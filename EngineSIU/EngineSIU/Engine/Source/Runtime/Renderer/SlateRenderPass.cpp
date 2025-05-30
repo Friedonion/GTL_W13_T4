@@ -60,7 +60,7 @@ void FSlateRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& View
         );
 
         float centerX = Rect.TopLeftX + Rect.Width * 0.5f; // 중앙 정렬용
-        float ndcX = centerX / ClientWidthFloat * 2.0f - 0.6;
+        float ndcX = centerX / ClientWidthFloat * 2.0f - 0.6f;
 
         float centerY = Rect.TopLeftY + Rect.Height * 0.5f;
         float ndcY = 1.0f - centerY / ClientHeightFloat * 2.0f;

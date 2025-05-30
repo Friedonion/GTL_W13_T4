@@ -240,7 +240,7 @@ void FDXDBufferManager::GetTextBuffer(const FWString& Text, FVertexInfo& OutVert
 
 
 HRESULT FDXDBufferManager::CreateUnicodeTextBuffer(const FWString& Text, FBufferInfo& OutBufferInfo,
-    float BitmapWidth, float BitmapHeight, float ColCount, float RowCount)
+    uint32 BitmapWidth, uint32 BitmapHeight, uint32 ColCount, uint32 RowCount)
 {
     if (TextAtlasBufferPool.Contains(Text))
     {
@@ -259,11 +259,11 @@ HRESULT FDXDBufferManager::CreateUnicodeTextBuffer(const FWString& Text, FBuffer
     // 텍스트의 중앙으로 정렬하기 위한 오프셋
     const float CenterOffset = TotalTextWidth / 2.0f;
 
-    const float CellWidth = BitmapWidth / ColCount;                       // 컬럼별 셀 폭
-    const float CellHeight = BitmapHeight / RowCount; // 행별 셀 높이
+    const float CellWidth = static_cast<float>(BitmapWidth) / static_cast<float>(ColCount);                       // 컬럼별 셀 폭
+    const float CellHeight = static_cast<float>(BitmapHeight) / static_cast<float>(RowCount); // 행별 셀 높이
 
-    const float TexelUOffset = CellWidth / BitmapWidth;
-    const float TexelVOffset = CellHeight / BitmapHeight;
+    const float TexelUOffset = static_cast<float>(CellWidth) / static_cast<float>(BitmapWidth);
+    const float TexelVOffset = static_cast<float>(CellHeight) / static_cast<float>(BitmapHeight);
 
     for (int Idx = 0; Idx < Text.size(); Idx++)
     {
@@ -356,6 +356,6 @@ void FDXDBufferManager::SetStartUV(wchar_t Hangul, FVector2D& UVOffset)
     const int OffsetV = (Offset + StartU) / 106;
     const int OffsetU = (Offset + StartU) % 106;
 
-    UVOffset = FVector2D(OffsetU, StartV + OffsetV);
+    UVOffset = FVector2D(static_cast<float>(OffsetU), static_cast<float>(StartV + OffsetV));
 
 }

@@ -403,6 +403,7 @@ void PropertyEditorPanel::RenderForActor(AActor* SelectedActor, USceneComponent*
             catch (const std::filesystem::filesystem_error& e)
             {
                 MessageBoxA(nullptr, "Failed to Create Script File for writing: ", "Error", MB_OK | MB_ICONERROR);
+                UE_LOG(ELogLevel::Error, TEXT("Failed to Create Script File for writing: %s"), *FString(e.what()));
             }
             LuaDisplayPath = NewScript->GetDisplayName();
         }
@@ -1380,7 +1381,7 @@ void PropertyEditorPanel::RenderForMaterial(UStaticMeshComponent* StaticMeshComp
     if (ImGui::TreeNodeEx("SubMeshes", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
     {
         const auto Subsets = StaticMeshComp->GetStaticMesh()->GetRenderData()->MaterialSubsets;
-        for (uint32 i = 0; i < Subsets.Num(); ++i)
+        for (int32 i = 0; i < Subsets.Num(); ++i)
         {
             std::string temp = "subset " + std::to_string(i);
             if (ImGui::Selectable(temp.c_str(), false, ImGuiSelectableFlags_AllowDoubleClick))
@@ -1656,6 +1657,6 @@ void PropertyEditorPanel::OnResize(HWND hWnd)
 {
     RECT ClientRect;
     GetClientRect(hWnd, &ClientRect);
-    Width = ClientRect.right - ClientRect.left;
-    Height = ClientRect.bottom - ClientRect.top;
+    Width = static_cast<float>(ClientRect.right - ClientRect.left);
+    Height = static_cast<float>(ClientRect.bottom - ClientRect.top);
 }

@@ -23,16 +23,16 @@ SLevelEditor::SLevelEditor()
 
 void SLevelEditor::Initialize(uint32 InEditorWidth, uint32 InEditorHeight)
 {
-    EditorWidth = InEditorWidth * 0.8f;
-    EditorHeight = InEditorHeight - 104.f;
+    EditorWidth = static_cast<uint32>(static_cast<float>(InEditorWidth) * 0.8f);
+    EditorHeight = InEditorHeight - 104;
     
     ResizeEditor(EditorWidth, EditorHeight);
     
     VSplitter = new SSplitterV();
-    VSplitter->Initialize(FRect(0.0f, 0.f, EditorWidth, EditorHeight));
-    
+    VSplitter->Initialize(FRect(0.0f, 0.f, static_cast<float>(EditorWidth), static_cast<float>(EditorHeight)));
+
     HSplitter = new SSplitterH();
-    HSplitter->Initialize(FRect(0.f, 0.0f, EditorWidth, EditorHeight));
+    HSplitter->Initialize(FRect(0.f, 0.0f, static_cast<float>(EditorWidth), static_cast<float>(EditorHeight)));
     
     FRect Top = VSplitter->SideLT->GetRect();
     FRect Bottom = VSplitter->SideRB->GetRect();
@@ -117,8 +117,8 @@ void SLevelEditor::ResizeEditor(uint32 InEditorWidth, uint32 InEditorHeight)
         return;
     }
     
-    EditorWidth = InEditorWidth * 0.8f;
-    EditorHeight = InEditorHeight - 104.f;
+    EditorWidth = static_cast<uint32>(static_cast<float>(InEditorWidth) * 0.8f);
+    EditorHeight = static_cast<uint32>(static_cast<float>(InEditorHeight) - 104.f);
 
     if (HSplitter && VSplitter)
     {
@@ -159,7 +159,7 @@ void SLevelEditor::ResizeViewports()
     }
     else
     {
-        ActiveViewportClient->GetViewport()->ResizeViewport(FRect(0.0f, 72.f, EditorWidth , EditorHeight ));
+        ActiveViewportClient->GetViewport()->ResizeViewport(FRect(0.0f, 72.f, static_cast<float>(EditorWidth) , static_cast<float>(EditorHeight)));
     }
 }
 

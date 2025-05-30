@@ -48,8 +48,8 @@ void ParticleViewerPanel::OnResize(HWND hWnd)
 {
     RECT ClientRect;
     GetClientRect(hWnd, &ClientRect);
-    Width = ClientRect.right - ClientRect.left;
-    Height = ClientRect.bottom - ClientRect.top;
+    Width = static_cast<float>(ClientRect.right - ClientRect.left);
+    Height = static_cast<float>(ClientRect.bottom - ClientRect.top);
 }
 
 void ParticleViewerPanel::RenderDetailPanel()

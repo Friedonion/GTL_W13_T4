@@ -33,7 +33,7 @@ public:
     virtual void Release();
 
     // TODO: UObject->GetWorld() 구현 이후 추가.
-    UWorld* GetWorldFromContextObject(const UObject* Object) const;
+    //UWorld* GetWorldFromContextObject(const UObject* Object) const;
     FWorldContext* GetWorldContextFromWorld(const UWorld* InWorld);
 
     FWorldContext& CreateNewWorldContext(EWorldType InWorldType);

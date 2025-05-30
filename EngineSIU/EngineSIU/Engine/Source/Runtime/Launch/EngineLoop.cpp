@@ -167,7 +167,9 @@ void FEngineLoop::Tick()
             }
         }
 
-        const float DeltaTime = static_cast<float>(ElapsedTime / 1000.f);
+        float DeltaTime = static_cast<float>(ElapsedTime / 1000.f);
+
+        DeltaTime /= DelaTimeDenom;
 
         GEngine->Tick(DeltaTime);
         LevelEditor->Tick(DeltaTime);

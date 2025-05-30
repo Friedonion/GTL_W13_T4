@@ -7,8 +7,8 @@
 class SSplitter : public SWindow
 {
 public:
-    SWindow* SideLT; // Left or Top
-    SWindow* SideRB; // Right or Bottom
+    SWindow* SideLT = nullptr; // Left or Top
+    SWindow* SideRB = nullptr; // Right or Bottom
 
     float SplitRatio = 0.5f; // 값 범위: [0, 1]
 

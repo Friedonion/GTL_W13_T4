@@ -647,6 +647,26 @@ void FPhysicsManager::CreateJoint(const GameObject* Obj1, const GameObject* Obj2
     ConstraintInstance->ConstraintData = Joint;
 }
 
+void FPhysicsManager::SetGravity(UWorld* World, FVector Gravity)
+{
+    if (SceneMap.Contains(World))
+    {
+        SceneMap[World]->setGravity(PxVec3(Gravity.X, Gravity.Y, Gravity.Z));
+    }
+    UE_LOG(ELogLevel::Error, TEXT("Invalid World"));
+}
+
+FVector FPhysicsManager::GetGravity(UWorld* World)
+{
+    if (SceneMap.Contains(World))
+    {
+        PxVec3 Gravity = SceneMap[World]->getGravity();
+        return FVector(Gravity.x, Gravity.y, Gravity.z);
+    }
+    UE_LOG(ELogLevel::Error, TEXT("Invalid World"));
+    return FVector::ZeroVector;
+}
+
 void FPhysicsManager::DestroyGameObject(GameObject* GameObject) const
 {
     // TODO: StaticRigidBody 분기 처리 필요

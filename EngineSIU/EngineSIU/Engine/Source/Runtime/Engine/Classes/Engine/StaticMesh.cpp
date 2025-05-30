@@ -12,9 +12,9 @@ UObject* UStaticMesh::Duplicate(UObject* InOuter)
     return nullptr;
 }
 
-uint32 UStaticMesh::GetMaterialIndex(FName MaterialSlotName) const
+int32 UStaticMesh::GetMaterialIndex(FName MaterialSlotName) const
 {
-    for (uint32 MaterialIndex = 0; MaterialIndex < Materials.Num(); MaterialIndex++)
+    for (int32 MaterialIndex = 0; MaterialIndex < Materials.Num(); MaterialIndex++)
     {
         if (Materials[MaterialIndex]->MaterialSlotName == MaterialSlotName)
         {

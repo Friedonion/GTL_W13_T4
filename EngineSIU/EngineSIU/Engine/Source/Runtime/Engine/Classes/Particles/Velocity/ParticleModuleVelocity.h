@@ -3,7 +3,7 @@
 #include "Classes/Distribution/DistributionVector.h"
 #include "Classes/Distribution/DistributionFloat.h"
 
-class FDistributionVector;
+struct FDistributionVector;
 
 class UParticleModuleVelocity : public UParticleModuleVelocityBase
 {

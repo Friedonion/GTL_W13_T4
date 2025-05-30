@@ -184,8 +184,8 @@ void FBillboardRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& 
         else if (UTextComponent* TextComp = Cast<UTextComponent>(BillboardComp))
         {
             FBufferInfo Buffers;
-            float Height = TextComp->Texture->Height;
-            float Width = TextComp->Texture->Width;
+            uint32 Height = TextComp->Texture->Height;
+            uint32 Width = TextComp->Texture->Width;
             BufferManager->CreateUnicodeTextBuffer(TextComp->GetText(), Buffers, Width, Height, TextComp->GetColumnCount(), TextComp->GetRowCount());
 
             UpdateSubUVConstant(FVector2D(), FVector2D(1, 1));

@@ -137,7 +137,7 @@ void UStaticMeshComponent::GetUsedMaterials(TArray<UMaterial*>& Out) const
     }
 
     StaticMesh->GetUsedMaterials(Out);
-    for (int MaterialIndex = 0; MaterialIndex < GetNumMaterials(); MaterialIndex++)
+    for (uint32 MaterialIndex = 0; MaterialIndex < GetNumMaterials(); MaterialIndex++)
     {
         if (OverrideMaterials[MaterialIndex] != nullptr)
         {

@@ -60,20 +60,20 @@ private:
     TArray<UPointLightComponent*> PointLights;
     TArray<USpotLightComponent*> SpotLights;
     
-    FShadowManager* ShadowManager;
+    FShadowManager* ShadowManager = nullptr;
 
-    ID3D11InputLayout* StaticMeshIL;
-    ID3D11VertexShader* DepthOnlyVS;
-    ID3D11PixelShader* DepthOnlyPS;
-    ID3D11SamplerState* Sampler;
+    ID3D11InputLayout* StaticMeshIL = nullptr;
+    ID3D11VertexShader* DepthOnlyVS = nullptr;
+    ID3D11PixelShader* DepthOnlyPS = nullptr;
+    ID3D11SamplerState* Sampler = nullptr;
 
-    ID3D11VertexShader* DepthCubeMapVS;
-    ID3D11GeometryShader* DepthCubeMapGS;
+    ID3D11VertexShader* DepthCubeMapVS = nullptr;
+    ID3D11GeometryShader* DepthCubeMapGS = nullptr;
 
 
-    ID3D11VertexShader* CascadedShadowMapVS;
-    ID3D11GeometryShader* CascadedShadowMapGS;
-    ID3D11PixelShader* CascadedShadowMapPS;
+    ID3D11VertexShader* CascadedShadowMapVS = nullptr;
+    ID3D11GeometryShader* CascadedShadowMapGS = nullptr;
+    ID3D11PixelShader* CascadedShadowMapPS = nullptr;
 
     D3D11_VIEWPORT ShadowViewport;
 

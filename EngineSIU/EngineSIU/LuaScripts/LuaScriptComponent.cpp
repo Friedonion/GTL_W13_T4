@@ -170,7 +170,7 @@ bool ULuaScriptComponent::CheckFileModified()
         }
     }
     catch (const std::exception& e) {
-        UE_LOG(ELogLevel::Error, TEXT("Failed to check lua script file"));
+        UE_LOG(ELogLevel::Error, TEXT("Failed to check lua script file: %s"), e.what());
     }
     return false;
 }
@@ -205,7 +205,7 @@ void ULuaScriptComponent::TickComponent(float DeltaTime)
             UE_LOG(ELogLevel::Display, TEXT("Lua script reloaded"));
         }
         catch (const sol::error& e) {
-            UE_LOG(ELogLevel::Error, TEXT("Failed to reload lua script"));
+            UE_LOG(ELogLevel::Error, TEXT("Failed to reload lua script : %s"), e.what());
         }
     }
 }

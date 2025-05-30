@@ -69,7 +69,7 @@ void UTextComponent::SetProperties(const TMap<FString, FString>& InProperties)
     TempStr = InProperties.Find(TEXT("QuadSize"));
     if (TempStr)
     {
-        QuadSize = FString::ToFloat(*TempStr);
+        QuadSize = FString::ToInt(*TempStr);
     }
     
 }

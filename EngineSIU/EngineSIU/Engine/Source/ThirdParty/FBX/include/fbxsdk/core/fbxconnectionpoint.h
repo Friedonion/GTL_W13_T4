@@ -114,7 +114,7 @@ public:
 	void Destroy();
 	void SubConnectRemoveAll();
 
-	inline FbxConnectionPoint*			GetSubOwnerConnect(){ return GetConnectType() == eSubConnection ? mOwner : NULL; }
+	inline FbxConnectionPoint*			GetSubOwnerConnect(){ return GetConnectType() & eSubConnection ? mOwner : NULL; }
 	inline FbxConnectionPointFilter*	GetFilter(){ return mFilter; }
 
 	virtual bool		IsInReplace(FbxConnectionPoint* p1, FbxConnectionPoint* p2);

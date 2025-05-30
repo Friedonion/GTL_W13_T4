@@ -41,6 +41,8 @@
 #include "Engine/Classes/Engine/AssetManager.h"
 #include "Particles/ParticleSystemComponent.h"
 
+#include "PhysicsManager.h"
+
 ControlEditorPanel::ControlEditorPanel()
 {
     SetSupportedWorldTypes(EWorldTypeBitFlag::Editor | EWorldTypeBitFlag::PIE | EWorldTypeBitFlag::SkeletalViewer | EWorldTypeBitFlag::PhysicsAssetViewer);
@@ -275,6 +277,29 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
 
         ImGui::Separator();
 
+        ImGui::Text("Gravity");
+        UWorld* CurrentWorld = GEngine->ActiveWorld;
+        FVector Gravity = GEngine->PhysicsManager->GetGravity(CurrentWorld);
+        ImGui::SetNextItemWidth(120.0f);
+        if (ImGui::SliderFloat("##GravityX", &Gravity.X, -1024, 1024))
+        {
+            GEngine->PhysicsManager->SetGravity(CurrentWorld, Gravity);
+        }
+
+        ImGui::SetNextItemWidth(120.0f);
+        if (ImGui::SliderFloat("##GravityY", &Gravity.Y, -1024, 1024))
+        {
+            GEngine->PhysicsManager->SetGravity(CurrentWorld, Gravity);
+        }
+
+        ImGui::SetNextItemWidth(120.0f);
+        if (ImGui::SliderFloat("##GravityZ", &Gravity.Z, -1024, 1024))
+        {
+            GEngine->PhysicsManager->SetGravity(CurrentWorld, Gravity);
+        }
+
+        ImGui::Separator();
+
         ImGui::Text("Camera FOV");
         FOV = &GEngineLoop.GetLevelEditor()->GetActiveViewportClient()->ViewFOV;
         ImGui::SetNextItemWidth(120.0f);
@@ -291,6 +316,17 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
         if (ImGui::DragFloat("##CamSpeed", &CameraSpeed, 0.1f, 0.198f, 192.0f, "%.1f"))
         {
             GEngineLoop.GetLevelEditor()->GetActiveViewportClient()->SetCameraSpeed(CameraSpeed);
+        }
+        
+        ImGui::Spacing();
+
+        ImGui::Text("Game Speed");
+        float DeltaTimeDenom = GEngineLoop.DelaTimeDenom;
+        float DeltaTimeNumerator = 1 / DeltaTimeDenom;
+        ImGui::SetNextItemWidth(120.0f);
+        if (ImGui::DragFloat("##GameSpeed", &DeltaTimeNumerator, 0.1f, -10.f, 10.f, "%.1f"))
+        {
+            GEngineLoop.DelaTimeDenom = 1 / DeltaTimeNumerator;
         }
 
         ImGui::Text("F-Stop");
@@ -677,8 +713,8 @@ void ControlEditorPanel::OnResize(const HWND hWnd)
 {
     RECT ClientRect;
     GetClientRect(hWnd, &ClientRect);
-    Width = ClientRect.right - ClientRect.left;
-    Height = ClientRect.bottom - ClientRect.top;
+    Width = static_cast<float>(ClientRect.right - ClientRect.left);
+    Height = static_cast<float>(ClientRect.bottom - ClientRect.top);
 }
 
 void ControlEditorPanel::CreateLightSpawnButton(const ImVec2 InButtonSize, ImFont* IconFont)

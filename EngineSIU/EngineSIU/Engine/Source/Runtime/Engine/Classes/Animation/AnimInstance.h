@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "AnimStateMachine.h"
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
@@ -45,6 +45,6 @@ public:
 
     virtual void SetBlendDuration(float InBlendDuration);
 private:
-    USkeleton* CurrentSkeleton;
+    USkeleton* CurrentSkeleton = nullptr;
     
 };
