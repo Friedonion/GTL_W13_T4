@@ -5,7 +5,7 @@
 
 AEnemySpawner::AEnemySpawner()
     : CurrentSpawnTimer(0.f)
-    , SpawnInterval(3.f)
+    , SpawnInterval(4.f)
     , bShouldSpawn(false)
     , Character(nullptr)
 {
@@ -18,6 +18,8 @@ UObject* AEnemySpawner::Duplicate(UObject* InOuter)
     NewActor->bShouldSpawn = bShouldSpawn;
     NewActor->CurrentSpawnTimer = CurrentSpawnTimer;
 
+    NewActor->Character = Character;
+
     return NewActor;
 }
 
@@ -29,7 +31,7 @@ void AEnemySpawner::BeginPlay()
 
     if (SpawnInterval <= 0.f)
     {
-        SpawnInterval = 3.0f;
+        SpawnInterval = 4.0f;
     }
 }
 
@@ -51,6 +53,11 @@ void AEnemySpawner::EndPlay(const EEndPlayReason::Type EndPlayReason)
     Super::EndPlay(EndPlayReason);
 }
 
+void AEnemySpawner::Destroyed()
+{
+    Super::Destroyed();
+}
+
 void AEnemySpawner::Spawn()
 {
     UWorld* World = GEngine->ActiveWorld;
@@ -58,8 +65,7 @@ void AEnemySpawner::Spawn()
 
     SpawnedEnemy = World->SpawnActor<AEnemy>();
     SpawnedEnemy->SetActorLabel(TEXT("OBJ_ENEMY"));
-    SpawnedEnemy->SetActorLocation(this->GetActorLocation());
-
+    SpawnedEnemy->SetOwner(this);
     bShouldSpawn = false;
 }
 

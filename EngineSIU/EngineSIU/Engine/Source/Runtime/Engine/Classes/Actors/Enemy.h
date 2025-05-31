@@ -3,12 +3,14 @@
 
 class USkeletalMeshComponent;
 
+class UStaticMeshComponent;
+
 class AEnemy : public AActor
 {
     DECLARE_CLASS(AEnemy, AActor)
 
 public:
-    AEnemy() = default;
+    AEnemy();
 
     virtual UObject* Duplicate(UObject* InOuter) override;
 
