@@ -29,8 +29,6 @@ public:
 
     void UpdateFogConstant(UHeightFogComponent* Fog);
 
-    void CreateSampler();
-
 private:
     virtual void PrepareRender(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
     virtual void CleanUpRender(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
@@ -38,8 +36,6 @@ private:
     // Fog 렌더링용 셰이더 생성 및 입력 레이아웃 설정
     virtual void CreateResource() override;
     void UpdateShader();
-    
-    ID3D11SamplerState* Sampler = nullptr;
 
     ID3D11VertexShader* VertexShader = nullptr;
     ID3D11PixelShader* PixelShader = nullptr;

@@ -9,8 +9,8 @@ Texture2D BlurredCoCTexture : register(t94);
 Texture2D InputDepth : register(t99);
 Texture2D SceneTexture : register(t100);
 
-SamplerState LinearSampler : register(s10);
-SamplerState PointSampler : register(s11);
+SamplerState LinearSampler : register(s1); // Linear Clamp
+SamplerState PointSampler : register(s3); // Point Clamp
 
 static const float MAX_KERNEL_PIXEL_RADIUS = 5.0f;
 

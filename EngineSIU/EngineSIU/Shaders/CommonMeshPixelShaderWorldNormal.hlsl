@@ -18,7 +18,7 @@ float4 mainPS(PS_INPUT_CommonMesh Input) : SV_Target
 
         float3x3 TBN = float3x3(Tangent, BiTangent, WorldNormal);
         
-        float3 Normal = MaterialTextures[TEXTURE_SLOT_NORMAL].Sample(MaterialSamplers[TEXTURE_SLOT_NORMAL], Input.UV).rgb;
+        float3 Normal = MaterialTextures[TEXTURE_SLOT_NORMAL].Sample(SamplerLinearWrap, Input.UV).rgb;
         Normal = normalize(2.f * Normal - 1.f);
         WorldNormal = normalize(mul(Normal, TBN));
     }

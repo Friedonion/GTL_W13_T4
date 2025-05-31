@@ -1,7 +1,7 @@
 
 Texture2D ViewportTexture : register(t120);
 
-SamplerState Sampler : register(s0);
+SamplerState Sampler : register(s3); // Point Clamp
 
 cbuffer SlateTransform : register(b11)
 {

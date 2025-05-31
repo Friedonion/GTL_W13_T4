@@ -36,8 +36,6 @@ void FFogRenderPass::CreateResource()
     // 생성된 셰이더와 입력 레이아웃 획득
     VertexShader = ShaderManager->GetVertexShaderByKey(L"FogVertexShader");
     PixelShader = ShaderManager->GetPixelShaderByKey(L"FogPixelShader");
-    
-    CreateSampler();
 }
 
 void FFogRenderPass::UpdateShader()
@@ -72,8 +70,6 @@ void FFogRenderPass::PrepareRenderState()
     Graphics->DeviceContext->IASetInputLayout(nullptr);
     Graphics->DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     Graphics->DeviceContext->RSSetState(Graphics->RasterizerSolidBack);
-    
-    Graphics->DeviceContext->PSSetSamplers(0, 1, &Sampler);
 
     TArray<FString> PSBufferKeys = {
         TEXT("FFogConstants")
@@ -93,7 +89,7 @@ void FFogRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& Viewpo
     }
 
     FViewportResource* ViewportResource = Viewport->GetViewportResource();
-    const EResourceType ResourceType = EResourceType::ERT_PP_Fog; 
+    const EResourceType ResourceType = EResourceType::ERT_Scene; 
     FRenderTargetRHI* RenderTargetRHI = ViewportResource->GetRenderTarget(ResourceType);
 
     Graphics->DeviceContext->OMSetRenderTargets(1, &RenderTargetRHI->RTV, nullptr);
@@ -136,20 +132,6 @@ void FFogRenderPass::UpdateFogConstant(UHeightFogComponent* Fog)
     }
     //상수버퍼 업데이트
     BufferManager->UpdateConstantBuffer(TEXT("FFogConstants"), Constants);
-}
-
-void FFogRenderPass::CreateSampler()
-{
-    D3D11_SAMPLER_DESC SamplerDesc = {};
-    SamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-    SamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-    SamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-    SamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-    SamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-    SamplerDesc.MinLOD = 0;
-    SamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-    
-    Graphics->Device->CreateSamplerState(&SamplerDesc, &Sampler);
 }
 
 void FFogRenderPass::PrepareRender(const std::shared_ptr<FEditorViewportClient>& Viewport)

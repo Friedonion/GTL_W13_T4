@@ -50,7 +50,7 @@ float4 mainPS(PS_INPUT_CommonMesh Input) : SV_Target
     float3 DiffuseColor = Material.DiffuseColor;
     if (Material.TextureFlag & TEXTURE_FLAG_DIFFUSE)
     {
-        float4 DiffuseColor4 = MaterialTextures[TEXTURE_SLOT_DIFFUSE].Sample(MaterialSamplers[TEXTURE_SLOT_DIFFUSE], Input.UV);
+        float4 DiffuseColor4 = MaterialTextures[TEXTURE_SLOT_DIFFUSE].Sample(SamplerLinearWrap, Input.UV);
         DiffuseColor = DiffuseColor4.rgb;
         BaseAlpha = DiffuseColor4.a;
     }
@@ -58,7 +58,7 @@ float4 mainPS(PS_INPUT_CommonMesh Input) : SV_Target
     // Alpha
     if (Material.TextureFlag & TEXTURE_FLAG_ALPHA)
     {
-        float Alpha = MaterialTextures[TEXTURE_SLOT_ALPHA].Sample(MaterialSamplers[TEXTURE_SLOT_ALPHA], Input.UV).r;
+        float Alpha = MaterialTextures[TEXTURE_SLOT_ALPHA].Sample(SamplerLinearWrap, Input.UV).r;
         BaseAlpha = Alpha;
     }
     
@@ -72,7 +72,7 @@ float4 mainPS(PS_INPUT_CommonMesh Input) : SV_Target
 
         float3x3 TBN = float3x3(Tangent, BiTangent, WorldNormal);
         
-        float3 Normal = MaterialTextures[TEXTURE_SLOT_NORMAL].Sample(MaterialSamplers[TEXTURE_SLOT_NORMAL], Input.UV).rgb;
+        float3 Normal = MaterialTextures[TEXTURE_SLOT_NORMAL].Sample(SamplerLinearWrap, Input.UV).rgb;
         Normal = normalize(2.f * Normal - 1.f);
         WorldNormal = normalize(mul(Normal, TBN));
     }
@@ -82,14 +82,14 @@ float4 mainPS(PS_INPUT_CommonMesh Input) : SV_Target
     float3 SpecularColor = Material.SpecularColor;
     if (Material.TextureFlag & TEXTURE_FLAG_SPECULAR)
     {
-        SpecularColor = MaterialTextures[TEXTURE_SLOT_SPECULAR].Sample(MaterialSamplers[TEXTURE_SLOT_SPECULAR], Input.UV).rgb;
+        SpecularColor = MaterialTextures[TEXTURE_SLOT_SPECULAR].Sample(SamplerLinearWrap, Input.UV).rgb;
     }
 
     // Specular Exponent or Glossiness
     float Shininess = Material.Shininess;
     if (Material.TextureFlag & TEXTURE_FLAG_SHININESS)
     {
-        Shininess = MaterialTextures[TEXTURE_SLOT_SHININESS].Sample(MaterialSamplers[TEXTURE_SLOT_SHININESS], Input.UV).r;
+        Shininess = MaterialTextures[TEXTURE_SLOT_SHININESS].Sample(SamplerLinearWrap, Input.UV).r;
         Shininess = 1000 * Shininess * Shininess; // y = 1000 * x ^ 2
     }
 #endif
@@ -98,7 +98,7 @@ float4 mainPS(PS_INPUT_CommonMesh Input) : SV_Target
     float3 EmissiveColor = Material.EmissiveColor;
     if (Material.TextureFlag & TEXTURE_FLAG_EMISSIVE)
     {
-        EmissiveColor = MaterialTextures[TEXTURE_SLOT_EMISSIVE].Sample(MaterialSamplers[TEXTURE_SLOT_EMISSIVE], Input.UV).rgb;
+        EmissiveColor = MaterialTextures[TEXTURE_SLOT_EMISSIVE].Sample(SamplerLinearWrap, Input.UV).rgb;
     }
     EmissiveColor *= 5.0; // 5.0은 임의의 값
 
@@ -107,14 +107,14 @@ float4 mainPS(PS_INPUT_CommonMesh Input) : SV_Target
     float Metallic = Material.Metallic;
     if (Material.TextureFlag & TEXTURE_FLAG_METALLIC)
     {
-        Metallic = MaterialTextures[TEXTURE_SLOT_METALLIC].Sample(MaterialSamplers[TEXTURE_SLOT_METALLIC], Input.UV).b;
+        Metallic = MaterialTextures[TEXTURE_SLOT_METALLIC].Sample(SamplerLinearWrap, Input.UV).b;
     }
 
     // Roughness
     float Roughness = Material.Roughness;
     if (Material.TextureFlag & TEXTURE_FLAG_ROUGHNESS)
     {
-        Roughness = MaterialTextures[TEXTURE_SLOT_ROUGHNESS].Sample(MaterialSamplers[TEXTURE_SLOT_ROUGHNESS], Input.UV).g;
+        Roughness = MaterialTextures[TEXTURE_SLOT_ROUGHNESS].Sample(SamplerLinearWrap, Input.UV).g;
     }
 #endif
     

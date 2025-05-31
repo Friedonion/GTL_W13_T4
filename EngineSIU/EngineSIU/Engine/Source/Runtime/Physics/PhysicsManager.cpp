@@ -462,9 +462,18 @@ void FPhysicsManager::CreateJoint(const GameObject* Obj1, const GameObject* Obj2
 {
     PxTransform GlobalPose1 = Obj1->DynamicRigidBody->getGlobalPose();
     PxTransform GlobalPose2 = Obj2->DynamicRigidBody->getGlobalPose();
-        
-    PxTransform LocalFrameParent = GlobalPose1.getInverse() * GlobalPose2;
-    PxTransform LocalFrameChild = PxTransform(PxVec3(0));
+
+    PxQuat AxisCorrection = PxQuat(PxMat33(
+        PxVec3(0.0f, 0.0f, 1.0f),
+        PxVec3(1.0f, 0.0f, 0.0f),
+        PxVec3(0.0f, 1.0f, 0.0f)
+    ));
+    AxisCorrection.normalize();
+
+    PxTransform LocalFrameChild(PxVec3(0.0f), AxisCorrection);
+
+    PxTransform ChildJointFrameInWorld = GlobalPose2 * LocalFrameChild;
+    PxTransform LocalFrameParent = GlobalPose1.getInverse() * ChildJointFrameInWorld;
 
     // PhysX D6 Joint 생성
     PxD6Joint* Joint = PxD6JointCreate(*Physics,
@@ -642,6 +651,10 @@ void FPhysicsManager::CreateJoint(const GameObject* Obj1, const GameObject* Obj2
         
         // 파괴 임계값 설정 (선택사항)
         Joint->setBreakForce(PX_MAX_F32, PX_MAX_F32);  // 무한대로 설정하여 파괴되지 않음
+
+        Joint->setConstraintFlag(PxConstraintFlag::ePROJECTION, true);
+        Joint->setProjectionLinearTolerance(0.01f);
+        Joint->setProjectionAngularTolerance(0.017f);
     }
 
     ConstraintInstance->ConstraintData = Joint;

@@ -16,6 +16,16 @@ class AActor;
 class USceneComponent;
 class UPhysicsAsset;
 
+enum class EViewerType : uint8
+{
+    EVT_Editor,
+    EVT_PIE,
+    EVT_SkeletalMeshViewer,
+    EVT_ParticleViewer,
+    EVT_PhysicsAssetViewer,
+    EVT_MAX,
+};
+
 class UEditorEngine : public UEngine
 {
     DECLARE_CLASS(UEditorEngine, UEngine)
@@ -25,7 +35,7 @@ public:
 
     virtual void Init() override;
     virtual void Tick(float DeltaTime) override;
-    void Release() override;
+    virtual void Release() override;
 
     UWorld* PIEWorld = nullptr;
     USkeletalViewerWorld* SkeletalMeshViewerWorld = nullptr;
@@ -33,11 +43,9 @@ public:
     UPhysicsAssetViewerWorld* PhysicsAssetViewerWorld = nullptr;
     UWorld* EditorWorld = nullptr;
     
-
     void StartPIE();
     void StartSkeletalMeshViewer(FName SkeletalMeshName, UAnimationAsset* AnimAsset);
     void StartParticleViewer(UParticleSystem* ParticleSystemAsset);
-
     void StartPhysicsAssetViewer(FName PreviewMeshKey, FName PhysicsAssetName);
 
     void BindEssentialObjects();
@@ -53,6 +61,11 @@ public:
     FWorldContext& GetEditorWorldContext(/*bool bEnsureIsGWorld = false*/);
     FWorldContext* GetPIEWorldContext(/*int32 WorldPIEInstance = 0*/);
 
+    EViewerType GetViewerType() const { return ViewerType; }
+
+private:
+    EViewerType ViewerType = EViewerType::EVT_Editor;
+    
 public:
     void SelectActor(AActor* InActor);
 

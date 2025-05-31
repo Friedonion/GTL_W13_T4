@@ -38,8 +38,6 @@
 #include "Renderer/ShadowManager.h"
 #include "UnrealEd/EditorViewportClient.h"
 #include "UObject/UObjectIterator.h"
-#include "LuaScripts/LuaScriptComponent.h"
-#include "LuaScripts/LuaScriptFileUtils.h"
 #include "imgui/imgui_bezier.h"
 #include "imgui/imgui_curve.h"
 #include "Math/Transform.h"
@@ -556,7 +554,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
             {
                 SkeletalMeshComp->SetAnimationMode(EAnimationMode::AnimationBlueprint);
                 CurrentAnimationMode = EAnimationMode::AnimationBlueprint;
-                SkeletalMeshComp->SetAnimClass(UClass::FindClass(FName("UMyAnimInstance")));
+                SkeletalMeshComp->SetAnimClass(UClass::FindClass(FName("ULuaScriptAnimInstance")));
             }
             if (ImGui::Selectable("Animation Asset", CurrentAnimationMode == EAnimationMode::AnimationSingleNode))
             {

@@ -216,7 +216,8 @@ void USpotLightComponent::UpdateProjectionMatrix()
     // TODO: 텍스쳐 비율 반영
     AspectRatio = 1.0f;
 
-    const float OuterCosine = SpotLightInfo.OuterRad;
+    const float OuterHalfDegree = FMath::RadiansToDegrees(SpotLightInfo.OuterRad);
+    const float OuterCosine = FMath::DegreesToRadians(OuterHalfDegree * 2.f);
     // 각도(radian) = acos(cos(angle)) * 2. 스포트라이트 FOV는 전체 원뿔 각도임.
     const float FieldOfViewRadians = OuterCosine;
 

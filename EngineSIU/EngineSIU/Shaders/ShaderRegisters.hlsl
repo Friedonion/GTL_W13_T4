@@ -72,7 +72,11 @@ struct FMaterial
 #define TEXTURE_SLOT_ROUGHNESS     (8)
 
 Texture2D MaterialTextures[9] : register(t0);
-SamplerState MaterialSamplers[9] : register(s0);
+
+SamplerState SamplerLinearWrap : register(s0);
+SamplerState SamplerLinearClamp : register(s1);
+SamplerState SamplerPointWrap : register(s2);
+SamplerState SamplerPointClamp : register(s3);
 
 struct VS_INPUT_StaticMesh
 {
