@@ -11,8 +11,6 @@
 #include "SlateCore/Widgets/SWindow.h"
 #include "UnrealEd/EditorViewportClient.h"
 
-extern FEngineLoop GEngineLoop;
-
 
 SLevelEditor::SLevelEditor()
     : HSplitter(nullptr)
@@ -98,9 +96,16 @@ void SLevelEditor::Initialize(uint32 InEditorWidth, uint32 InEditorHeight)
 
 void SLevelEditor::Tick(float DeltaTime)
 {
-    for (std::shared_ptr<FEditorViewportClient> Viewport : ViewportClients)
+    if (IsMultiViewport())
     {
-        Viewport->Tick(DeltaTime);
+        for (const std::shared_ptr<FEditorViewportClient>& Viewport : ViewportClients)
+        {
+            Viewport->Tick(DeltaTime);
+        }
+    }
+    else
+    {
+        ActiveViewportClient->Tick(DeltaTime);
     }
 }
 
@@ -117,8 +122,25 @@ void SLevelEditor::ResizeEditor(uint32 InEditorWidth, uint32 InEditorHeight)
         return;
     }
     
-    EditorWidth = InEditorWidth * 0.8f;
-    EditorHeight = InEditorHeight - 104.f;
+    EditorWidth = static_cast<uint32>(static_cast<float>(InEditorWidth) * 0.8f);
+    EditorHeight = static_cast<uint32>(static_cast<float>(InEditorHeight) - 104.f);
+
+    if (UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine))
+    {
+        const EViewerType ViewerType = EditorEngine->GetViewerType();
+        switch (ViewerType)
+        {
+        case EViewerType::EVT_ParticleViewer:
+            break;
+        case EViewerType::EVT_PhysicsAssetViewer:
+            break;
+        case EViewerType::EVT_Editor:
+        case EViewerType::EVT_PIE:
+        case EViewerType::EVT_SkeletalMeshViewer:
+        default:
+            break;
+        }
+    }
 
     if (HSplitter && VSplitter)
     {
@@ -142,19 +164,16 @@ void SLevelEditor::SelectViewport(const FVector2D& Point)
 
 void SLevelEditor::ResizeViewports()
 {
-    if (bMultiViewportMode)
+    if (IsMultiViewport())
     {
-        if (GetViewports()[0])
+        for (int32 i = 0; i < 4; ++i)
         {
-            for (int i = 0; i < 4; ++i)
-            {
-                GetViewports()[i]->ResizeViewport(
-                    VSplitter->SideLT->GetRect(),
-                    VSplitter->SideRB->GetRect(),
-                    HSplitter->SideLT->GetRect(),
-                    HSplitter->SideRB->GetRect()
-                );
-            }
+            GetViewports()[i]->ResizeViewport(
+                VSplitter->SideLT->GetRect(),
+                VSplitter->SideRB->GetRect(),
+                HSplitter->SideLT->GetRect(),
+                HSplitter->SideRB->GetRect()
+            );
         }
     }
     else
@@ -198,15 +217,7 @@ void SLevelEditor::LoadConfig()
     FEditorViewportClient::OrthoSize = GetValueFromConfig(Config, "OrthoZoomSize", 10.0f);
 
     SetActiveViewportClient(GetValueFromConfig(Config, "ActiveViewportIndex", 0));
-    bMultiViewportMode = GetValueFromConfig(Config, "bMultiView", false);
-    if (bMultiViewportMode)
-    {
-        SetEnableMultiViewport(true);
-    }
-    else
-    {
-        SetEnableMultiViewport(false);
-    }
+    SetEnableMultiViewport(GetValueFromConfig(Config, "bMultiView", false));
     
     for (size_t i = 0; i < 4; i++)
     {
@@ -313,7 +324,10 @@ void SLevelEditor::RegisterEditorInputDelegates()
 
     InputDelegatesHandles.Add(Handler->OnMouseDownDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
         {
-            if (ImGui::GetIO().WantCaptureMouse) return;
+            if (ImGui::GetIO().WantCaptureMouse)
+            {
+                return;
+            }
 
             switch (InMouseEvent.GetEffectingButton())  // NOLINT(clang-diagnostic-switch-enum)
             {
@@ -328,7 +342,7 @@ void SLevelEditor::RegisterEditorInputDelegates()
                         {
                             TargetComponent = SelectedComponent;
                         }
-                        else if (AActor* SelectedActor = EdEngine->GetSelectedActor())
+                        else if (SelectedActor)
                         {
                             TargetComponent = SelectedActor->GetRootComponent();
                         }
@@ -381,7 +395,10 @@ void SLevelEditor::RegisterEditorInputDelegates()
 
     InputDelegatesHandles.Add(Handler->OnMouseMoveDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
         {
-            if (ImGui::GetIO().WantCaptureMouse) return;
+            if (ImGui::GetIO().WantCaptureMouse)
+            {
+                return;
+            }
 
             // Splitter 움직임 로직
             if (InMouseEvent.IsMouseButtonDown(EKeys::LeftMouseButton))
@@ -585,7 +602,10 @@ void SLevelEditor::RegisterEditorInputDelegates()
 
     InputDelegatesHandles.Add(Handler->OnMouseWheelDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
         {
-            if (ImGui::GetIO().WantCaptureMouse) return;
+            if (ImGui::GetIO().WantCaptureMouse)
+            {
+                return;
+            }
 
             // 뷰포트에서 앞뒤 방향으로 화면 이동
             if (ActiveViewportClient->IsPerspective())

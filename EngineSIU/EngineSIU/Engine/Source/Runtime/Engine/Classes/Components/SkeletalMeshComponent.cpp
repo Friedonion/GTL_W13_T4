@@ -16,11 +16,12 @@
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
 #include "PhysicsEngine/ConstraintInstance.h"
+#include <Engine/Contents/AnimInstance/LuaScriptAnimInstance.h>
 
 bool USkeletalMeshComponent::bIsCPUSkinning = false;
 
 USkeletalMeshComponent::USkeletalMeshComponent()
-    : AnimationMode(EAnimationMode::AnimationSingleNode)
+    : AnimationMode(EAnimationMode::AnimationBlueprint)
     , SkeletalMeshAsset(nullptr)
     , AnimClass(nullptr)
     , AnimScriptInstance(nullptr)
@@ -317,7 +318,7 @@ bool USkeletalMeshComponent::InitializeAnimScriptInstance()
         bool bShouldSpawnSingleNodeInstance = !AnimScriptInstance && SkelMesh && SkelMesh->GetSkeleton();
         if (bShouldSpawnSingleNodeInstance)
         {
-            AnimScriptInstance = FObjectFactory::ConstructObject<UAnimSingleNodeInstance>(this);
+            AnimScriptInstance = FObjectFactory::ConstructObject<ULuaScriptAnimInstance>(this);
 
             if (AnimScriptInstance)
             {

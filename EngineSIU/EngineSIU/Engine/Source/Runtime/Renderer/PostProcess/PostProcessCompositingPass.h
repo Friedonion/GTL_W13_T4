@@ -5,7 +5,7 @@
 class FPostProcessCompositingPass : public FRenderPassBase
 {
 public:
-    FPostProcessCompositingPass();
+    FPostProcessCompositingPass() = default;
     virtual ~FPostProcessCompositingPass() override = default;
     
     virtual void Initialize(FDXDBufferManager* InBufferManager, FGraphicsDevice* InGraphics, FDXDShaderManager* InShaderManage) override;
@@ -19,6 +19,4 @@ public:
 protected:
     virtual void PrepareRender(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
     virtual void CleanUpRender(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
-
-    ID3D11SamplerState* Sampler;
 };

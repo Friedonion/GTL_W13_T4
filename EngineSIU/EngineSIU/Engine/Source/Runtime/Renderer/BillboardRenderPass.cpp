@@ -71,7 +71,6 @@ void FBillboardRenderPass::RenderTexturePrimitive(ID3D11Buffer* pVertexBuffer, U
 
     Graphics->DeviceContext->IASetIndexBuffer(pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
     Graphics->DeviceContext->PSSetShaderResources(0, 1, &TextureSRV);
-    Graphics->DeviceContext->PSSetSamplers(0, 1, &SamplerState);
     Graphics->DeviceContext->DrawIndexed(NumIndices, 0, 0);
 }
 
@@ -80,7 +79,6 @@ void FBillboardRenderPass::RenderTextPrimitive(ID3D11Buffer* pVertexBuffer, UINT
     SetupVertexBuffer(pVertexBuffer, NumVertices);
 
     Graphics->DeviceContext->PSSetShaderResources(0, 1, &TextureSRV);
-    Graphics->DeviceContext->PSSetSamplers(0, 1, &SamplerState);
     Graphics->DeviceContext->Draw(NumVertices, 0);
 }
 

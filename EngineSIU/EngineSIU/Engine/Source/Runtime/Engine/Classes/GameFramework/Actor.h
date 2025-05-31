@@ -12,6 +12,12 @@ DECLARE_MULTICAST_DELEGATE_TwoParams(FActorEndOverlapSignature, AActor* /* Overl
 DECLARE_MULTICAST_DELEGATE_FourParams(FActorHitSignature, AActor* /* SelfActor */, AActor* /* OtherActor */, FVector /*NormalImpulse*/, const FHitResult& /* Hit */);
 
 class UActorComponent;
+class ULuaScriptComponent;
+
+namespace sol
+{
+class state;
+}
 
 class AActor : public UObject
 {
@@ -170,6 +176,18 @@ public:
      *    @note For collisions during physics simulation to generate hit events, 'Simulation Generates Hit Events' must be enabled.
      */
     FActorHitSignature OnActorHit;
+
+
+public:
+    void InitLuaScriptComponent();
+    virtual void RegisterLuaType(sol::state& Lua); // Lua에 클래스 등록해주는 함수.
+    virtual bool BindSelfLuaProperties(); // LuaEnv에서 사용할 멤버 변수 등록 함수.
+    ULuaScriptComponent* GetLuaScriptComponent() const { return LuaScriptComponent; } 
+    
+private:
+    UPROPERTY(EditAnywhere | EditInline, ULuaScriptComponent*, LuaScriptComponent, = nullptr)
+    UPROPERTY(EditAnywhere, bool, bUseScript, = true)
+    
 };
 
 template <typename T>

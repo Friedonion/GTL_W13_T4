@@ -1,117 +1,60 @@
 #include "AnimStateMachine.h"
 
+#include "Components/SkeletalMeshComponent.h"
+#include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
+#include "Lua/LuaScriptManager.h"
+#include "Animation/AnimSequence.h"
+
 UAnimStateMachine::UAnimStateMachine()
 {
-    CurrentState = EAnimState::AS_Idle;
-    MoveSpeed = 0;
-    bIsDancing = false;
+    
 }
 
-EAnimState UAnimStateMachine::GetState() const
+void UAnimStateMachine::Initialize(USkeletalMeshComponent* InOwner, ULuaScriptAnimInstance* InAnimInstance)
 {
-    return CurrentState;
-}
+    OwningComponent = InOwner;
+    OwningAnimInstance = InAnimInstance;
 
-FString UAnimStateMachine::GetStateName(EAnimState State) const
-{
-    switch (State)
-    {
-    case AS_Idle: return TEXT("Idle");
-    case AS_Dance: return TEXT("Dance");
-    case AS_SlowRun: return TEXT("SlowRun");
-    case AS_NarutoRun: return TEXT("NarutoRun");
-    case AS_FastRun: return TEXT("FastRun");
-    default: return TEXT("Unknown");
-    }
-}
-
-void UAnimStateMachine::MoveFast()
-{
-    MoveSpeed++;
-    MoveSpeed = FMath::Clamp(MoveSpeed, 0, 3);
-}
-
-void UAnimStateMachine::MoveSlow()
-{
-    MoveSpeed--;
-    MoveSpeed = FMath::Clamp(MoveSpeed, 0, 3);
-}
-
-void UAnimStateMachine::Dance()
-{
-    bIsDancing = true;
-}
-
-void UAnimStateMachine::StopDance()
-{
-    bIsDancing = false;
+    LuaScriptName = OwningComponent->StateMachineFileName;
+    InitLuaStateMachine();
 }
 
 void UAnimStateMachine::ProcessState()
 {
-    if (CurrentState == EAnimState::AS_Idle)
+    if (!LuaTable.valid())
+        return;
+
+    sol::function UpdateFunc = LuaTable["Update"];
+    if (!UpdateFunc.valid())
     {
-        if (MoveSpeed > 0)
-        {
-            CurrentState = EAnimState::AS_SlowRun;
-        }
+        UE_LOG(ELogLevel::Warning, TEXT("Lua Update function not valid!"));
+        return;
     }
-    else if (CurrentState == EAnimState::AS_SlowRun)
+
+    sol::object result = UpdateFunc(LuaTable, 0.0f);
+
+    sol::table StateInfo = result.as<sol::table>();
+    FString StateName = StateInfo["anim"].get_or(std::string("")).c_str();
+    float Blend = StateInfo["blend"].get_or(0.f);
+
+    if (OwningAnimInstance)
     {
-        if (MoveSpeed == 0)
-        {
-            CurrentState = EAnimState::AS_Idle;
-        }
-        else if (MoveSpeed == 2)
-        {
-            CurrentState = EAnimState::AS_NarutoRun;
-        }
+        UAnimSequence* NewAnim = Cast<UAnimSequence>(UAssetManager::Get().GetAnimation(StateName));
+        OwningAnimInstance->SetAnimation(NewAnim, Blend, false, false);
     }
-    else if (CurrentState == EAnimState::AS_NarutoRun)
+}
+
+void UAnimStateMachine::InitLuaStateMachine()
+{
+    if (LuaScriptName.IsEmpty())
     {
-        if (MoveSpeed == 1)
-        {
-            CurrentState = EAnimState::AS_SlowRun;
-        }
-        else if (MoveSpeed == 3)
-        {
-            CurrentState = EAnimState::AS_FastRun;
-        }
+        return;
     }
-    else if (CurrentState == EAnimState::AS_FastRun)
-    {
-        if (MoveSpeed == 2)
-        {
-            CurrentState = EAnimState::AS_NarutoRun;
-        }
-    }
-    else if (CurrentState == EAnimState::AS_Dance)
-    {
-        if (!bIsDancing)
-        {
-            if (MoveSpeed == 0)
-            {
-                CurrentState = EAnimState::AS_Idle;
-            }
-            if (MoveSpeed == 1)
-            {
-                CurrentState = EAnimState::AS_SlowRun;
-            }
-            if (MoveSpeed == 2)
-            {
-                CurrentState = EAnimState::AS_NarutoRun;
-            }
-            if (MoveSpeed == 3)
-            {
-                CurrentState = EAnimState::AS_FastRun;           
-            }
-        }
-    }
-    if (bIsDancing)
-    {
-        CurrentState = EAnimState::AS_Dance;
-    }
-    UE_LOG(ELogLevel::Display, TEXT("Current State: %s"), *GetStateName(CurrentState));
+    LuaTable = FLuaScriptManager::Get().CreateLuaTable(LuaScriptName);
+
+    FLuaScriptManager::Get().RegisterActiveAnimLua(this);
+    if (!LuaTable.valid())
+        return;
 }
 
 

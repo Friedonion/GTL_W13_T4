@@ -48,7 +48,6 @@ FWorldContext& UEngine::CreateNewWorldContext(EWorldType InWorldType)
     return *NewWorldContext;
 }
 
-
 void UEngine::LoadLevel(const FString& FileName) const
 {
     SceneManager::LoadSceneFromJsonFile(*FileName, *ActiveWorld);

@@ -80,9 +80,6 @@ void FDepthOfFieldRenderPass::Render(const std::shared_ptr<FEditorViewportClient
 
 void FDepthOfFieldRenderPass::PrepareRender(const std::shared_ptr<FEditorViewportClient>& Viewport)
 {
-    Graphics->DeviceContext->PSSetSamplers(10, 1, &Graphics->SamplerState_LinearClamp);
-    Graphics->DeviceContext->PSSetSamplers(11, 1, &Graphics->SamplerState_PointClamp);
-
     ID3D11VertexShader* VertexShader = ShaderManager->GetVertexShaderByKey(L"FullScreenQuadVertexShader");
     Graphics->DeviceContext->VSSetShader(VertexShader, nullptr, 0);
     
@@ -391,8 +388,6 @@ void FDepthOfFieldRenderPass::PrepareComposite(const std::shared_ptr<FEditorView
     Graphics->DeviceContext->VSSetShader(VertexShader, nullptr, 0);
     Graphics->DeviceContext->PSSetShader(PixelShader, nullptr, 0);
     Graphics->DeviceContext->IASetInputLayout(nullptr);
-
-    Graphics->DeviceContext->PSSetSamplers(10, 1, &Graphics->SamplerState_LinearClamp);
 }
 
 void FDepthOfFieldRenderPass::CleanUpComposite(const std::shared_ptr<FEditorViewportClient>& Viewport)
