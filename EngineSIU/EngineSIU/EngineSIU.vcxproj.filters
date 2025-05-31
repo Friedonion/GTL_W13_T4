@@ -1643,6 +1643,9 @@
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\Enemy.cpp">
       <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\EnemySpawner.cpp">
+      <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="EngineSIU.natvis" />
@@ -1766,6 +1769,9 @@
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\Enemy.h">
+      <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\EnemySpawner.h">
       <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
     </ClInclude>
   </ItemGroup>

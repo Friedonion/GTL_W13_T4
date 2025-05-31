@@ -18,6 +18,7 @@ void AEnemy::Tick(float DeltaTime)
 void AEnemy::BeginPlay()
 {
     Super::BeginPlay();
+    UE_LOG(ELogLevel::Display, TEXT("AEnemy has been spawned."));
 }
 
 void AEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)

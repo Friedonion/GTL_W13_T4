@@ -41,6 +41,8 @@
 #include "Engine/Classes/Engine/AssetManager.h"
 #include "Particles/ParticleSystemComponent.h"
 
+#include "Actors/EnemySpawner.h"
+
 ControlEditorPanel::ControlEditorPanel()
 {
     SetSupportedWorldTypes(EWorldTypeBitFlag::Editor | EWorldTypeBitFlag::PIE | EWorldTypeBitFlag::SkeletalViewer | EWorldTypeBitFlag::PhysicsAssetViewer);
@@ -371,6 +373,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "CapsuleCol",        .OBJ = OBJ_CAPSULE_COLLISION },
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
             { .Label = "SequencerPlayer",   .OBJ = OBJ_SEQUENCERPLAYER },
+            { .Label = "EnemySpawner",      .OBJ = OBJ_ENEMYSPAWNER },
         };
 
         for (const auto& primitive : primitives)
@@ -482,18 +485,25 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                     break;
                 }
                 case OBJ_SKELETALMESH:
-                    {
-                        SpawnedActor = World->SpawnActor<AActor>();
-                        SpawnedActor->SetActorTickInEditor(true);
-                        auto* MeshComp = SpawnedActor->AddComponent<USkeletalMeshComponent>();
-                        SpawnedActor->SetRootComponent(MeshComp);
-                        SpawnedActor->SetActorLabel(TEXT("OBJ_SKELETALMESH"));
-                    }
+                {
+                    SpawnedActor = World->SpawnActor<AActor>();
+                    SpawnedActor->SetActorTickInEditor(true);
+                    auto* MeshComp = SpawnedActor->AddComponent<USkeletalMeshComponent>();
+                    SpawnedActor->SetRootComponent(MeshComp);
+                    SpawnedActor->SetActorLabel(TEXT("OBJ_SKELETALMESH"));
                     break;
+                }
                 case OBJ_SEQUENCERPLAYER:
                 {
                     SpawnedActor = World->SpawnActor<ASequencerPlayer>();
                     SpawnedActor->SetActorLabel(TEXT("OBJ_SEQUENCERPLAYER"));
+                    break;
+                }
+                case OBJ_ENEMYSPAWNER:
+                {
+                    SpawnedActor = World->SpawnActor<AEnemySpawner>();
+                    SpawnedActor->SetActorLabel(TEXT("OBJ_ENEMYSPAWNER"));
+                    break;
                 }
                 case OBJ_CAMERA:
                 case OBJ_PLAYER:
