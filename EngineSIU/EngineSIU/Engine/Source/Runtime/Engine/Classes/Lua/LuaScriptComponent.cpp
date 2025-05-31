@@ -94,10 +94,8 @@ bool ULuaScriptComponent::LoadScript()
     {
         return false;
     }
-
-    const FString ScriptFullName = "LuaScripts/Actors/" + ScriptName + ".lua";
     
-    SelfTable = FLuaScriptManager::Get().CreateLuaTable(ScriptFullName);
+    SelfTable = FLuaScriptManager::Get().CreateLuaTable(ScriptName);
 
         if (!SelfTable.valid())
     {

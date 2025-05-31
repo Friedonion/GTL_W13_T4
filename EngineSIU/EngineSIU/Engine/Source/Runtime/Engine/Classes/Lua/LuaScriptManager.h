@@ -27,6 +27,7 @@ private:
 
 public:
     FLuaScriptManager();
+    ~FLuaScriptManager();
 
 private:
     void SetLuaDefaultTypes();

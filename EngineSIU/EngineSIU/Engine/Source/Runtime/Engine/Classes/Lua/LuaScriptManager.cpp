@@ -32,6 +32,13 @@ FLuaScriptManager::FLuaScriptManager()
     SetLuaDefaultTypes();
 }
 
+FLuaScriptManager::~FLuaScriptManager()
+{
+    ScriptCacheMap.Empty();
+    ActiveLuaComponents.Empty();
+    ActiveAnimLua.Empty();
+}
+
 void FLuaScriptManager::SetLuaDefaultTypes()
 {
     sol::table TypeTable = LuaState.create_table("EngineTypes");

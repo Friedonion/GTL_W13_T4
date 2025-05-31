@@ -17,6 +17,7 @@ void UAnimStateMachine::Initialize(USkeletalMeshComponent* InOwner, ULuaScriptAn
 
     LuaScriptName = OwningComponent->StateMachineFileName;
     InitLuaStateMachine();
+
 }
 
 void UAnimStateMachine::ProcessState()
@@ -55,6 +56,8 @@ void UAnimStateMachine::InitLuaStateMachine()
     FLuaScriptManager::Get().RegisterActiveAnimLua(this);
     if (!LuaTable.valid())
         return;
+
+    LuaTable["OwnerCharacter"] = Cast<AActor>(OwningComponent->GetOwner());
 }
 
 

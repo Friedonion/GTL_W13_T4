@@ -2,8 +2,8 @@
     "Actors": [
         {
             "ActorClass": "ASkeletalMeshActor",
-            "ActorID": "ASkeletalMeshActor_245",
-            "ActorLabel": "ASkeletalMeshActor245",
+            "ActorID": "ASkeletalMeshActor_443",
+            "ActorLabel": "ASkeletalMeshActor443",
             "ActorTickInEditor": "true",
             "Components": [
                 {
@@ -12,9 +12,9 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ASkeletalMeshActor_245",
+                        "ComponentOwner": "ASkeletalMeshActor_443",
                         "ComponentOwnerClass": "ASkeletalMeshActor",
-                        "ScriptName": "DefaultActor",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
@@ -30,10 +30,10 @@
                         "AttachParentID": "nullptr",
                         "ComponentClass": "USkeletalMeshComponent",
                         "ComponentName": "SkeletalMeshComponent",
-                        "ComponentOwner": "ASkeletalMeshActor_245",
+                        "ComponentOwner": "ASkeletalMeshActor_443",
                         "ComponentOwnerClass": "ASkeletalMeshActor",
-                        "RelativeLocation": "X=121.364 Y=0.000 Z=-17.851",
-                        "RelativeRotation": "Pitch=0.000 Yaw=73.338 Roll=-0.000",
+                        "RelativeLocation": "X=195.636 Y=0.000 Z=-25.815",
+                        "RelativeRotation": "Pitch=0.000 Yaw=85.370 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "SkeletalMeshKey": "Contents/Human/Human",

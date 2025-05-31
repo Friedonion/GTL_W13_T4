@@ -411,6 +411,7 @@ void AActor::RegisterLuaType(sol::state& Lua)
     "ActorScale", sol::property(&ThisClass::GetActorScale, &ThisClass::SetActorScale),
     "Destroy", &ThisClass::Destroy
     )
+
 }
 
 bool AActor::BindSelfLuaProperties()
