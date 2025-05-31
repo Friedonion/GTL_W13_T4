@@ -12,8 +12,8 @@ void SWindow::Initialize(FRect InitRect)
 
 void SWindow::OnResize(uint32 InWidth, uint32 InHeight)
 {
-    Rect.Width = InWidth;
-    Rect.Height = InHeight;
+    Rect.Width = static_cast<float>(InWidth);
+    Rect.Height = static_cast<float>(InHeight);
 }
 
 bool SWindow::IsHover(const FPoint& InPoint) 
