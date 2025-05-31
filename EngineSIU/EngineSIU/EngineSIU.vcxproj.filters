@@ -1641,6 +1641,7 @@
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\GameFramework\Bullet.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\GameFramework\BulletTester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="EngineSIU.natvis" />
@@ -1764,6 +1765,7 @@
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\GameFramework\Bullet.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\GameFramework\BulletTester.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\CompositingShader.hlsl" />
