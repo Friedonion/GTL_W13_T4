@@ -204,6 +204,7 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\GameFramework\Bullet.cpp" />
     <ClCompile Include="Engine\Contents\AnimInstance\MyAnimInstance.cpp" />
     <ClCompile Include="Engine\Contents\Objects\DamageCameraShake.cpp" />
     <ClCompile Include="Engine\Source\Developer\AnimDataController\AnimDataController.cpp" />
@@ -513,6 +514,7 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\GameFramework\Bullet.h" />
     <ClInclude Include="Engine\Contents\AnimInstance\MyAnimInstance.h" />
     <ClInclude Include="Engine\Contents\Objects\DamageCameraShake.h" />
     <ClInclude Include="Engine\Source\Editor\PropertyEditor\PhysicsAssetViewerPanel.h" />

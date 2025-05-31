@@ -418,54 +418,6 @@
     <ClInclude Include="LightGridGenerator.h" />
     <ClCompile Include="SoundManager.cpp" />
     <ClInclude Include="SoundManager.h" />
-    <ClCompile Include="Engine\Source\Contents\Actors\Fish.cpp">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClCompile>
-    <ClInclude Include="Engine\Source\Contents\Actors\Fish.h">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClInclude>
-    <ClCompile Include="Engine\Source\Contents\Actors\GoalPlatformActor.cpp">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClCompile>
-    <ClInclude Include="Engine\Source\Contents\Actors\GoalPlatformActor.h">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClInclude>
-    <ClCompile Include="Engine\Source\Contents\Actors\ItemActor.cpp">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClCompile>
-    <ClInclude Include="Engine\Source\Contents\Actors\ItemActor.h">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClInclude>
-    <ClCompile Include="Engine\Source\Contents\Actors\PlatformActor.cpp">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClCompile>
-    <ClInclude Include="Engine\Source\Contents\Actors\PlatformActor.h">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClInclude>
-    <ClCompile Include="Engine\Source\Contents\Actors\TriggerBox.cpp">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClCompile>
-    <ClInclude Include="Engine\Source\Contents\Actors\TriggerBox.h">
-      <Filter>Engine\Source\Contents\Actors</Filter>
-    </ClInclude>
-    <ClCompile Include="Engine\Source\Contents\Components\FishBodyComponent.cpp">
-      <Filter>Engine\Source\Contents\Components</Filter>
-    </ClCompile>
-    <ClInclude Include="Engine\Source\Contents\Components\FishBodyComponent.h">
-      <Filter>Engine\Source\Contents\Components</Filter>
-    </ClInclude>
-    <ClCompile Include="Engine\Source\Contents\Components\FishTailComponent.cpp">
-      <Filter>Engine\Source\Contents\Components</Filter>
-    </ClCompile>
-    <ClInclude Include="Engine\Source\Contents\Components\FishTailComponent.h">
-      <Filter>Engine\Source\Contents\Components</Filter>
-    </ClInclude>
-    <ClCompile Include="Engine\Source\Contents\Objects\DamageCameraShake.cpp">
-      <Filter>Engine\Source\Contents\Objects</Filter>
-    </ClCompile>
-    <ClInclude Include="Engine\Source\Contents\Objects\DamageCameraShake.h">
-      <Filter>Engine\Source\Contents\Objects</Filter>
-    </ClInclude>
     <ClCompile Include="Engine\Source\Developer\LuaTypes\LuaUserTypes.cpp">
       <Filter>Engine\Source\Developer\LuaTypes</Filter>
     </ClCompile>
@@ -1614,7 +1566,6 @@
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Animation\SkeletalMeshActor.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Animation\Skeleton.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\ReferenceSkeleton.cpp" />
-    <ClCompile Include="Engine\Source\Contents\Actors\SkeletalMeshActorTest.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Core\Math\Transform.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimSequence.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\World\SkeletalViewerWorld.cpp" />
@@ -1636,7 +1587,6 @@
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimNotify.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimNotifyState.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimStateMachine.cpp" />
-    <ClCompile Include="Engine\Source\Contents\AnimInstance\MyAnimInstance.cpp" />
     <ClCompile Include="Engine\Source\Editor\PropertyEditor\ParticleViewerPanel.cpp" />
     <ClCompile Include="Engine\Source\Editor\PropertyEditor\SkeletalMeshViewerPanel.cpp" />
     <ClCompile Include="Engine\Source\Runtime\CoreUObject\UObject\PropertyDisplay.cpp" />
@@ -1682,6 +1632,15 @@
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAcceleration.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAccelerationBase.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Physics\PhysicsManager.cpp" />
+    <ClCompile Include="Engine\Contents\AnimInstance\MyAnimInstance.cpp" />
+    <ClCompile Include="Engine\Contents\Objects\DamageCameraShake.cpp" />
+    <ClCompile Include="Engine\Source\Editor\PropertyEditor\PhysicsAssetViewerPanel.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Core\Container\ArrayHelper.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\BodyInstance.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\ConstraintInstance.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\GameFramework\Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="EngineSIU.natvis" />
@@ -1708,7 +1667,6 @@
     <ClInclude Include="Engine\Source\Runtime\Core\Math\NumericLimits.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Animation\Skeleton.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\ReferenceSkeleton.h" />
-    <ClInclude Include="Engine\Source\Contents\Actors\SkeletalMeshActorTest.h" />
     <ClInclude Include="Engine\Source\Runtime\Core\Math\Axis.h" />
     <ClInclude Include="Engine\Source\Runtime\Core\Math\Transform.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimSequence.h" />
@@ -1734,7 +1692,6 @@
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimNotify.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimNotifyState.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimStateMachine.h" />
-    <ClInclude Include="Engine\Source\Contents\AnimInstance\MyAnimInstance.h" />
     <ClInclude Include="Engine\Source\Runtime\CoreUObject\UObject\PropertyEvent.h" />
     <ClInclude Include="Engine\Source\Editor\PropertyEditor\ParticleViewerPanel.h" />
     <ClInclude Include="Engine\Source\Editor\PropertyEditor\SkeletalMeshViewerPanel.h" />
@@ -1798,6 +1755,15 @@
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAcceleration.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAccelerationBase.h" />
     <ClInclude Include="Engine\Source\Runtime\Physics\PhysicsManager.h" />
+    <ClInclude Include="Engine\Contents\AnimInstance\MyAnimInstance.h" />
+    <ClInclude Include="Engine\Contents\Objects\DamageCameraShake.h" />
+    <ClInclude Include="Engine\Source\Editor\PropertyEditor\PhysicsAssetViewerPanel.h" />
+    <ClInclude Include="Engine\Source\Runtime\Core\Container\ArrayHelper.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\BodyInstance.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\ConstraintInstance.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\GameFramework\Bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\CompositingShader.hlsl" />
@@ -1827,5 +1793,8 @@
     <None Include="Shaders\CommonMeshPixelShaderWorldNormal.hlsl" />
     <None Include="Shaders\BillBoardVertexShader.hlsl" />
     <None Include="Shaders\CommonMeshPixelShaderWorldTangent.hlsl" />
+    <None Include="Shaders\GaussianBlurShader.hlsl" />
+    <None Include="Shaders\DepthOfFieldShader.hlsl" />
+    <None Include="Shaders\FullScreenQuadVertexShader.hlsl" />
   </ItemGroup>
 </Project>
