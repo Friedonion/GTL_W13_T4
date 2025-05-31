@@ -392,6 +392,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
 
         static const Primitive primitives[] = 
         {
+            { .Label = "Player",            .OBJ = OBJ_PLAYER },
             { .Label = "Cube",              .OBJ = OBJ_CUBE },
             { .Label = "Sphere",            .OBJ = OBJ_SPHERE },
             { .Label = "PointLight",        .OBJ = OBJ_POINTLIGHT },
@@ -417,6 +418,12 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                 AActor* SpawnedActor = nullptr;
                 switch (static_cast<OBJECTS>(primitive.OBJ))
                 {
+                case OBJ_PLAYER:
+                {
+                    SpawnedActor = World->SpawnActor<APlayer>();
+                    SpawnedActor->SetActorLabel(TEXT("OBJ_PLAYER"));
+                    break;
+                }
                 case OBJ_SPHERE:
                 {
                     SpawnedActor = World->SpawnActor<AActor>();
@@ -532,7 +539,6 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                     SpawnedActor->SetActorLabel(TEXT("OBJ_SEQUENCERPLAYER"));
                 }
                 case OBJ_CAMERA:
-                case OBJ_PLAYER:
                 case OBJ_END:
                     break;
                 }

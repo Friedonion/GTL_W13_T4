@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <string>
+#include "ThirdParty/tinyfiledialogs/include/tinyfiledialogs.h"
 //#include <windows.h>
 //#include <tchar.h>
 
@@ -407,9 +408,22 @@ void PropertyEditorPanel::RenderForActor(AActor* SelectedActor, USceneComponent*
             }
             LuaDisplayPath = NewScript->GetDisplayName();
         }
+        ImGui::SameLine();
+        if (ImGui::Button("Add Script"))
+        {
+            char const* lFilterPatterns[1] = { "*.lua" };
+            const char* FileName = tinyfd_openFileDialog("Open LuaScript File", "", 1, lFilterPatterns, "LuaScript(.lua) file", 0);
+
+            if (FileName)
+            {
+                ULuaScriptComponent* NewScript = SelectedActor->AddComponent<ULuaScriptComponent>();
+                NewScript->SetScriptPath(FileName);
+                LuaDisplayPath = NewScript->GetDisplayName();
+            }
+        }
     }
-    ImGui::InputText("Script File", GetData(LuaDisplayPath), IM_ARRAYSIZE(*LuaDisplayPath),
-        ImGuiInputTextFlags_ReadOnly);
+
+    ImGui::Text("LuaScript Path : %s", GetData(LuaDisplayPath));
 
     if (ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
     {
