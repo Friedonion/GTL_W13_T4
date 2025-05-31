@@ -55,7 +55,7 @@ public:
     HRESULT CreateVertexBufferInternal(const FWString& KeyName, const TArray<T>& Vertices, FVertexInfo& OutVertexInfo,
         D3D11_USAGE Usage, UINT CpuAccessFlags);
 
-    HRESULT CreateUnicodeTextBuffer(const FWString& Text, FBufferInfo& OutBufferInfo, float BitmapWidth, float BitmapHeight, float ColCount, float RowCount);
+    HRESULT CreateUnicodeTextBuffer(const FWString& Text, FBufferInfo& OutBufferInfo, uint32 BitmapWidth, uint32 BitmapHeight, uint32 ColCount, uint32 RowCount);
 
     void SetStartUV(wchar_t Hangul, FVector2D& UVOffset);
     

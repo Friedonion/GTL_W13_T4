@@ -47,7 +47,7 @@
 
 PropertyEditorPanel::PropertyEditorPanel()
 {
-    SetSupportedWorldTypes(EWorldTypeBitFlag::Editor| EWorldTypeBitFlag::PIE);
+    SetSupportedWorldTypes(EWorldTypeBitFlag::Editor | EWorldTypeBitFlag::PIE);
 }
 
 void PropertyEditorPanel::Render()
@@ -57,7 +57,7 @@ void PropertyEditorPanel::Render()
     {
         return;
     }
-    
+
     /* Pre Setup */
     float PanelWidth = (Width) * 0.2f - 5.0f;
     float PanelHeight = (Height)-((Height) * 0.3f + 10.0f) - 32.0f;
@@ -86,7 +86,7 @@ void PropertyEditorPanel::Render()
         TargetComponent = SelectedComponent;
     }
     else if (SelectedActor != nullptr)
-    {        
+    {
         TargetComponent = SelectedActor->GetRootComponent();
     }
 
@@ -121,7 +121,7 @@ void PropertyEditorPanel::Render()
             }
         }
     }
-    
+
     if (UAmbientLightComponent* LightComponent = GetTargetComponent<UAmbientLightComponent>(SelectedActor, SelectedComponent))
     {
         RenderForAmbientLightComponent(LightComponent);
@@ -165,7 +165,7 @@ void PropertyEditorPanel::Render()
     {
         RenderForCameraComponent(CameraComponent);
     }
-  
+
     if (UShapeComponent* ShapeComponent = GetTargetComponent<UShapeComponent>(SelectedActor, SelectedComponent))
     {
         RenderForShapeComponent(ShapeComponent);
@@ -317,7 +317,7 @@ void PropertyEditorPanel::RenderForSceneComponent(USceneComponent* SceneComponen
         {
             Player->AddCoordMode();
         }
-         
+
         ImGui::TreePop();
     }
 
@@ -326,7 +326,7 @@ void PropertyEditorPanel::RenderForSceneComponent(USceneComponent* SceneComponen
 
 void PropertyEditorPanel::RenderForCameraComponent(UCameraComponent* InCameraComponent)
 {
-    
+
 }
 
 void PropertyEditorPanel::RenderForPlayerActor(APlayer* InPlayerActor)
@@ -346,8 +346,6 @@ void PropertyEditorPanel::RenderForActor(AActor* SelectedActor, USceneComponent*
         Engine->SelectActor(NewActor);
         Engine->DeselectComponent(Engine->GetSelectedComponent());
     }
-    
-    FString BasePath = FString(L"LuaScripts\\");
 
     if (ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
     {
@@ -393,7 +391,7 @@ void PropertyEditorPanel::RenderForStaticMesh(UStaticMeshComponent* StaticMeshCo
                 PreviewName = RenderData->DisplayName;
             }
         }
-        
+
         const TMap<FName, FAssetInfo> Assets = UAssetManager::Get().GetAssetRegistry();
 
         if (ImGui::BeginCombo("##StaticMesh", GetData(PreviewName), ImGuiComboFlags_None))
@@ -404,7 +402,7 @@ void PropertyEditorPanel::RenderForStaticMesh(UStaticMeshComponent* StaticMeshCo
                 {
                     continue;
                 }
-                
+
                 if (ImGui::Selectable(GetData(Asset.Value.AssetName.ToString()), false))
                 {
                     FString MeshName = Asset.Value.PackagePath.ToString() + "/" + Asset.Value.AssetName.ToString();
@@ -444,7 +442,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                 SelectedSkeletalMeshName = RenderData->DisplayName;
             }
         }
-        
+
         const TMap<FName, FAssetInfo> SkeletalMeshAssets = UAssetManager::Get().GetAssetRegistry();
 
         if (ImGui::BeginCombo("##SkeletalMesh", GetData(SelectedSkeletalMeshName), ImGuiComboFlags_None))
@@ -455,7 +453,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                 {
                     continue;
                 }
-                
+
                 if (ImGui::Selectable(GetData(Asset.Value.AssetName.ToString()), false))
                 {
                     FString AssetName = Asset.Value.PackagePath.ToString() + "/" + Asset.Value.AssetName.ToString();
@@ -539,7 +537,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                     }
                 }
                 if (AnimInstance && AnimInstance->GetClass()->IsChildOf(SelectedClass))
-                {                    
+                {
                     UAnimStateMachine* AnimStateMachine = AnimInstance->GetStateMachine();
                     if(ImGui::Button("MoveFast"))
                     {
@@ -560,7 +558,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                     {
                         AnimStateMachine->StopDance();
                     }
-                    
+
                     AnimInstance->SetAnimState(AnimStateMachine->GetState());
                 }
                 */
@@ -573,7 +571,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
             {
                 SelectedAnimationName = Animation->GetName();
             }
-        
+
             const TMap<FName, FAssetInfo> AnimationAssets = UAssetManager::Get().GetAssetRegistry();
 
             ImGui::Text("Anim To Play");
@@ -584,21 +582,21 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                 {
                     SkeletalMeshComp->SetAnimation(nullptr);
                 }
-                
+
                 for (const auto& Asset : AnimationAssets)
                 {
                     if (Asset.Value.AssetType != EAssetType::Animation)
                     {
                         continue;
                     }
-                
+
                     if (ImGui::Selectable(GetData(Asset.Value.AssetName.ToString()), false))
                     {
                         FString AssetName = Asset.Value.PackagePath.ToString() + "/" + Asset.Value.AssetName.ToString();
 
                         UAnimationAsset* Animation = UAssetManager::Get().GetAnimation(FName(AssetName));
                         UAnimSequence* AnimSeq = nullptr;
-                    
+
                         if (Animation)
                         {
                             AnimSeq = Cast<UAnimSequence>(Animation);
@@ -610,7 +608,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                             const bool bWasPlaying = SkeletalMeshComp->IsPlaying();
 
                             SkeletalMeshComp->SetAnimation(AnimSeq);
-                            
+
                             SkeletalMeshComp->SetLooping(bWasLooping);
                             if (bWasPlaying)
                             {
@@ -674,7 +672,7 @@ void PropertyEditorPanel::RenderForPhysicsAsset(const USkeletalMeshComponent* Sk
         ImGui::SameLine();
 
         FString SelectedPhysicsAssetKey = FString("None");
-        
+
         USkeletalMesh* SkeletalMesh = SkeletalMeshComp->GetSkeletalMeshAsset();
         if (SkeletalMesh)
         {
@@ -721,7 +719,7 @@ void PropertyEditorPanel::RenderForPhysicsAsset(const USkeletalMeshComponent* Sk
             {
                 return;
             }
-            
+
             Engine->StartPhysicsAssetViewer(FName(SkeletalMesh->GetRenderData()->ObjectName), SelectedPhysicsAssetKey);
         }
         ImGui::TreePop();
@@ -740,7 +738,7 @@ void PropertyEditorPanel::RenderForParticleSystem(UParticleSystemComponent* Part
             if (!ParticleSystemAsset)
             {
                 ParticleSystemAsset = FObjectFactory::ConstructObject<UParticleSystem>(nullptr);
-        
+
                 FAssetInfo Info;
                 Info.AssetName = ParticleSystemAsset->GetName();
                 Info.PackagePath = TEXT("Contents/ParticleSystem");
@@ -751,7 +749,7 @@ void PropertyEditorPanel::RenderForParticleSystem(UParticleSystemComponent* Part
                 UAssetManager::Get().AddAsset(Info.GetFullPath(), ParticleSystemAsset);
                 ParticleSystemComponent->SetParticleSystem(ParticleSystemAsset);
             }
-            
+
             Engine->StartParticleViewer(ParticleSystemAsset);
         }
     }
@@ -858,7 +856,7 @@ void PropertyEditorPanel::RenderForPointLightComponent(UPointLightComponent* Poi
             if (faceSRV)
             {
                 ImGui::Image(reinterpret_cast<ImTextureID>(faceSRV), ImVec2(imageSize, imageSize));
-                ImGui::SameLine(); 
+                ImGui::SameLine();
                 ImGui::Text("%s", faceNames[i]);
             }
         }
@@ -1207,7 +1205,7 @@ void PropertyEditorPanel::RenderForShapeComponent(UShapeComponent* ShapeComponen
             ImGui::TreePop();
         }
     }
-    
+
     ImGui::PopStyleColor();
 }
 
@@ -1243,9 +1241,9 @@ void PropertyEditorPanel::RenderForSpringArmComponent(USpringArmComponent* Sprin
         if (ImGui::Checkbox("UsePawnControlRotation", &UsePawnControlRotation))
             SpringArmComponent->bUsePawnControlRotation = UsePawnControlRotation;
 
-		bool UseAbsolRot = SpringArmComponent->IsUsingAbsoluteRotation();
-		if (ImGui::Checkbox("UseAbsoluteRot", &UseAbsolRot))
-			SpringArmComponent->SetUsingAbsoluteRotation(UseAbsolRot);
+        bool UseAbsolRot = SpringArmComponent->IsUsingAbsoluteRotation();
+        if (ImGui::Checkbox("UseAbsoluteRot", &UseAbsolRot))
+            SpringArmComponent->SetUsingAbsoluteRotation(UseAbsolRot);
 
         bool InheritPitch = SpringArmComponent->bInheritPitch;
         if (ImGui::Checkbox("InheritPitch", &InheritPitch))
@@ -1274,7 +1272,7 @@ void PropertyEditorPanel::RenderForSpringArmComponent(USpringArmComponent* Sprin
 
         // --- Lag speeds / limits ---
         ImGui::DragFloat("LocSpeed", &SpringArmComponent->CameraLagSpeed, 0.1f, 0.0f, 100.0f);
-        
+
         ImGui::DragFloat("RotSpeed", &SpringArmComponent->CameraRotationLagSpeed, 0.1f, 0.0f, 100.0f);
         //ImGui::NewLine();
         ImGui::DragFloat("LagMxStep", &SpringArmComponent->CameraLagMaxTimeStep, 0.005f, 0.0f, 1.0f);
@@ -1319,7 +1317,7 @@ void PropertyEditorPanel::RenderForMaterial(UStaticMeshComponent* StaticMeshComp
     if (ImGui::TreeNodeEx("SubMeshes", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
     {
         const auto Subsets = StaticMeshComp->GetStaticMesh()->GetRenderData()->MaterialSubsets;
-        for (uint32 i = 0; i < Subsets.Num(); ++i)
+        for (int32 i = 0; i < Subsets.Num(); ++i)
         {
             std::string temp = "subset " + std::to_string(i);
             if (ImGui::Selectable(temp.c_str(), false, ImGuiSelectableFlags_AllowDoubleClick))
@@ -1595,6 +1593,6 @@ void PropertyEditorPanel::OnResize(HWND hWnd)
 {
     RECT ClientRect;
     GetClientRect(hWnd, &ClientRect);
-    Width = ClientRect.right - ClientRect.left;
-    Height = ClientRect.bottom - ClientRect.top;
+    Width = static_cast<float>(ClientRect.right - ClientRect.left);
+    Height = static_cast<float>(ClientRect.bottom - ClientRect.top);
 }

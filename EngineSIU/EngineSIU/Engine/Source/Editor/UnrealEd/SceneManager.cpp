@@ -148,6 +148,7 @@ bool SceneManager::SaveSceneToJsonFile(const std::filesystem::path& FilePath, co
         }
         catch (const std::filesystem::filesystem_error& e)
         {
+            UE_LOG(ELogLevel::Error, TEXT("Failed to create directory: %s"), *FString(e.what()));
             return false;
         }
     }

@@ -141,7 +141,7 @@ bool FDynamicSpriteEmitterData::GetVertexAndIndexData(void* VertexData, void* Fi
 
     FParticleSpriteVertex* FillVertex;
 
-    float SubImageIndex = 0.0f;
+    int32 SubImageIndex = 0;
 
     const uint8* ParticleData = Source.DataContainer.ParticleData;
     const uint16* ParticleIndices = Source.DataContainer.ParticleIndices;

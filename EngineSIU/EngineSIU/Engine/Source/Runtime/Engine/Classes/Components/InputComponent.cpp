@@ -2,22 +2,36 @@
 
 void UInputComponent::ProcessInput(float DeltaTime)
 {
-    if (PressedKeys.Contains(EKeys::W))
+    for (EKeys::Type Key : PressedKeys)
     {
-        KeyBindDelegate[FString("W")].Broadcast(DeltaTime);
+        FString KeyName = EKeys::ToString(Key);
+        if (KeyBindDelegate.Contains(KeyName))
+        {
+            KeyBindDelegate[KeyName].Broadcast(DeltaTime);
+        }
     }
-    if (PressedKeys.Contains(EKeys::A))
-    {
-        KeyBindDelegate[FString("A")].Broadcast(DeltaTime);
-    }
-    if (PressedKeys.Contains(EKeys::S))
-    {
-        KeyBindDelegate[FString("S")].Broadcast(DeltaTime);
-    }
-    if (PressedKeys.Contains(EKeys::D))
-    {
-        KeyBindDelegate[FString("D")].Broadcast(DeltaTime);
-    }
+    return;
+    //if (PressedKeys.Contains(EKeys::W))
+    //{
+    //    KeyBindDelegate[FString("W")].Broadcast(DeltaTime);
+    //}
+    //if (PressedKeys.Contains(EKeys::A))
+    //{
+    //    KeyBindDelegate[FString("A")].Broadcast(DeltaTime);
+    //}
+    //if (PressedKeys.Contains(EKeys::S))
+    //{
+    //    KeyBindDelegate[FString("S")].Broadcast(DeltaTime);
+    //}
+    //if (PressedKeys.Contains(EKeys::D))
+    //{
+    //    KeyBindDelegate[FString("D")].Broadcast(DeltaTime);
+    //}
+    //if (PressedKeys.Contains(EKeys::SpaceBar))
+    //{
+    //    KeyBindDelegate[FString("Space")].Broadcast(DeltaTime);
+    //}
+
 }
 
 void UInputComponent::SetPossess()
@@ -68,60 +82,78 @@ void UInputComponent::ClearBindDelegate()
 
 void UInputComponent::InputKey(const FKeyEvent& InKeyEvent)
 {
-    // 일반적인 단일 키 이벤트
-    switch (InKeyEvent.GetCharacter())
+    EKeys::Type Key = EKeys::FromCharCode(InKeyEvent.GetCharacter());
+    if (InKeyEvent.GetInputEvent() == IE_Pressed)
     {
-    case 'W':
+        if (!PressedKeys.Contains(Key))
         {
-            if (InKeyEvent.GetInputEvent() == IE_Pressed)
-            {
-                PressedKeys.Add(EKeys::W);
-            }
-            else if (InKeyEvent.GetInputEvent() == IE_Released)
-            {
-                PressedKeys.Remove(EKeys::W);
-            }
-            break;
+            PressedKeys.Add(Key);
+            return;
         }
-    case 'A':
-        {
-            if (InKeyEvent.GetInputEvent() == IE_Pressed)
-            {
-                PressedKeys.Add(EKeys::A);
-            }
-            else if (InKeyEvent.GetInputEvent() == IE_Released)
-            {
-                PressedKeys.Remove(EKeys::A);
-            }
-            break;
-        }
-    case 'S':
-        {
-            if (InKeyEvent.GetInputEvent() == IE_Pressed)
-            {
-                PressedKeys.Add(EKeys::S);
-            }
-            else if (InKeyEvent.GetInputEvent() == IE_Released)
-            {
-                PressedKeys.Remove(EKeys::S);
-            }
-            break;
-        }
-    case 'D':
-        {
-            if (InKeyEvent.GetInputEvent() == IE_Pressed)
-            {
-                PressedKeys.Add(EKeys::D);
-            }
-            else if (InKeyEvent.GetInputEvent() == IE_Released)
-            {
-                PressedKeys.Remove(EKeys::D);
-            }
-            break;
-        }
-    default:
-        break;
     }
+    else if (InKeyEvent.GetInputEvent() == IE_Released)
+    {
+        if (PressedKeys.Contains(Key))
+        {
+            PressedKeys.Remove(Key);
+        }
+    }
+    return;
+
+    //// 일반적인 단일 키 이벤트
+    //switch (InKeyEvent.GetCharacter())
+    //{
+    //case 'W':
+    //    {
+    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
+    //        {
+    //            PressedKeys.Add(EKeys::W);
+    //        }
+    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
+    //        {
+    //            PressedKeys.Remove(EKeys::W);
+    //        }
+    //        break;
+    //    }
+    //case 'A':
+    //    {
+    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
+    //        {
+    //            PressedKeys.Add(EKeys::A);
+    //        }
+    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
+    //        {
+    //            PressedKeys.Remove(EKeys::A);
+    //        }
+    //        break;
+    //    }
+    //case 'S':
+    //    {
+    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
+    //        {
+    //            PressedKeys.Add(EKeys::S);
+    //        }
+    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
+    //        {
+    //            PressedKeys.Remove(EKeys::S);
+    //        }
+    //        break;
+    //    }
+    //case 'D':
+    //    {
+    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
+    //        {
+    //            PressedKeys.Add(EKeys::D);
+    //        }
+    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
+    //        {
+    //            PressedKeys.Remove(EKeys::D);
+    //        }
+    //        break;
+    //    }
+    //default:
+    //    break;
+    //}
 }
 
 

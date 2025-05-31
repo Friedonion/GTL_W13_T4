@@ -1,4 +1,4 @@
-﻿#include "RenderPassBase.h"
+#include "RenderPassBase.h"
 
 #include "Define.h"
 #include "RendererHelpers.h"
@@ -85,9 +85,9 @@ void FRenderPassBase::RenderStaticMesh_Internal(const FStaticMeshRenderData* Ren
         return;
     }
 
-    for (int SubMeshIndex = 0; SubMeshIndex < RenderData->MaterialSubsets.Num(); SubMeshIndex++)
+    for (int32 SubMeshIndex = 0; SubMeshIndex < RenderData->MaterialSubsets.Num(); SubMeshIndex++)
     {
-        uint32 MaterialIndex = RenderData->MaterialSubsets[SubMeshIndex].MaterialIndex;
+        int32 MaterialIndex = RenderData->MaterialSubsets[SubMeshIndex].MaterialIndex;
 
         FSubMeshConstants SubMeshData = (SubMeshIndex == SelectedSubMeshIndex) ? FSubMeshConstants(true) : FSubMeshConstants(false);
 
@@ -143,11 +143,11 @@ void FRenderPassBase::RenderStaticMeshInstanced_Internal(const FStaticMeshRender
 
         BufferManager->UpdateConstantBuffer(TEXT("FSubMeshConstants"), SubMeshData);
 
-        if (!OverrideMaterials.IsEmpty() && OverrideMaterials.Num() >= MaterialIndex && OverrideMaterials[MaterialIndex] != nullptr)
+        if (!OverrideMaterials.IsEmpty() && OverrideMaterials.Num() >= static_cast<int32>(MaterialIndex) && OverrideMaterials[MaterialIndex] != nullptr)
         {
             MaterialUtils::UpdateMaterial(BufferManager, Graphics, OverrideMaterials[MaterialIndex]->GetMaterialInfo());
         }
-        else if (!Materials.IsEmpty() && Materials.Num() >= MaterialIndex && Materials[MaterialIndex] != nullptr)
+        else if (!Materials.IsEmpty() && Materials.Num() >= static_cast<int32>(MaterialIndex) && Materials[MaterialIndex] != nullptr)
         {
             MaterialUtils::UpdateMaterial(BufferManager, Graphics, Materials[MaterialIndex]->Material->GetMaterialInfo());
         }

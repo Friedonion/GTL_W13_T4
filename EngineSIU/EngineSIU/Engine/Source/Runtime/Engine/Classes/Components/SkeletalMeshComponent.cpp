@@ -115,11 +115,11 @@ void USkeletalMeshComponent::SetProperties(const TMap<FString, FString>& InPrope
         }
         if (InProperties.Contains("LoopStartFrame"))
         {
-            SetLoopStartFrame(FString::ToFloat(InProperties["LoopStartFrame"]));
+            SetLoopStartFrame(FString::ToInt(InProperties["LoopStartFrame"]));
         }
         if (InProperties.Contains("LoopEndFrame"))
         {
-            SetLoopEndFrame(FString::ToFloat(InProperties["LoopEndFrame"]));
+            SetLoopEndFrame(FString::ToInt(InProperties["LoopEndFrame"]));
         }
     }
 }
@@ -881,6 +881,7 @@ bool USkeletalMeshComponent::IsReverse() const
     {
         return SingleNodeInstance->IsReverse();
     }
+    return false;
 }
 
 void USkeletalMeshComponent::SetPlayRate(float Rate)

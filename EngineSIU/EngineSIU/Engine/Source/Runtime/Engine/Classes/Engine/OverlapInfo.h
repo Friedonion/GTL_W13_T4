@@ -23,7 +23,7 @@ struct FOverlapInfo
 
     //This function completely ignores SweepResult information. It seems that places that use this function do not care, but it still seems risky
     friend bool operator == (const FOverlapInfo& Lhs, const FOverlapInfo& Rhs) { return Lhs.OverlapInfo.Component == Rhs.OverlapInfo.Component && Lhs.OverlapInfo.Item == Rhs.OverlapInfo.Item; }
-    bool bFromSweep;
+    bool bFromSweep = false;
 
     /** Information for both sweep and overlap queries. Different parts are valid depending on bFromSweep.
       * If bFromSweep is true then FHitResult is completely valid just like a regular sweep result.

@@ -265,8 +265,8 @@ void PhysicsAssetViewerPanel::OnResize(HWND hWnd)
 {
     RECT ClientRect;
     GetClientRect(hWnd, &ClientRect);
-    Width = ClientRect.right - ClientRect.left;
-    Height = ClientRect.bottom - ClientRect.top;
+    Width = static_cast<float>(ClientRect.right - ClientRect.left);
+    Height = static_cast<float>(ClientRect.bottom - ClientRect.top);
 }
 
 void PhysicsAssetViewerPanel::SetSkeletalMesh(USkeletalMesh* SMesh)
@@ -485,7 +485,7 @@ void PhysicsAssetViewerPanel::RenderBoneTree(const FReferenceSkeleton& RefSkelet
                             for (int i = 0; i < OppoBody.Num(); ++i)
                             {
                                 char buf[32];
-                                sprintf(buf, "%s", *GetCleanBoneName(OppoBody[i]->BoneName.ToString()));
+                                sprintf_s(buf, "%s", *GetCleanBoneName(OppoBody[i]->BoneName.ToString()));
 
                                 if (ImGui::MenuItem(buf))
                                 {

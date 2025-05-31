@@ -31,6 +31,6 @@ public:
     USkeleton* GetCurrentSkeleton() const { return CurrentSkeleton; }
     
 private:
-    USkeleton* CurrentSkeleton;
+    USkeleton* CurrentSkeleton = nullptr;
     
 };

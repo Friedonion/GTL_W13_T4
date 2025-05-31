@@ -142,7 +142,7 @@ struct alignas(16) FConstantBufferLights
     UINT IsLit = 1;
     UINT NumPointLights;
     UINT NumDirLights;
-    float pad0;
+    float pad0 = 0.f;
 };
 
 /////////////////////////////////////////////////////////////////////////
@@ -157,7 +157,7 @@ struct FConstantBufferDebugBox
     FMatrix WorldMatrix;
     
     FVector Extent;
-    float Padding2 = 0;
+    float Padding2 = 0.f;
 };
 
 /// <summary>
@@ -166,7 +166,7 @@ struct FConstantBufferDebugBox
 struct FConstantBufferDebugSphere
 {
     FVector Position;
-    float Radius;
+    float Radius = 0.f;
 };
 
 /// <summary>
@@ -175,10 +175,10 @@ struct FConstantBufferDebugSphere
 struct FConstantBufferDebugCone
 {
     FVector ApexPosition;
-    float Radius;
+    float Radius = 0.f;
 
     FVector Direction;
-    float Angle;
+    float Angle = 0.f;
 };
 
 /// <summary>
@@ -195,7 +195,7 @@ struct FConstantBufferDebugGrid
 struct FConstantBufferDebugIcon
 {
     FVector Position;
-    float Scale;
+    float Scale = 0.f;
 };
 
 /// <summary>
@@ -204,18 +204,18 @@ struct FConstantBufferDebugIcon
 struct FConstantBufferDebugArrow
 {
     FVector Position;
-    float   ScaleXYZ;
+    float   ScaleXYZ = 0.f;
     
     FVector Direction;
-    float   ScaleZ;
+    float   ScaleZ = 0.f;
 };
 
 
 struct FConstantBufferDebugCapsule
 {
     FMatrix WorldMatrix;
-    float Height;
-    float Radius;
+    float Height = 0.f;
+    float Radius = 0.f;
 };
 
 struct alignas(16) FConstantBufferCameraFade

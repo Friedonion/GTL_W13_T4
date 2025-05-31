@@ -51,6 +51,7 @@ public:
     FGPUTimingManager GPUTimingManager;
     FEngineProfiler EngineProfiler;
 
+    float DelaTimeDenom = 1;
 private:
     UImGuiManager* UIManager;
     //TODO: GWorld 제거, Editor들 EditorEngine으로 넣기

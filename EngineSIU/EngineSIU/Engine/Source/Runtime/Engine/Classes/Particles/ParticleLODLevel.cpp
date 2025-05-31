@@ -143,7 +143,7 @@ int32 UParticleLODLevel::CalculateMaxActiveParticleCount()
 				}
 				else //if (ParticleLifetime > MaxDuration)
 				{
-					MaxAPC += FMath::CeilToInt(MaxDuration * MaxSpawnRate) * ParticleLifetime;
+					MaxAPC += FMath::CeilToInt(MaxDuration * MaxSpawnRate * ParticleLifetime);
 				}
 			}
 			else

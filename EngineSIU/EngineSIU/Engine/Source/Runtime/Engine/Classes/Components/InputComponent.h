@@ -27,9 +27,9 @@ public:
     void InputKey(const FKeyEvent& InKeyEvent);
 
 private:
-    TMap<FString, FOneFloatDelegate> KeyBindDelegate;
     TArray<FDelegateHandle> BindKeyDownDelegateHandles;
     TArray<FDelegateHandle> BindKeyUpDelegateHandles;
+    TMap<FString, FOneFloatDelegate> KeyBindDelegate;
 
     TSet<EKeys::Type> PressedKeys;
 };

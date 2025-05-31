@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Array.h"
 #include "Serialization/Archive.h"
 #include "UObject/Casts.h"
@@ -40,7 +40,7 @@ struct FArrayHelper
             Array.SetNum(ArraySize);
         }
 
-        for (SizeType Index = 0; Index < ArraySize; ++Index)
+        for (uint32 Index = 0; Index < ArraySize; ++Index)
         {
             FName ActualClassName = NAME_None;
             if (Ar.IsSaving())
