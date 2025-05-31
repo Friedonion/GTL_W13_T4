@@ -42,7 +42,7 @@ EKeys::Type EKeys::FromCharCode(uint32_t CharCode)
     case '\'': return EKeys::Apostrophe;
 
     default:
-        assert(0);
+        //assert(0);
         return EKeys::Invalid;
     }
 }
@@ -112,7 +112,41 @@ FString EKeys::ToString(EKeys::Type Key)
 
         // 기본값
     default:
-        assert(0);
+        //assert(0);
         return TEXT("Invalid");
     }
+}
+
+// 알파벳은 대문자만 허용
+EKeys::Type EKeys::FromString(const FString& KeyName)
+{
+    // 알파벳 (대문자만 허용)
+    if (KeyName.Len() == 1)
+    {
+        TCHAR Char = KeyName[0];
+        if (Char >= 'A' && Char <= 'Z')
+            return static_cast<EKeys::Type>(EKeys::A + (Char - 'A'));
+        if (Char >= '0' && Char <= '9')
+            return static_cast<EKeys::Type>(EKeys::Zero + (Char - '0'));
+        if (Char == ';') return EKeys::Semicolon;
+        if (Char == '=') return EKeys::Equals;
+        if (Char == ',') return EKeys::Comma;
+        if (Char == '-') return EKeys::Hyphen;
+        if (Char == '.') return EKeys::Period;
+        if (Char == '/') return EKeys::Slash;
+        if (Char == '~') return EKeys::Tilde;
+        if (Char == '[') return EKeys::LeftBracket;
+        if (Char == '\\') return EKeys::Backslash;
+        if (Char == ']') return EKeys::RightBracket;
+        if (Char == '\'') return EKeys::Apostrophe;
+    }
+
+    // 문자열 비교 (대소문자 구분 없음)
+    if (KeyName.Equals(TEXT("Space"), ESearchCase::IgnoreCase)) return EKeys::SpaceBar;
+    if (KeyName.Equals(TEXT("Tab"), ESearchCase::IgnoreCase)) return EKeys::Tab;
+    if (KeyName.Equals(TEXT("Enter"), ESearchCase::IgnoreCase)) return EKeys::Enter;
+    if (KeyName.Equals(TEXT("Backspace"), ESearchCase::IgnoreCase)) return EKeys::BackSpace;
+    if (KeyName.Equals(TEXT("Escape"), ESearchCase::IgnoreCase)) return EKeys::Escape;
+
+    return EKeys::Invalid;
 }

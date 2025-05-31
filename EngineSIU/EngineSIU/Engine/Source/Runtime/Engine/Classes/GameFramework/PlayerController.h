@@ -34,7 +34,14 @@ public:
 
     virtual void UnPossess();
     
-    virtual void BindAction(const FString& Key, const std::function<void(float)>& Callback);
+    template<typename Func>
+    void BindKey(const FString& Key, Func&& Callback);
+
+    template<typename Func>
+    void BindKey(const EKeys::Type Key, Func&& Callback);
+
+    template<typename Func>
+    void BindMouseMove(Func&& Callback);
 
     AActor* GetPossessedActor() const { return PossessedActor; }
     
@@ -59,3 +66,29 @@ protected:
     bool bHasPossessed = false;
 };
 
+template<typename Func>
+inline void APlayerController::BindKey(const FString& Key, Func&& Callback)
+{
+    if (InputComponent)
+    {
+        InputComponent->BindKey(EKeys::FromString(Key), Callback);
+    }
+}
+
+template<typename Func>
+inline void APlayerController::BindKey(const EKeys::Type Key, Func&& Callback)
+{
+    if (InputComponent)
+    {
+        InputComponent->BindKey(Key, Callback);
+    }
+}
+
+template<typename Func>
+inline void APlayerController::BindMouseMove(Func&& Callback)
+{
+    if (InputComponent)
+    {
+        InputComponent->BindMouseMove(Callback);
+    }
+}

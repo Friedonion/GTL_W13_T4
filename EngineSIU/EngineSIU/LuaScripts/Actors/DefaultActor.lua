@@ -7,6 +7,32 @@ local ReturnTable = {} -- Return용 table. cpp에서 Table 단위로 객체 관�
 
 local FVector = EngineTypes.FVector -- EngineTypes로 등록된 FVector local로 선언.
 
+-- 키입력을 바인딩.
+function ReturnTable:InitializeCallback()
+    RegisterKeyCallback("W", function(dt)
+        self:MoveForward(dt)
+    end)
+
+    RegisterKeyCallback("S", function(dt)
+        self:MoveBackward(dt)
+    end)
+
+    RegisterKeyCallback("A", function(dt)
+        self:MoveLeft(dt)
+    end)
+
+    RegisterKeyCallback("D", function(dt)
+        self:MoveRight(dt)
+    end)
+
+    RegisterMouseMoveCallback(function(dx, dy)
+        -- 마우스 이동에 대한 처리
+        self:Turn(dx/1000)
+        self:Lookup(dy/1000)
+        -- print("Mouse moved: ", dtX, dtY) -- 디버깅용 출력
+    end)
+end
+
 -- BeginPlay: Actor가 처음 활성화될 때 호출
 function ReturnTable:BeginPlay()
 
@@ -36,5 +62,36 @@ function ReturnTable:Attack(AttackDamage)
     self.GetDamate(AttackDamage)
 
 end
+
+function ReturnTable:MoveForward(DeltaTime)
+    self:Move(FVector(10.0, 0.0, 0.0) * DeltaTime)
+end
+
+function ReturnTable:MoveBackward(DeltaTime)
+    self:Move(FVector(-10.0, 0.0, 0.0) * DeltaTime)
+end
+
+function ReturnTable:MoveLeft(DeltaTime)
+    self:Move(FVector(0.0, -10.0, 0.0) * DeltaTime)
+end
+
+function ReturnTable:MoveRight(DeltaTime)
+    self:Move(FVector(0.0, 10.0, 0.0) * DeltaTime)
+end
+
+-- 좌우 움직임
+function ReturnTable:Turn(Delta)
+    local this = self.this
+    dv = FVector(Delta, 0, 0)
+    this.ActorLocation = this.ActorLocation + dv
+end
+
+-- 위아래 움직임
+function ReturnTable:Lookup(Delta)
+    local this = self.this
+    dv = FVector(0, Delta, 0)
+    this.ActorLocation = this.ActorLocation + dv
+end
+
 
 return ReturnTable

@@ -184,7 +184,7 @@ public:
     virtual bool BindSelfLuaProperties(); // LuaEnv에서 사용할 멤버 변수 등록 함수.
     ULuaScriptComponent* GetLuaScriptComponent() const { return LuaScriptComponent; } 
     
-private:
+protected:
     UPROPERTY(EditAnywhere | EditInline, ULuaScriptComponent*, LuaScriptComponent, = nullptr)
     UPROPERTY(EditAnywhere, bool, bUseScript, = true)
     

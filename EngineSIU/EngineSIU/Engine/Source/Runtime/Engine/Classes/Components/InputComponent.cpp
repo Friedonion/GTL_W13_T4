@@ -4,34 +4,17 @@ void UInputComponent::ProcessInput(float DeltaTime)
 {
     for (EKeys::Type Key : PressedKeys)
     {
-        FString KeyName = EKeys::ToString(Key);
-        if (KeyBindDelegate.Contains(KeyName))
+        if (KeyBindDelegate.Contains(Key))
         {
-            KeyBindDelegate[KeyName].Broadcast(DeltaTime);
+            KeyBindDelegate[Key].Broadcast(DeltaTime);
         }
     }
-    return;
-    //if (PressedKeys.Contains(EKeys::W))
-    //{
-    //    KeyBindDelegate[FString("W")].Broadcast(DeltaTime);
-    //}
-    //if (PressedKeys.Contains(EKeys::A))
-    //{
-    //    KeyBindDelegate[FString("A")].Broadcast(DeltaTime);
-    //}
-    //if (PressedKeys.Contains(EKeys::S))
-    //{
-    //    KeyBindDelegate[FString("S")].Broadcast(DeltaTime);
-    //}
-    //if (PressedKeys.Contains(EKeys::D))
-    //{
-    //    KeyBindDelegate[FString("D")].Broadcast(DeltaTime);
-    //}
-    //if (PressedKeys.Contains(EKeys::SpaceBar))
-    //{
-    //    KeyBindDelegate[FString("Space")].Broadcast(DeltaTime);
-    //}
 
+    MouseBindDelegate.Broadcast(MouseX, MouseY);
+
+    MouseX = 0.f;
+    MouseY = 0.f;
+    return;
 }
 
 void UInputComponent::SetPossess()
@@ -53,6 +36,11 @@ void UInputComponent::BindInputDelegate()
     BindKeyUpDelegateHandles.Add(Handler->OnKeyUpDelegate.AddLambda([this](const FKeyEvent& InKeyEvent)
     {
         InputKey(InKeyEvent);
+    }));
+
+    BindMouseMoveDelegateHandles.Add(Handler->OnMouseMoveDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
+    {
+        InputMouseMove(InMouseEvent);
     }));
     
 }
@@ -99,73 +87,44 @@ void UInputComponent::InputKey(const FKeyEvent& InKeyEvent)
         }
     }
     return;
-
-    //// 일반적인 단일 키 이벤트
-    //switch (InKeyEvent.GetCharacter())
-    //{
-    //case 'W':
-    //    {
-    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
-    //        {
-    //            PressedKeys.Add(EKeys::W);
-    //        }
-    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
-    //        {
-    //            PressedKeys.Remove(EKeys::W);
-    //        }
-    //        break;
-    //    }
-    //case 'A':
-    //    {
-    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
-    //        {
-    //            PressedKeys.Add(EKeys::A);
-    //        }
-    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
-    //        {
-    //            PressedKeys.Remove(EKeys::A);
-    //        }
-    //        break;
-    //    }
-    //case 'S':
-    //    {
-    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
-    //        {
-    //            PressedKeys.Add(EKeys::S);
-    //        }
-    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
-    //        {
-    //            PressedKeys.Remove(EKeys::S);
-    //        }
-    //        break;
-    //    }
-    //case 'D':
-    //    {
-    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
-    //        {
-    //            PressedKeys.Add(EKeys::D);
-    //        }
-    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
-    //        {
-    //            PressedKeys.Remove(EKeys::D);
-    //        }
-    //        break;
-    //    }
-    //default:
-    //    break;
-    //}
 }
 
-
-void UInputComponent::BindAction(const FString& Key, const std::function<void(float)>& Callback)
+void UInputComponent::InputMouseMove(const FPointerEvent& InMouseEvent)
 {
-    if (Callback == nullptr)
-    {
-        return;
-    }
-    
-    KeyBindDelegate[Key].AddLambda([this, Callback](float DeltaTime)
-    {
-        Callback(DeltaTime);
-    });
+    FVector2D Delta = InMouseEvent.GetCursorDelta();
+    MouseX = Delta.X;
+    MouseY = Delta.Y;
 }
+
+// 해당 키에 대한 콜백 함수를 바인딩합니다.
+// 사용법
+/*
+// C++ 코드
+AActor::BeginPlay()
+{
+    ...
+    sol::state Lua; // 파라미터로 받은거
+    Lua.set_function("controller",
+        [](const std::string& Key, const std::function<void(float)>& Callback)
+        {
+            GEngine->ActiveWorld->GetPlayerController()->BindAction(FString(Key), Callback);
+        }
+    );
+
+    CallLuaFunction("InitializeLua");
+    ...
+}
+
+// Lua 코드
+function InitializeLua()
+    controller("W", OnPressW)
+    controller("S", OnPressS)
+    controller("A", OnPressA)
+    controller("D", OnPressD)
+end
+
+function OnPressW(DeltaTime)
+    print("W key pressed. DeltaTime: " .. DeltaTime)
+end
+*/
+

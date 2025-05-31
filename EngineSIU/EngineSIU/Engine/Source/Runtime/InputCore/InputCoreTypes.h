@@ -391,6 +391,7 @@ enum Type : uint8
 // 일부 키코드만 지원
 EKeys::Type FromCharCode(uint32_t CharCode);
 FString ToString(EKeys::Type Key);
+EKeys::Type FromString(const FString& KeyName);
 }
 
 struct FInputKeyManager // ue FInputKeyManager.cpp, 1530
