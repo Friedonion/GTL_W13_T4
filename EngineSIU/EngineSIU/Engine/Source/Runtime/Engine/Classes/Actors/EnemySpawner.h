@@ -2,6 +2,9 @@
 #include "GameFramework/Actor.h"
 
 class ACharacter;
+class AEnemy;
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnSpawnedEnemyDestroyed, const bool /*bDestroyed*/);
 
 class AEnemySpawner : public AActor
 {
@@ -24,10 +27,10 @@ private:
 
 private:
     UPROPERTY(EditAnywhere, float, SpawnInterval,)
-
     UPROPERTY(VisibleAnywhere, bool, bShouldSpawn,)
-
-    UPROPERTY(PropertyNone, ACharacter*, Character,)
+    UPROPERTY(VisibleAnywhere, ACharacter*, Character,)
+public:
+    UPROPERTY(VisibleAnywhere, AEnemy*, SpawnedEnemy,)
 
     float CurrentSpawnTimer;
 };

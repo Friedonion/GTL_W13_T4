@@ -2,8 +2,7 @@
 #include "GameFramework/Actor.h"
 
 class USkeletalMeshComponent;
-
-class UStaticMeshComponent;
+class ACharacter;
 
 class AEnemy : public AActor
 {
@@ -21,11 +20,15 @@ public:
 
 private:
     void Fire();
+    void CalculateTimer(float DeltaTime);
     // SpawnProjectile
-    // ACharacter의 위치를 찾는 로직
 
 private:
-    UPROPERTY(VisibleAnywhere, USkeletalMeshComponent*, SkeletalMeshComponent, = nullptr)
-    UPROPERTY(EditAnywhere, float, FireInterval, = 3.f)
+    UPROPERTY(VisibleAnywhere, USkeletalMeshComponent*, SkeletalMeshComponent,)
+    UPROPERTY(VisibleAnywhere, ACharacter*, Character, )
+    UPROPERTY(EditAnywhere, float, FireInterval,)
+    UPROPERTY(VisibleAnywhere, bool, bShouldFire, )
+
+    float CurrentFireTimer;
 };
 

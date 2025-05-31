@@ -56,20 +56,20 @@
             "RootComponentID": "UBillboardComponent_0"
         },
         {
-            "ActorClass": "AActor",
-            "ActorID": "AActor_223",
-            "ActorLabel": "OBJ_SKELETALMESH_223",
-            "ActorTickInEditor": "true",
+            "ActorClass": "AEnemySpawner",
+            "ActorID": "AEnemySpawner_224",
+            "ActorLabel": "OBJ_ENEMYSPAWNER_224",
+            "ActorTickInEditor": "false",
             "Components": [
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_224",
+                    "ComponentID": "USceneComponent_219",
                     "Properties": {
-                        "AttachParentID": "USkeletalMeshComponent_225",
+                        "AttachParentID": "USceneComponent_225",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_224",
-                        "ComponentOwner": "AActor_223",
-                        "ComponentOwnerClass": "AActor",
+                        "ComponentName": "USceneComponent_219",
+                        "ComponentOwner": "AEnemySpawner_224",
+                        "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
@@ -78,39 +78,64 @@
                     }
                 },
                 {
-                    "ComponentClass": "USkeletalMeshComponent",
-                    "ComponentID": "USkeletalMeshComponent_225",
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_225",
                     "Properties": {
-                        "AABB_max": "X=32.182 Y=140.308 Z=422.026",
-                        "AABB_min": "X=-35.191 Y=-140.308 Z=0.000",
-                        "AnimClass": "None",
-                        "AnimToPlay": "None",
-                        "AnimationMode": "1",
                         "AttachParentID": "nullptr",
-                        "ComponentClass": "USkeletalMeshComponent",
-                        "ComponentName": "USkeletalMeshComponent_225",
-                        "ComponentOwner": "AActor_223",
-                        "ComponentOwnerClass": "AActor",
-                        "LoopEndFrame": "0",
-                        "LoopStartFrame": "0",
-                        "PlayRate": "1.000000",
-                        "RelativeLocation": "X=100.532 Y=0.000 Z=0.000",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_225",
+                        "ComponentOwner": "AEnemySpawner_224",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=529.775 Y=456.365 Z=-100.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/Enemy/Enemy_T-Pose",
-                        "bApplyGravity": "false",
                         "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bLooping": "true",
-                        "bPlaying": "true",
-                        "bReverse": "false",
-                        "bSimulate": "false",
-                        "m_Type": ""
+                        "bIsActive": "true"
                     }
                 }
             ],
-            "RootComponentID": "USkeletalMeshComponent_225"
+            "RootComponentID": "USceneComponent_225"
+        },
+        {
+            "ActorClass": "AEnemySpawner",
+            "ActorID": "AEnemySpawner_252",
+            "ActorLabel": "OBJ_ENEMYSPAWNER_252",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_222",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_253",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_222",
+                        "ComponentOwner": "AEnemySpawner_252",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_253",
+                    "Properties": {
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_253",
+                        "ComponentOwner": "AEnemySpawner_252",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=866.053 Y=-364.540 Z=-231.240",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "USceneComponent_253"
         }
     ],
     "NextUUID": 0,
