@@ -14,6 +14,7 @@
 #include "UnrealEd/ImGuiWidget.h"
 #include "Animation/AnimSoundNotify.h"
 #include "SoundManager.h"
+#include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 
 SkeletalMeshViewerPanel::SkeletalMeshViewerPanel()
 {
@@ -269,118 +270,141 @@ void SkeletalMeshViewerPanel::RenderBoneTree(const FReferenceSkeleton& RefSkelet
 void SkeletalMeshViewerPanel::RenderAnimationSequence(const FReferenceSkeleton& RefSkeleton, UEditorEngine* Engine)
 {
     UAnimSequence* AnimSeq = nullptr;
+    ULuaScriptAnimInstance* LuaInstance = nullptr;
 
     if (RefSkeletalMeshComponent)
     {
-        if (RefSkeletalMeshComponent->GetAnimation() && RefSkeletalMeshComponent->GetAnimationMode() == EAnimationMode::AnimationSingleNode)
+        if (RefSkeletalMeshComponent->GetAnimationMode() == EAnimationMode::AnimationSingleNode)
         {
             AnimSeq = Cast<UAnimSequence>(RefSkeletalMeshComponent->GetAnimation());
         }
+        else if (ULuaScriptAnimInstance* Lua = Cast<ULuaScriptAnimInstance>(RefSkeletalMeshComponent->GetAnimInstance()))
+        {
+            AnimSeq = Cast<UAnimSequence>(Lua->GetCurrentAnim());
+            LuaInstance = Lua;
+        }
     }
+
     if (!AnimSeq)
-    {
         return;
-    }
+
     UAnimDataModel* DataModel = AnimSeq->GetDataModel();
-    
-    ImVec2 windowSize = ImVec2(Width*0.7f, Height*0.3f);
-    ImVec2 windowPos = ImVec2(0.0f, Height - windowSize.y - 30.f);
-    ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
-    ImGui::SetNextWindowPos(windowPos, ImGuiCond_Always);
-    
     if (!DataModel)
-    {
         return;
-    }
+
+    const int32 FrameRate = DataModel->GetFrameRate();
+    const int32 NumFrames = DataModel->GetNumberOfFrames();
+    if (NumFrames <= 1 || FrameRate <= 0)
+        return;
+
     if (PrevAnimDataModel != DataModel)
     {
-        RefSkeletalMeshComponent->SetLoopStartFrame(0);
-        RefSkeletalMeshComponent->SetLoopEndFrame(FMath::Max(1, DataModel->GetNumberOfFrames() - 1));
+        int32 DefaultEnd = FMath::Max(1, NumFrames - 1);
+        if (LuaInstance)
+        {
+            LuaInstance->SetLoopStartFrame(0);
+            LuaInstance->SetLoopEndFrame(DefaultEnd);
+        }
+        else
+        {
+            RefSkeletalMeshComponent->SetLoopStartFrame(0);
+            RefSkeletalMeshComponent->SetLoopEndFrame(DefaultEnd);
+        }
         PrevAnimDataModel = DataModel;
     }
-    
-    const int32 FrameRate = DataModel->GetFrameRate();
-    int32 NumFrames = DataModel->GetNumberOfFrames();
-    if (NumFrames <= 1)
-    {
-        ImGui::Begin("Animation Sequence Timeline");
-        ImGui::Text("Animation has too few frames.");
-        ImGui::End();
-        return;
-    }
 
-    static bool transformOpen = false;
+    float PlayRate = LuaInstance ? LuaInstance->GetPlayRate() : RefSkeletalMeshComponent->GetPlayRate();
+    bool bLooping = LuaInstance ? LuaInstance->IsLooping() : RefSkeletalMeshComponent->IsLooping();
+    bool bReverse = LuaInstance ? LuaInstance->IsReverse() : RefSkeletalMeshComponent->IsReverse();
+    bool bPlaying = LuaInstance ? LuaInstance->IsPlaying() : RefSkeletalMeshComponent->IsPlaying();
+    float Elapsed = LuaInstance ? LuaInstance->GetElapsedTime() : RefSkeletalMeshComponent->GetElapsedTime();
 
-    int32 LoopStart = RefSkeletalMeshComponent->GetLoopStartFrame();
-    int32 LoopEnd = RefSkeletalMeshComponent->GetLoopEndFrame();
+    int LoopStart = LuaInstance ? LuaInstance->GetLoopStartFrame() : RefSkeletalMeshComponent->GetLoopStartFrame();
+    int LoopEnd = LuaInstance ? LuaInstance->GetLoopEndFrame() : RefSkeletalMeshComponent->GetLoopEndFrame();
 
     LoopStart = FMath::Clamp(LoopStart, 0, NumFrames - 2);
     LoopEnd = FMath::Clamp(LoopEnd, LoopStart + 1, NumFrames - 1);
 
-    // 유효성 확인: Start가 End보다 크거나 같거나 음수면 기본 값으로 설정
     if (LoopStart >= LoopEnd || LoopStart < 0 || LoopEnd < 0)
     {
         LoopStart = 0;
         LoopEnd = FMath::Max(1, NumFrames - 1);
-        RefSkeletalMeshComponent->SetLoopStartFrame(LoopStart);
-        RefSkeletalMeshComponent->SetLoopEndFrame(LoopEnd);
+        if (LuaInstance)
+        {
+            LuaInstance->SetLoopStartFrame(LoopStart);
+            LuaInstance->SetLoopEndFrame(LoopEnd);
+        }
+        else
+        {
+            RefSkeletalMeshComponent->SetLoopStartFrame(LoopStart);
+            RefSkeletalMeshComponent->SetLoopEndFrame(LoopEnd);
+        }
     }
 
-    float PlayRate = RefSkeletalMeshComponent->GetPlayRate();
-    bool bLooping = RefSkeletalMeshComponent->IsLooping();
-    bool bReverse = RefSkeletalMeshComponent->IsReverse();
-    bool bPlaying = RefSkeletalMeshComponent->IsPlaying();
-    bool bPlayAnimation = RefSkeletalMeshComponent->bIsAnimationEnabled();
-
-    float Elapsed = RefSkeletalMeshComponent->GetElapsedTime();
     float TargetKeyFrame = Elapsed * static_cast<float>(FrameRate);
     int32 CurrentFrame = static_cast<int32>(TargetKeyFrame) % (LoopEnd + 1);
     PreviousFrame = CurrentFrame;
 
+    ImVec2 windowSize = ImVec2(Width * 0.7f, Height * 0.3f);
+    ImVec2 windowPos = ImVec2(0.0f, Height - windowSize.y - 30.f);
+    ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
+    ImGui::SetNextWindowPos(windowPos, ImGuiCond_Always);
 
     if (ImGui::Begin("Animation Sequence Timeline"))
     {
-        if (ImGui::Button((!bPlayAnimation||!bPlaying)?"Play":"Pause")) {
-            if (!bPlayAnimation)
-            {
-                RefSkeletalMeshComponent->SetPlaying(true);
-            }
-            else if (!bPlaying)
-            {
-                RefSkeletalMeshComponent->SetPlaying(true);
-            }
-            else
-            {
-                RefSkeletalMeshComponent->SetPlaying(false);
-            }
+        if (ImGui::Button((!bPlaying) ? "Play" : "Pause")) {
+            bPlaying = !bPlaying;
         }
         ImGui::SameLine();
         if (ImGui::Button("Stop")) {
-            RefSkeletalMeshComponent->SetPlaying(false);
+            bPlaying = false;
+            
+            if (LuaInstance)
+            {
+                LuaInstance->SetCurrentKey(0);
+                LuaInstance->SetElapsedTime(0);
+            }
+            else
+            {
+                LuaInstance->SetCurrentKey(0);
+                LuaInstance->SetElapsedTime(0);
+            }
+           
         }
         ImGui::SameLine();
-        if (ImGui::Checkbox("Looping", &bLooping))
+        if (ImGui::Checkbox("Looping", &bLooping)) {}
+        ImGui::SameLine();
+        if (ImGui::Checkbox("Reverse", &bReverse)) {}
+        ImGui::SameLine();
+        FImGuiWidget::DrawDragFloat("Play Rate", PlayRate, 0.f, 3.0, 84);
+        ImGui::Separator();
+        ImGui::Text("Frame: %d / %d", CurrentFrame, NumFrames - 1);
+        ImGui::SameLine();
+        ImGui::Text("Time: %.2fs", Elapsed);
+        ImGui::Separator();
+        FImGuiWidget::DrawDragInt("Loop Start", LoopStart, 0, NumFrames - 2, 84);
+        ImGui::SameLine();
+        FImGuiWidget::DrawDragInt("Loop End", LoopEnd, LoopStart + 1, NumFrames - 1, 84);
+
+        // 상태 반영
+        if (LuaInstance)
         {
+            LuaInstance->SetPlayRate(PlayRate);
+            LuaInstance->SetLooping(bLooping);
+            LuaInstance->SetReverse(bReverse);
+            LuaInstance->SetLoopStartFrame(LoopStart);
+            LuaInstance->SetLoopEndFrame(LoopEnd);
+            LuaInstance->SetPlaying(bPlaying);
+        }
+        else
+        {
+            RefSkeletalMeshComponent->SetPlayRate(PlayRate);
             RefSkeletalMeshComponent->SetLooping(bLooping);
-        }
-        ImGui::SameLine();
-        if (ImGui::Checkbox("Play Reverse", &bReverse))
-        {
             RefSkeletalMeshComponent->SetReverse(bReverse);
+            RefSkeletalMeshComponent->SetLoopStartFrame(LoopStart);
+            RefSkeletalMeshComponent->SetLoopEndFrame(LoopEnd);
+            RefSkeletalMeshComponent->SetPlaying(bPlaying);
         }
-        ImGui::SameLine();
-        FImGuiWidget::DrawDragFloat("Play Rate", PlayRate, 0.f,3.0,84);
-        RefSkeletalMeshComponent->SetPlayRate(PlayRate);
-        ImGui::Separator();
-        ImGui::Text("Frame: %d / %d", CurrentFrame, NumFrames -1);
-        ImGui::SameLine();
-        ImGui::Text("Time: %.2fs", RefSkeletalMeshComponent->GetElapsedTime());
-        ImGui::Separator();
-        FImGuiWidget::DrawDragInt("Loop Start", LoopStart, 0, NumFrames - 2,84);
-        RefSkeletalMeshComponent->SetLoopStartFrame(LoopStart);
-        ImGui::SameLine();
-        FImGuiWidget::DrawDragInt("Loop End", LoopEnd, LoopStart + 1, NumFrames - 1,84);
-        RefSkeletalMeshComponent->SetLoopEndFrame(LoopEnd);
         
         LoopStart = FMath::Clamp(LoopStart, 0, NumFrames - 2);
         LoopEnd = FMath::Clamp(LoopEnd, LoopStart + 1, NumFrames - 1);
@@ -407,12 +431,31 @@ void SkeletalMeshViewerPanel::RenderAnimationSequence(const FReferenceSkeleton& 
         const TArray<FAnimNotifyTrack>& Tracks = AnimSeq->GetAnimNotifyTracks();
         const TArray<FAnimNotifyEvent>& Events = AnimSeq->Notifies;
         
-        if (ImGui::BeginNeoSequencer("Sequencer", &CurrentFrame, &LoopStart, &LoopEnd,ImVec2(0,0), ImGuiNeoSequencerFlags_EnableSelection |
-            ImGuiNeoSequencerFlags_Selection_EnableDragging)) {
-            if (CurrentFrame != PreviousFrame)
+        static int32 LastConfirmedFrame = -1;
+
+        if (ImGui::BeginNeoSequencer("Sequencer", &CurrentFrame, &LoopStart, &LoopEnd,
+            ImVec2(0, 0),
+            ImGuiNeoSequencerFlags_EnableSelection | ImGuiNeoSequencerFlags_Selection_EnableDragging))
+        {
+            if (ImGui::IsItemActive() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
             {
-                RefSkeletalMeshComponent->SetCurrentKey(CurrentFrame);
-                RefSkeletalMeshComponent->SetElapsedTime(static_cast<float>(CurrentFrame) / static_cast<float>(FrameRate));
+                if (CurrentFrame != LastConfirmedFrame)
+                {
+                    float NewElapsed = static_cast<float>(CurrentFrame) / static_cast<float>(FrameRate);
+
+                    if (LuaInstance)
+                    {
+                        LuaInstance->SetCurrentKey(CurrentFrame);
+                        LuaInstance->SetElapsedTime(NewElapsed);
+                    }
+                    else
+                    {
+                        RefSkeletalMeshComponent->SetCurrentKey(CurrentFrame);
+                        RefSkeletalMeshComponent->SetElapsedTime(NewElapsed);
+                    }
+
+                    LastConfirmedFrame = CurrentFrame;
+                }
             }
 
             if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
@@ -639,24 +682,94 @@ void SkeletalMeshViewerPanel::RenderAnimationPanel(float PanelPosX, float PanelP
 
     if (ImGui::Begin("Anim Settings", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove))
     {
-        // Animation Mode 선택
+        // 모드 선택
         if (ImGui::BeginCombo("Animation Mode", GetData(AnimModeStr)))
         {
             if (ImGui::Selectable("Animation Instance", CurrentAnimationMode == EAnimationMode::AnimationBlueprint))
             {
                 RefSkeletalMeshComponent->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-                CurrentAnimationMode = EAnimationMode::AnimationBlueprint;
-                RefSkeletalMeshComponent->SetAnimClass(UClass::FindClass(FName("UMyAnimInstance")));
+                RefSkeletalMeshComponent->SetAnimClass(UClass::FindClass(FName("ULuaScriptAnimInstance")));
             }
             if (ImGui::Selectable("Animation Asset", CurrentAnimationMode == EAnimationMode::AnimationSingleNode))
             {
                 RefSkeletalMeshComponent->SetAnimationMode(EAnimationMode::AnimationSingleNode);
-                CurrentAnimationMode = EAnimationMode::AnimationSingleNode;
             }
             ImGui::EndCombo();
+        }
+
+        const TMap<FName, FAssetInfo>& AnimAssets = UAssetManager::Get().GetAssetRegistry();
+
+        if (CurrentAnimationMode == EAnimationMode::AnimationBlueprint)
+        {
+            UAnimInstance* AnimInstance = RefSkeletalMeshComponent->GetAnimInstance();
+            if (ULuaScriptAnimInstance* LuaInstance = Cast<ULuaScriptAnimInstance>(AnimInstance))
+            {
+                FString CurrAnimName = LuaInstance->GetCurrentAnim() ? LuaInstance->GetCurrentAnim()->GetName() : TEXT("None");
+
+                ImGui::Text("Lua CurrAnim: %s", *CurrAnimName);
+
+                if (ImGui::BeginCombo("##LuaAnimAsset", *CurrAnimName))
+                {
+                    if (ImGui::Selectable("None"))
+                    {
+                        LuaInstance->SetAnimation(nullptr, 0.2f, true, false);
+                    }
+
+                    for (const auto& Pair : AnimAssets)
+                    {
+                        if (Pair.Value.AssetType != EAssetType::Animation)
+                            continue;
+
+                        FString FullPath = Pair.Value.PackagePath.ToString() + "/" + Pair.Value.AssetName.ToString();
+                        bool bIsSelected = LuaInstance->GetCurrentAnim()
+                            && LuaInstance->GetCurrentAnim()->GetName() == Pair.Value.AssetName.ToString();
+
+                        if (ImGui::Selectable(*Pair.Value.AssetName.ToString(), bIsSelected))
+                        {
+                            UAnimationAsset* AnimAsset = UAssetManager::Get().GetAnimation(FName(*FullPath));
+                            LuaInstance->SetAnimation(Cast<UAnimSequence>(AnimAsset), 0.2f, true, false);
+                        }
+                    }
+
+                    ImGui::EndCombo();
+                }
+            }
+        }
+        else if (CurrentAnimationMode == EAnimationMode::AnimationSingleNode)
+        {
+            FString SelectedAnimationName = RefSkeletalMeshComponent->GetAnimation()
+                ? RefSkeletalMeshComponent->GetAnimation()->GetName()
+                : TEXT("None");
+
+            ImGui::Text("Anim To Play");
+            ImGui::SameLine();
+            if (ImGui::BeginCombo("##AnimAsset", *SelectedAnimationName))
+            {
+                if (ImGui::Selectable("None"))
+                    RefSkeletalMeshComponent->SetAnimation(nullptr);
+
+                for (const auto& Pair : AnimAssets)
+                {
+                    if (Pair.Value.AssetType != EAssetType::Animation)
+                        continue;
+
+                    FString FullPath = Pair.Value.PackagePath.ToString() + "/" + Pair.Value.AssetName.ToString();
+                    bool bIsSelected = RefSkeletalMeshComponent->GetAnimation()
+                        && RefSkeletalMeshComponent->GetAnimation()->GetName() == Pair.Value.AssetName.ToString();
+
+                    if (ImGui::Selectable(*Pair.Value.AssetName.ToString(), bIsSelected))
+                    {
+                        UAnimationAsset* AnimAsset = UAssetManager::Get().GetAnimation(FName(*FullPath));
+                        RefSkeletalMeshComponent->SetAnimation(Cast<UAnimSequence>(AnimAsset));
+                    }
+                }
+
+                ImGui::EndCombo();
+            }
         }
     }
     ImGui::End();
 }
+
 
 

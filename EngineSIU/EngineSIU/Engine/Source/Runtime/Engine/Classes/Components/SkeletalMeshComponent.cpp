@@ -17,6 +17,7 @@
 #include "UObject/ObjectFactory.h"
 #include "PhysicsEngine/ConstraintInstance.h"
 #include <Engine/Contents/AnimInstance/LuaScriptAnimInstance.h>
+#include "World/World.h"
 
 bool USkeletalMeshComponent::bIsCPUSkinning = false;
 
@@ -293,7 +294,7 @@ void USkeletalMeshComponent::TickAnimInstances(float DeltaTime)
 
 bool USkeletalMeshComponent::ShouldTickAnimation() const
 {
-    if (GEngine->GetWorldContextFromWorld(GetWorld())->WorldType == EWorldType::Editor)
+    if (GEngine->ActiveWorld->WorldType == EWorldType::Editor)
     {
         return false;
     }
