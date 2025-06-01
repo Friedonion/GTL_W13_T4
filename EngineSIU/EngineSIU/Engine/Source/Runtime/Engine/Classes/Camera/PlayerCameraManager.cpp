@@ -4,6 +4,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Camera/CameraModifier_CameraShake.h"
 #include "World/World.h"
+#include "GameFramework/Character.h"
 
 bool FTViewTarget::Equal(const FTViewTarget& OtherTarget) const
 {
@@ -21,9 +22,9 @@ void FTViewTarget::CheckViewTarget(APlayerController* OwningController)
     if (Target != nullptr)
     {
         // PossessActor가 있을때
-        if (OwningController->GetPossessedActor() && !OwningController->GetPossessedActor()->IsActorBeingDestroyed() )
+        if (OwningController->GetCharacter() && !OwningController->GetCharacter()->IsActorBeingDestroyed() )
         {
-            OwningController->PlayerCameraManager->AssignViewTarget(OwningController->GetPossessedActor(), *this);
+            OwningController->PlayerCameraManager->AssignViewTarget(OwningController->GetCharacter(), *this);
         }
         else
         {
@@ -46,7 +47,7 @@ AActor* FTViewTarget::GetTargetActor() const
 
     if (APlayerController* Controller = Cast<APlayerController>(Target))
     {
-        return Controller->GetPossessedActor();
+        return Controller->GetCharacter();
     }
 
     return nullptr;
@@ -305,7 +306,7 @@ void APlayerCameraManager::SetViewTarget(class AActor* NewTarget, struct FViewTa
 
 		BlendTimeToGo = TransitionParams.BlendTime;
 
-		AssignViewTarget(PCOwner->GetPossessedActor(), ViewTarget);
+		AssignViewTarget(PCOwner->GetCharacter(), ViewTarget);
 		AssignViewTarget(NewTarget, PendingViewTarget, TransitionParams);
 
 	}
@@ -332,6 +333,10 @@ void APlayerCameraManager::UpdateViewTarget(FTViewTarget& OutVT, float DeltaTime
 	bool bDoNotApplyModifiers = false;
 
     OutVT.POV.Location = OutVT.Target->GetActorLocation();
+    if (ACharacter* Character = Cast<ACharacter>(OutVT.Target))
+    {
+        OutVT.POV.Location += FVector(0.f, 0.f, Character->BaseEyeHeight);
+    }
     OutVT.POV.Rotation = OutVT.Target->GetActorRotation();
     OutVT.POV.Rotation.Roll = 0.0f;
     

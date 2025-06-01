@@ -4,6 +4,7 @@
 
 #include "Actors/Player.h"
 #include "Actors/EditorPlayer.h"
+#include "Actors/SequencePlayer.h"
 #include "Actors/LightActor.h"
 #include "Actors/FireballActor.h"
 
@@ -423,7 +424,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                 {
                 case OBJ_PLAYER:
                 {
-                    SpawnedActor = World->SpawnActor<APlayer>();
+                    SpawnedActor = World->SpawnActor<APlayerCharacter>();
                     SpawnedActor->SetActorLabel(TEXT("OBJ_PLAYER"));
                     break;
                 }

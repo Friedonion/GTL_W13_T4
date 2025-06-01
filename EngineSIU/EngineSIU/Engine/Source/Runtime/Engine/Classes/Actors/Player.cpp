@@ -8,7 +8,17 @@
 #include "Classes/Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 
-void APlayer::BeginPlay()
+APlayerCharacter::APlayerCharacter()
+    : ACharacter()
+{
+    LeftArm = AddComponent<USkeletalMeshComponent>(FName("LeftArm"));
+    RightArm = AddComponent<USkeletalMeshComponent>(FName("RightArm"));
+    
+    LeftArm->SetupAttachment(Super::Mesh);
+    RightArm->SetupAttachment(Super::Mesh);
+}
+
+void APlayerCharacter::BeginPlay()
 {
     Super::BeginPlay();
 
@@ -32,55 +42,20 @@ void APlayer::BeginPlay()
     LuaScriptComponent->ActivateFunction("InitializeCallback");
 }
 
-UObject* APlayer::Duplicate(UObject* InOuter)
+UObject* APlayerCharacter::Duplicate(UObject* InOuter)
 {
     ThisClass* NewActor = Cast<ThisClass>(Super::Duplicate(InOuter));
 
     return NewActor;
 }
 
-void APlayer::Tick(float DeltaTime)
+void APlayerCharacter::Tick(float DeltaTime)
 {
     AActor::Tick(DeltaTime);
 }
 
-void APlayer::RegisterLuaType(sol::state& Lua)
+void APlayerCharacter::RegisterLuaType(sol::state& Lua)
 {
     Super::RegisterLuaType(Lua);
 }
 
-ASequencerPlayer::ASequencerPlayer()
-{
-}
-
-void ASequencerPlayer::PostSpawnInitialize()
-{
-    APlayer::PostSpawnInitialize();
-
-    RootComponent = AddComponent<USceneComponent>();
-
-    CameraComponent = AddComponent<UCameraComponent>();
-    CameraComponent->SetupAttachment(RootComponent);
-}
-
-void ASequencerPlayer::Tick(float DeltaTime)
-{
-    APlayer::Tick(DeltaTime);
-
-    if (SkeletalMeshComponent)
-    {
-        const FTransform SocketTransform = SkeletalMeshComponent->GetSocketTransform(Socket);
-        SetActorRotation(SocketTransform.GetRotation().Rotator());
-        SetActorLocation(SocketTransform.GetTranslation());
-    }
-}
-
-UObject* ASequencerPlayer::Duplicate(UObject* InOuter)
-{
-    ThisClass* NewActor = Cast<ThisClass>(Super::Duplicate(InOuter));
-
-    NewActor->Socket = Socket;
-    NewActor->SkeletalMeshComponent = nullptr;
-
-    return NewActor;
-}

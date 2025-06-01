@@ -7,6 +7,7 @@
 
 #include "World/World.h"
 #include "Actors/Player.h"
+#include "Actors/SequencePlayer.h"
 #include "Actors/EditorPlayer.h"
 #include "Animation/AnimationAsset.h"
 #include "Animation/AnimSequence.h"
@@ -337,7 +338,7 @@ void PropertyEditorPanel::RenderForCameraComponent(UCameraComponent* InCameraCom
 
 }
 
-void PropertyEditorPanel::RenderForPlayerActor(APlayer* InPlayerActor)
+void PropertyEditorPanel::RenderForPlayerActor(APlayerCharacter* InPlayerActor)
 {
     if (ImGui::Button("SetMainPlayer"))
     {

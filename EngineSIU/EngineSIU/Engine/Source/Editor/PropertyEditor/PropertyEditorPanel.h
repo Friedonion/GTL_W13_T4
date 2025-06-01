@@ -18,7 +18,7 @@ class UProjectileMovementComponent;
 class UTextComponent;
 class UHeightFogComponent;
 class AEditorPlayer;
-class APlayer;
+class APlayerCharacter;
 class UStaticMeshComponent;
 class UMaterial;
 class USocketComponent;
@@ -57,7 +57,7 @@ private:
 
     void RenderForSceneComponent(USceneComponent* SceneComponent, AEditorPlayer* Player) const;
     void RenderForCameraComponent(UCameraComponent* InCameraComponent);
-    void RenderForPlayerActor(APlayer* InPlayerActor);
+    void RenderForPlayerActor(APlayerCharacter* InPlayerActor);
     void RenderForActor(AActor* SelectedActor, USceneComponent* TargetComponent) const;
     
     /* Static Mesh Settings */

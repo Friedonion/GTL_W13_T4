@@ -1,16 +1,17 @@
 #pragma once
 
-#include "GameFramework/Actor.h"
+#include "GameFramework/Character.h"
 
 class USkeletalMeshComponent;
 class UCameraComponent;
 
-class APlayer : public AActor
+// ACharacter를 상속받는 게임 내에서의 플레이어 캐릭터.
+class APlayerCharacter : public ACharacter
 {
-    DECLARE_CLASS(APlayer, AActor)
+    DECLARE_CLASS(APlayerCharacter, ACharacter)
 
 public:
-    APlayer() = default;
+    APlayerCharacter();
 
     virtual void BeginPlay() override;
 
@@ -18,25 +19,8 @@ public:
     virtual void Tick(float DeltaTime) override;
 
     virtual void RegisterLuaType(sol::state& Lua); // Lua에 클래스 등록해주는 함수.
+    
+protected:
+    USkeletalMeshComponent* LeftArm = nullptr;
+    USkeletalMeshComponent* RightArm = nullptr;
 };
-
-#pragma region W10
-class ASequencerPlayer : public APlayer
-{
-    DECLARE_CLASS(ASequencerPlayer, APlayer)
-
-public:
-    ASequencerPlayer();
-    virtual ~ASequencerPlayer() override = default;
-
-    virtual void PostSpawnInitialize() override;
-    virtual void Tick(float DeltaTime) override;
-    virtual UObject* Duplicate(UObject* InOuter) override;
-
-    FName Socket = "jx_c_camera";
-    USkeletalMeshComponent* SkeletalMeshComponent = nullptr;
-
-private:
-    UCameraComponent* CameraComponent = nullptr;
-};
-#pragma endregion

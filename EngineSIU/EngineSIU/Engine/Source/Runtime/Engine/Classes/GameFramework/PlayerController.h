@@ -5,6 +5,7 @@
 #include "Classes/Components/InputComponent.h"
 
 class APlayerCameraManager;
+class ACharacter;
 
 class APlayerController : public AActor
 {
@@ -30,7 +31,7 @@ public:
 
     void SetViewTarget(class AActor* NewViewTarget, struct FViewTargetTransitionParams TransitionParams);
 
-    virtual void Possess(AActor* InActor);
+    virtual void Possess(ACharacter* CharacterToPossess);
 
     virtual void UnPossess();
     
@@ -46,7 +47,7 @@ public:
     //template<typename Func>
     //void BindMouseDown(EMouseButtons::Type Button, Func&& Callback);
 
-    AActor* GetPossessedActor() const { return PossessedActor; }
+    ACharacter* GetCharacter() const { return Character; }
     
     // 카메라 관련 함수
     AActor* GetViewTarget() const;
@@ -64,7 +65,7 @@ protected:
 
     virtual void SetupInputComponent();
 
-    AActor* PossessedActor = nullptr;
+    ACharacter* Character = nullptr;
 
     bool bHasPossessed = false;
 };
