@@ -20,4 +20,7 @@ public:
     virtual void Destroyed();
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason);
+
+    virtual void RegisterLuaType(sol::state& Lua); // Lua에 클래스 등록해주는 함수.
+
 };

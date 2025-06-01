@@ -1,10 +1,5 @@
-local EngineTypes = EngineTypes
-local CustomEnums = CustomEnums
-setmetatable(_ENV, {
-    __index = function(t, k)
-        return rawget(EngineTypes, k) or rawget(CustomEnums, k)
-    end
-})
+
+setmetatable(_ENV, { __index = EngineTypes })
 
 -- Template은 AActor라는 가정 하에 작동.
 
@@ -74,11 +69,6 @@ function ReturnTable:Attack(AttackDamage)
 end
 
 function ReturnTable:MoveForward(DeltaTime)
-    print(self.this.State)
-    if self.this.State == PlayerState.Idle then
-        print("Idle 상태에서 이동 불가")
-        return
-    end
     self:Move(FVector(30.0, 0.0, 0.0) * DeltaTime)
 end
 

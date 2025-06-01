@@ -6,6 +6,7 @@
 #include "Lua/LuaScriptComponent.h"
 #include "Animation/AnimStateMachine.h"
 #include "GameFramework/Actor.h"
+#include "Actors/Player/PlayerDefine.h"
 
 TMap<FString, FLuaTableScriptInfo> FLuaScriptManager::ScriptCacheMap;
 TSet<ULuaScriptComponent*> FLuaScriptManager::ActiveLuaComponents;
@@ -30,6 +31,7 @@ FLuaScriptManager::FLuaScriptManager()
     );
 
     SetLuaDefaultTypes();
+    SetLuaCustomTypes();
 }
 
 FLuaScriptManager::~FLuaScriptManager()
@@ -52,6 +54,18 @@ void FLuaScriptManager::SetLuaDefaultTypes()
     LuaTypes::FBindLua<FRotator>::Bind(TypeTable);
     LuaTypes::FBindLua<FQuat>::Bind(TypeTable);
     LuaTypes::FBindLua<FMatrix>::Bind(TypeTable);
+}
+
+void FLuaScriptManager::SetLuaCustomTypes()
+{
+    sol::table EnumTable = LuaState.create_table("CustomEnums");
+
+    EnumTable.new_enum("PlayerState",
+        "Idle", PlayerState::Idle,
+        "Shooting", PlayerState::Shooting,
+        "Stabbing", PlayerState::Stabbing,
+        "Hit", PlayerState::Hit
+    );
 }
 
 FLuaScriptManager& FLuaScriptManager::Get()

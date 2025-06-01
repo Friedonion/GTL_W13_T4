@@ -2,7 +2,7 @@
 
 #include "World/World.h"
 
-#include "Actors/Player.h"
+#include "Actors/Player/Player.h"
 #include "Actors/EditorPlayer.h"
 #include "Actors/SequencePlayer.h"
 #include "Actors/LightActor.h"

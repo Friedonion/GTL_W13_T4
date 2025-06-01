@@ -3,7 +3,7 @@
 #include "CollisionManager.h"
 #include "PhysicsManager.h"
 #include "Actors/EditorPlayer.h"
-#include "Actors/Player.h"
+#include "Actors/Player/Player.h"
 #include "BaseGizmos/TransformGizmo.h"
 #include "Classes/Components/StaticMeshComponent.h"
 #include "Engine/FObjLoader.h"

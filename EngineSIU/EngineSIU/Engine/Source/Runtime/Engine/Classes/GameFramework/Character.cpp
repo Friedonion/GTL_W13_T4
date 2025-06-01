@@ -61,3 +61,8 @@ void ACharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
     Super::EndPlay(EndPlayReason);
 }
+
+void ACharacter::RegisterLuaType(sol::state& Lua)
+{
+    DEFINE_LUA_TYPE_ABSTRACT_WITH_PARENT(ACharacter, APawn)
+}

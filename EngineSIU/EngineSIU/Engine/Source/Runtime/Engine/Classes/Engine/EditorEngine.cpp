@@ -22,7 +22,7 @@
 #include "Particles/ParticleSystem.h"
 #include "SoundManager.h"
 #include "Actors/EditorPlayer.h"
-#include "Actors/Player.h"
+#include "Actors/Player/Player.h"
 
 extern FEngineLoop GEngineLoop;
 

@@ -6,7 +6,7 @@
 //#include <tchar.h>
 
 #include "World/World.h"
-#include "Actors/Player.h"
+#include "Actors/Player/Player.h"
 #include "Actors/SequencePlayer.h"
 #include "Actors/EditorPlayer.h"
 #include "Animation/AnimationAsset.h"
@@ -454,7 +454,8 @@ void PropertyEditorPanel::RenderForStaticMesh(UStaticMeshComponent* StaticMeshCo
 void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* SkeletalMeshComp) const
 {
     ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-    if (ImGui::TreeNodeEx("Skeletal Mesh", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
+    FString TreeNodeName = SkeletalMeshComp->GetName();
+    if (ImGui::TreeNodeEx(*TreeNodeName, ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
     {
         ImGui::Text("SkeletalMesh");
         ImGui::SameLine();
