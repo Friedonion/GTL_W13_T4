@@ -53,6 +53,7 @@ public:
 public:
     /** 이 컴포넌트를 소유하고 있는 Actor를 반환합니다. */
     AActor* GetOwner() const { return OwnerPrivate; }
+    void SetOwner(AActor* InOwner) { OwnerPrivate = InOwner; }
 
     /** 이 컴포넌트를 제거합니다. */
     virtual void DestroyComponent(bool bPromoteChildren = false);

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <cassert>
 #include <compare>
 #include "MathUtility.h"
@@ -59,6 +59,21 @@ public:
         X += Rhs.X;
         Y += Rhs.Y;
         return *this;
+    }
+
+    float operator|(const FVector2D& Rhs) const
+    {
+        return X * Rhs.X + Y * Rhs.Y;
+    }
+
+    float Dot(const FVector2D& Other) const
+    {
+        return *this | Other;
+    }
+
+    static float DotProduct(const FVector2D& A, const FVector2D& B)
+    {
+        return A | B;
     }
 
     bool operator==(const FVector2D& Vector2D) const = default;

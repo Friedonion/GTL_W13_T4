@@ -1543,18 +1543,6 @@
     <ClInclude Include="Font\RawFonts.h">
       <Filter>Font</Filter>
     </ClInclude>
-    <ClInclude Include="LuaScripts\LuaBindingHelpers.h">
-      <Filter>LuaScripts</Filter>
-    </ClInclude>
-    <ClCompile Include="LuaScripts\LuaScriptComponent.cpp">
-      <Filter>LuaScripts</Filter>
-    </ClCompile>
-    <ClInclude Include="LuaScripts\LuaScriptComponent.h">
-      <Filter>LuaScripts</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaScripts\LuaScriptFileUtils.h">
-      <Filter>LuaScripts</Filter>
-    </ClInclude>
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Components\SkeletalMeshComponent.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Components\SkinnedMeshComponent.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Engine\FbxLoader.cpp" />
