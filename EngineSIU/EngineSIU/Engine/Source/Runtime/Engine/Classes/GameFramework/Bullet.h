@@ -23,6 +23,7 @@ public:
     // ABulletTester에서 이 컴포넌트의 속성을 설정할 수 있도록 public Getter를 제공
     UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
 
+    static ABullet* SpawnBulletFromCurrentViewpoint(UWorld* InWorld);
 
 private:
     // 총알 시각 충돌용 메시 컴포넌트
