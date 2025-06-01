@@ -352,7 +352,7 @@ void PropertyEditorPanel::RenderForActor(AActor* SelectedActor, USceneComponent*
         Engine->DeselectComponent(Engine->GetSelectedComponent());
     }
 
-    if (ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
+    if (ImGui::TreeNodeEx("Component", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
     {
         ImGui::Text("Add");
         ImGui::SameLine();
@@ -360,14 +360,30 @@ void PropertyEditorPanel::RenderForActor(AActor* SelectedActor, USceneComponent*
         TArray<UClass*> CompClasses;
         GetChildOfClass(USceneComponent::StaticClass(), CompClasses);
 
+        // 이름순 정렬
+        CompClasses.Sort([](const UClass* A, const UClass* B)
+            {
+                return A->GetName() < B->GetName();
+            });
         if (ImGui::BeginCombo("##AddComponent", "Components", ImGuiComboFlags_None))
         {
+            static char SearchBuf[128] = "";
+            ImGui::SetNextItemWidth(-1);
+            ImGui::InputTextWithHint("##SearchComponentInCombo", "Search...", SearchBuf, IM_ARRAYSIZE(SearchBuf));
+
+            FString SearchStr = FString(SearchBuf).ToLower();
+
             for (UClass* Class : CompClasses)
             {
-                if (ImGui::Selectable(GetData(Class->GetName()), false))
+                FString ClassName = Class->GetName();
+
+                if (!SearchStr.IsEmpty() && !ClassName.ToLower().Contains(SearchStr))
+                    continue;
+
+                if (ImGui::Selectable(GetData(ClassName), false))
                 {
                     USceneComponent* NewComp = Cast<USceneComponent>(SelectedActor->AddComponent(Class));
-                    if (NewComp != nullptr && TargetComponent != nullptr)
+                    if (NewComp && TargetComponent)
                     {
                         NewComp->SetupAttachment(TargetComponent);
                     }
@@ -375,9 +391,9 @@ void PropertyEditorPanel::RenderForActor(AActor* SelectedActor, USceneComponent*
             }
             ImGui::EndCombo();
         }
-
         ImGui::TreePop();
     }
+
 }
 
 void PropertyEditorPanel::RenderForStaticMesh(UStaticMeshComponent* StaticMeshComp) const
