@@ -23,6 +23,7 @@ public:
     void InitLuaStateMachine();
     
     FString GetLuaScriptName() const { return LuaScriptName; }
+    void SetLuaScriptName(const FString& InName) { LuaScriptName = InName; }
 
     USkeletalMeshComponent* OwningComponent;
     ULuaScriptAnimInstance* OwningAnimInstance;

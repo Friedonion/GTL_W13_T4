@@ -14,7 +14,7 @@ void UAnimStateMachine::Initialize(USkeletalMeshComponent* InOwner, ULuaScriptAn
 {
     OwningComponent = InOwner;
     OwningAnimInstance = InAnimInstance;
-
+        
     LuaScriptName = OwningComponent->StateMachineFileName;
     InitLuaStateMachine();
 

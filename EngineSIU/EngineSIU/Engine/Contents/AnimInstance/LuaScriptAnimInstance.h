@@ -50,6 +50,9 @@ public:
 
     void SetAnimation(UAnimSequence* NewAnim, float BlendingTime, float LoopAnim = false, bool ReverseAnim = false);
 
+public:
+    UAnimStateMachine* GetStateMachine() const { return StateMachine; }
+
 private:
     float ElapsedTime;
     float PlayRate;

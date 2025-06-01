@@ -10,6 +10,9 @@
 #include "Actors/Bullet.h"
 #include "Engine/EditorEngine.h"
 
+#include "Animation/AnimStateMachine.h"
+#include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
+
 AEnemy::AEnemy()
     : SkeletalMeshComponent(nullptr)
     , SkeletalMesh(nullptr)
@@ -59,17 +62,14 @@ void AEnemy::BeginPlay()
     SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
     SetRootComponent(SkeletalMeshComponent);
 
-    SkeletalMeshComponent->ClearAnimScriptInstance();
-
     SkeletalMesh = UAssetManager::Get().GetSkeletalMesh(FName("Contents/Enemy/Pistol_Idle"));
     SkeletalMeshComponent->SetSkeletalMeshAsset(SkeletalMesh);
-    BindSelfLuaProperties();
     SkeletalMeshComponent->StateMachineFileName = "LuaScripts/Animations/EnemyStateMachine.lua";
-
+    Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance())->GetStateMachine()->SetLuaScriptName(SkeletalMeshComponent->StateMachineFileName);
+    Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance())->GetStateMachine()->InitLuaStateMachine();
 
     SetActorLocation(GetOwner()->GetRootComponent()->GetRelativeLocation());
     GetActorRotation();
-
 
     CurrentFireTimer = 0.0f;
 
