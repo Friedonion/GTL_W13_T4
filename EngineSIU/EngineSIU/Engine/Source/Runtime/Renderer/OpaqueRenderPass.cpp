@@ -195,10 +195,8 @@ void FOpaqueRenderPass::CleanUpRender(const std::shared_ptr<FEditorViewportClien
     constexpr UINT NumViews = static_cast<UINT>(EMaterialTextureSlots::MTS_MAX);
     
     ID3D11ShaderResourceView* NullSRVs[NumViews] = { nullptr };
-    ID3D11SamplerState* NullSamplers[NumViews] = { nullptr};
     
     Graphics->DeviceContext->PSSetShaderResources(0, NumViews, NullSRVs);
-    Graphics->DeviceContext->PSSetSamplers(0, NumViews, NullSamplers);
 
     // for Gouraud shading
     ID3D11SamplerState* NullSampler[1] = { nullptr};

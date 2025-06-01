@@ -73,20 +73,20 @@ private:
     TArray<TArray<uint32>> SpotLightPerTiles;
     TArray<SpotLightPerTile> GSpotLightPerTiles;
 
-    ID3D11Buffer* PointLightBuffer;
-    ID3D11ShaderResourceView* PointLightSRV;
+    ID3D11Buffer* PointLightBuffer = nullptr;
+    ID3D11ShaderResourceView* PointLightSRV = nullptr;
 
-    ID3D11Buffer* SpotLightBuffer;
-    ID3D11ShaderResourceView* SpotLightSRV;
+    ID3D11Buffer* SpotLightBuffer = nullptr;
+    ID3D11ShaderResourceView* SpotLightSRV = nullptr;
     
-    ID3D11Buffer* PointLightPerTilesBuffer;
-    ID3D11ShaderResourceView* PointLightPerTilesSRV;
+    ID3D11Buffer* PointLightPerTilesBuffer = nullptr;
+    ID3D11ShaderResourceView* PointLightPerTilesSRV = nullptr;
 
-    ID3D11Buffer* SpotLightPerTilesBuffer;
-    ID3D11ShaderResourceView* SpotLightPerTilesSRV;
+    ID3D11Buffer* SpotLightPerTilesBuffer = nullptr;
+    ID3D11ShaderResourceView* SpotLightPerTilesSRV = nullptr;
 
-    ID3D11ShaderResourceView* PointLightIndexBufferSRV;
-    ID3D11ShaderResourceView* SpotLightIndexBufferSRV;
+    ID3D11ShaderResourceView* PointLightIndexBufferSRV = nullptr;
+    ID3D11ShaderResourceView* SpotLightIndexBufferSRV = nullptr;
 
     static constexpr uint32 MAX_NUM_POINTLIGHTS = 50000;
     static constexpr uint32 MAX_NUM_SPOTLIGHTS = 50000;

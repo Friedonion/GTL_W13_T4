@@ -4,7 +4,7 @@
 #include "UnrealEd/EditorPanel.h"
 
 class USkeletalMesh;
-class FReferenceSkeleton;
+struct FReferenceSkeleton;
 class USkeletalMeshComponent;
 class UAnimDataModel;
 class SkeletalMeshViewerPanel : public UEditorPanel

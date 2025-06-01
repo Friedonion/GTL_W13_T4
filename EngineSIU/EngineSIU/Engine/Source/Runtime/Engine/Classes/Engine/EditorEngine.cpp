@@ -20,6 +20,7 @@
 #include "SkeletalMesh.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 #include "Particles/ParticleSystem.h"
+#include "SoundManager.h"
 
 extern FEngineLoop GEngineLoop;
 
@@ -245,6 +246,7 @@ void UEditorEngine::Tick(float DeltaTime)
             }
         }
     }
+    FSoundManager::GetInstance().Update();
 }
 
 void UEditorEngine::StartPIE()
@@ -254,6 +256,13 @@ void UEditorEngine::StartPIE()
         UE_LOG(ELogLevel::Warning, TEXT("PIEWorld already exists!"));
         return;
     }
+
+    if (!PhysicsManager->GetPhysics())
+    {
+        PhysicsManager->InitPhysX(); 
+    }
+
+    ViewerType = EViewerType::EVT_PIE;
     
     ClearActorSelection(); // Editor World 기준 Select Actor 해제
     ClearComponentSelection();
@@ -290,6 +299,8 @@ void UEditorEngine::StartSkeletalMeshViewer(FName SkeletalMeshName, UAnimationAs
         UE_LOG(ELogLevel::Warning, TEXT("SkeletalMeshViewerWorld already exists!"));
         return;
     }
+
+    ViewerType = EViewerType::EVT_SkeletalMeshViewer;
     
     FWorldContext& WorldContext = CreateNewWorldContext(EWorldType::SkeletalViewer);
     
@@ -356,6 +367,8 @@ void UEditorEngine::StartParticleViewer(UParticleSystem* ParticleSystemAsset)
     {
         return;
     }
+
+    ViewerType = EViewerType::EVT_ParticleViewer;
 
     ClearActorSelection();
     ClearComponentSelection();
@@ -431,6 +444,8 @@ void UEditorEngine::StartPhysicsAssetViewer(FName PreviewMeshKey, FName PhysicsA
     {
         return;
     }
+
+    ViewerType = EViewerType::EVT_PhysicsAssetViewer;
 
     ClearActorSelection();
     ClearComponentSelection();
@@ -576,6 +591,8 @@ void UEditorEngine::SetPhysXScene(UWorld* World)
 
 void UEditorEngine::EndPIE()
 {
+    ViewerType = EViewerType::EVT_Editor;
+    
     if (PIEWorld)
     {
         this->ClearActorSelection(); // PIE World 기준 Select Actor 해제 
@@ -599,6 +616,8 @@ void UEditorEngine::EndPIE()
 
 void UEditorEngine::EndSkeletalMeshViewer()
 {
+    ViewerType = EViewerType::EVT_Editor;
+    
     if (SkeletalMeshViewerWorld)
     {
         this->ClearActorSelection();
@@ -624,6 +643,8 @@ void UEditorEngine::EndSkeletalMeshViewer()
 
 void UEditorEngine::EndParticleViewer()
 {
+    ViewerType = EViewerType::EVT_Editor;
+    
     if (ParticleViewerWorld)
     {
         this->ClearActorSelection();
@@ -649,6 +670,8 @@ void UEditorEngine::EndParticleViewer()
 
 void UEditorEngine::EndPhysicsAssetViewer()
 {
+    ViewerType = EViewerType::EVT_Editor;
+    
     if (PhysicsAssetViewerWorld)
     {
         this->ClearActorSelection();

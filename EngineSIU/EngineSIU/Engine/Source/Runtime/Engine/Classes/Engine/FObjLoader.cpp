@@ -640,20 +640,24 @@ void FObjLoader::CalculateTangent(FStaticMeshVertex& PivotVertex, const FStaticM
 
 FStaticMeshRenderData* FObjManager::LoadObjStaticMeshAsset(const FString& PathFileName)
 {
-    FStaticMeshRenderData* NewStaticMesh = new FStaticMeshRenderData();
-
     if ( const auto It = ObjStaticMeshMap.Find(PathFileName))
     {
         return *It;
     }
+    
 
     FWString BinaryPath = (PathFileName + ".bin").ToWideString();
     if (std::ifstream(BinaryPath).good())
     {
+        FStaticMeshRenderData* NewStaticMesh = new FStaticMeshRenderData();
         if (LoadStaticMeshFromBinary(BinaryPath, *NewStaticMesh))
         {
             ObjStaticMeshMap.Add(PathFileName, NewStaticMesh);
             return NewStaticMesh;
+        }
+        else
+        {
+            delete NewStaticMesh;
         }
     }
 
@@ -663,11 +667,11 @@ FStaticMeshRenderData* FObjManager::LoadObjStaticMeshAsset(const FString& PathFi
 
     if (!Result)
     {
-        delete NewStaticMesh;
         return nullptr;
     }
 
     // Material
+    FStaticMeshRenderData* NewStaticMesh = new FStaticMeshRenderData();
     if (NewObjInfo.MaterialSubsets.Num() > 0)
     {
         Result = FObjLoader::ParseMaterial(NewObjInfo, *NewStaticMesh);

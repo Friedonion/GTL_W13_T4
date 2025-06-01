@@ -1,6 +1,8 @@
-﻿#pragma once
+#pragma once
 #include "Pawn.h"
 
+class UCapsuleComponent;
+class USkeletalMeshComponent;
 
 class ACharacter : public APawn
 {
@@ -9,4 +11,21 @@ class ACharacter : public APawn
 public:
     ACharacter() = default;
     
+
+private:
+
+    UPROPERTY(
+        VisibleAnywhere,
+        USkeletalMeshComponent*,
+        Mesh,
+        = nullptr
+    )
+
+    UPROPERTY(
+        VisibleAnywhere,
+        UCapsuleComponent*,
+        CapsuleComponent,
+        = nullptr
+    )
+
 };

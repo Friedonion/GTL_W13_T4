@@ -112,6 +112,6 @@ void OutlinerEditorPanel::OnResize(HWND hWnd)
 {
     RECT clientRect;
     GetClientRect(hWnd, &clientRect);
-    Width = clientRect.right - clientRect.left;
-    Height = clientRect.bottom - clientRect.top;
+    Width = static_cast<float>(clientRect.right - clientRect.left);
+    Height = static_cast<float>(clientRect.bottom - clientRect.top);
 }

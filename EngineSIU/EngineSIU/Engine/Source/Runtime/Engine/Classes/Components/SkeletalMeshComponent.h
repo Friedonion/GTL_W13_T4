@@ -9,7 +9,7 @@
 struct FConstraintInstance;
 class UAnimSequence;
 class USkeletalMesh;
-class FAnimNotifyEvent;
+struct FAnimNotifyEvent;
 class UAnimSequenceBase;
 class UAnimInstance;
 class UAnimSingleNodeInstance;
@@ -154,6 +154,9 @@ private:
     TArray<FConstraintInstance*> Constraints;
 
     void CPUSkinning(bool bForceUpdate = false);
+
+public:
+    UPROPERTY(EditAnywhere, FString, StateMachineFileName, = "LuaScripts/Animations/DefaultStateMachine.lua");
 
 public:
     TSubclassOf<UAnimInstance> AnimClass;

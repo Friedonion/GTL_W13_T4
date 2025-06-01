@@ -55,7 +55,7 @@ public:
 private:
     TArray<FParticleEmitterInstance*> EmitterInstances;
 
-    UPROPERTY_WITH_FLAGS(EditAnywhere, UParticleSystem*, Template)
+    UPROPERTY_WITH_FLAGS(EditAnywhere, UParticleSystem*, Template, = nullptr)
 
     TArray<FDynamicEmitterDataBase*> EmitterRenderData;
 

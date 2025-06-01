@@ -20,15 +20,16 @@ class AGameMode : public AActor
     DECLARE_CLASS(AGameMode, AActor)
     
 public:
-    AGameMode();
-    virtual ~AGameMode() override;
+    AGameMode() = default;
+    virtual ~AGameMode() override = default;
+
+    virtual void PostSpawnInitialize() override;
     
     void InitializeComponent();
     virtual UObject* Duplicate(UObject* InOuter) override;
 
     //virtual void BeginPlay() override;
     //virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-
 
     // 게임 모드 초기화
     virtual void InitGame();
@@ -43,7 +44,6 @@ public:
 
     void Reset();
 
-public:
     FOnGameInit OnGameInit;
     FOnGameStart OnGameStart;
     FOnGameEnd OnGameEnd;

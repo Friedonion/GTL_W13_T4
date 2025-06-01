@@ -26,13 +26,10 @@ public:
     virtual void ClearRenderArr() override;
 
     void CreateBuffer();
-    void CreateSampler();
 
 protected:
     virtual void PrepareRender(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
     virtual void CleanUpRender(const std::shared_ptr<FEditorViewportClient>& Viewport) override;
 
     virtual void CreateResource() override;
-    
-    ID3D11SamplerState* Sampler;
 };

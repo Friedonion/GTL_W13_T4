@@ -139,7 +139,7 @@ struct FMaterialInfo
     float IOR = 1.5f;                                              // Ni: Index of Refraction
     float Transparency = 0.f;                                      // d or Tr: Transparency of surface
     float BumpMultiplier = 1.f;                                    // -bm: Bump Multiplier
-    uint32 IlluminanceModel;                                       // illum: illumination Model between 0 and 10.
+    uint32 IlluminanceModel = 0;                                       // illum: illumination Model between 0 and 10.
 
     float Metallic = 0.0f;                                         // Pm: Metallic
     float Roughness = 0.5f;                                        // Pr: Roughness
@@ -211,8 +211,8 @@ struct FPoint
 {
     FPoint() : x(0), y(0) {}
     FPoint(float _x, float _y) : x(_x), y(_y) {}
-    FPoint(long _x, long _y) : x(_x), y(_y) {}
-    FPoint(int _x, int _y) : x(_x), y(_y) {}
+    FPoint(long _x, long _y) : x(static_cast<float>(_x)), y(static_cast<float>(_y)) {}
+    FPoint(int _x, int _y) : x(static_cast<float>(_x)), y(static_cast<float>(_y)) {}
 
     float x, y;
 };
@@ -223,10 +223,10 @@ struct FBoundingBox
     FBoundingBox(FVector InMin, FVector InMax) : MinLocation(InMin), MaxLocation(InMax) {}
     
     FVector MinLocation; // Minimum extents
-    float pad;
+    float pad = 0;
     
     FVector MaxLocation; // Maximum extents
-    float pad1;
+    float pad1 = 0;
 
     bool IsValidBox() const
     {

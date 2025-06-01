@@ -3,7 +3,7 @@
 
 Texture2D SceneDepthTexture : register(t99);
 
-SamplerState Sampler : register(s0);
+SamplerState Sampler : register(s3); // Point Clamp
 
 cbuffer MaterialConstants : register(b1)
 {

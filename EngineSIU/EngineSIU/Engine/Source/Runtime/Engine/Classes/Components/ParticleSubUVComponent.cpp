@@ -56,22 +56,22 @@ void UParticleSubUVComponent::SetProperties(const TMap<FString, FString>& InProp
     TempStr = InProperties.Find(TEXT("CellsPerRow"));
     if (TempStr)
     {
-        CellsPerRow = FString::ToFloat(*TempStr);
+        CellsPerRow = FString::ToInt(*TempStr);
     }
     TempStr = InProperties.Find(TEXT("CellsPerColumn"));
     if (TempStr)
     {
-        CellsPerColumn = FString::ToFloat(**TempStr);
+        CellsPerColumn = FString::ToInt(**TempStr);
     }
     TempStr = InProperties.Find(TEXT("IndexU"));
     if (TempStr)
     {
-        IndexU = FString::ToFloat(*TempStr);
+        IndexU = FString::ToInt(*TempStr);
     }
     TempStr = InProperties.Find(TEXT("IndexV"));
     if (TempStr)
     {
-        IndexV = FString::ToFloat(*TempStr);
+        IndexV = FString::ToInt(*TempStr);
     }
     TempStr = InProperties.Find(TEXT("ElapsedTime"));
     if (TempStr)

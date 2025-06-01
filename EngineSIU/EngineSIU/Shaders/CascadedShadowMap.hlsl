@@ -10,6 +10,25 @@ struct VS_INPUT_StaticMesh
     float2 UV : TEXCOORD;
 };
 
+struct VS_INPUT_SkeletalMesh
+{
+    float3 Position : POSITION;
+    float4 Color : COLOR;
+    float3 Normal : NORMAL;
+    float4 Tangent : TANGENT;
+    float2 UV : TEXCOORD;
+    uint4 BoneIndices : BONE_INDICES;
+    float4 BoneWeights : BONE_WEIGHTS;
+};
+
+StructuredBuffer<float4x4> BoneMatrices : register(t1);
+
+cbuffer FCPUSkinningConstants : register(b2)
+{
+    bool bCPUSkinning;
+    float3 pad0;
+}
+
 cbuffer CascadeConstantBuffer : register(b0)
 {
     row_major matrix World;
@@ -27,10 +46,55 @@ struct GS_OUTPUT
     uint RTIndex : SV_RenderTargetArrayIndex;
 };
 
-GS_INPUT mainVS(VS_INPUT_StaticMesh Input)
+GS_INPUT mainVS_SM(VS_INPUT_StaticMesh Input)
 {
     GS_INPUT output;
     float4 pos = mul(float4(Input.Position, 1.0f), World);
+    output.position = pos;
+    return output;
+}
+
+GS_INPUT mainVS_SKM(VS_INPUT_SkeletalMesh Input)
+{
+    float4 SkinnedPosition = float4(0, 0, 0, 0);
+    
+    if (bCPUSkinning)
+    {
+        SkinnedPosition = float4(Input.Position, 1.0f);
+    }
+    else
+    {    
+        // 가중치 합산
+        float TotalWeight = 0.0f;
+    
+        for (int i = 0; i < 4; ++i)
+        {
+            float Weight = Input.BoneWeights[i];
+            TotalWeight += Weight;
+        
+            if (Weight > 0.0f)
+            {
+                uint BoneIdx = Input.BoneIndices[i];
+                float4 Pos = mul(float4(Input.Position, 1.0f), BoneMatrices[BoneIdx]);
+            
+                SkinnedPosition += Weight * Pos;
+            }
+        }
+    
+        // 가중치 예외 처리
+        if (TotalWeight < 0.001f)
+        {
+            SkinnedPosition = float4(Input.Position, 1.0f);
+        }
+        else if (abs(TotalWeight - 1.0f) > 0.001f && TotalWeight > 0.001f)
+        {
+            // 가중치 합이 1이 아닌 경우 정규화
+            SkinnedPosition /= TotalWeight;
+        }
+    }
+    
+    GS_INPUT output;
+    float4 pos = mul(SkinnedPosition, World);
     output.position = pos;
     return output;
 }

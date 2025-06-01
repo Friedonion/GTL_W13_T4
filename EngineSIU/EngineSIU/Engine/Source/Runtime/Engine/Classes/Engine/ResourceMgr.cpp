@@ -32,6 +32,7 @@ void FResourceManager::Initialize(FRenderer* Renderer, FGraphicsDevice* Device)
     LoadTextureFromFile(Device->Device, L"Assets/Viewer/Bone_16x.PNG");
     LoadTextureFromFile(Device->Device, L"Assets/Viewer/BoneNonWeighted_16x.PNG");
     LoadTextureFromFile(Device->Device, L"Assets/Viewer/GroupActor_16x.PNG");
+    LoadTextureFromFile(Device->Device, L"Assets/Viewer/qer.PNG");
 }
 
 void FResourceManager::Release(FRenderer* Renderer)
@@ -71,6 +72,12 @@ std::shared_ptr<FTexture> FResourceManager::GetTexture(const FWString& Name) con
     auto* TempValue = TextureMap.Find(Name);
     return TempValue ? *TempValue : nullptr;
 }
+
+const TMap<FWString, std::shared_ptr<FTexture>>& FResourceManager::GetTextureMap() const
+{
+    return TextureMap;
+}
+
 
 HRESULT FResourceManager::LoadTextureFromFile(ID3D11Device* Device, const wchar_t* Filename, bool bIsSRGB)
 {

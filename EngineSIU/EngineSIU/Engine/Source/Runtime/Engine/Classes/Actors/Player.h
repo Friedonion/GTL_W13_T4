@@ -1,6 +1,6 @@
 #pragma once
 #include "Components/SkeletalMeshComponent.h"
-#include "GameFramework/Actor.h"
+#include "GameFramework/Character.h"
 #include "UObject/ObjectMacros.h"
 #include "UObject/ObjectTypes.h"
 
@@ -45,7 +45,7 @@ private:
 
     bool bLeftMouseDown = false;
 
-    POINT LastMousePos;
+    POINT LastMousePos = { 0,0 };
     EControlMode ControlMode = CM_TRANSLATION;
     ECoordMode CoordMode = CDM_WORLD;
     FQuat InitialBoneRotationForGizmo;
@@ -56,15 +56,19 @@ public:
     ECoordMode GetCoordMode() const { return CoordMode; }
 };
 
-class APlayer : public AActor
+class APlayer : public ACharacter
 {
-    DECLARE_CLASS(APlayer, AActor)
+    DECLARE_CLASS(APlayer, ACharacter)
 
 public:
     APlayer() = default;
 
+    virtual void BeginPlay() override;
+
     virtual UObject* Duplicate(UObject* InOuter) override;
     virtual void Tick(float DeltaTime) override;
+
+    virtual void RegisterLuaType(sol::state& Lua); // Lua에 클래스 등록해주는 함수.
 };
 
 #pragma region W10

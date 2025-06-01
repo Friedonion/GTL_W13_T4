@@ -1642,6 +1642,17 @@
     <ClCompile Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\GameFramework\Bullet.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\GameFramework\BulletTester.cpp" />
+    <ClCompile Include="Engine\Contents\AnimInstance\MyAnimInstance.cpp" />
+    <ClCompile Include="Engine\Contents\Objects\DamageCameraShake.cpp" />
+    <ClCompile Include="Engine\Source\Editor\PropertyEditor\PhysicsAssetViewerPanel.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Core\Container\ArrayHelper.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\BodyInstance.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\ConstraintInstance.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Components\SocketComponent.cpp">
+      <Filter>Engine\Source\Runtime\Engine\Classes\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="EngineSIU.natvis" />
@@ -1756,16 +1767,6 @@
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAcceleration.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAccelerationBase.h" />
     <ClInclude Include="Engine\Source\Runtime\Physics\PhysicsManager.h" />
-    <ClInclude Include="Engine\Contents\AnimInstance\MyAnimInstance.h" />
-    <ClInclude Include="Engine\Contents\Objects\DamageCameraShake.h" />
-    <ClInclude Include="Engine\Source\Editor\PropertyEditor\PhysicsAssetViewerPanel.h" />
-    <ClInclude Include="Engine\Source\Runtime\Core\Container\ArrayHelper.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\BodyInstance.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\ConstraintInstance.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\GameFramework\Bullet.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\GameFramework\BulletTester.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\CompositingShader.hlsl" />

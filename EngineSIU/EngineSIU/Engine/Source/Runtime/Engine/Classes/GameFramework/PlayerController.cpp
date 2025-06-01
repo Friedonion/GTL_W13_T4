@@ -96,14 +96,6 @@ void APlayerController::SetupInputComponent()
     }
 }
 
-void APlayerController::BindAction(const FString& Key, const std::function<void(float)>& Callback)
-{
-    if (InputComponent)
-    {
-        InputComponent->BindAction(Key, Callback);
-    }
-}
-
 AActor* APlayerController::GetViewTarget() const
 {
     AActor* CameraManagerViewTarget = PlayerCameraManager ? PlayerCameraManager->GetViewTarget() : nullptr;

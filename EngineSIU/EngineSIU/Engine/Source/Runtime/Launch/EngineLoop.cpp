@@ -16,6 +16,7 @@
 #include "Renderer/TileLightCullingPass.h"
 
 #include "SoundManager.h"
+#include "Lua/LuaScriptManager.h"
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 
@@ -167,7 +168,9 @@ void FEngineLoop::Tick()
             }
         }
 
-        const float DeltaTime = static_cast<float>(ElapsedTime / 1000.f);
+        float DeltaTime = static_cast<float>(ElapsedTime / 1000.f);
+
+        DeltaTime /= DelaTimeDenom;
 
         GEngine->Tick(DeltaTime);
         LevelEditor->Tick(DeltaTime);
@@ -188,6 +191,8 @@ void FEngineLoop::Tick()
             GPUTimingManager.EndFrame();        // End GPU frame timing
         }
 
+        FLuaScriptManager::Get().HotReloadLuaScript();
+
         GraphicDevice.SwapBuffer();
         do
         {
@@ -196,7 +201,7 @@ void FEngineLoop::Tick()
             ElapsedTime = (static_cast<double>(EndTime.QuadPart - StartTime.QuadPart) * 1000.f / static_cast<double>(Frequency.QuadPart));
         } while (ElapsedTime < TargetFrameTime);
     }
-    FSoundManager::GetInstance().Update();
+   
 }
 
 void FEngineLoop::GetClientSize(uint32& OutWidth, uint32& OutHeight) const
