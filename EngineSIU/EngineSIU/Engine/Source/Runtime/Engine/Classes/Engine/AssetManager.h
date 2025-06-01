@@ -12,6 +12,7 @@ class USkeletalMesh;
 
 enum class EAssetType : uint8
 {
+    None,
     StaticMesh,
     SkeletalMesh,
     Skeleton,
@@ -28,9 +29,9 @@ struct FAssetInfo
     FName AssetName;        // Asset의 이름
     FName PackagePath;      // Asset의 패키지 경로
     FString SourceFilePath; // 원본 파일 경로
-    EAssetType AssetType;   // Asset의 타입
+    EAssetType AssetType = EAssetType::None;   // Asset의 타입
     uint32 Size;            // Asset의 크기 (바이트 단위)
-    UObject* AssetObject;
+    UObject* AssetObject = nullptr;
 
     [[nodiscard]] FString GetFullPath() const { return PackagePath.ToString() / AssetName.ToString(); }
 
@@ -99,7 +100,7 @@ public:
     void GetAssetKeys(EAssetType AssetType, TSet<FName>& OutKeys) const;
     void GetAssetKeys(EAssetType AssetType, TArray<FName>& OutKeys) const;
 
-    const FName& GetAssetKeyByObject(EAssetType AssetType, const UObject* AssetObject) const;
+    const FName GetAssetKeyByObject(EAssetType AssetType, const UObject* AssetObject) const;
     
     void AddAssetInfo(const FAssetInfo& Info);
     

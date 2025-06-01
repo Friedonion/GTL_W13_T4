@@ -228,7 +228,7 @@ void FShadowManager::BindResourcesForSampling(
 
         FCascadeConstantBuffer CascadeData = {};
         CascadeData.World = FMatrix::Identity;
-        for (uint32 i = 0; i < NumCascades; i++)
+        for (int32 i = 0; i < NumCascades; i++)
         {
             CascadeData.ViewProj[i] = CascadesViewProjMatrices[i];
             CascadeData.InvViewProj[i] = FMatrix::Inverse(CascadeData.ViewProj[i]);

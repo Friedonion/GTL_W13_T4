@@ -145,7 +145,7 @@ void UAssetManager::GetAssetKeys(EAssetType AssetType, TArray<FName>& OutKeys) c
     }
 }
 
-const FName& UAssetManager::GetAssetKeyByObject(EAssetType AssetType, const UObject* AssetObject) const
+const FName UAssetManager::GetAssetKeyByObject(EAssetType AssetType, const UObject* AssetObject) const
 {
     if (AssetObject)
     {
@@ -157,7 +157,7 @@ const FName& UAssetManager::GetAssetKeyByObject(EAssetType AssetType, const UObj
             }
         }
     }
-    return NAME_None;
+    return FName(NAME_None);
 }
 
 void UAssetManager::AddAssetInfo(const FAssetInfo& Info)
@@ -199,6 +199,7 @@ bool UAssetManager::SavePhysicsAsset(const FString& FilePath, UPhysicsAsset* Phy
         }
         catch (const std::filesystem::filesystem_error& e)
         {
+            UE_LOG(ELogLevel::Error, TEXT("Failed to create directory: %s"), *FString(e.what()));
             return false;
         }
     }
@@ -247,6 +248,7 @@ bool UAssetManager::SaveParticleSystemAsset(const FString& FilePath, UParticleSy
         }
         catch (const std::filesystem::filesystem_error& e)
         {
+            UE_LOG(ELogLevel::Error, TEXT("Failed to create directory: %s"), *FString(e.what()));
             return false;
         }
     }

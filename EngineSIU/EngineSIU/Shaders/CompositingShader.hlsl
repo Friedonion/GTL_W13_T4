@@ -7,7 +7,7 @@ Texture2D EditorOverlayTexture : register(t104);
 Texture2D DebugTexture : register(t106);
 Texture2D CameraEffectTexture : register(t107);
 
-SamplerState CompositingSampler : register(s0);
+SamplerState CompositingSampler : register(s1); // Linear Clamp
 
 #define VMI_Lit_Gouraud      0
 #define VMI_Lit_Lambert      1

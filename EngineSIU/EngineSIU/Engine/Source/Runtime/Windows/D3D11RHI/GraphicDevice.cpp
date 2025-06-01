@@ -69,8 +69,8 @@ void FGraphicsDevice::CreateDeviceAndSwapChain(HWND hWindow)
     ScreenWidth = SwapchainDesc.BufferDesc.Width;
     ScreenHeight = SwapchainDesc.BufferDesc.Height;
 
-    Viewport.Width = ScreenWidth;
-    Viewport.Height = ScreenHeight;
+    Viewport.Width = static_cast<FLOAT>(ScreenWidth);
+    Viewport.Height = static_cast<FLOAT>(ScreenHeight);
     Viewport.MinDepth = 0.0f;
     Viewport.MaxDepth = 1.0f;
     Viewport.TopLeftX = 0;

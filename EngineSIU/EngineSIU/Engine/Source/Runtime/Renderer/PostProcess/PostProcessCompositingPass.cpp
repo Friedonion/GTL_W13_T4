@@ -7,28 +7,12 @@
 #include "D3D11RHI/DXDShaderManager.h"
 #include "UnrealEd/EditorViewportClient.h"
 
-FPostProcessCompositingPass::FPostProcessCompositingPass()
-    : Sampler(nullptr)
-{
-}
-
 void FPostProcessCompositingPass::Initialize(FDXDBufferManager* InBufferManager, FGraphicsDevice* InGraphics, FDXDShaderManager* InShaderManage)
 {
     FRenderPassBase::Initialize(InBufferManager, InGraphics, InShaderManage);
 
     ShaderManager->AddVertexShader(L"PostProcessCompositing", L"Shaders/PostProcessCompositingShader.hlsl", "mainVS");
     ShaderManager->AddPixelShader(L"PostProcessCompositing", L"Shaders/PostProcessCompositingShader.hlsl", "mainPS");
-
-    D3D11_SAMPLER_DESC SamplerDesc = {};
-    SamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-    SamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-    SamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-    SamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-    SamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-    SamplerDesc.MinLOD = 0;
-    SamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-    
-    Graphics->Device->CreateSamplerState(&SamplerDesc, &Sampler);
 }
 
 void FPostProcessCompositingPass::PrepareRenderArr()
@@ -53,7 +37,6 @@ void FPostProcessCompositingPass::Render(const std::shared_ptr<FEditorViewportCl
 
     Graphics->DeviceContext->RSSetState(Graphics->RasterizerSolidBack);
     Graphics->DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    Graphics->DeviceContext->PSSetSamplers(0, 1, &Sampler);
 
     Graphics->DeviceContext->IASetVertexBuffers(0, 0, nullptr, nullptr, nullptr);
     

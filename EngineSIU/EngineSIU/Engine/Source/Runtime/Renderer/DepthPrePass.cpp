@@ -74,12 +74,22 @@ void FDepthPrePass::PrepareRender(const std::shared_ptr<FEditorViewportClient>& 
     FDepthStencilRHI* DepthStencilRHI = ViewportResource->GetDepthStencil(EResourceType::ERT_Debug);
 
     Graphics->DeviceContext->OMSetRenderTargets(0, nullptr, DepthStencilRHI->DSV); // ← 깊이 전용
+
+    BufferManager->BindStructuredBufferSRV(TEXT("BoneBuffer"), 1, EShaderStage::Vertex);
+    BufferManager->BindConstantBuffer(TEXT("FCPUSkinningConstants"), 2, EShaderStage::Vertex);
+
+    FCPUSkinningConstants CPUSkinningData;
+    CPUSkinningData.bCPUSkinning = USkeletalMeshComponent::GetCPUSkinning();
+    BufferManager->UpdateConstantBuffer(TEXT("FCPUSkinningConstants"), CPUSkinningData);
 }
 
 void FDepthPrePass::CleanUpRender(const std::shared_ptr<FEditorViewportClient>& Viewport)
 {
     // 렌더 타겟 해제
     Graphics->DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
+
+    ID3D11ShaderResourceView* NullSRV[1] = { nullptr };
+    Graphics->DeviceContext->VSSetShaderResources(1, 1, NullSRV);
 }
 
 void FDepthPrePass::PrepareStaticMesh()

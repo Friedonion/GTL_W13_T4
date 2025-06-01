@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Container/Map.h"
 #include "HAL/PlatformType.h"
 
@@ -387,6 +387,10 @@ enum Type : uint8
 
     Max,
 };
+
+// 일부 키코드만 지원
+EKeys::Type FromCharCode(uint32_t CharCode);
+FString ToString(EKeys::Type Key);
 }
 
 struct FInputKeyManager // ue FInputKeyManager.cpp, 1530

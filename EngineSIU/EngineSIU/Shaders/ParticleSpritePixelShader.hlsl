@@ -41,7 +41,7 @@ float4 main(PS_Input Input) : SV_TARGET
     float4 Color = Input.Color;
     if (Material.TextureFlag & TEXTURE_FLAG_DIFFUSE)
     {
-        Color *= MaterialTextures[TEXTURE_SLOT_DIFFUSE].Sample(MaterialSamplers[TEXTURE_SLOT_DIFFUSE], UV);        
+        Color *= MaterialTextures[TEXTURE_SLOT_DIFFUSE].Sample(SamplerLinearWrap, UV);        
     }
 
     FinalColor = Color;

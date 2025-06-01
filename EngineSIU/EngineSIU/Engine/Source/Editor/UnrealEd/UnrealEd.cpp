@@ -19,7 +19,7 @@ void UnrealEd::Initialize()
     auto PropertyPanel = std::make_shared<PropertyEditorPanel>();
     Panels["PropertyPanel"] = PropertyPanel;
 
-    // TODO : SkeletalViewe 전용 UI 분리
+    // TODO : SkeletalView 전용 UI 분리
     auto BoneHierarchyPanel = std::make_shared<SkeletalMeshViewerPanel>();
     Panels["BoneHierarchyPanel"] = BoneHierarchyPanel;
     

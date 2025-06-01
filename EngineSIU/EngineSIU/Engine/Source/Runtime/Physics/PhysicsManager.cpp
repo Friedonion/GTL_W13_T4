@@ -462,9 +462,18 @@ void FPhysicsManager::CreateJoint(const GameObject* Obj1, const GameObject* Obj2
 {
     PxTransform GlobalPose1 = Obj1->DynamicRigidBody->getGlobalPose();
     PxTransform GlobalPose2 = Obj2->DynamicRigidBody->getGlobalPose();
-        
-    PxTransform LocalFrameParent = GlobalPose1.getInverse() * GlobalPose2;
-    PxTransform LocalFrameChild = PxTransform(PxVec3(0));
+
+    PxQuat AxisCorrection = PxQuat(PxMat33(
+        PxVec3(0.0f, 0.0f, 1.0f),
+        PxVec3(1.0f, 0.0f, 0.0f),
+        PxVec3(0.0f, 1.0f, 0.0f)
+    ));
+    AxisCorrection.normalize();
+
+    PxTransform LocalFrameChild(PxVec3(0.0f), AxisCorrection);
+
+    PxTransform ChildJointFrameInWorld = GlobalPose2 * LocalFrameChild;
+    PxTransform LocalFrameParent = GlobalPose1.getInverse() * ChildJointFrameInWorld;
 
     // PhysX D6 Joint 생성
     PxD6Joint* Joint = PxD6JointCreate(*Physics,
@@ -642,9 +651,33 @@ void FPhysicsManager::CreateJoint(const GameObject* Obj1, const GameObject* Obj2
         
         // 파괴 임계값 설정 (선택사항)
         Joint->setBreakForce(PX_MAX_F32, PX_MAX_F32);  // 무한대로 설정하여 파괴되지 않음
+
+        Joint->setConstraintFlag(PxConstraintFlag::ePROJECTION, true);
+        Joint->setProjectionLinearTolerance(0.01f);
+        Joint->setProjectionAngularTolerance(0.017f);
     }
 
     ConstraintInstance->ConstraintData = Joint;
+}
+
+void FPhysicsManager::SetGravity(UWorld* World, FVector Gravity)
+{
+    if (SceneMap.Contains(World))
+    {
+        SceneMap[World]->setGravity(PxVec3(Gravity.X, Gravity.Y, Gravity.Z));
+    }
+    UE_LOG(ELogLevel::Error, TEXT("Invalid World"));
+}
+
+FVector FPhysicsManager::GetGravity(UWorld* World)
+{
+    if (SceneMap.Contains(World))
+    {
+        PxVec3 Gravity = SceneMap[World]->getGravity();
+        return FVector(Gravity.x, Gravity.y, Gravity.z);
+    }
+    UE_LOG(ELogLevel::Error, TEXT("Invalid World"));
+    return FVector::ZeroVector;
 }
 
 void FPhysicsManager::DestroyGameObject(GameObject* GameObject) const

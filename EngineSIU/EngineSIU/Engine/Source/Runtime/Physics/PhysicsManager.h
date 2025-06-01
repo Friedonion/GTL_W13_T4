@@ -52,6 +52,8 @@ public:
     void RemoveScene(UWorld* World) { SceneMap.Remove(World); }
     void SetCurrentScene(UWorld* World) { CurrentScene = SceneMap[World]; }
     void SetCurrentScene(PxScene* Scene) { CurrentScene = Scene; }
+    void SetGravity(UWorld* World, FVector Gravity);
+    FVector GetGravity(UWorld* World);
     
     void DestroyGameObject(GameObject* GameObject) const;
     
@@ -63,7 +65,7 @@ public:
     PxShape* CreateBoxShape(const PxVec3& Pos, const PxQuat& Quat, const PxVec3& HalfExtents) const;
     PxShape* CreateSphereShape(const PxVec3& Pos, const PxQuat& Quat, float Radius) const;
     PxShape* CreateCapsuleShape(const PxVec3& Pos, const PxQuat& Quat, float Radius, float HalfHeight) const;
-    PxQuat EulerToQuat(const PxVec3& EulerAngles) const;
+    //PxQuat EulerToQuat(const PxVec3& EulerAngles) const;
 
     PxPhysics* GetPhysics() { return Physics; }
     PxMaterial* GetMaterial() const { return Material; }
@@ -83,8 +85,8 @@ private:
     PxMaterial* Material = nullptr;
     PxDefaultCpuDispatcher* Dispatcher = nullptr;
     // 디버깅용
-    PxPvd* Pvd;
-    PxPvdTransport* Transport;
+    PxPvd* Pvd = nullptr;
+    PxPvdTransport* Transport = nullptr;
 
     PxRigidDynamic* CreateDynamicRigidBody(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetups) const;
     PxRigidStatic* CreateStaticRigidBody(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetups) const;

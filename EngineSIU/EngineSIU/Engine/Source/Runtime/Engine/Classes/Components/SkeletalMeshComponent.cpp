@@ -16,11 +16,12 @@
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
 #include "PhysicsEngine/ConstraintInstance.h"
+#include <Engine/Contents/AnimInstance/LuaScriptAnimInstance.h>
 
 bool USkeletalMeshComponent::bIsCPUSkinning = false;
 
 USkeletalMeshComponent::USkeletalMeshComponent()
-    : AnimationMode(EAnimationMode::AnimationSingleNode)
+    : AnimationMode(EAnimationMode::AnimationBlueprint)
     , SkeletalMeshAsset(nullptr)
     , AnimClass(nullptr)
     , AnimScriptInstance(nullptr)
@@ -114,11 +115,11 @@ void USkeletalMeshComponent::SetProperties(const TMap<FString, FString>& InPrope
         }
         if (InProperties.Contains("LoopStartFrame"))
         {
-            SetLoopStartFrame(FString::ToFloat(InProperties["LoopStartFrame"]));
+            SetLoopStartFrame(FString::ToInt(InProperties["LoopStartFrame"]));
         }
         if (InProperties.Contains("LoopEndFrame"))
         {
-            SetLoopEndFrame(FString::ToFloat(InProperties["LoopEndFrame"]));
+            SetLoopEndFrame(FString::ToInt(InProperties["LoopEndFrame"]));
         }
     }
 }
@@ -317,7 +318,7 @@ bool USkeletalMeshComponent::InitializeAnimScriptInstance()
         bool bShouldSpawnSingleNodeInstance = !AnimScriptInstance && SkelMesh && SkelMesh->GetSkeleton();
         if (bShouldSpawnSingleNodeInstance)
         {
-            AnimScriptInstance = FObjectFactory::ConstructObject<UAnimSingleNodeInstance>(this);
+            AnimScriptInstance = FObjectFactory::ConstructObject<ULuaScriptAnimInstance>(this);
 
             if (AnimScriptInstance)
             {
@@ -880,6 +881,7 @@ bool USkeletalMeshComponent::IsReverse() const
     {
         return SingleNodeInstance->IsReverse();
     }
+    return false;
 }
 
 void USkeletalMeshComponent::SetPlayRate(float Rate)

@@ -68,7 +68,7 @@ void UMeshComponent::SetMaterialByName(FName MaterialSlotName, UMaterial* Materi
 
 void UMeshComponent::GetUsedMaterials(TArray<UMaterial*>& Out) const
 {
-    for (int32 ElementIndex = 0; ElementIndex < GetNumMaterials(); ElementIndex++)
+    for (uint32 ElementIndex = 0; ElementIndex < GetNumMaterials(); ElementIndex++)
     {
         if (UMaterial* Material = GetMaterial(ElementIndex))
         {

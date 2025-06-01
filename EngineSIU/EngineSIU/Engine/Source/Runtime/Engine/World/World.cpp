@@ -101,6 +101,11 @@ void UWorld::Release()
         CollisionManager = nullptr;
     }
     
+    if (GEngine->PhysicsManager->GetScene(this))
+    {
+        GEngine->PhysicsManager->RemoveScene(this);
+    }
+
     GUObjectArray.ProcessPendingDestroyObjects();
 }
 

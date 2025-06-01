@@ -33,8 +33,8 @@ public:
     virtual int CheckRayIntersection(const FVector& InRayOrigin, const FVector& InRayDirection, float& OutHitDistance) const override;
  
     
-    float GetRowCount() const { return RowCount; }
-    float GetColumnCount() const { return ColumnCount; }
+    int GetRowCount() const { return RowCount; }
+    int GetColumnCount() const { return ColumnCount; }
 
 protected:
 

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <utility>
 #include <variant>
 #include <optional>
@@ -1395,7 +1395,7 @@ FProperty* MakeProperty(
     {
         constexpr std::string_view TypeName = GetTypeNameString<T>();
         FProperty* Property = new FUnresolvedPtrProperty{ InOwnerStruct, InPropertyName, sizeof(T), InOffset, InFlags, std::move(InMetadata) };
-        Property->TypeSpecificData = FName(TypeName.data(), TypeName.size());
+        Property->TypeSpecificData = FName(TypeName.data(), static_cast<uint32>(TypeName.size()));
 
         // 런타임 검사목록에 추가
         UStruct::AddUnresolvedProperty(Property);

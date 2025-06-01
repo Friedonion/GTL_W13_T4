@@ -1,4 +1,4 @@
-#include "SlateRenderPass.h"
+﻿#include "SlateRenderPass.h"
 
 #include "RendererHelpers.h"
 #include "UnrealClient.h"
@@ -40,13 +40,13 @@ void FSlateRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& View
         ClientHeightFloat /= 0.5f;
         
         Transform.Scale = FVector2D(
-    Rect.Width / ClientWidthFloat,
-    Rect.Height / ClientHeightFloat
+            Rect.Width / ClientWidthFloat,
+            Rect.Height / ClientHeightFloat
         );
         
         Transform.Offset = FVector2D(
-    (Rect.TopLeftX + Rect.Width * 0.5f) / ClientWidthFloat * 2.0f - 1.0f,
-    1.0f - (Rect.TopLeftY + Rect.Height * 0.5f) / ClientHeightFloat * 2.0f
+            (Rect.TopLeftX + Rect.Width * 0.5f) / ClientWidthFloat * 2.0f - 1.0f,
+            1.0f - (Rect.TopLeftY + Rect.Height * 0.5f) / ClientHeightFloat * 2.0f
         );
     }
     else if (GEngine->ActiveWorld->WorldType == EWorldType::PhysicsAssetViewer)
@@ -59,15 +59,15 @@ void FSlateRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& View
             Rect.Height / ClientHeightFloat
         );
 
-        float centerX = Rect.TopLeftX + Rect.Width * 0.5f; // 중앙 정렬용
-        float ndcX = centerX / ClientWidthFloat * 2.0f - 0.6;
+        float CenterX = Rect.TopLeftX + Rect.Width * 0.5f; // 중앙 정렬용
+        float NdcX = CenterX / ClientWidthFloat * 2.0f - 0.6;
 
-        float centerY = Rect.TopLeftY + Rect.Height * 0.5f;
-        float ndcY = 1.0f - centerY / ClientHeightFloat * 2.0f;
+        float CenterY = Rect.TopLeftY + Rect.Height * 0.5f;
+        float NdcY = 1.0f - CenterY / ClientHeightFloat * 2.0f;
 
         Transform.Offset = FVector2D(
-            ndcX,
-            ndcY
+            NdcX,
+            NdcY
         );
     }
     else
@@ -95,7 +95,6 @@ void FSlateRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& View
     FRenderTargetRHI* Resource = ViewportResource->GetRenderTarget(EResourceType::ERT_Compositing);
 
     Graphics->DeviceContext->PSSetShaderResources(static_cast<UINT>(EShaderSRVSlot::SRV_Viewport), 1, &Resource->SRV);
-    Graphics->DeviceContext->PSSetSamplers(0, 1, &Sampler);
 
     ID3D11VertexShader* VertexShader = ShaderManager->GetVertexShaderByKey(L"SlateShader");
     ID3D11PixelShader* PixelShader = ShaderManager->GetPixelShaderByKey(L"SlateShader");
@@ -130,7 +129,6 @@ void FSlateRenderPass::CreateResource()
     }
     
     CreateBuffer();
-    CreateSampler();
 }
 
 void FSlateRenderPass::CreateBuffer()
@@ -143,20 +141,6 @@ void FSlateRenderPass::CreateBuffer()
     {
         return;
     }
-}
-
-void FSlateRenderPass::CreateSampler()
-{
-    D3D11_SAMPLER_DESC SamplerDesc = {};
-    SamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-    SamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-    SamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-    SamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-    SamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
-    SamplerDesc.MinLOD = 0;
-    SamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-    
-    Graphics->Device->CreateSamplerState(&SamplerDesc, &Sampler);
 }
 
 void FSlateRenderPass::PrepareRender(const std::shared_ptr<FEditorViewportClient>& Viewport)

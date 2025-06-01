@@ -45,7 +45,7 @@ private:
 
     bool bLeftMouseDown = false;
 
-    POINT LastMousePos;
+    POINT LastMousePos = { 0,0 };
     EControlMode ControlMode = CM_TRANSLATION;
     ECoordMode CoordMode = CDM_WORLD;
     FQuat InitialBoneRotationForGizmo;

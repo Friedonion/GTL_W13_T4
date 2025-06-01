@@ -19,5 +19,5 @@ public:
     virtual UObject* Duplicate(UObject* InOuter) override;
 
     TArray<AActor*> Actors;
-    UWorld* OwningWorld;
+    UWorld* OwningWorld = nullptr;
 };

@@ -113,12 +113,12 @@ struct FBodyInstance
     
     
     // PhysX 객체 참조
-    physx::PxRigidActor* RigidActorSync;   // 동기 액터
-    physx::PxRigidActor* RigidActorAsync;  // 비동기 액터
+    physx::PxRigidActor* RigidActorSync = nullptr;   // 동기 액터
+    physx::PxRigidActor* RigidActorAsync = nullptr;  // 비동기 액터
 
-    GameObject* BIGameObject;
+    GameObject* BIGameObject = nullptr;
 
-    UPrimitiveComponent* OwnerComponent;
+    UPrimitiveComponent* OwnerComponent = nullptr;
     
-    int32 BoneIndex;
+    int32 BoneIndex = -1;
 };

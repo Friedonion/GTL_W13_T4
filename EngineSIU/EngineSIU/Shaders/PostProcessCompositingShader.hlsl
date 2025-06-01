@@ -1,7 +1,7 @@
 Texture2D FogTexture : register(t103);
 // PostProcessing 추가 시 Texture 추가 (EShaderSRVSlot)
 
-SamplerState CompositingSampler : register(s0);
+SamplerState CompositingSampler : register(s3); // Point Clamp
 
 struct PS_Input
 {

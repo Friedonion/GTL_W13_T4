@@ -71,7 +71,7 @@ public:
     void Deactivate();
 
 private:
-    AActor* OwnerPrivate;
+    AActor* OwnerPrivate = nullptr;
 
     /** InitializeComponent가 호출 되었는지 여부 */
     uint8 bHasBeenInitialized : 1 = false;

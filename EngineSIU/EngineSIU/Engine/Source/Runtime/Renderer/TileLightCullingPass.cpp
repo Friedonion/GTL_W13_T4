@@ -89,8 +89,8 @@ void FTileLightCullingPass::Render(const std::shared_ptr<FEditorViewportClient>&
 void FTileLightCullingPass::Dispatch(const std::shared_ptr<FEditorViewportClient>& Viewport) const
 {
     // 한 스레드 그룹(groupSizeX, groupSizeY)은 16x16픽셀 영역처리
-    const UINT GroupSizeX = (Viewport->GetD3DViewport().Width  + TILE_SIZE - 1) / TILE_SIZE;
-    const UINT GroupSizeY = (Viewport->GetD3DViewport().Height + TILE_SIZE - 1) / TILE_SIZE;
+    const UINT GroupSizeX = static_cast<UINT>((Viewport->GetD3DViewport().Width + TILE_SIZE - 1) / TILE_SIZE);
+    const UINT GroupSizeY = static_cast<UINT>((Viewport->GetD3DViewport().Height + TILE_SIZE - 1) / TILE_SIZE);
 
     Graphics->DeviceContext->CSSetConstantBuffers(0, 1, &TileLightConstantBuffer);
 

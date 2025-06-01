@@ -78,8 +78,6 @@ void FGizmoRenderPass::PrepareRender(const std::shared_ptr<FEditorViewportClient
 
     BufferManager->BindConstantBuffer(TEXT("FMaterialConstants"), 1, EShaderStage::Pixel);
     BufferManager->BindConstantBuffer(TEXT("FViewportSize"), 2, EShaderStage::Pixel);
-    
-    Graphics->DeviceContext->PSSetSamplers(0, 1, &Graphics->SamplerState_LinearClamp);
 }
 
 void FGizmoRenderPass::CleanUpRender(const std::shared_ptr<FEditorViewportClient>& Viewport)

@@ -47,7 +47,6 @@ namespace MaterialUtils
         BufferManager->UpdateConstantBuffer(TEXT("FMaterialConstants"), Data);
 
         ID3D11ShaderResourceView* SRVs[9] = {};
-        ID3D11SamplerState* Samplers[9] = {};
 
         for (uint8 Idx = 0; Idx < static_cast<uint8>(EMaterialTextureSlots::MTS_MAX); ++Idx)
         {
@@ -56,18 +55,15 @@ namespace MaterialUtils
                 std::shared_ptr<FTexture> Texture = FEngineLoop::ResourceManager.GetTexture(MaterialInfo.TextureInfos[Idx].TexturePath);
 
                 SRVs[Idx] = Texture->TextureSRV;
-                Samplers[Idx] = Graphics->GetSamplerState(Texture->SamplerType);
 
                 if (Idx == static_cast<uint8>(EMaterialTextureSlots::MTS_Diffuse))
                 {
                     // for Gouraud shading
                     Graphics->DeviceContext->VSSetShaderResources(0, 1, &SRVs[Idx]);
-                    Graphics->DeviceContext->VSSetSamplers(0, 1, &Samplers[Idx]);
                 }
             }
         }
 
         Graphics->DeviceContext->PSSetShaderResources(0, 9, SRVs);
-        Graphics->DeviceContext->PSSetSamplers(0, 9, Samplers);
     }
 }

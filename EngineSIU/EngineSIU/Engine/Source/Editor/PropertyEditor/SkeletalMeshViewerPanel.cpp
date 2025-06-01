@@ -128,8 +128,8 @@ void SkeletalMeshViewerPanel::OnResize(HWND hWnd)
 {
     RECT ClientRect;
     GetClientRect(hWnd, &ClientRect);
-    Width = ClientRect.right - ClientRect.left;
-    Height = ClientRect.bottom - ClientRect.top;
+    Width = static_cast<float>(ClientRect.right - ClientRect.left);
+    Height = static_cast<float>(ClientRect.bottom - ClientRect.top);
 }
 
 void SkeletalMeshViewerPanel::SetSkeletalMesh(USkeletalMesh* SMesh)
@@ -283,8 +283,8 @@ void SkeletalMeshViewerPanel::RenderAnimationSequence(const FReferenceSkeleton& 
     }
     UAnimDataModel* DataModel = AnimSeq->GetDataModel();
     
-    ImVec2 windowSize = ImVec2(Width*0.7, Height*0.3);
-    ImVec2 windowPos = ImVec2(0.0f, Height - windowSize.y - 30);
+    ImVec2 windowSize = ImVec2(Width*0.7f, Height*0.3f);
+    ImVec2 windowPos = ImVec2(0.0f, Height - windowSize.y - 30.f);
     ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
     ImGui::SetNextWindowPos(windowPos, ImGuiCond_Always);
     
@@ -508,7 +508,7 @@ void SkeletalMeshViewerPanel::RenderAnimationSequence(const FReferenceSkeleton& 
                                 float NewTime = static_cast<float>(Frame) / FrameRate;
                                 if(Frame<LoopStart)
                                 {
-                                    NewTime = LoopStart / FrameRate;
+                                    NewTime = static_cast<float>(LoopStart) / FrameRate;
                                 }
                                 else if(Frame + DurationFrame >LoopEnd)
                                 {
@@ -654,116 +654,6 @@ void SkeletalMeshViewerPanel::RenderAnimationPanel(float PanelPosX, float PanelP
                 CurrentAnimationMode = EAnimationMode::AnimationSingleNode;
             }
             ImGui::EndCombo();
-        }
-
-        const TMap<FName, FAssetInfo>& AnimAssets = UAssetManager::Get().GetAssetRegistry();
-
-        if (CurrentAnimationMode == EAnimationMode::AnimationBlueprint)
-        {
-            UAnimInstance* AnimInstance = RefSkeletalMeshComponent->GetAnimInstance();
-            if (AnimInstance)
-            {
-                TArray<UClass*> CompClasses;
-                GetChildOfClass(UAnimInstance::StaticClass(), CompClasses);
-                static int SelectedIndex = 0;
-
-                // AnimInstance 목록 텍스트
-                ImGui::Text("AnimInstance List");
-                ImGui::SameLine();
-                if (ImGui::BeginCombo("##AnimInstance List Combo", *CompClasses[SelectedIndex]->GetName()))
-                {
-                    for (int i = 0; i < CompClasses.Num(); ++i)
-                    {
-                        if (CompClasses[i] == UAnimInstance::StaticClass() || CompClasses[i] == UAnimSingleNodeInstance::StaticClass())
-                        {
-                            continue;
-                        }
-                        bool bIsSelected = (SelectedIndex == i);
-                        if (ImGui::Selectable(*CompClasses[i]->GetName(), bIsSelected))
-                        {
-                            SelectedIndex = i;
-                        }
-                        if (bIsSelected)
-                            ImGui::SetItemDefaultFocus();
-                    }
-                    ImGui::EndCombo();
-                }
-
-                if (CompClasses.IsValidIndex(SelectedIndex))
-                {
-                    // CurrAnim (AnimA)
-                    FString CurrAnimName = AnimInstance->GetCurrAnim() ? AnimInstance->GetCurrAnim()->GetName() : TEXT("None");
-                    ImGui::Text("CurrAnim: %s", *CurrAnimName);
-
-                    // PrevAnim (AnimB)
-                    FString PrevAnimName = AnimInstance->GetPrevAnim() ? AnimInstance->GetPrevAnim()->GetName() : TEXT("None");
-                    ImGui::Text("PrevAnim: %s", *PrevAnimName);
-
-
-                    float BlendDuration = AnimInstance->GetBlendDuration();
-                    if (ImGui::SliderFloat("Blend Duration", &BlendDuration, 0.f, 1.f))
-                        AnimInstance->SetBlendDuration(BlendDuration);
-                    
-                    UClass* SelectedClass = CompClasses[SelectedIndex];
-                    if (AnimInstance && AnimInstance->GetClass()->IsChildOf(SelectedClass))
-                    {                    
-                        UAnimStateMachine* AnimStateMachine = AnimInstance->GetStateMachine();
-                        if(ImGui::Button("MoveFast"))
-                        {
-                            AnimStateMachine->MoveFast();
-                        }
-                        ImGui::SameLine();
-                        if(ImGui::Button("MoveSlow"))
-                        {
-                            AnimStateMachine->MoveSlow();
-                        }
-                        ImGui::SameLine();
-                        if (ImGui::Button("Dance"))
-                        {
-                            AnimStateMachine->Dance();
-                        }
-                        ImGui::SameLine();
-                        if (ImGui::Button("StopDance"))
-                        {
-                            AnimStateMachine->StopDance();
-                        }
-                        
-                        AnimInstance->SetAnimState(AnimStateMachine->GetState());
-                    }
-                }
-            }
-        }
-        else if (CurrentAnimationMode == EAnimationMode::AnimationSingleNode)
-        {
-            FString SelectedAnimationName = RefSkeletalMeshComponent->GetAnimation()
-                ? RefSkeletalMeshComponent->GetAnimation()->GetName()
-                : TEXT("None");
-
-            ImGui::Text("Anim To Play");
-            ImGui::SameLine();
-            if (ImGui::BeginCombo("##AnimAsset", *SelectedAnimationName))
-            {
-                if (ImGui::Selectable("None"))
-                    RefSkeletalMeshComponent->SetAnimation(nullptr);
-
-                for (const auto& Pair : AnimAssets)
-                {
-                    if (Pair.Value.AssetType != EAssetType::Animation)
-                        continue;
-
-                    FString FullPath = Pair.Value.PackagePath.ToString() + "/" + Pair.Value.AssetName.ToString();
-                    bool bIsSelected = RefSkeletalMeshComponent->GetAnimation()
-                        && RefSkeletalMeshComponent->GetAnimation()->GetName() == Pair.Value.AssetName.ToString();
-
-                    if (ImGui::Selectable(*Pair.Value.AssetName.ToString(), bIsSelected))
-                    {
-                        UAnimationAsset* AnimAsset = UAssetManager::Get().GetAnimation(FName(*FullPath));
-                        RefSkeletalMeshComponent->SetAnimation(Cast<UAnimSequence>(AnimAsset));
-                    }
-                }
-
-                ImGui::EndCombo();
-            }
         }
     }
     ImGui::End();

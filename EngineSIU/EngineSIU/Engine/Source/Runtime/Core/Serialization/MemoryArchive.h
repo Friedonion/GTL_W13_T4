@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <assert.h>
 
 #include "Archive.h"
@@ -79,7 +79,7 @@ public:
     }
 
 private:
-    TArray<uint8>& Data;
+    TArray<uint8/*, FDefaultAllocator64<uint8>*/>& Data;  // TODO : Data의 DefaultAllocator를 64비트로?
 };
 
 class FMemoryReader : public FMemoryArchive

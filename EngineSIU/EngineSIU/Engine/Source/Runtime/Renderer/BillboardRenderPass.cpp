@@ -71,7 +71,6 @@ void FBillboardRenderPass::RenderTexturePrimitive(ID3D11Buffer* pVertexBuffer, U
 
     Graphics->DeviceContext->IASetIndexBuffer(pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
     Graphics->DeviceContext->PSSetShaderResources(0, 1, &TextureSRV);
-    Graphics->DeviceContext->PSSetSamplers(0, 1, &SamplerState);
     Graphics->DeviceContext->DrawIndexed(NumIndices, 0, 0);
 }
 
@@ -80,7 +79,6 @@ void FBillboardRenderPass::RenderTextPrimitive(ID3D11Buffer* pVertexBuffer, UINT
     SetupVertexBuffer(pVertexBuffer, NumVertices);
 
     Graphics->DeviceContext->PSSetShaderResources(0, 1, &TextureSRV);
-    Graphics->DeviceContext->PSSetSamplers(0, 1, &SamplerState);
     Graphics->DeviceContext->Draw(NumVertices, 0);
 }
 
@@ -184,8 +182,8 @@ void FBillboardRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& 
         else if (UTextComponent* TextComp = Cast<UTextComponent>(BillboardComp))
         {
             FBufferInfo Buffers;
-            float Height = TextComp->Texture->Height;
-            float Width = TextComp->Texture->Width;
+            uint32 Height = TextComp->Texture->Height;
+            uint32 Width = TextComp->Texture->Width;
             BufferManager->CreateUnicodeTextBuffer(TextComp->GetText(), Buffers, Width, Height, TextComp->GetColumnCount(), TextComp->GetRowCount());
 
             UpdateSubUVConstant(FVector2D(), FVector2D(1, 1));
