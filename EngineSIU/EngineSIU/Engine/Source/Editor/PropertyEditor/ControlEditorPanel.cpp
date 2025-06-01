@@ -40,6 +40,7 @@
 #include <Engine/FbxLoader.h>
 #include "Engine/Classes/Engine/AssetManager.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "GameFramework/BulletTester.h"
 
 ControlEditorPanel::ControlEditorPanel()
 {
@@ -371,6 +372,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "CapsuleCol",        .OBJ = OBJ_CAPSULE_COLLISION },
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
             { .Label = "SequencerPlayer",   .OBJ = OBJ_SEQUENCERPLAYER },
+			{ .Label = "Bullet",            .OBJ = OBJ_BULLET },
         };
 
         for (const auto& primitive : primitives)
@@ -490,11 +492,93 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                         SpawnedActor->SetActorLabel(TEXT("OBJ_SKELETALMESH"));
                     }
                     break;
-                case OBJ_SEQUENCERPLAYER:
+                case OBJ_BULLET:
                 {
-                    SpawnedActor = World->SpawnActor<ASequencerPlayer>();
-                    SpawnedActor->SetActorLabel(TEXT("OBJ_SEQUENCERPLAYER"));
+                    if (World)
+                    {
+                        FVector CamLoc = FVector::ZeroVector;
+                        FRotator CamRot = FRotator::ZeroRotator;
+
+                        // 플레이어 컨트롤러/카메라 매니저 또는 에디터 카메라에서 뷰포인트 얻기
+                        APlayerController* PC = World->GetPlayerController();
+                        if (PC && PC->PlayerCameraManager)
+                        {
+                            AActor* ViewActor = PC->PlayerCameraManager->GetViewTarget();
+                            if (ViewActor)
+                            {
+                                CamLoc = ViewActor->GetActorLocation();
+                                CamRot = ViewActor->GetActorRotation();
+                            }
+                        }
+                        // Fallback: 플레이어 컨트롤러나 뷰 타겟이 없으면 에디터 뷰포트 카메라를 사용합니다.
+                        // CamLoc과 CamRot이 기본값(ZeroVector/ZeroRotator)이라면 아직 설정되지 않았다는 의미로 사용합니다.
+                        if (CamLoc == FVector::ZeroVector && CamRot == FRotator::ZeroRotator)
+                        {
+                            // GEngineLoop.GetLevelEditor()와 GetActiveViewportClient()가 유효하다고 가정합니다.
+                            if (GEngineLoop.GetLevelEditor() && GEngineLoop.GetLevelEditor()->GetActiveViewportClient())
+                            {
+                                // 현재 활성화된 뷰포트 클라이언트를 가져옵니다.
+                                std::shared_ptr<FEditorViewportClient> Client = GEngineLoop.GetLevelEditor()->GetActiveViewportClient();
+
+                                // CamLoc은 GetCameraLocation() 함수를 사용하여 가져옵니다. 이 함수는 이미 존재합니다.
+                                CamLoc = Client->GetCameraLocation();
+
+                                // CamRot은 FEditorViewportClient가 직접 제공하지 않으므로,
+                                // FViewportCamera 객체를 통해 가져와야 합니다.
+                                const FVector* CameraRotationVector = nullptr; // 카메라 회전 값을 담을 FVector 포인터
+
+                                // 현재 뷰포트가 직교(Orthographic)인지 원근(Perspective)인지에 따라
+                                // 적절한 FViewportCamera 객체에서 회전 정보를 가져옵니다.
+                                if (Client->IsOrthographic())
+                                {
+                                    // 직교 카메라의 회전 정보를 가져옵니다. FViewportCamera의 GetRotation() 사용.
+                                    CameraRotationVector = &Client->OrthogonalCamera.GetRotation();
+                                }
+                                else // 기본적으로 원근 카메라를 사용합니다.
+                                {
+                                    // 원근 카메라의 회전 정보를 가져옵니다. FViewportCamera의 GetRotation() 사용.
+                                    CameraRotationVector = &Client->PerspectiveCamera.GetRotation();
+                                }
+
+                                // FViewportCamera::GetRotation()이 FVector를 반환하므로,
+                                // 이를 FRotator로 변환해야 합니다.
+                                // FVector의 X, Y, Z가 각각 Pitch, Yaw, Roll에 매핑된다고 가정합니다.
+                                // (이 매핑은 FViewportCamera의 내부 구현에 따라 달라질 수 있으니,
+                                // 만약 정확히 동작하지 않으면 FViewportCamera의 SetRotation() 구현을 확인하여
+                                // FVector의 각 컴포넌트가 어떤 회전축을 의미하는지 파악해야 합니다.)
+                                if (CameraRotationVector)
+                                {
+                                    CamRot = FRotator(CameraRotationVector->X, CameraRotationVector->Y, CameraRotationVector->Z);
+                                }
+                                else
+                                {
+                                    // 회전 정보를 가져오지 못한 경우 안전하게 0으로 초기화
+                                    CamRot = FRotator::ZeroRotator;
+                                }
+                            }
+                            else
+                            {
+                                // 에디터 뷰포트도 가져올 수 없는 최후의 경우, (0,0,0)에 스폰됩니다.
+                            }
+                        }
+
+                        FVector CamForward = CamRot.RotateVector(FVector(1.0f, 0.0f, 0.0f));
+                        FVector SpawnLoc = CamLoc + CamForward * 100.0f;
+                        FRotator SpawnRot = CamRot;
+
+                        ABullet* BulletActor = World->SpawnActor<ABullet>();
+
+                        if (BulletActor)
+                        {
+                            BulletActor->SetActorLocation(SpawnLoc);
+                            BulletActor->SetActorRotation(SpawnRot);
+                            BulletActor->FireInDirection(CamForward * 1000.0f);
+                            SpawnedActor = BulletActor;
+                        }
+                    }
+                    break;
                 }
+
                 case OBJ_CAMERA:
                 case OBJ_PLAYER:
                 case OBJ_END:

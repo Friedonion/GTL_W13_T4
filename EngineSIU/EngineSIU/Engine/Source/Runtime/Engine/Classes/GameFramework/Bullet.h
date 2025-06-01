@@ -20,6 +20,10 @@ public:
     // 이후에 총알을 특정 방향으로 발사할 때 호출할 함수
     void FireInDirection(const FVector& InitialVelocity);
 
+    // ABulletTester에서 이 컴포넌트의 속성을 설정할 수 있도록 public Getter를 제공
+    UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+
 private:
     // 총알 시각 충돌용 메시 컴포넌트
     UStaticMeshComponent* BulletMesh = nullptr;
