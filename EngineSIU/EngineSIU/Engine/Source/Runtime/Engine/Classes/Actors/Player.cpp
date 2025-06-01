@@ -629,7 +629,7 @@ void APlayer::BeginPlay()
     Lua.set_function("RegisterKeyCallback", 
         [](const std::string& Key, const std::function<void(float)>& Callback)
         {
-            GEngine->ActiveWorld->GetPlayerController()->BindKey(FString(Key), Callback);
+            GEngine->ActiveWorld->GetPlayerController()->BindAction(FString(Key), Callback);
         }
     );
 

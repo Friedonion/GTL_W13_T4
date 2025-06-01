@@ -5,6 +5,7 @@
 #include "Runtime/InputCore/InputCoreTypes.h"
 #include "Components/ActorComponent.h"
 
+//DECLARE_MULTICAST_DELEGATE(FVoidDelegate)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOneFloatDelegate, const float&)
 DECLARE_MULTICAST_DELEGATE_TwoParams(FTwoFloatDelegate, const float&, const float&)
 
@@ -12,7 +13,6 @@ DECLARE_MULTICAST_DELEGATE_TwoParams(FTwoFloatDelegate, const float&, const floa
 class UInputComponent : public UActorComponent
 {
     DECLARE_CLASS(UInputComponent, UActorComponent)
-
 
 public:
     UInputComponent() = default;
@@ -28,6 +28,9 @@ public:
     >
     BindMouseMove(Func&& Callback);
 
+    template<typename Func>
+    void BindMouseDown(EMouseButtons::Type Button, Func&& Callback);
+
     void ProcessInput(float DeltaTime);
     
     void SetPossess();
@@ -37,15 +40,20 @@ public:
     // Possess가 풀렸다가 다시 왔을때 원래 바인딩 돼있던 애들 일괄적으로 다시 바인딩해줘야할수도 있음.
     void InputKey(const FKeyEvent& InKeyEvent);
     void InputMouseMove(const FPointerEvent& InMouseEvent);
+    void InputMouseButton(const FPointerEvent& InMouseEvent);
 
 private:
     TArray<FDelegateHandle> BindKeyDownDelegateHandles;
     TArray<FDelegateHandle> BindKeyUpDelegateHandles;
+    TArray<FDelegateHandle> BindMouseDownDelegateHandles;
+    TArray<FDelegateHandle> BindMouseUpDelegateHandles;
     TArray<FDelegateHandle> BindMouseMoveDelegateHandles;
     TMap<EKeys::Type, FOneFloatDelegate> KeyBindDelegate;
-    FTwoFloatDelegate MouseBindDelegate;
+    TMap<EMouseButtons::Type, FOneFloatDelegate> MouseDownBindDelegate;
+    FTwoFloatDelegate MouseMoveBindDelegate;
 
     TSet<EKeys::Type> PressedKeys;
+    //TSet<EMouseButtons::Type> PressedMouseButtons;
     float MouseX = 0.0f;
     float MouseY = 0.0f;
 };
@@ -79,5 +87,15 @@ UInputComponent::BindMouseMove(Func&& Callback)
     {
         return;
     }
-    MouseBindDelegate.AddLambda(std::forward<Func>(Callback));
+    MouseMoveBindDelegate.AddLambda(std::forward<Func>(Callback));
+}
+
+template<typename Func>
+inline void UInputComponent::BindMouseDown(EMouseButtons::Type Button, Func&& Callback)
+{
+    if (Callback == nullptr)
+    {
+        return;
+    }
+    MouseDownBindDelegate[Button].AddLambda(std::forward<Func>(Callback));
 }

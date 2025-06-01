@@ -8,9 +8,13 @@ void UInputComponent::ProcessInput(float DeltaTime)
         {
             KeyBindDelegate[Key].Broadcast(DeltaTime);
         }
+        else if (MouseDownBindDelegate.Contains(EKeys::ToMouseButton(Key)))
+        {
+            MouseDownBindDelegate[EKeys::ToMouseButton(Key)].Broadcast(DeltaTime);
+        }
     }
 
-    MouseBindDelegate.Broadcast(MouseX, MouseY);
+    MouseMoveBindDelegate.Broadcast(MouseX, MouseY);
 
     MouseX = 0.f;
     MouseY = 0.f;
@@ -20,7 +24,10 @@ void UInputComponent::ProcessInput(float DeltaTime)
 void UInputComponent::SetPossess()
 {
     BindInputDelegate();
-    
+
+    PressedKeys.Empty();
+    MouseX = 0.f;
+    MouseY = 0.f;
     //TODO: Possess일때 기존에 있던거 다시 넣어줘야할수도
 }
 
@@ -41,6 +48,15 @@ void UInputComponent::BindInputDelegate()
     BindMouseMoveDelegateHandles.Add(Handler->OnMouseMoveDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
     {
         InputMouseMove(InMouseEvent);
+    }));
+
+    BindMouseDownDelegateHandles.Add(Handler->OnMouseDownDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
+    {
+        InputMouseButton(InMouseEvent);
+    }));
+    BindMouseUpDelegateHandles.Add(Handler->OnMouseUpDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
+    {
+        InputMouseButton(InMouseEvent);
     }));
     
 }
@@ -94,37 +110,40 @@ void UInputComponent::InputMouseMove(const FPointerEvent& InMouseEvent)
     FVector2D Delta = InMouseEvent.GetCursorDelta();
     MouseX = Delta.X;
     MouseY = Delta.Y;
-}
 
-// 해당 키에 대한 콜백 함수를 바인딩합니다.
-// 사용법
-/*
-// C++ 코드
-AActor::BeginPlay()
-{
-    ...
-    sol::state Lua; // 파라미터로 받은거
-    Lua.set_function("controller",
-        [](const std::string& Key, const std::function<void(float)>& Callback)
+    EKeys::Type EffectingButton = InMouseEvent.GetEffectingButton();
+    if (EffectingButton == EKeys::LeftMouseButton ||
+        EffectingButton == EKeys::RightMouseButton ||
+        EffectingButton == EKeys::MiddleMouseButton
+        )
+    {
+        if (InMouseEvent.GetInputEvent() == IE_Pressed)
         {
-            GEngine->ActiveWorld->GetPlayerController()->BindAction(FString(Key), Callback);
+            if (PressedKeys.Contains(EffectingButton))
+            {
+                PressedKeys.Add(EffectingButton);
+            }
         }
-    );
-
-    CallLuaFunction("InitializeLua");
-    ...
+        else if (InMouseEvent.GetInputEvent() == IE_Released)
+        {
+            if (PressedKeys.Contains(EffectingButton))
+            {
+                PressedKeys.Remove(EffectingButton);
+            }
+        }
+    }
+        
 }
 
-// Lua 코드
-function InitializeLua()
-    controller("W", OnPressW)
-    controller("S", OnPressS)
-    controller("A", OnPressA)
-    controller("D", OnPressD)
-end
-
-function OnPressW(DeltaTime)
-    print("W key pressed. DeltaTime: " .. DeltaTime)
-end
-*/
-
+void UInputComponent::InputMouseButton(const FPointerEvent& InMouseEvent)
+{
+    EKeys::Type EffectingButton = InMouseEvent.GetEffectingButton();
+    if (InMouseEvent.GetInputEvent() == IE_Pressed)
+    {
+        PressedKeys.Add(EffectingButton);
+    }
+    else if (InMouseEvent.GetInputEvent() == IE_Released)
+    {
+        PressedKeys.Remove(EffectingButton);
+    }
+}
