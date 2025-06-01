@@ -92,6 +92,8 @@ PxScene* FPhysicsManager::CreateScene(UWorld* World)
     PxScene* NewScene = Physics->createScene(SceneDesc);
     SceneMap.Add(World, NewScene);
 
+    CurrentScene = NewScene;
+
     // PVD 클라이언트 생성 및 씬 연결
     if (Pvd && Pvd->isConnected()) {
         PxPvdSceneClient* pvdClient = NewScene->getScenePvdClient();

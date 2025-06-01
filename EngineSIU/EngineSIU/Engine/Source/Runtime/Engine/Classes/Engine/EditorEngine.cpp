@@ -257,6 +257,11 @@ void UEditorEngine::StartPIE()
         return;
     }
 
+    if (!PhysicsManager->GetPhysics())
+    {
+        PhysicsManager->InitPhysX(); 
+    }
+
     ViewerType = EViewerType::EVT_PIE;
     
     ClearActorSelection(); // Editor World 기준 Select Actor 해제
