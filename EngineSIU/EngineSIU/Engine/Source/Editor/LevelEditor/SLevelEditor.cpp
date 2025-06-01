@@ -627,11 +627,19 @@ void SLevelEditor::RegisterEditorInputDelegates()
 
     InputDelegatesHandles.Add(Handler->OnKeyDownDelegate.AddLambda([this](const FKeyEvent& InKeyEvent)
         {
+            if (ImGui::GetIO().WantCaptureKeyboard)
+            {
+                return;
+            }
             ActiveViewportClient->InputKey(InKeyEvent);
         }));
 
     InputDelegatesHandles.Add(Handler->OnKeyUpDelegate.AddLambda([this](const FKeyEvent& InKeyEvent)
         {
+            if (ImGui::GetIO().WantCaptureKeyboard)
+            {
+                return;
+            }
             ActiveViewportClient->InputKey(InKeyEvent);
         }));
 }
