@@ -19,6 +19,7 @@ AEnemy::AEnemy()
     , Character(nullptr)
     , Direction(FRotator::ZeroRotator)
 {
+
 }
 
 UObject* AEnemy::Duplicate(UObject* InOuter)
@@ -58,13 +59,26 @@ void AEnemy::BeginPlay()
     SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
     SetRootComponent(SkeletalMeshComponent);
 
+    SkeletalMeshComponent->ClearAnimScriptInstance();
+
     SkeletalMesh = UAssetManager::Get().GetSkeletalMesh(FName("Contents/Enemy/Pistol_Idle"));
     SkeletalMeshComponent->SetSkeletalMeshAsset(SkeletalMesh);
+    BindSelfLuaProperties();
+    SkeletalMeshComponent->StateMachineFileName = "LuaScripts/Animations/EnemyStateMachine.lua";
+
 
     SetActorLocation(GetOwner()->GetRootComponent()->GetRelativeLocation());
     GetActorRotation();
 
+
     CurrentFireTimer = 0.0f;
+
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_real_distribution<float> distrib(1.0f, 10.0f);
+        FireInterval = distrib(gen);
+    }
 }
 
 void AEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -77,7 +91,11 @@ void AEnemy::Destroyed()
     Super::Destroyed();
     AEnemySpawner* Owner = Cast<AEnemySpawner>(GetOwner());
 
-    Owner->SpawnedEnemy = nullptr;
+
+    SkeletalMeshComponent->bSimulate = true;
+    //Owner->SpawnedEnemy = nullptr;
+
+    // rag doll
 }
 
 void AEnemy::CalculateTimer(float DeltaTime)
