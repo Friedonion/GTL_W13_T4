@@ -3,6 +3,7 @@
 #include "World/World.h"
 
 #include "Actors/Player.h"
+#include "Actors/EditorPlayer.h"
 #include "Actors/LightActor.h"
 #include "Actors/FireballActor.h"
 

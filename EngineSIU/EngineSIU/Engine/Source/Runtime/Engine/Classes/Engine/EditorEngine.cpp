@@ -21,6 +21,8 @@
 #include "PhysicsEngine/PhysicsAsset.h"
 #include "Particles/ParticleSystem.h"
 #include "SoundManager.h"
+#include "Actors/EditorPlayer.h"
+#include "Actors/Player.h"
 
 extern FEngineLoop GEngineLoop;
 

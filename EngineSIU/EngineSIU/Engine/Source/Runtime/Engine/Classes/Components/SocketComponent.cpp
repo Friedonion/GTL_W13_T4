@@ -3,6 +3,7 @@
 #include "SkeletalMeshComponent.h"
 #include "Engine/Engine.h"
 #include "Engine/SkeletalMesh.h"
+#include "CoreUObject/UObject/Casts.h"
 
 USocketComponent::USocketComponent()
 {

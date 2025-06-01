@@ -1,14 +1,10 @@
 #pragma once
 
-#include "Actors/Player.h"
 #include "Components/ActorComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SceneComponent.h"
 #include "GameFramework/Actor.h"
 #include "UnrealEd/EditorPanel.h"
-#include "Math/Rotator.h"
-#include "UObject/Casts.h"
-
 class UParticleSystemComponent;
 class USkeletalMeshComponent;
 class USpringArmComponent;
@@ -22,6 +18,7 @@ class UProjectileMovementComponent;
 class UTextComponent;
 class UHeightFogComponent;
 class AEditorPlayer;
+class APlayer;
 class UStaticMeshComponent;
 class UMaterial;
 class USocketComponent;

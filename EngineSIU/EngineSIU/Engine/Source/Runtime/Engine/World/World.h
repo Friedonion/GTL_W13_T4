@@ -5,7 +5,6 @@
 #include "UObject/ObjectMacros.h"
 #include "WorldType.h"
 #include "Level.h"
-#include "Actors/Player.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/EventManager.h"
 #include "UObject/UObjectIterator.h"
@@ -20,6 +19,7 @@ class USceneComponent;
 class FCollisionManager;
 class AGameMode;
 class UTextComponent;
+class APlayer;
 
 class UWorld : public UObject
 {

@@ -4,6 +4,8 @@
 #include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 #include "Lua/LuaScriptManager.h"
 #include "Animation/AnimSequence.h"
+#include "CoreUObject/UObject/Casts.h"
+#include "GameFramework/Actor.h"
 
 UAnimStateMachine::UAnimStateMachine()
 {

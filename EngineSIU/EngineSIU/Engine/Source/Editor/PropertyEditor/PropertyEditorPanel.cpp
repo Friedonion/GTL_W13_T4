@@ -7,6 +7,7 @@
 
 #include "World/World.h"
 #include "Actors/Player.h"
+#include "Actors/EditorPlayer.h"
 #include "Animation/AnimationAsset.h"
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimSingleNodeInstance.h"
@@ -30,6 +31,8 @@
 #include "Components/SphereComponent.h"
 #include "Engine/AssetManager.h"
 #include "Engine/SkeletalMesh.h"
+#include "Math/Rotator.h"
+#include "UObject/Casts.h"
 #include "Engine/Asset/SkeletalMeshAsset.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "LevelEditor/SLevelEditor.h"
