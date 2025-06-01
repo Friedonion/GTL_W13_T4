@@ -1,51 +1,205 @@
 {
     "Actors": [
         {
-            "ActorClass": "ASkeletalMeshActor",
-            "ActorID": "ASkeletalMeshActor_443",
-            "ActorLabel": "ASkeletalMeshActor443",
+            "ActorClass": "ADirectionalLight",
+            "ActorID": "ADirectionalLight_304",
+            "ActorLabel": "OBJ_DIRECTIONALLGIHT_304",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "UDirectionalLightComponent",
+                    "ComponentID": "UDirectionalLightComponent_0",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "AttachParentID": "UBillboardComponent_0",
+                        "ComponentClass": "UDirectionalLightComponent",
+                        "ComponentName": "UDirectionalLightComponent_0",
+                        "ComponentOwner": "ADirectionalLight_304",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "Direction": "X=-1.000 Y=-0.000 Z=-0.000",
+                        "Intensity": "10.400000",
+                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=14.896 Yaw=0.000 Roll=148.784",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "UBillboardComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "BufferKey": "Assets/Editor/Icon/S_LightDirectional.PNG",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "UBillboardComponent_0",
+                        "ComponentOwner": "ADirectionalLight_304",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": "UBillboardComponent"
+                    }
+                }
+            ],
+            "RootComponentID": "UBillboardComponent_0"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_344",
+            "ActorLabel": "OBJ_SKELETALMESH_344",
             "ActorTickInEditor": "true",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_350",
                     "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ASkeletalMeshActor_443",
-                        "ComponentOwnerClass": "ASkeletalMeshActor",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "AttachParentID": "USkeletalMeshComponent_346",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_350",
+                        "ComponentOwner": "AActor_344",
+                        "ComponentOwnerClass": "AActor",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
                 },
                 {
                     "ComponentClass": "USkeletalMeshComponent",
-                    "ComponentID": "SkeletalMeshComponent",
+                    "ComponentID": "USkeletalMeshComponent_346",
                     "Properties": {
-                        "AABB_max": "X=17.174 Y=90.257 Z=180.888",
-                        "AABB_min": "X=-14.896 Y=-90.257 Z=-0.035",
+                        "AABB_max": "X=7.109 Y=-9.803 Z=152.728",
+                        "AABB_min": "X=-13.225 Y=-97.342 Z=128.793",
                         "AnimClass": "None",
-                        "AnimationMode": "0",
+                        "AnimToPlay": "Contents/Player/Armature|Armature|mixamo.com|Layer0",
+                        "AnimationMode": "1",
                         "AttachParentID": "nullptr",
                         "ComponentClass": "USkeletalMeshComponent",
-                        "ComponentName": "SkeletalMeshComponent",
-                        "ComponentOwner": "ASkeletalMeshActor_443",
-                        "ComponentOwnerClass": "ASkeletalMeshActor",
-                        "RelativeLocation": "X=195.636 Y=0.000 Z=-25.815",
-                        "RelativeRotation": "Pitch=0.000 Yaw=85.370 Roll=-0.000",
+                        "ComponentName": "USkeletalMeshComponent_346",
+                        "ComponentOwner": "AActor_344",
+                        "ComponentOwnerClass": "AActor",
+                        "LoopEndFrame": "31",
+                        "LoopStartFrame": "0",
+                        "PlayRate": "1.000000",
+                        "RelativeLocation": "X=0.000 Y=-29.313 Z=-124.424",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/Human/Human",
+                        "SkeletalMeshKey": "Contents/Player/Punch",
                         "bApplyGravity": "false",
                         "bAutoActive": "true",
                         "bIsActive": "true",
+                        "bLooping": "true",
+                        "bPlaying": "true",
+                        "bReverse": "false",
                         "bSimulate": "false",
                         "m_Type": ""
                     }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_345",
+                    "Properties": {
+                        "AttachParentID": "USkeletalMeshComponent_346",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_345",
+                        "ComponentOwner": "AActor_344",
+                        "ComponentOwnerClass": "AActor",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USocketComponent",
+                    "ComponentID": "USocketComponent_433",
+                    "Properties": {
+                        "AttachParentID": "USkeletalMeshComponent_346",
+                        "ComponentClass": "USocketComponent",
+                        "ComponentName": "USocketComponent_433",
+                        "ComponentOwner": "AActor_344",
+                        "ComponentOwnerClass": "AActor",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
                 }
             ],
-            "RootComponentID": "SkeletalMeshComponent"
+            "RootComponentID": "USkeletalMeshComponent_346"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_356",
+            "ActorLabel": "OBJ_SKELETALMESH_356",
+            "ActorTickInEditor": "true",
+            "Components": [
+                {
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "USkeletalMeshComponent_358",
+                    "Properties": {
+                        "AABB_max": "X=13.130 Y=97.343 Z=152.728",
+                        "AABB_min": "X=-13.214 Y=9.759 Z=127.923",
+                        "AnimClass": "None",
+                        "AnimToPlay": "None",
+                        "AnimationMode": "1",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "USkeletalMeshComponent_358",
+                        "ComponentOwner": "AActor_356",
+                        "ComponentOwnerClass": "AActor",
+                        "LoopEndFrame": "0",
+                        "LoopStartFrame": "0",
+                        "PlayRate": "1.000000",
+                        "RelativeLocation": "X=16.019 Y=33.257 Z=-170.313",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "Contents/GunPlay",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bLooping": "true",
+                        "bPlaying": "true",
+                        "bReverse": "false",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_357",
+                    "Properties": {
+                        "AttachParentID": "USkeletalMeshComponent_358",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_357",
+                        "ComponentOwner": "AActor_356",
+                        "ComponentOwnerClass": "AActor",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "USkeletalMeshComponent_358"
         }
     ],
     "NextUUID": 0,

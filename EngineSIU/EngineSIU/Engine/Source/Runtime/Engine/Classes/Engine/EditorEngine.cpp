@@ -20,6 +20,7 @@
 #include "SkeletalMesh.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 #include "Particles/ParticleSystem.h"
+#include "SoundManager.h"
 
 extern FEngineLoop GEngineLoop;
 
@@ -245,6 +246,7 @@ void UEditorEngine::Tick(float DeltaTime)
             }
         }
     }
+    FSoundManager::GetInstance().Update();
 }
 
 void UEditorEngine::StartPIE()

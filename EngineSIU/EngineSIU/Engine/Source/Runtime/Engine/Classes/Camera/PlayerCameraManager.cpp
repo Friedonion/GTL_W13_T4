@@ -340,6 +340,13 @@ void APlayerCameraManager::UpdateViewTarget(FTViewTarget& OutVT, float DeltaTime
 		// Viewing through a camera actor.
 		CamComp->GetCameraView(DeltaTime, OutVT.POV);
 	}
+    else 
+    {
+        for (auto It : TObjectRange<UCameraComponent>())
+        {
+            It->GetCameraView(DeltaTime, OutVT.POV);
+        }
+    }
     
 	ApplyCameraModifiers(DeltaTime, OutVT.POV);
 }
