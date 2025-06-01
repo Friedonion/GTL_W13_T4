@@ -44,6 +44,7 @@ UObject* USkeletalMeshComponent::Duplicate(UObject* InOuter)
 
     NewComponent->SetRelativeTransform(GetRelativeTransform());
     NewComponent->SetSkeletalMeshAsset(SkeletalMeshAsset);
+    NewComponent->StateMachineFileName = StateMachineFileName;
     NewComponent->SetAnimationMode(AnimationMode);
     if (AnimationMode == EAnimationMode::AnimationBlueprint)
     {

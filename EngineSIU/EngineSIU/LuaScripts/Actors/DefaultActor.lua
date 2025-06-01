@@ -28,14 +28,13 @@ function ReturnTable:InitializeCallback()
 
     RegisterMouseMoveCallback(function(dx, dy)
         -- 마우스 이동에 대한 처리
-        self:Turn(dx/100)
-        self:Lookup(dy/100)
+        self:Turn(dx/10)
+        self:Lookup(dy/10)
         -- print("Mouse moved: ", dtX, dtY) -- 디버깅용 출력
     end)
 
     RegisterKeyCallback("RightMouseButton", function(dt)
         -- 우클릭에 대한 처리
-        self:MoveForward(dt * 10)
     end)
 end
 
@@ -70,24 +69,26 @@ function ReturnTable:Attack(AttackDamage)
 end
 
 function ReturnTable:MoveForward(DeltaTime)
-    self:Move(FVector(10.0, 0.0, 0.0) * DeltaTime)
+    self:Move(FVector(30.0, 0.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveBackward(DeltaTime)
-    self:Move(FVector(-10.0, 0.0, 0.0) * DeltaTime)
+    self:Move(FVector(-30.0, 0.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveLeft(DeltaTime)
-    self:Move(FVector(0.0, -10.0, 0.0) * DeltaTime)
+    self:Move(FVector(0.0, -30.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveRight(DeltaTime)
-    self:Move(FVector(0.0, 10.0, 0.0) * DeltaTime)
+    self:Move(FVector(0.0, 30.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:Move(dv)
     local this = self.this
-    this.ActorLocation = this.ActorLocation + dv
+    local Rot = this.ActorRotation;
+    local LocalMovement = Rot:RotateVector(dv)
+    this.ActorLocation = this.ActorLocation + LocalMovement
 end
 
 -- 좌우 움직임
