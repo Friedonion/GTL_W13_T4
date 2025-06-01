@@ -4,40 +4,30 @@ void UInputComponent::ProcessInput(float DeltaTime)
 {
     for (EKeys::Type Key : PressedKeys)
     {
-        FString KeyName = EKeys::ToString(Key);
-        if (KeyBindDelegate.Contains(KeyName))
+        if (KeyBindDelegate.Contains(Key))
         {
-            KeyBindDelegate[KeyName].Broadcast(DeltaTime);
+            KeyBindDelegate[Key].Broadcast(DeltaTime);
+        }
+        else if (MouseButtonBindDelegate.Contains(EKeys::ToMouseButton(Key)))
+        {
+            MouseButtonBindDelegate[EKeys::ToMouseButton(Key)].Broadcast(DeltaTime);
         }
     }
-    return;
-    //if (PressedKeys.Contains(EKeys::W))
-    //{
-    //    KeyBindDelegate[FString("W")].Broadcast(DeltaTime);
-    //}
-    //if (PressedKeys.Contains(EKeys::A))
-    //{
-    //    KeyBindDelegate[FString("A")].Broadcast(DeltaTime);
-    //}
-    //if (PressedKeys.Contains(EKeys::S))
-    //{
-    //    KeyBindDelegate[FString("S")].Broadcast(DeltaTime);
-    //}
-    //if (PressedKeys.Contains(EKeys::D))
-    //{
-    //    KeyBindDelegate[FString("D")].Broadcast(DeltaTime);
-    //}
-    //if (PressedKeys.Contains(EKeys::SpaceBar))
-    //{
-    //    KeyBindDelegate[FString("Space")].Broadcast(DeltaTime);
-    //}
 
+    MouseMoveBindDelegate.Broadcast(MouseX, MouseY);
+
+    MouseX = 0.f;
+    MouseY = 0.f;
+    return;
 }
 
 void UInputComponent::SetPossess()
 {
     BindInputDelegate();
-    
+
+    PressedKeys.Empty();
+    MouseX = 0.f;
+    MouseY = 0.f;
     //TODO: Possess일때 기존에 있던거 다시 넣어줘야할수도
 }
 
@@ -53,6 +43,20 @@ void UInputComponent::BindInputDelegate()
     BindKeyUpDelegateHandles.Add(Handler->OnKeyUpDelegate.AddLambda([this](const FKeyEvent& InKeyEvent)
     {
         InputKey(InKeyEvent);
+    }));
+
+    BindMouseMoveDelegateHandles.Add(Handler->OnMouseMoveDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
+    {
+        InputMouseMove(InMouseEvent);
+    }));
+
+    BindMouseDownDelegateHandles.Add(Handler->OnMouseDownDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
+    {
+        InputMouseButton(InMouseEvent);
+    }));
+    BindMouseUpDelegateHandles.Add(Handler->OnMouseUpDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
+    {
+        InputMouseButton(InMouseEvent);
     }));
     
 }
@@ -75,9 +79,27 @@ void UInputComponent::ClearBindDelegate()
     {
         Handler->OnKeyUpDelegate.Remove(DelegateHandle);
     }
-    
+
+    for (FDelegateHandle DelegateHandle : BindMouseMoveDelegateHandles)
+    {
+        Handler->OnMouseMoveDelegate.Remove(DelegateHandle);
+    }
+
+    for (FDelegateHandle DelegateHandle : BindMouseDownDelegateHandles)
+    {
+        Handler->OnMouseDownDelegate.Remove(DelegateHandle);
+    }
+
+    for (FDelegateHandle DelegateHandle : BindMouseUpDelegateHandles)
+    {
+        Handler->OnMouseUpDelegate.Remove(DelegateHandle);
+    }
+
     BindKeyDownDelegateHandles.Empty();
     BindKeyUpDelegateHandles.Empty();
+    BindMouseMoveDelegateHandles.Empty();
+    BindMouseDownDelegateHandles.Empty();
+    BindMouseUpDelegateHandles.Empty();
 }
 
 void UInputComponent::InputKey(const FKeyEvent& InKeyEvent)
@@ -99,73 +121,30 @@ void UInputComponent::InputKey(const FKeyEvent& InKeyEvent)
         }
     }
     return;
-
-    //// 일반적인 단일 키 이벤트
-    //switch (InKeyEvent.GetCharacter())
-    //{
-    //case 'W':
-    //    {
-    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
-    //        {
-    //            PressedKeys.Add(EKeys::W);
-    //        }
-    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
-    //        {
-    //            PressedKeys.Remove(EKeys::W);
-    //        }
-    //        break;
-    //    }
-    //case 'A':
-    //    {
-    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
-    //        {
-    //            PressedKeys.Add(EKeys::A);
-    //        }
-    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
-    //        {
-    //            PressedKeys.Remove(EKeys::A);
-    //        }
-    //        break;
-    //    }
-    //case 'S':
-    //    {
-    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
-    //        {
-    //            PressedKeys.Add(EKeys::S);
-    //        }
-    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
-    //        {
-    //            PressedKeys.Remove(EKeys::S);
-    //        }
-    //        break;
-    //    }
-    //case 'D':
-    //    {
-    //        if (InKeyEvent.GetInputEvent() == IE_Pressed)
-    //        {
-    //            PressedKeys.Add(EKeys::D);
-    //        }
-    //        else if (InKeyEvent.GetInputEvent() == IE_Released)
-    //        {
-    //            PressedKeys.Remove(EKeys::D);
-    //        }
-    //        break;
-    //    }
-    //default:
-    //    break;
-    //}
 }
 
-
-void UInputComponent::BindAction(const FString& Key, const std::function<void(float)>& Callback)
+void UInputComponent::InputMouseMove(const FPointerEvent& InMouseEvent)
 {
-    if (Callback == nullptr)
+    FVector2D Delta = InMouseEvent.GetCursorDelta();
+    MouseX = Delta.X;
+    MouseY = Delta.Y;       
+}
+
+void UInputComponent::InputMouseButton(const FPointerEvent& InMouseEvent)
+{
+    EKeys::Type EffectingButton = InMouseEvent.GetEffectingButton();
+    if (InMouseEvent.GetInputEvent() == IE_Pressed)
     {
-        return;
+        if (!PressedKeys.Contains(EffectingButton))
+        {
+            PressedKeys.Add(EffectingButton);
+        }
     }
-    
-    KeyBindDelegate[Key].AddLambda([this, Callback](float DeltaTime)
+    else if (InMouseEvent.GetInputEvent() == IE_Released)
     {
-        Callback(DeltaTime);
-    });
+        if (PressedKeys.Contains(EffectingButton))
+        {
+            PressedKeys.Remove(EffectingButton);
+        }
+    }
 }

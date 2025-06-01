@@ -169,7 +169,7 @@ void LuaTypes::FBindLua<FRotator>::Bind(sol::table& Table)
 {
     Table.Lua_NewUserType(
         FRotator,
-
+        sol::call_constructor,
         // Constructors
         sol::constructors<FRotator(), FRotator(float, float, float)>(),
 
