@@ -1,4 +1,4 @@
-﻿#include "AnimSingleNodeInstance.h"
+#include "AnimSingleNodeInstance.h"
 
 #include "Components/SkeletalMeshComponent.h"
 #include "AnimationAsset.h"
@@ -68,7 +68,6 @@ void UAnimSingleNodeInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCon
 {
     UAnimInstance::NativeUpdateAnimation(DeltaSeconds, OutPose);
     
-#pragma region Anim
     USkeletalMeshComponent* SkeletalMeshComp = GetSkelMeshComponent();
     
     if (!SkeletalMeshComp->GetAnimation() || !SkeletalMeshComp->GetSkeletalMeshAsset() || !SkeletalMeshComp->GetSkeletalMeshAsset()->GetSkeleton())
@@ -143,5 +142,4 @@ void UAnimSingleNodeInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCon
         FTransform RefBoneTransform = RefSkeleton.RawRefBonePose[BoneIdx];
         OutPose.Pose[BoneIdx] = RefBoneTransform * DataModel->EvaluateBoneTrackTransform(BoneName, FrameTime, EAnimInterpolationType::Linear);
     }
-#pragma endregion
 }
