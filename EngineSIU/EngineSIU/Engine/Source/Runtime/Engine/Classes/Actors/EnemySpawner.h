@@ -33,5 +33,7 @@ public:
     UPROPERTY(VisibleAnywhere, AEnemy*, SpawnedEnemy,)
 
     float CurrentSpawnTimer;
+
+    int count = 0;
 };
 

@@ -22,6 +22,7 @@ enum OBJECTS : uint8
     OBJ_SEQUENCERPLAYER,
     OBJ_ENEMY,
     OBJ_ENEMYSPAWNER,
+    OBJ_BULLET,
     OBJ_END
 };
 

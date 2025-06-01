@@ -34,6 +34,5 @@ private:
     UPROPERTY(EditAnywhere, FVector, Velocity, )
     UPROPERTY(EditAnywhere, float, ProjectileLifetime, )
     UPROPERTY(EditAnywhere, float, AccumulatedTime, )
-
 };
 

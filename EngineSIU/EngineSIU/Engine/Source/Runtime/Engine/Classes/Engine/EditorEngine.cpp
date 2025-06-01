@@ -20,6 +20,7 @@
 #include "SkeletalMesh.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 #include "Particles/ParticleSystem.h"
+#include "SoundManager.h"
 
 extern FEngineLoop GEngineLoop;
 
@@ -245,6 +246,7 @@ void UEditorEngine::Tick(float DeltaTime)
             }
         }
     }
+    FSoundManager::GetInstance().Update();
 }
 
 void UEditorEngine::StartPIE()
@@ -253,6 +255,11 @@ void UEditorEngine::StartPIE()
     {
         UE_LOG(ELogLevel::Warning, TEXT("PIEWorld already exists!"));
         return;
+    }
+
+    if (!PhysicsManager->GetPhysics())
+    {
+        PhysicsManager->InitPhysX(); 
     }
 
     ViewerType = EViewerType::EVT_PIE;

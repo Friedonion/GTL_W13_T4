@@ -390,9 +390,13 @@ enum Type : uint8
 
 // 일부 키코드만 지원
 EKeys::Type FromCharCode(uint32_t CharCode);
+uint32 ToCharCode(EKeys::Type Key);
 FString ToString(EKeys::Type Key);
-}
-
+EKeys::Type FromString(const FString& KeyName);
+bool IsKeyboardKey(EKeys::Type Key);
+bool IsMouseKey(EKeys::Type Key);
+EMouseButtons::Type ToMouseButton(EKeys::Type Key);
+} // namespace EKeys
 struct FInputKeyManager // ue FInputKeyManager.cpp, 1530
 {
 public:

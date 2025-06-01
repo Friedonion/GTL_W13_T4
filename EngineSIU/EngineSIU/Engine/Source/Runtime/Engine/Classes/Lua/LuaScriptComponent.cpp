@@ -9,6 +9,11 @@ ULuaScriptComponent::ULuaScriptComponent()
 {
 }
 
+ULuaScriptComponent::~ULuaScriptComponent()
+{
+    FLuaScriptManager::Get().UnRigisterActiveLuaComponent(this);
+}
+
 UObject* ULuaScriptComponent::Duplicate(UObject* InOuter)
 {
     ULuaScriptComponent* NewComponent = Cast<ULuaScriptComponent>(Super::Duplicate(InOuter));
@@ -78,6 +83,7 @@ void ULuaScriptComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
     {
         ActivateFunction("EndPlay", EndPlayReason);
     }
+    FLuaScriptManager::Get().UnRigisterActiveLuaComponent(this);
 }
 
 void ULuaScriptComponent::DestroyComponent(bool bPromoteChildren)

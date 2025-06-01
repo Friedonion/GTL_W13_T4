@@ -42,8 +42,45 @@ EKeys::Type EKeys::FromCharCode(uint32_t CharCode)
     case '\'': return EKeys::Apostrophe;
 
     default:
-        assert(0);
+        //assert(0);
         return EKeys::Invalid;
+    }
+}
+
+uint32 EKeys::ToCharCode(EKeys::Type Key)
+{
+    // 알파벳 (A~Z)
+    if (Key >= EKeys::A && Key <= EKeys::Z) {
+        return 'A' + (Key - EKeys::A);
+    }
+
+    // 숫자 0~9
+    if (Key >= EKeys::Zero && Key <= EKeys::Nine) {
+        return '0' + (Key - EKeys::Zero);
+    }
+
+    // 특수문자 매핑
+    switch (Key) {
+    case EKeys::SpaceBar:    return ' ';
+    case EKeys::Tab:         return '\t';
+    case EKeys::Enter:       return '\n'; // '\r'도 가능
+    case EKeys::BackSpace:   return '\b';
+    case EKeys::Escape:      return 27;   // ASCII ESC
+
+    case EKeys::Semicolon:   return ';';
+    case EKeys::Equals:      return '=';
+    case EKeys::Comma:       return ',';
+    case EKeys::Hyphen:      return '-';
+    case EKeys::Period:      return '.';
+    case EKeys::Slash:       return '/';
+    case EKeys::Tilde:       return '~';
+    case EKeys::LeftBracket: return '[';
+    case EKeys::Backslash:   return '\\';
+    case EKeys::RightBracket:return ']';
+    case EKeys::Apostrophe:  return '\'';
+
+    default:
+        return 0; // 매핑이 없는 경우
     }
 }
 
@@ -110,9 +147,87 @@ FString EKeys::ToString(EKeys::Type Key)
     case EKeys::RightBracket: return TEXT("]");
     case EKeys::Apostrophe: return TEXT("'");
 
+    case EKeys::RightMouseButton: return TEXT("RightMouseButton");
+    case EKeys::LeftMouseButton: return TEXT("LeftMouseButton");
+
         // 기본값
     default:
-        assert(0);
+        //assert(0);
         return TEXT("Invalid");
+    }
+}
+
+// 알파벳은 대문자만 허용
+EKeys::Type EKeys::FromString(const FString& KeyName)
+{
+    // 알파벳 (대문자만 허용)
+    if (KeyName.Len() == 1)
+    {
+        TCHAR Char = KeyName[0];
+        if (Char >= 'A' && Char <= 'Z')
+            return static_cast<EKeys::Type>(EKeys::A + (Char - 'A'));
+        if (Char >= '0' && Char <= '9')
+            return static_cast<EKeys::Type>(EKeys::Zero + (Char - '0'));
+        if (Char == ';') return EKeys::Semicolon;
+        if (Char == '=') return EKeys::Equals;
+        if (Char == ',') return EKeys::Comma;
+        if (Char == '-') return EKeys::Hyphen;
+        if (Char == '.') return EKeys::Period;
+        if (Char == '/') return EKeys::Slash;
+        if (Char == '~') return EKeys::Tilde;
+        if (Char == '[') return EKeys::LeftBracket;
+        if (Char == '\\') return EKeys::Backslash;
+        if (Char == ']') return EKeys::RightBracket;
+        if (Char == '\'') return EKeys::Apostrophe;
+    }
+
+    // 문자열 비교 (대소문자 구분 없음)
+    if (KeyName.Equals(TEXT("Space"), ESearchCase::IgnoreCase)) return EKeys::SpaceBar;
+    if (KeyName.Equals(TEXT("Tab"), ESearchCase::IgnoreCase)) return EKeys::Tab;
+    if (KeyName.Equals(TEXT("Enter"), ESearchCase::IgnoreCase)) return EKeys::Enter;
+    if (KeyName.Equals(TEXT("Backspace"), ESearchCase::IgnoreCase)) return EKeys::BackSpace;
+    if (KeyName.Equals(TEXT("Escape"), ESearchCase::IgnoreCase)) return EKeys::Escape;
+
+    // 마우스
+    if (KeyName.Equals(TEXT("RightMouseButton"), ESearchCase::IgnoreCase)) return EKeys::RightMouseButton;
+    if (KeyName.Equals(TEXT("LeftMouseButton"), ESearchCase::IgnoreCase)) return EKeys::LeftMouseButton;
+
+    return EKeys::Invalid;
+}
+
+bool EKeys::IsKeyboardKey(EKeys::Type Key)
+{
+    return (Key >= EKeys::A && Key <= EKeys::Z) ||
+        (Key >= EKeys::Zero && Key <= EKeys::Nine) ||
+        Key == EKeys::SpaceBar || Key == EKeys::Tab ||
+        Key == EKeys::Enter || Key == EKeys::BackSpace ||
+        Key == EKeys::Escape || Key == EKeys::Semicolon ||
+        Key == EKeys::Equals || Key == EKeys::Comma ||
+        Key == EKeys::Hyphen || Key == EKeys::Period ||
+        Key == EKeys::Slash || Key == EKeys::Tilde ||
+        Key == EKeys::LeftBracket || Key == EKeys::Backslash ||
+        Key == EKeys::RightBracket || Key == EKeys::Apostrophe;
+}
+
+bool EKeys::IsMouseKey(EKeys::Type Key)
+{
+    return Key == EKeys::LeftMouseButton || Key == EKeys::RightMouseButton ||
+        Key == EKeys::MiddleMouseButton || Key == EKeys::ThumbMouseButton ||
+        Key == EKeys::ThumbMouseButton2 || Key == EKeys::MouseX ||
+        Key == EKeys::MouseY || Key == EKeys::Mouse2D ||
+        Key == EKeys::MouseScrollUp || Key == EKeys::MouseScrollDown ||
+        Key == EKeys::MouseWheelAxis;
+}
+
+EMouseButtons::Type EKeys::ToMouseButton(EKeys::Type Key)
+{
+    switch (Key)
+    {
+    case EKeys::LeftMouseButton:   return EMouseButtons::Type::Left;
+    case EKeys::MiddleMouseButton: return EMouseButtons::Type::Middle;
+    case EKeys::RightMouseButton:  return EMouseButtons::Type::Right;
+    case EKeys::ThumbMouseButton:  return EMouseButtons::Type::Thumb01;
+    case EKeys::ThumbMouseButton2: return EMouseButtons::Type::Thumb02;
+    default:                       return EMouseButtons::Type::Invalid;
     }
 }

@@ -44,6 +44,7 @@ UObject* USkeletalMeshComponent::Duplicate(UObject* InOuter)
 
     NewComponent->SetRelativeTransform(GetRelativeTransform());
     NewComponent->SetSkeletalMeshAsset(SkeletalMeshAsset);
+    NewComponent->StateMachineFileName = StateMachineFileName;
     NewComponent->SetAnimationMode(AnimationMode);
     if (AnimationMode == EAnimationMode::AnimationBlueprint)
     {
@@ -376,9 +377,12 @@ FTransform USkeletalMeshComponent::GetSocketTransform(FName SocketName) const
     {
         int32 BoneIndex = Skeleton->FindBoneIndex(SocketName);
 
-        TArray<FMatrix> GlobalBoneMatrices;
-        GetCurrentGlobalBoneMatrices(GlobalBoneMatrices);
-        Transform = FTransform(GlobalBoneMatrices[BoneIndex]);
+        if (BoneIndex != INDEX_NONE)
+        {
+            TArray<FMatrix> GlobalBoneMatrices;
+            GetCurrentGlobalBoneMatrices(GlobalBoneMatrices);
+            Transform = FTransform(GlobalBoneMatrices[BoneIndex]);
+        }
     }
     return Transform;
 }

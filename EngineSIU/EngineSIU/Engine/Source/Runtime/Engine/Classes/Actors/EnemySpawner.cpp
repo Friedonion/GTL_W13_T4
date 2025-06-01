@@ -3,9 +3,10 @@
 #include "Engine/EditorEngine.h"
 //#include "Actors/Character.h"
 
+// 스폰한 액터가 없어지고 나면 다시 카운트다운하도록 변경함.
 AEnemySpawner::AEnemySpawner()
     : CurrentSpawnTimer(0.f)
-    , SpawnInterval(5.f)
+    , SpawnInterval(1.f)
     , bShouldSpawn(false)
     , Character(nullptr)
     , SpawnedEnemy(nullptr)
@@ -56,6 +57,39 @@ void AEnemySpawner::Destroyed()
 
 }
 
+// Spawn 시간을 판단
+void AEnemySpawner::CalculateTimer(float DeltaTime)
+{
+    CurrentSpawnTimer += DeltaTime;
+
+    if (CurrentSpawnTimer >= SpawnInterval)
+    {
+        CurrentSpawnTimer = 0.f;
+        bShouldSpawn = true;
+    }
+}
+
+// Player의 방향을 판단
+bool AEnemySpawner::CanSpawn()
+{
+    FVector PlayerLocation3D = GEngine->ActiveWorld->GetMainPlayer()->GetActorLocation();   
+    FVector PlayerDirection3D = GEngine->ActiveWorld->GetMainPlayer()->GetActorForwardVector();
+
+    FVector2D PlayerToSpawner2D = FVector2D(this->GetActorLocation().X, this->GetActorLocation().Y) - FVector2D(PlayerLocation3D.X, PlayerLocation3D.Y);
+    FVector2D PlayerDirection2D = FVector2D(PlayerDirection3D.X, PlayerDirection3D.Y);
+
+    if (SpawnedEnemy != nullptr) 
+        return false; 
+
+    float result = FVector2D::DotProduct(PlayerToSpawner2D, PlayerDirection2D);
+    if (result > 0.f)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void AEnemySpawner::Spawn()
 {
     UWorld* World = GEngine->ActiveWorld;
@@ -66,32 +100,4 @@ void AEnemySpawner::Spawn()
     SpawnedEnemy->SetActorLabel(TEXT("OBJ_ENEMY"));
     SpawnedEnemy->SetOwner(this);
     bShouldSpawn = false;
-}
-
-bool AEnemySpawner::CanSpawn()
-{
-    FVector2D CharacterToSpawner = /*FVector2D(this->GetActorLocation().X, this->GetActorLocation().Y) - FVector2D(Character->GetActorLocation().X, Character->GetActorLocation().Y)*/FVector2D();
-    FVector2D CharacterDirection = /* 이거는 카메라 방향으로 하는게 좋을 것 같음*/FVector2D();
-
-    if (SpawnedEnemy != nullptr) 
-        return false; 
-
-    if (FVector2D::DotProduct(CharacterToSpawner, CharacterDirection) <= 0.f)
-    {
-        return true;
-    }
-
-    return false;
-}
-
-void AEnemySpawner::CalculateTimer(float DeltaTime)
-{
-    CurrentSpawnTimer += DeltaTime;
-
-    if (CurrentSpawnTimer >= SpawnInterval)
-    {
-        CurrentSpawnTimer = 0.f;
-        
-        bShouldSpawn = true;
-    }
 }

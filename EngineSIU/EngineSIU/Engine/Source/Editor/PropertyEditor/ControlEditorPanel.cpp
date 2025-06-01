@@ -413,6 +413,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
             { .Label = "SequencerPlayer",   .OBJ = OBJ_SEQUENCERPLAYER },
             { .Label = "EnemySpawner",      .OBJ = OBJ_ENEMYSPAWNER },
+            { .Label = "Bullet",            .OBJ = OBJ_BULLET },
         };
 
         for (const auto& primitive : primitives)

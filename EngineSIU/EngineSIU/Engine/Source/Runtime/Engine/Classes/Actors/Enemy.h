@@ -31,10 +31,10 @@ private:
     UPROPERTY(VisibleAnywhere, ACharacter*, Character, )
     UPROPERTY(EditAnywhere, float, FireInterval,)
     UPROPERTY(VisibleAnywhere, bool, bShouldFire, )
+
     float CurrentFireTimer;
 
 public:
-    UPROPERTY(VisibleAnywhere, ABullet*, Bullet, )
-
+    UPROPERTY(VisibleAnywhere, FRotator, Direction, )
 };
 

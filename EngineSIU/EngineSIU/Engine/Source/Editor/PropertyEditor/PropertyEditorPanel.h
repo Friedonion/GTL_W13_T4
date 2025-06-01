@@ -24,6 +24,7 @@ class UHeightFogComponent;
 class AEditorPlayer;
 class UStaticMeshComponent;
 class UMaterial;
+class USocketComponent;
 
 // 헬퍼 함수 예시
 template<typename Getter, typename Setter>
@@ -67,6 +68,7 @@ private:
     void RenderForSkeletalMesh(USkeletalMeshComponent* SkeletalMeshComp) const;
     void RenderForPhysicsAsset(const USkeletalMeshComponent* SkeletalMeshComp) const;
     void RenderForParticleSystem(UParticleSystemComponent* ParticleSystemComponent) const;
+    void RenderForSocketComponent(USocketComponent* SocketComponent) const;
 
     void RenderForAmbientLightComponent(UAmbientLightComponent* AmbientLightComponent) const;
     void RenderForDirectionalLightComponent(UDirectionalLightComponent* DirectionalLightComponent) const;

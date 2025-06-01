@@ -8,11 +8,11 @@
 ABullet::ABullet()
     : StaticMeshComponent(nullptr)
     , ProjectileMovement(nullptr)
-    , InitialSpeed(10.f)
-    , MaxSpeed(10.f)
+    , InitialSpeed(100.f)
+    , MaxSpeed(100.f)
     , Velocity(FVector::ZeroVector)
-    , ProjectileLifetime(2.f)
-    , Gravity(1.f)
+    , ProjectileLifetime(10.f)
+    , Gravity(0.f)
     , AccumulatedTime(0.f)
 {
 }
@@ -28,6 +28,11 @@ UObject* ABullet::Duplicate(UObject* InOuter)
     NewActor->StaticMeshComponent = StaticMeshComponent;
     NewActor->ProjectileMovement = ProjectileMovement;
     NewActor->InitialSpeed = InitialSpeed;
+    NewActor->MaxSpeed = MaxSpeed;
+    NewActor->Velocity = Velocity;
+    NewActor->ProjectileLifetime = ProjectileLifetime;
+    NewActor->Gravity = Gravity;
+    NewActor->AccumulatedTime = AccumulatedTime;
 
     return NewActor;
 }
@@ -47,8 +52,9 @@ void ABullet::BeginPlay()
     {
         ProjectileMovement->SetInitialSpeed(InitialSpeed);
         ProjectileMovement->SetMaxSpeed(MaxSpeed);
-        ProjectileMovement->SetVelocity(GetOwner()->GetActorForwardVector());
-        
+        AEnemy* Owner = Cast<AEnemy>(GetOwner());
+        FVector TempVelocity = Owner->Direction.ToVector() * InitialSpeed;
+        ProjectileMovement->SetVelocity(TempVelocity);
         ProjectileMovement->SetGravity(Gravity);
     }
 
@@ -64,11 +70,16 @@ void ABullet::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void ABullet::Destroyed()
 {
     Super::Destroyed();
-    AEnemy* Owner = Cast<AEnemy>(GetOwner());
-    Owner->Bullet = nullptr;
+    
 }
 
 void ABullet::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
+    AccumulatedTime += DeltaTime;
+
+    if (AccumulatedTime >= ProjectileLifetime)
+    {
+        Destroy();
+    }
 }

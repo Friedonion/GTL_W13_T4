@@ -169,7 +169,7 @@ void LuaTypes::FBindLua<FRotator>::Bind(sol::table& Table)
 {
     Table.Lua_NewUserType(
         FRotator,
-
+        sol::call_constructor,
         // Constructors
         sol::constructors<FRotator(), FRotator(float, float, float)>(),
 
@@ -186,7 +186,8 @@ void LuaTypes::FBindLua<FRotator>::Bind(sol::table& Table)
 
         // Utility functions
         LUA_BIND_MEMBER(&FRotator::Normalize),
-        LUA_BIND_MEMBER(&FRotator::GetNormalized)
+        LUA_BIND_MEMBER(&FRotator::GetNormalized),
+        LUA_BIND_MEMBER(&FRotator::RotateVector)
         // LUA_BIND_MEMBER(&FRotator::GetInverse),
 
         // Static properties

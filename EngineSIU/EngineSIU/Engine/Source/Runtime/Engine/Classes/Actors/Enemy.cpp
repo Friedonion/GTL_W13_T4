@@ -17,7 +17,7 @@ AEnemy::AEnemy()
     , CurrentFireTimer(0.f)
     , bShouldFire(false)
     , Character(nullptr)
-    , Bullet(nullptr)
+    , Direction(FRotator::ZeroRotator)
 {
 }
 
@@ -29,17 +29,16 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
     NewActor->bShouldFire = bShouldFire;
     NewActor->SkeletalMeshComponent = SkeletalMeshComponent;
     NewActor->SkeletalMesh = SkeletalMesh;
-    NewActor->Bullet = Bullet;
 
     return NewActor;
 }
 
 void AEnemy::Tick(float DeltaTime)
 {
-    // FireDirection
-    // ZeroVector 대신 Character의 위치를 넣기.
-    FRotator LookAtRot = FRotator::MakeLookAtRotation(this->GetActorLocation(), FVector(0, 0, 0));
-    SetActorRotation(FRotator(0, LookAtRot.Yaw, 0));
+    FVector PlayerLocation = GEngine->ActiveWorld->GetMainPlayer()->GetActorLocation();
+    Direction = FRotator::MakeLookAtRotation(this->GetActorLocation(), PlayerLocation);
+    
+    SetActorRotation(FRotator(0, Direction.Yaw, 0));
 
     // Destroy로직은 다른 곳에 추가할 예정
     if (CurrentFireTimer >= 5.f)
@@ -77,6 +76,7 @@ void AEnemy::Destroyed()
 {
     Super::Destroyed();
     AEnemySpawner* Owner = Cast<AEnemySpawner>(GetOwner());
+
     Owner->SpawnedEnemy = nullptr;
 }
 
@@ -86,7 +86,7 @@ void AEnemy::CalculateTimer(float DeltaTime)
 
     if (CurrentFireTimer >= FireInterval)
     {
-        //CurrentFireTimer = 0.f;
+        CurrentFireTimer = 0.f;
 
         bShouldFire = true;
     }
@@ -94,13 +94,11 @@ void AEnemy::CalculateTimer(float DeltaTime)
 
 void AEnemy::Fire()
 {
-    if (Bullet != nullptr) return;
-
     UWorld* World = GEngine->ActiveWorld;
 
-    Bullet = World->SpawnActor<ABullet>();
-    //Bullet->SetActorLabel(TEXT("OBJ_BULLET"));
+    ABullet* Bullet = World->SpawnActor<ABullet>();
+    Bullet->SetActorLabel(TEXT("OBJ_BULLET"));
     Bullet->SetOwner(this);
-    //Bullet
 
+    bShouldFire = false;
 }

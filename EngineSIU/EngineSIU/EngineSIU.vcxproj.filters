@@ -418,6 +418,18 @@
     <ClInclude Include="LightGridGenerator.h" />
     <ClCompile Include="SoundManager.cpp" />
     <ClInclude Include="SoundManager.h" />
+    <ClCompile Include="Engine\Source\Developer\LuaTypes\LuaUserTypes.cpp">
+      <Filter>Engine\Source\Developer\LuaTypes</Filter>
+    </ClCompile>
+    <ClInclude Include="Engine\Source\Developer\LuaTypes\LuaUserTypes.h">
+      <Filter>Engine\Source\Developer\LuaTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Developer\LuaUtils\LuaBindMacros.h">
+      <Filter>Engine\Source\Developer\LuaUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Source\Developer\LuaUtils\LuaBindUtils.h">
+      <Filter>Engine\Source\Developer\LuaUtils</Filter>
+    </ClInclude>
     <ClCompile Include="Engine\Source\Editor\LevelEditor\SlateAppMessageHandler.cpp">
       <Filter>Engine\Source\Editor\LevelEditor</Filter>
     </ClCompile>
@@ -1608,6 +1620,7 @@
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAcceleration.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAccelerationBase.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Physics\PhysicsManager.cpp" />
+    <ClCompile Include="Engine\Contents\AnimInstance\MyAnimInstance.cpp" />
     <ClCompile Include="Engine\Contents\Objects\DamageCameraShake.cpp" />
     <ClCompile Include="Engine\Source\Editor\PropertyEditor\PhysicsAssetViewerPanel.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Core\Container\ArrayHelper.cpp" />
@@ -1615,18 +1628,8 @@
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\ConstraintInstance.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.cpp" />
-    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\Enemy.cpp">
-      <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\EnemySpawner.cpp">
-      <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Contents\AnimInstance\LuaScriptAnimInstance.cpp" />
-    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Lua\LuaScriptComponent.cpp" />
-    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Lua\LuaScriptManager.cpp" />
-    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Lua\LuaTypes\LuaUserTypes.cpp" />
-    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\Bullet.cpp">
-      <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Components\SocketComponent.cpp">
+      <Filter>Engine\Source\Runtime\Engine\Classes\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1742,6 +1745,7 @@
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAcceleration.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAccelerationBase.h" />
     <ClInclude Include="Engine\Source\Runtime\Physics\PhysicsManager.h" />
+    <ClInclude Include="Engine\Contents\AnimInstance\MyAnimInstance.h" />
     <ClInclude Include="Engine\Contents\Objects\DamageCameraShake.h" />
     <ClInclude Include="Engine\Source\Editor\PropertyEditor\PhysicsAssetViewerPanel.h" />
     <ClInclude Include="Engine\Source\Runtime\Core\Container\ArrayHelper.h" />
@@ -1749,20 +1753,8 @@
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\ConstraintInstance.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\World\PhysicsViewerWorld.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\Enemy.h">
-      <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\EnemySpawner.h">
-      <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Contents\AnimInstance\LuaScriptAnimInstance.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Lua\LuaScriptComponent.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Lua\LuaScriptManager.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Lua\LuaTypes\LuaUserTypes.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Lua\LuaUtils\LuaBindUtils.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Lua\LuaUtils\LuaTypeMacros.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\Bullet.h">
-      <Filter>Engine\Source\Runtime\Engine\Classes\Actors</Filter>
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Components\SocketComponent.h">
+      <Filter>Engine\Source\Runtime\Engine\Classes\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
