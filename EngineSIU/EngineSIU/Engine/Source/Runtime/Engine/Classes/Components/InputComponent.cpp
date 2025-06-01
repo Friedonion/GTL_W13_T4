@@ -8,9 +8,9 @@ void UInputComponent::ProcessInput(float DeltaTime)
         {
             KeyBindDelegate[Key].Broadcast(DeltaTime);
         }
-        else if (MouseDownBindDelegate.Contains(EKeys::ToMouseButton(Key)))
+        else if (MouseButtonBindDelegate.Contains(EKeys::ToMouseButton(Key)))
         {
-            MouseDownBindDelegate[EKeys::ToMouseButton(Key)].Broadcast(DeltaTime);
+            MouseButtonBindDelegate[EKeys::ToMouseButton(Key)].Broadcast(DeltaTime);
         }
     }
 
@@ -79,9 +79,27 @@ void UInputComponent::ClearBindDelegate()
     {
         Handler->OnKeyUpDelegate.Remove(DelegateHandle);
     }
-    
+
+    for (FDelegateHandle DelegateHandle : BindMouseMoveDelegateHandles)
+    {
+        Handler->OnMouseMoveDelegate.Remove(DelegateHandle);
+    }
+
+    for (FDelegateHandle DelegateHandle : BindMouseDownDelegateHandles)
+    {
+        Handler->OnMouseDownDelegate.Remove(DelegateHandle);
+    }
+
+    for (FDelegateHandle DelegateHandle : BindMouseUpDelegateHandles)
+    {
+        Handler->OnMouseUpDelegate.Remove(DelegateHandle);
+    }
+
     BindKeyDownDelegateHandles.Empty();
     BindKeyUpDelegateHandles.Empty();
+    BindMouseMoveDelegateHandles.Empty();
+    BindMouseDownDelegateHandles.Empty();
+    BindMouseUpDelegateHandles.Empty();
 }
 
 void UInputComponent::InputKey(const FKeyEvent& InKeyEvent)
@@ -109,30 +127,7 @@ void UInputComponent::InputMouseMove(const FPointerEvent& InMouseEvent)
 {
     FVector2D Delta = InMouseEvent.GetCursorDelta();
     MouseX = Delta.X;
-    MouseY = Delta.Y;
-
-    EKeys::Type EffectingButton = InMouseEvent.GetEffectingButton();
-    if (EffectingButton == EKeys::LeftMouseButton ||
-        EffectingButton == EKeys::RightMouseButton ||
-        EffectingButton == EKeys::MiddleMouseButton
-        )
-    {
-        if (InMouseEvent.GetInputEvent() == IE_Pressed)
-        {
-            if (PressedKeys.Contains(EffectingButton))
-            {
-                PressedKeys.Add(EffectingButton);
-            }
-        }
-        else if (InMouseEvent.GetInputEvent() == IE_Released)
-        {
-            if (PressedKeys.Contains(EffectingButton))
-            {
-                PressedKeys.Remove(EffectingButton);
-            }
-        }
-    }
-        
+    MouseY = Delta.Y;       
 }
 
 void UInputComponent::InputMouseButton(const FPointerEvent& InMouseEvent)
@@ -140,10 +135,16 @@ void UInputComponent::InputMouseButton(const FPointerEvent& InMouseEvent)
     EKeys::Type EffectingButton = InMouseEvent.GetEffectingButton();
     if (InMouseEvent.GetInputEvent() == IE_Pressed)
     {
-        PressedKeys.Add(EffectingButton);
+        if (!PressedKeys.Contains(EffectingButton))
+        {
+            PressedKeys.Add(EffectingButton);
+        }
     }
     else if (InMouseEvent.GetInputEvent() == IE_Released)
     {
-        PressedKeys.Remove(EffectingButton);
+        if (PressedKeys.Contains(EffectingButton))
+        {
+            PressedKeys.Remove(EffectingButton);
+        }
     }
 }

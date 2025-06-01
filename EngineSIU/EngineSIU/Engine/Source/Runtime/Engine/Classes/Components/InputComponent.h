@@ -49,7 +49,7 @@ private:
     TArray<FDelegateHandle> BindMouseUpDelegateHandles;
     TArray<FDelegateHandle> BindMouseMoveDelegateHandles;
     TMap<EKeys::Type, FOneFloatDelegate> KeyBindDelegate;
-    TMap<EMouseButtons::Type, FOneFloatDelegate> MouseDownBindDelegate;
+    TMap<EMouseButtons::Type, FOneFloatDelegate> MouseButtonBindDelegate;
     FTwoFloatDelegate MouseMoveBindDelegate;
 
     TSet<EKeys::Type> PressedKeys;
@@ -97,5 +97,5 @@ inline void UInputComponent::BindMouseDown(EMouseButtons::Type Button, Func&& Ca
     {
         return;
     }
-    MouseDownBindDelegate[Button].AddLambda(std::forward<Func>(Callback));
+    MouseButtonBindDelegate[Button].AddLambda(std::forward<Func>(Callback));
 }
