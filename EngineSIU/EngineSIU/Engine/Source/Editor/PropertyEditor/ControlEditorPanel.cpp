@@ -45,6 +45,8 @@
 #include "Engine/Classes/Engine/AssetManager.h"
 #include "Particles/ParticleSystemComponent.h"
 
+#include "Actors/EnemySpawner.h"
+
 #include "PhysicsManager.h"
 
 ControlEditorPanel::ControlEditorPanel()
@@ -412,6 +414,8 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "CapsuleCol",        .OBJ = OBJ_CAPSULE_COLLISION },
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
             { .Label = "SequencerPlayer",   .OBJ = OBJ_SEQUENCERPLAYER },
+            { .Label = "EnemySpawner",      .OBJ = OBJ_ENEMYSPAWNER },
+            { .Label = "Bullet",            .OBJ = OBJ_BULLET },
         };
 
         for (const auto& primitive : primitives)
@@ -529,15 +533,27 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                     break;
                 }
                 case OBJ_SKELETALMESH:
-                    {
-                        SpawnedActor = World->SpawnActor<ASkeletalMeshActor>();
-                        SpawnedActor->SetActorTickInEditor(true);
-                    }
+                {
+                    SpawnedActor = World->SpawnActor<ASkeletalMeshActor>();
+                    SpawnedActor->SetActorLabel(TEXT("OBJ_SKELETALMESH"));
+                    SpawnedActor->SetActorTickInEditor(true);
+
+                    //SpawnedActor = World->SpawnActor<AActor>();
+                    //auto* MeshComp = SpawnedActor->AddComponent<USkeletalMeshComponent>();
+                    //SpawnedActor->SetRootComponent(MeshComp);
                     break;
+                }
                 case OBJ_SEQUENCERPLAYER:
                 {
                     SpawnedActor = World->SpawnActor<ASequencerPlayer>();
                     SpawnedActor->SetActorLabel(TEXT("OBJ_SEQUENCERPLAYER"));
+                    break;
+                }
+                case OBJ_ENEMYSPAWNER:
+                {
+                    SpawnedActor = World->SpawnActor<AEnemySpawner>();
+                    SpawnedActor->SetActorLabel(TEXT("OBJ_ENEMYSPAWNER"));
+                    break;
                 }
                 case OBJ_CAMERA:
                 case OBJ_END:
