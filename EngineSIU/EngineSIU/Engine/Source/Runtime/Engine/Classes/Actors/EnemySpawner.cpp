@@ -5,7 +5,7 @@
 
 AEnemySpawner::AEnemySpawner()
     : CurrentSpawnTimer(0.f)
-    , SpawnInterval(10.f)
+    , SpawnInterval(5.f)
     , bShouldSpawn(false)
     , Character(nullptr)
     , SpawnedEnemy(nullptr)
@@ -15,12 +15,12 @@ AEnemySpawner::AEnemySpawner()
 UObject* AEnemySpawner::Duplicate(UObject* InOuter)
 {
     ThisClass* NewActor = Cast<ThisClass>(Super::Duplicate(InOuter));
+    NewActor->CurrentSpawnTimer = CurrentSpawnTimer;
     NewActor->SpawnInterval = SpawnInterval; 
     NewActor->bShouldSpawn = bShouldSpawn;
-    NewActor->CurrentSpawnTimer = CurrentSpawnTimer;
 
-    NewActor->SpawnedEnemy = SpawnedEnemy;
     NewActor->Character = Character;
+    NewActor->SpawnedEnemy = SpawnedEnemy;
 
     return NewActor;
 }
@@ -74,7 +74,7 @@ bool AEnemySpawner::CanSpawn()
     FVector2D CharacterDirection = /* 이거는 카메라 방향으로 하는게 좋을 것 같음*/FVector2D();
 
     if (SpawnedEnemy != nullptr) 
-        return false; // Destroy된다고 nullptr이 되는 것은 아님.
+        return false; 
 
     if (FVector2D::DotProduct(CharacterToSpawner, CharacterDirection) <= 0.f)
     {

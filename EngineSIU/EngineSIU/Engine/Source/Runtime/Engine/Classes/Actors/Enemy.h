@@ -2,7 +2,9 @@
 #include "GameFramework/Actor.h"
 
 class USkeletalMeshComponent;
+class USkeletalMesh;
 class ACharacter;
+class ABullet;
 
 class AEnemy : public AActor
 {
@@ -25,10 +27,14 @@ private:
 
 private:
     UPROPERTY(VisibleAnywhere, USkeletalMeshComponent*, SkeletalMeshComponent,)
+    UPROPERTY(VisibleAnywhere, USkeletalMesh*, SkeletalMesh, )
     UPROPERTY(VisibleAnywhere, ACharacter*, Character, )
     UPROPERTY(EditAnywhere, float, FireInterval,)
     UPROPERTY(VisibleAnywhere, bool, bShouldFire, )
-
     float CurrentFireTimer;
+
+public:
+    UPROPERTY(VisibleAnywhere, ABullet*, Bullet, )
+
 };
 

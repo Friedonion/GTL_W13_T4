@@ -2,8 +2,8 @@
     "Actors": [
         {
             "ActorClass": "ADirectionalLight",
-            "ActorID": "ADirectionalLight_247",
-            "ActorLabel": "OBJ_DIRECTIONALLGIHT_247",
+            "ActorID": "ADirectionalLight_255",
+            "ActorLabel": "OBJ_DIRECTIONALLGIHT_255",
             "ActorTickInEditor": "false",
             "Components": [
                 {
@@ -15,14 +15,27 @@
                         "AttachParentID": "UBillboardComponent_0",
                         "ComponentClass": "UDirectionalLightComponent",
                         "ComponentName": "UDirectionalLightComponent_0",
-                        "ComponentOwner": "ADirectionalLight_247",
+                        "ComponentOwner": "ADirectionalLight_255",
                         "ComponentOwnerClass": "ADirectionalLight",
                         "Direction": "X=-1.000 Y=-0.000 Z=-0.000",
                         "Intensity": "10.000000",
                         "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=-180.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ADirectionalLight_255",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
@@ -37,7 +50,7 @@
                         "BufferKey": "Assets/Editor/Icon/S_LightDirectional.PNG",
                         "ComponentClass": "UBillboardComponent",
                         "ComponentName": "UBillboardComponent_0",
-                        "ComponentOwner": "ADirectionalLight_247",
+                        "ComponentOwner": "ADirectionalLight_255",
                         "ComponentOwnerClass": "ADirectionalLight",
                         "FinalIndexU": "0.000000",
                         "FinalIndexV": "0.000000",
@@ -57,20 +70,20 @@
         },
         {
             "ActorClass": "AEnemySpawner",
-            "ActorID": "AEnemySpawner_224",
-            "ActorLabel": "OBJ_ENEMYSPAWNER_224",
+            "ActorID": "AEnemySpawner_229",
+            "ActorLabel": "OBJ_ENEMYSPAWNER_229",
             "ActorTickInEditor": "false",
             "Components": [
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_219",
+                    "ComponentID": "USceneComponent_231",
                     "Properties": {
-                        "AttachParentID": "USceneComponent_225",
+                        "AttachParentID": "nullptr",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_219",
-                        "ComponentOwner": "AEnemySpawner_224",
+                        "ComponentName": "USceneComponent_231",
+                        "ComponentOwner": "AEnemySpawner_229",
                         "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=200.000 Y=100.000 Z=-50.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
@@ -78,64 +91,20 @@
                     }
                 },
                 {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_225",
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_225",
-                        "ComponentOwner": "AEnemySpawner_224",
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemySpawner_229",
                         "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=529.775 Y=456.365 Z=-100.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
                 }
             ],
-            "RootComponentID": "USceneComponent_225"
-        },
-        {
-            "ActorClass": "AEnemySpawner",
-            "ActorID": "AEnemySpawner_252",
-            "ActorLabel": "OBJ_ENEMYSPAWNER_252",
-            "ActorTickInEditor": "false",
-            "Components": [
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_222",
-                    "Properties": {
-                        "AttachParentID": "USceneComponent_253",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_222",
-                        "ComponentOwner": "AEnemySpawner_252",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_253",
-                    "Properties": {
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_253",
-                        "ComponentOwner": "AEnemySpawner_252",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=866.053 Y=-364.540 Z=-231.240",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                }
-            ],
-            "RootComponentID": "USceneComponent_253"
+            "RootComponentID": "USceneComponent_231"
         }
     ],
     "NextUUID": 0,

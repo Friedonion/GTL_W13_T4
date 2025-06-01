@@ -1,17 +1,23 @@
 #include "Enemy.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Classes/Engine/SkeletalMesh.h"
 #include "UObject/ObjectFactory.h"
 
 #include "GameFramework/Character.h"
 #include "Math/Rotator.h"
 #include "EnemySpawner.h"
 
+#include "Actors/Bullet.h"
+#include "Engine/EditorEngine.h"
+
 AEnemy::AEnemy()
     : SkeletalMeshComponent(nullptr)
-    , FireInterval(3.f)
+    , SkeletalMesh(nullptr)
+    , FireInterval(4.f)
     , CurrentFireTimer(0.f)
     , bShouldFire(false)
     , Character(nullptr)
+    , Bullet(nullptr)
 {
 }
 
@@ -22,15 +28,21 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
     NewActor->CurrentFireTimer = CurrentFireTimer;
     NewActor->bShouldFire = bShouldFire;
     NewActor->SkeletalMeshComponent = SkeletalMeshComponent;
+    NewActor->SkeletalMesh = SkeletalMesh;
+    NewActor->Bullet = Bullet;
 
     return NewActor;
 }
 
 void AEnemy::Tick(float DeltaTime)
 {
-    Super::Tick(DeltaTime);
+    // FireDirection
+    // ZeroVector 대신 Character의 위치를 넣기.
+    FRotator LookAtRot = FRotator::MakeLookAtRotation(this->GetActorLocation(), FVector(0, 0, 0));
+    SetActorRotation(FRotator(0, LookAtRot.Yaw, 0));
 
-    if (CurrentFireTimer >= 6.f)
+    // Destroy로직은 다른 곳에 추가할 예정
+    if (CurrentFireTimer >= 5.f)
         Destroy();
 
     CalculateTimer(DeltaTime);
@@ -46,8 +58,10 @@ void AEnemy::BeginPlay()
 
     SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
     SetRootComponent(SkeletalMeshComponent);
-    USkeletalMesh* SkeletalMesh = UAssetManager::Get().GetSkeletalMesh(FName("Contents/Enemy/Enemy_T-Pose"));
+
+    SkeletalMesh = UAssetManager::Get().GetSkeletalMesh(FName("Contents/Enemy/Pistol_Idle"));
     SkeletalMeshComponent->SetSkeletalMeshAsset(SkeletalMesh);
+
     SetActorLocation(GetOwner()->GetRootComponent()->GetRelativeLocation());
     GetActorRotation();
 
@@ -80,8 +94,13 @@ void AEnemy::CalculateTimer(float DeltaTime)
 
 void AEnemy::Fire()
 {
-    // FireDirection
-    // ZeroVector 대신 Character의 위치를 넣기.
-    FRotator LookAtRot = FRotator::MakeLookAtRotation(this->GetActorLocation(), FVector(0, 0, 0));
-    SetActorRotation(FRotator(0, LookAtRot.Yaw, 0));
+    if (Bullet != nullptr) return;
+
+    UWorld* World = GEngine->ActiveWorld;
+
+    Bullet = World->SpawnActor<ABullet>();
+    //Bullet->SetActorLabel(TEXT("OBJ_BULLET"));
+    Bullet->SetOwner(this);
+    //Bullet
+
 }
