@@ -86,8 +86,11 @@ end
 
 function ReturnTable:Move(dv)
     local this = self.this
-    local Rot = this.ActorRotation;
-    local LocalMovement = Rot:RotateVector(dv)
+
+    local yawOnlyRot = FRotator(0.0, this.ActorRotation.Yaw, 0.0)
+    local LocalMovement = yawOnlyRot:RotateVector(dv)
+    LocalMovement.Z = 0.0
+
     this.ActorLocation = this.ActorLocation + LocalMovement
 end
 
