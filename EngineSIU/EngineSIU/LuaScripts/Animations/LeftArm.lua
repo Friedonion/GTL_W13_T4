@@ -1,3 +1,12 @@
+local EngineTypes = EngineTypes
+local CustomEnums = CustomEnums
+setmetatable(_ENV, {
+    __index = function(t, k)
+        return rawget(EngineTypes, k) or rawget(CustomEnums, k)
+    end
+})
+
+
 AnimFSM = {
     current = "Idle",
     
@@ -7,8 +16,9 @@ AnimFSM = {
         -- self.current = "Contents/Human/FastRun"
         -- self.current = "Contents/Human/NarutoRun"
         
-        self.current = "Contents/Player/Armature|Armature|mixamo.com|Layer0"
-
+        if(self.Owner.State == PlayerState.Stabbing) then
+            self.current = "Contents/Player/Armature|Armature|mixamo.com|Layer0"
+        end
 
         return {
             anim = self.current,

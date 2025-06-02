@@ -25,9 +25,9 @@ void ACharacter::BeginPlay()
 {
     Super::BeginPlay();
 
-    if (Mesh)
+    for (USkeletalMeshComponent* SkelComp : GetComponentsByClass<USkeletalMeshComponent>())
     {
-        Mesh->BindAnimScriptInstance(this);
+        SkelComp->BindAnimScriptInstance(this);
     }
     // Initialize components
     //if (GetMesh())

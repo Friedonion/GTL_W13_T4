@@ -33,14 +33,25 @@ function ReturnTable:InitializeCallback()
 
     RegisterMouseMoveCallback(function(dx, dy)
         -- 마우스 이동에 대한 처리
-        self:Turn(dx/1)
-        self:Lookup(dy/1)
+        self:Turn(dx/10)
+        self:Lookup(dy/10)
         -- print("Mouse moved: ", dtX, dtY) -- 디버깅용 출력
     end)
 
     RegisterKeyCallback("RightMouseButton", function(dt)
         -- 우클릭에 대한 처리
+        self.this.State = PlayerState.Shooting
     end)
+    
+    
+    RegisterKeyCallback("LeftMouseButton", function(dt)
+        -- 우클릭에 대한 처리
+        print(111111111111111111111111111111)
+        self.this.State = PlayerState.Stabbing
+    end)
+    -- RegisterKeyCallback("LeftMouseButton", function(dt)
+    --     self.this.State = PlayerState.Stabbing
+    -- end)
 end
 
 -- BeginPlay: Actor가 처음 활성화될 때 호출
@@ -76,22 +87,22 @@ end
 function ReturnTable:MoveForward(DeltaTime)
 -- print(123)    
 -- print(self.this.State)
-    self.this.State = PlayerState.Hit
+    -- self.this.State = PlayerState.Hit
     self:Move(FVector(30.0, 0.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveBackward(DeltaTime)
-    self.this.State = PlayerState.Idle
+    -- self.this.State = PlayerState.Idle
     self:Move(FVector(-30.0, 0.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveLeft(DeltaTime)
-    self.this.State = PlayerState.Shooting
+    -- self.this.State = PlayerState.Shooting
     self:Move(FVector(0.0, -30.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveRight(DeltaTime)
-    self.this.State = PlayerState.Stabbing
+    -- self.this.State = PlayerState.Stabbing
     self:Move(FVector(0.0, 30.0, 0.0) * DeltaTime)
 end
 

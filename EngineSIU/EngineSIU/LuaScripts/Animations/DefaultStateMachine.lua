@@ -1,3 +1,4 @@
+
 AnimFSM = {
     current = "Idle",
     
@@ -6,6 +7,7 @@ AnimFSM = {
 
         -- self.current = "Contents/Human/FastRun"
         -- self.current = "Contents/Human/NarutoRun"
+        
         
         self.current = "Contents/Armature|GunPlay"
 
