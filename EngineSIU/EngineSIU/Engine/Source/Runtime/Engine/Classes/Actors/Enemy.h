@@ -42,8 +42,6 @@ private:
 
 private:
     float CurrentFireTimer;
-    bool bCollisionShapesCreated;
-    bool bRagDollCreated;
 
     UPROPERTY(VisibleAnywhere, USkeletalMeshComponent*, SkeletalMeshComponent,)
     UPROPERTY(VisibleAnywhere, USkeletalMesh*, SkeletalMesh, )
@@ -58,8 +56,12 @@ private:
     void CreateCollisionConstraint_Internal(const TArray<UBodySetup*>& InBodySetups);
     void DestroyCollisions();
 
+    void Die();
+
     // FIX-ME
-    FString GetCleanBoneName(const FString& InFullName); 
+    FString GetCleanBoneName(const FString& InFullName);
+
+    void HandleCollision(AActor* SelfActor, AActor* OtherActor);
 
     TArray<FBodyInstance*> BodyInstances;
     TArray<UBodySetup*> BodySetups;

@@ -27,8 +27,6 @@ AEnemy::AEnemy()
     , bShouldFire(false)
     , Character(nullptr)
     , Direction(FRotator::ZeroRotator)
-    , bCollisionShapesCreated(false)
-    , bRagDollCreated(false)
     , bIsAlive(false)
     , BodyInstances()
     , BodySetups()
@@ -61,8 +59,6 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
     NewActor->bShouldFire = bShouldFire;
     NewActor->Character = Character;
     NewActor->Direction = Direction;
-    NewActor->bCollisionShapesCreated = bCollisionShapesCreated;
-    NewActor->bRagDollCreated = bRagDollCreated;
     NewActor->bIsAlive = bIsAlive;
     NewActor->BodyInstances = BodyInstances;
     NewActor->BodySetups = BodySetups;
@@ -78,18 +74,6 @@ void AEnemy::Tick(float DeltaTime)
     
     SetActorRotation(FRotator(0, Direction.Yaw, 0));
 
-    // Destroy로직은 다른 곳에 추가할 예정
-    if (CurrentFireTimer >= 3.f && !bRagDollCreated)
-    {
-        //Destroy();
-        DestroyCollisions();
-        SkeletalMeshComponent->CreatePhysXGameObject();
-        SkeletalMeshComponent->bSimulate = true;
-        SkeletalMeshComponent->bApplyGravity = true;
-
-        bRagDollCreated = true;
-    }
-        
     CalculateTimer(DeltaTime);
     if (!bShouldFire) return;
 
@@ -102,7 +86,6 @@ void AEnemy::BeginPlay()
     SetRootComponent(SkeletalMeshComponent);
     Super::BeginPlay();
     UE_LOG(ELogLevel::Display, TEXT("AEnemy has been spawned."));
-
 
     SetLuaToPlayAnim();
 
@@ -122,6 +105,8 @@ void AEnemy::BeginPlay()
 
 void AEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+    DestroyCollisions();
+
     Super::EndPlay(EndPlayReason);
 }
 
@@ -141,7 +126,7 @@ void AEnemy::SetRandomFireInterval()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> distrib(1.0f, 10.0f);
+    std::uniform_real_distribution<float> distrib(1.0f, 3.0f);
     FireInterval = distrib(gen);
 }
 
@@ -200,7 +185,6 @@ void AEnemy::CreateCollisionShapes()
     CreateCollisionBox_Body_Internal(headCenterZ, HeadSize, HEAD);
 
     CreateCollisionConstraint_Internal(BodySetups);
-    bCollisionShapesCreated = true;
 }
 
 void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase, FVector InFullSize, FName& BoneName)
@@ -209,6 +193,7 @@ void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase
     UBodySetup* BodySetup = FObjectFactory::ConstructObject<UBodySetup>(this);
     BodySetup->BoneName = BoneName;
     FBodyInstance* BodyInstance = new FBodyInstance(SkeletalMeshComponent); 
+    BodyInstance->OwnerActor = this;
     BodyInstance->bSimulatePhysics = true;
     BodyInstance->bEnableGravity = false;
 
@@ -233,9 +218,16 @@ void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase
     BodySetup->AggGeom.BoxElems.Add(PxBoxShape);
 
     BodySetups.Add(BodySetup);
-    BodyInstances.Add(BodyInstance);
+    BodyInstances.Add(BodyInstance); 
 
-    CollisionRigidBodies.Add(GEngine->PhysicsManager->CreateGameObject(PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC));
+    GameObject* NewRigidBodyGameObject = GEngine->PhysicsManager->CreateGameObject(PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC);
+
+    if (NewRigidBodyGameObject)
+    {
+        NewRigidBodyGameObject->OnHit.AddUObject(this, &AEnemy::HandleCollision);
+
+        CollisionRigidBodies.Add(NewRigidBodyGameObject);
+    }
 }
 
 void AEnemy::CreateCollisionConstraint_Internal(const TArray<UBodySetup*>& InBodySetups)
@@ -288,6 +280,21 @@ void AEnemy::DestroyCollisions()
     }
 }
 
+void AEnemy::Die()
+{
+    if (!bIsAlive) return;
+
+    bIsAlive = false;
+
+    // Ragdoll 생성
+    SkeletalMeshComponent->CreatePhysXGameObject();
+
+    SkeletalMeshComponent->bSimulate = true;
+    SkeletalMeshComponent->bApplyGravity = true;
+
+    //Destroy();
+}
+
 void AEnemy::Fire()
 {
     UWorld* World = GEngine->ActiveWorld;
@@ -318,4 +325,22 @@ FString AEnemy::GetCleanBoneName(const FString& InFullName)
         return name.RightChop(colonIdx + 1);
     }
     return name;
+}
+
+void AEnemy::HandleCollision(AActor* SelfActor, AActor* OtherActor)
+{
+    if (!bIsAlive) return;
+
+    // SelfActor는 이 AEnemy 인스턴스여야 합니다.
+    // 또는, 이 함수는 AEnemy의 여러 콜리전 박스 중 하나에 의해 호출될 수 있으므로,
+    // OtherActor가 ABullet인지 확인하는 것이 더 중요할 수 있습니다.
+    // if (SelfActor != this) return; // 이 조건은 상황에 따라 필요 없을 수 있음
+
+    ABullet* HittingBullet = Cast<ABullet>(OtherActor);
+    if (HittingBullet)
+    {
+        Die();
+        HittingBullet->Destroy();
+    }
+    // 플레이어가 충돌한 경우 체력 감소 로직 추가 가능.
 }

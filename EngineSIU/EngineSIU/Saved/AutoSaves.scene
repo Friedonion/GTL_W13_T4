@@ -2,8 +2,8 @@
     "Actors": [
         {
             "ActorClass": "AEnemySpawner",
-            "ActorID": "AEnemySpawner_723",
-            "ActorLabel": "OBJ_ENEMYSPAWNER_723",
+            "ActorID": "AEnemySpawner_384",
+            "ActorLabel": "OBJ_ENEMYSPAWNER_384",
             "ActorTickInEditor": "false",
             "Components": [
                 {
@@ -12,7 +12,7 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEnemySpawner_723",
+                        "ComponentOwner": "AEnemySpawner_384",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
@@ -21,30 +21,14 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_382",
-                    "Properties": {
-                        "AttachParentID": "USceneComponent_725",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_382",
-                        "ComponentOwner": "AEnemySpawner_723",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_725",
+                    "ComponentID": "USceneComponent_386",
                     "Properties": {
                         "AttachParentID": "nullptr",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_725",
-                        "ComponentOwner": "AEnemySpawner_723",
+                        "ComponentName": "USceneComponent_386",
+                        "ComponentOwner": "AEnemySpawner_384",
                         "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=200.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=100.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
@@ -52,7 +36,45 @@
                     }
                 }
             ],
-            "RootComponentID": "USceneComponent_725"
+            "RootComponentID": "USceneComponent_386"
+        },
+        {
+            "ActorClass": "AEnemySpawner",
+            "ActorID": "AEnemySpawner_479",
+            "ActorLabel": "OBJ_ENEMYSPAWNER_479",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_481",
+                    "Properties": {
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_481",
+                        "ComponentOwner": "AEnemySpawner_479",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=-100.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemySpawner_479",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "USceneComponent_481"
         }
     ],
     "NextUUID": 0,

@@ -11,6 +11,8 @@
 #include "PhysicsEngine/ConstraintInstance.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 
+#include "Delegates/Delegate.h"
+#include "Delegates/DelegateCombination.h"
 
 enum class ERigidBodyType : uint8;
 struct FBodyInstance;
@@ -21,12 +23,17 @@ using namespace physx;
 using namespace DirectX;
 
 class UPrimitiveComponent;
+class FSimulationEventCallback;
+
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnSimpleActorHit, AActor* /*HitActor*/, AActor* /*OtherActor*/);
 
 // 게임 오브젝트
 struct GameObject {
     PxRigidDynamic* DynamicRigidBody = nullptr;
     PxRigidStatic* StaticRigidBody = nullptr;
     XMMATRIX WorldMatrix = XMMatrixIdentity();
+
+    FOnSimpleActorHit OnHit;
 
     void UpdateFromPhysics(PxScene* Scene) {
         PxSceneReadLock scopedReadLock(*Scene);
@@ -36,13 +43,16 @@ struct GameObject {
     }
 
     void SetRigidBodyType(ERigidBodyType RigidBody) const;
+
+    //OnHit
+
 };
 
 class FPhysicsManager
 {
 public:
     FPhysicsManager();
-    ~FPhysicsManager() = default;
+    ~FPhysicsManager();
 
     void InitPhysX();
     
@@ -58,8 +68,13 @@ public:
     void DestroyGameObject(GameObject* GameObject) const;
     
     GameObject CreateBox(const PxVec3& Pos, const PxVec3& HalfExtents) const;
-    GameObject* CreateGameObject(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetup, ERigidBodyType RigidBodyType =
-                                     ERigidBodyType::DYNAMIC) const;
+    GameObject* CreateGameObject(
+        const PxVec3& Pos,
+        const PxQuat& Rot,
+        FBodyInstance* BodyInstance,
+        UBodySetup* BodySetup,
+        ERigidBodyType RigidBodyType = ERigidBodyType::DYNAMIC
+    ) const;
     void CreateJoint(const GameObject* Obj1, const GameObject* Obj2, FConstraintInstance* ConstraintInstance, const FConstraintSetup* ConstraintSetup) const;
 
     PxShape* CreateBoxShape(const PxVec3& Pos, const PxQuat& Quat, const PxVec3& HalfExtents) const;
@@ -88,6 +103,8 @@ private:
     PxPvd* Pvd = nullptr;
     PxPvdTransport* Transport = nullptr;
 
+    FSimulationEventCallback* SimulationEventCallback;
+
     PxRigidDynamic* CreateDynamicRigidBody(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetups) const;
     PxRigidStatic* CreateStaticRigidBody(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetups) const;
     void AttachShapesToActor(PxRigidActor* Actor, UBodySetup* BodySetup) const;
@@ -96,5 +113,6 @@ private:
     void ApplyLockConstraints(PxRigidDynamic* DynamicBody, const FBodyInstance* BodyInstance) const;
     void ApplyCollisionSettings(const PxRigidActor* Actor, const FBodyInstance* BodyInstance) const;
     void ApplyShapeCollisionSettings(PxShape* Shape, const FBodyInstance* BodyInstance) const;
+
 };
 
