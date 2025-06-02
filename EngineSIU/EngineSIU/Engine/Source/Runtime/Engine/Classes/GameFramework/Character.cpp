@@ -24,6 +24,11 @@ UObject* ACharacter::Duplicate(UObject* InOuter)
 void ACharacter::BeginPlay()
 {
     Super::BeginPlay();
+
+    if (Mesh)
+    {
+        Mesh->BindAnimScriptInstance(this);
+    }
     // Initialize components
     //if (GetMesh())
     //{
@@ -64,5 +69,6 @@ void ACharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void ACharacter::RegisterLuaType(sol::state& Lua)
 {
-    DEFINE_LUA_TYPE_ABSTRACT_WITH_PARENT(ACharacter, APawn)
+    DEFINE_LUA_TYPE_WITH_PARENT_ONLY(ACharacter, (sol::bases<AActor, APawn>()))
 }
+ 

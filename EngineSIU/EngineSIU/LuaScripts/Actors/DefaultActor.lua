@@ -74,23 +74,24 @@ function ReturnTable:Attack(AttackDamage)
 end
 
 function ReturnTable:MoveForward(DeltaTime)
-    print(self.this.State)
-    if self.this.State == PlayerState.Idle then
-        print("Idle 상태에서 이동 불가")
-        return
-    end
+-- print(123)    
+-- print(self.this.State)
+    self.this.State = PlayerState.Hit
     self:Move(FVector(30.0, 0.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveBackward(DeltaTime)
+    self.this.State = PlayerState.Idle
     self:Move(FVector(-30.0, 0.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveLeft(DeltaTime)
+    self.this.State = PlayerState.Shooting
     self:Move(FVector(0.0, -30.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveRight(DeltaTime)
+    self.this.State = PlayerState.Stabbing
     self:Move(FVector(0.0, 30.0, 0.0) * DeltaTime)
 end
 

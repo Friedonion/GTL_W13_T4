@@ -18,6 +18,9 @@ public:
 
     virtual void NativeUpdateAnimation(float DeltaSeconds, FPoseContext& OutPose) override;
     
+    template <typename T>
+    void BindLua(T* Owner);
+
     void SetPlaying(bool bIsPlaying)
     {
         bPlaying = bIsPlaying;
@@ -93,3 +96,9 @@ private:
     UPROPERTY(EditAnywhere, UAnimStateMachine*, StateMachine, = nullptr)
     
 };
+
+template<typename T>
+inline void ULuaScriptAnimInstance::BindLua(T* Owner)
+{
+    StateMachine->InitLuaStateMachine(Owner);
+}

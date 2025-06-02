@@ -11,14 +11,10 @@
 #include "UObject/Casts.h"
 #include "UObject/ObjectFactory.h"
 #include "GameFramework/Pawn.h"
-#include "Animation/AnimData/AnimDataModel.h"
-#include "Engine/Engine.h"
-#include "World/World.h"
 
 ULuaScriptAnimInstance::ULuaScriptAnimInstance()
     : PrevAnim(nullptr)
     , CurrAnim(nullptr)
-    , PreviousTime(0.f)
     , ElapsedTime(0.f)
     , PlayRate(1.f)
     , bLooping(true)
@@ -37,7 +33,7 @@ ULuaScriptAnimInstance::ULuaScriptAnimInstance()
 void ULuaScriptAnimInstance::InitializeAnimation()
 {
     UAnimInstance::InitializeAnimation();
-    
+
     StateMachine = FObjectFactory::ConstructObject<UAnimStateMachine>(this);
     StateMachine->Initialize(Cast<USkeletalMeshComponent>(GetOuter()), this);
 }
@@ -49,131 +45,92 @@ void ULuaScriptAnimInstance::NativeInitializeAnimation()
 void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseContext& OutPose)
 {
     UAnimInstance::NativeUpdateAnimation(DeltaSeconds, OutPose);
+    StateMachine->ProcessState();
 
-    if (GEngine->ActiveWorld->WorldType == EWorldType::PIE && StateMachine)
-    {
-        StateMachine->ProcessState();
-    }
-
+#pragma region MyAnim
     USkeletalMeshComponent* SkeletalMeshComp = GetSkelMeshComponent();
-    if (!CurrAnim || !SkeletalMeshComp || !SkeletalMeshComp->GetSkeletalMeshAsset() || !bPlaying)
-        return;
 
-    UAnimDataModel* DataModel = CurrAnim->GetDataModel();
-    if (!DataModel)
-        return;
-
-    const int32 FrameRate = DataModel->GetFrameRate();
-    if (FrameRate <= 0)
-        return;
-
-    const float StartTime = static_cast<float>(LoopStartFrame) / FrameRate;
-    const float EndTime = static_cast<float>(LoopEndFrame) / FrameRate;
-    const float Direction = bReverse ? -1.f : 1.f;
-
-    PreviousTime = ElapsedTime;
-    const float DeltaTime = DeltaSeconds * PlayRate * Direction;
-    ElapsedTime += DeltaTime;
-
-    // 루프 / 비루프 처리
-    if (bLooping)
+    if (!PrevAnim || !CurrAnim || !SkeletalMeshComp->GetSkeletalMeshAsset() || !SkeletalMeshComp->GetSkeletalMeshAsset()->GetSkeleton() || !bPlaying)
     {
-        const float Duration = EndTime - StartTime;
-        float Adjusted = FMath::Fmod(ElapsedTime - StartTime, Duration);
-        if (Adjusted < 0.f)
-            Adjusted += Duration;
-        ElapsedTime = StartTime + Adjusted;
-    }
-    else
-    {
-        ElapsedTime = FMath::Clamp(ElapsedTime, StartTime, EndTime);
-
-        // 정방향 재생이 끝났거나 역방향 재생이 끝났을 때 멈추고 경계로 복구
-        if ((!bReverse && ElapsedTime >= EndTime) || (bReverse && ElapsedTime <= StartTime))
-        {
-            bPlaying = false;
-            ElapsedTime = bReverse ? EndTime : StartTime;
-        }
+        return;
     }
 
-    
+    ElapsedTime += DeltaSeconds;
 
-    CurrAnim->EvaluateAnimNotifies(CurrAnim->Notifies, ElapsedTime, PreviousTime, DeltaTime, SkeletalMeshComp, CurrAnim, bLooping);
-
-
-    // 블렌딩 처리 (DeltaTime 누적 방식 없음 → BlendAlpha 자체 누적)
-    float BlendAlphaValue = 1.f;
-    if (bIsBlending && PrevAnim)
+    if (bIsBlending)
     {
-        BlendAlpha += DeltaSeconds / BlendDuration;
-        BlendAlpha = FMath::Clamp(BlendAlpha, 0.f, 1.f);
+        float BlendElapsed = ElapsedTime - BlendStartTime;
+        BlendAlpha = FMath::Clamp(BlendElapsed / BlendDuration, 0.f, 1.f);
 
         if (BlendAlpha >= 1.f)
         {
             bIsBlending = false;
             PrevAnim = CurrAnim;
         }
-
-        BlendAlphaValue = BlendAlpha;
+    }
+    else
+    {
+        BlendAlpha = 1.f;
     }
 
+    // TODO: FPoseContext의 BoneContainer로 바꾸기
     const FReferenceSkeleton& RefSkeleton = this->GetCurrentSkeleton()->GetReferenceSkeleton();
-    const int32 BoneNum = RefSkeleton.RawRefBoneInfo.Num();
 
-    if (!PrevAnim || BoneNum <= 0 ||
-        CurrAnim->GetSkeleton()->GetReferenceSkeleton().GetRawBoneNum() != BoneNum ||
-        PrevAnim->GetSkeleton()->GetReferenceSkeleton().GetRawBoneNum() != BoneNum)
+    if (PrevAnim->GetSkeleton()->GetReferenceSkeleton().GetRawBoneNum() != RefSkeleton.RawRefBoneInfo.Num() || CurrAnim->GetSkeleton()->GetReferenceSkeleton().GetRawBoneNum() != RefSkeleton.RawRefBoneInfo.Num())
+    {
         return;
+    }
 
     FPoseContext PrevPose(this);
     FPoseContext CurrPose(this);
-    PrevPose.Pose.InitBones(BoneNum);
-    CurrPose.Pose.InitBones(BoneNum);
 
-    for (int32 BoneIdx = 0; BoneIdx < BoneNum; ++BoneIdx)
+    PrevPose.Pose.InitBones(RefSkeleton.RawRefBoneInfo.Num());
+    CurrPose.Pose.InitBones(RefSkeleton.RawRefBoneInfo.Num());
+    for (int32 BoneIdx = 0; BoneIdx < RefSkeleton.RawRefBoneInfo.Num(); ++BoneIdx)
     {
         PrevPose.Pose[BoneIdx] = RefSkeleton.RawRefBonePose[BoneIdx];
         CurrPose.Pose[BoneIdx] = RefSkeleton.RawRefBonePose[BoneIdx];
     }
 
-    FAnimExtractContext Extract(ElapsedTime, false);
-    CurrAnim->GetAnimationPose(CurrPose, Extract);
-    PrevAnim->GetAnimationPose(PrevPose, Extract);
+    FAnimExtractContext ExtractA(ElapsedTime, false);
+    FAnimExtractContext ExtractB(ElapsedTime, false);
 
-    FAnimationRuntime::BlendTwoPosesTogether(CurrPose.Pose, PrevPose.Pose, BlendAlphaValue, OutPose.Pose);
+    PrevAnim->GetAnimationPose(PrevPose, ExtractA);
+    CurrAnim->GetAnimationPose(CurrPose, ExtractB);
+
+    FAnimationRuntime::BlendTwoPosesTogether(CurrPose.Pose, PrevPose.Pose, BlendAlpha, OutPose.Pose);
+#pragma endregion
 }
-
-
 
 void ULuaScriptAnimInstance::SetAnimation(UAnimSequence* NewAnim, float BlendingTime, float LoopAnim, bool ReverseAnim)
 {
-    if (!NewAnim || CurrAnim == NewAnim)
-        return;
+    if (CurrAnim == NewAnim)
+    {
+        return; // 이미 같은 애니메이션이 설정되어 있다면 아무 작업도 하지 않음.
+    }
 
-    // 이전 애니메이션 설정
     if (!PrevAnim && !CurrAnim)
     {
         PrevAnim = NewAnim;
+        CurrAnim = NewAnim;
     }
-    else
+    else if (PrevAnim == nullptr)
     {
-        PrevAnim = CurrAnim ? CurrAnim : NewAnim;
+        PrevAnim = CurrAnim; // 이전 애니메이션이 없으면 현재 애니메이션을 이전으로 설정.
+    }
+    else if (CurrAnim)
+    {
+        PrevAnim = CurrAnim; // 현재 애니메이션이 있으면 현재를 이전으로 설정.
     }
 
     CurrAnim = NewAnim;
-
-    // 루프/역재생/블렌딩 설정
+    BlendDuration = BlendingTime;
     bLooping = LoopAnim;
     bReverse = ReverseAnim;
-    BlendDuration = FMath::Max(BlendingTime, 0.001f); // 0 나누기 방지
-    bPlaying = true;
 
-    // 블렌딩 시작
+    //ElapsedTime = 0.0f;
+    BlendStartTime = ElapsedTime;
+    BlendAlpha = 0.0f;
     bIsBlending = true;
-    BlendAlpha = 0.f;
-
-    // 타이밍 리셋
-    ElapsedTime = 0.f;
-    PreviousTime = 0.f;
+    bPlaying = true;
 }
-

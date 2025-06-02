@@ -40,6 +40,12 @@ void APlayerCharacter::BeginPlay()
     );
 
     Super::BeginPlay();
+
+    if (Mesh)
+    {
+        Mesh->BindAnimScriptInstance(this);
+    }
+
     // C++코드를 호출
     LuaScriptComponent->ActivateFunction("InitializeCallback");
 }
@@ -47,6 +53,10 @@ void APlayerCharacter::BeginPlay()
 UObject* APlayerCharacter::Duplicate(UObject* InOuter)
 {
     ThisClass* NewActor = Cast<ThisClass>(Super::Duplicate(InOuter));
+
+    //NewActor->LeftArm = Cast<USkeletalMeshComponent>(LeftArm->Duplicate(NewActor));
+    //NewActor->RightArm = Cast<USkeletalMeshComponent>(RightArm->Duplicate(NewActor));
+
 
     return NewActor;
 }
@@ -58,34 +68,35 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 void APlayerCharacter::RegisterLuaType(sol::state& Lua)
 {
-    DEFINE_LUA_TYPE_WITH_PARENT(APlayerCharacter, ACharacter,
-        "State", sol::property(&ThisClass::State))
+    DEFINE_LUA_TYPE_WITH_PARENT(APlayerCharacter, (sol::bases<AActor, APawn, ACharacter>()),
+        "State", &APlayerCharacter::State
+    )
 }
 
-//bool APlayerCharacter::BindSelfLuaProperties()
-//{
-//    if (!LuaScriptComponent)
-//    {
-//        return false;
-//    }
-//    // LuaScript Load 실패.
-//    if (!LuaScriptComponent->LoadScript())
-//    {
-//        return false;
-//    }
-//
-//    sol::table& LuaTable = LuaScriptComponent->GetLuaSelfTable();
-//    if (!LuaTable.valid())
-//    {
-//        return false;
-//    }
-//
-//    // 자기 자신 등록.
-//    // self에 this를 하게 되면 내부에서 임의로 Table로 바꿔버리기 때문에 self:함수() 형태의 호출이 불가능.
-//    // 자기 자신 객체를 따로 넘겨주어야만 AActor:GetName() 같은 함수를 실행시켜줄 수 있다.
-//    LuaTable["this"] = this;
-//    LuaTable["Name"] = *GetName(); // FString 해결되기 전까지 임시로 Table로 전달.
-//    // 이 아래에서 또는 하위 클래스 함수에서 멤버 변수 등록.
-//
-//    return true;
-//}
+bool APlayerCharacter::BindSelfLuaProperties()
+{
+    if (!LuaScriptComponent)
+    {
+        return false;
+    }
+    // LuaScript Load 실패.
+    if (!LuaScriptComponent->LoadScript())
+    {
+        return false;
+    }
+
+    sol::table& LuaTable = LuaScriptComponent->GetLuaSelfTable();
+    if (!LuaTable.valid())
+    {
+        return false;
+    }
+
+    // 자기 자신 등록.
+    // self에 this를 하게 되면 내부에서 임의로 Table로 바꿔버리기 때문에 self:함수() 형태의 호출이 불가능.
+    // 자기 자신 객체를 따로 넘겨주어야만 AActor:GetName() 같은 함수를 실행시켜줄 수 있다.
+    LuaTable["this"] = this;
+    LuaTable["Name"] = *GetName(); // FString 해결되기 전까지 임시로 Table로 전달.
+    // 이 아래에서 또는 하위 클래스 함수에서 멤버 변수 등록.
+
+    return true;
+}

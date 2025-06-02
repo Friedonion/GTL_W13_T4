@@ -182,7 +182,7 @@ void FLuaScriptManager::HotReloadLuaScript()
         {
             if (AnimStateMachine->GetLuaScriptName() == ChangedScript)
             {
-                AnimStateMachine->InitLuaStateMachine();
+                //AnimStateMachine->InitLuaStateMachine();
                 UE_LOG(ELogLevel::Display, TEXT("Lua Script Reloaded: %s"), *ChangedScript);
             }
         }

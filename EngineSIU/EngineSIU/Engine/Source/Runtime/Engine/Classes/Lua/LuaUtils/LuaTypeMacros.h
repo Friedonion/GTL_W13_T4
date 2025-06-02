@@ -20,16 +20,17 @@ if (!bRegisteredLuaProperties)                                                  
 {                                                                                  \
     Lua.new_usertype<CLASS_NAME>(#CLASS_NAME,                                      \
         sol::constructors<CLASS_NAME()>(),                                         \
-        sol::base_classes, sol::bases<BASE_CLASSES>(), ##__VA_ARGS__);                           \
+        sol::base_classes, BASE_CLASSES, ##__VA_ARGS__);                           \
     bRegisteredLuaProperties = true;                                               \
 }
 
-#define DEFINE_LUA_TYPE_ABSTRACT_WITH_PARENT(CLASS_NAME, BASE_CLASS)               \
+#define DEFINE_LUA_TYPE_WITH_PARENT_ONLY(CLASS_NAME, BASE_CLASSES)                 \
 Super::RegisterLuaType(Lua);                                                       \
 static bool bRegisteredLuaProperties = false;                                      \
 if (!bRegisteredLuaProperties)                                                     \
 {                                                                                  \
     Lua.new_usertype<CLASS_NAME>(#CLASS_NAME,                                      \
-        sol::base_classes, sol::bases<BASE_CLASS>());                                            \
+        sol::constructors<CLASS_NAME()>(),                                         \
+        sol::base_classes, BASE_CLASSES);                                          \
     bRegisteredLuaProperties = true;                                               \
 }

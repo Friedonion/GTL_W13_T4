@@ -1,11 +1,11 @@
 #include "AnimStateMachine.h"
 
-#include "Components/SkeletalMeshComponent.h"
 #include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
-#include "Lua/LuaScriptManager.h"
 #include "Animation/AnimSequence.h"
 #include "CoreUObject/UObject/Casts.h"
 #include "GameFramework/Actor.h"
+#include "Actors/Player/Player.h"
+#include "Components/SkeletalMeshComponent.h"
 
 UAnimStateMachine::UAnimStateMachine()
 {
@@ -18,7 +18,7 @@ void UAnimStateMachine::Initialize(USkeletalMeshComponent* InOwner, ULuaScriptAn
     OwningAnimInstance = InAnimInstance;
 
     LuaScriptName = OwningComponent->StateMachineFileName;
-    InitLuaStateMachine();
+    //InitLuaStateMachine();
 
 }
 
@@ -46,21 +46,4 @@ void UAnimStateMachine::ProcessState()
         OwningAnimInstance->SetAnimation(NewAnim, Blend, false, false);
     }
 }
-
-void UAnimStateMachine::InitLuaStateMachine()
-{
-    if (LuaScriptName.IsEmpty())
-    {
-        return;
-    }
-    LuaTable = FLuaScriptManager::Get().CreateLuaTable(LuaScriptName);
-
-    FLuaScriptManager::Get().RegisterActiveAnimLua(this);
-    if (!LuaTable.valid())
-        return;
-
-    LuaTable["OwnerCharacter"] = Cast<AActor>(OwningComponent->GetOwner());
-}
-
-
 

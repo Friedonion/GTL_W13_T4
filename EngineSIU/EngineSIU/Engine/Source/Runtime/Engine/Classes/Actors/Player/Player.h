@@ -22,7 +22,7 @@ public:
 
     virtual void RegisterLuaType(sol::state& Lua); // Lua에 클래스 등록해주는 함수.
     
-    //virtual bool BindSelfLuaProperties(); // LuaEnv에서 사용할 멤버 변수 등록 함수.
+    virtual bool BindSelfLuaProperties(); // LuaEnv에서 사용할 멤버 변수 등록 함수.
 
     PlayerState State = PlayerState::Idle; // 플레이어의 현재 상태를 나타내는 변수.
 

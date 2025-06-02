@@ -49,6 +49,7 @@
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Components/SocketComponent.h"
+#include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 
 PropertyEditorPanel::PropertyEditorPanel()
 {
@@ -527,7 +528,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
             {
                 for (int i = 0; i < CompClasses.Num(); ++i)
                 {
-                    if (CompClasses[i] == UAnimInstance::StaticClass() || CompClasses[i] == UAnimSingleNodeInstance::StaticClass())
+                    if (CompClasses[i] == UAnimInstance::StaticClass()/* || CompClasses[i] == UAnimSingleNodeInstance::StaticClass()*/)
                     {
                         continue;
                     }
@@ -535,6 +536,16 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                     if (ImGui::Selectable(*CompClasses[i]->GetName(), bIsSelected))
                     {
                         SelectedIndex = i;
+                        // 현재의 SkeletalMeshComponent의 AnimInstance를 해당 인스턴스 종류로 변경
+                        // 현재는 하드코딩으로 되어있음
+                        if (CompClasses[i] == UAnimSingleNodeInstance::StaticClass())
+                        {
+                            SkeletalMeshComp->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+                        }
+                        else if (CompClasses[i] == ULuaScriptAnimInstance::StaticClass())
+                        {
+                            SkeletalMeshComp->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+                        }
                     }
                     if (bIsSelected)
                     {
@@ -589,6 +600,19 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                 }
                 */
             }
+
+            // 스크립트 파일 위치
+            char buf[256] = { 0 };
+            std::string FileName = SkeletalMeshComp->StateMachineFileName.ToAnsiString();
+
+            // Copy FileName to buf safely
+            strncpy(buf, FileName.c_str(), sizeof(buf) - 1);
+            buf[sizeof(buf) - 1] = '\0'; // Null-terminate for safety
+
+            ImGui::InputText("##LuaScriptAnimInstanceFileDirectory", buf, sizeof(buf));
+
+            FileName = std::string(buf);
+            SkeletalMeshComp->StateMachineFileName = FileName;
         }
         else
         {
