@@ -88,7 +88,6 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
     {
         ElapsedTime = FMath::Clamp(ElapsedTime, StartTime, EndTime);
 
-        // 정방향 재생이 끝났거나 역방향 재생이 끝났을 때 멈추고 경계로 복구
         if ((!bReverse && ElapsedTime >= EndTime) || (bReverse && ElapsedTime <= StartTime))
         {
             bPlaying = false;

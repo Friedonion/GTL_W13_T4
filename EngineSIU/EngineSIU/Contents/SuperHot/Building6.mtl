@@ -1,0 +1,23 @@
+# Blender 4.4.0 MTL File: 'None'
+# www.blender.org
+
+newmtl ground.006
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Hotel_Hous_AO.png
+map_Ks Steel_S.jpg
+
+newmtl hotel_glas.006
+Ns 96.078453
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.000000 0.000000 0.000000
+Ke 0.344000 0.344000 0.344000
+Ni 1.000000
+d 0.300000
+illum 1
+map_refl -s 0.8 0.8 1 REF 1.jpg
