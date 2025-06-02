@@ -1,33 +1,64 @@
 #include "InputComponent.h"
+#include "Runtime/Windows/WindowsCursor.h"
+
+UInputComponent::UInputComponent()
+{
+    MouseX = FWindowsCursor::GetPosition().X;
+    MouseY = FWindowsCursor::GetPosition().Y;
+}
 
 void UInputComponent::ProcessInput(float DeltaTime)
-{
-    for (EKeys::Type Key : PressedKeys)
+{ 
+    if (!bShowCursor)
     {
-        if (KeyBindDelegate.Contains(Key))
+        for (EKeys::Type Key : PressedKeys)
         {
-            KeyBindDelegate[Key].Broadcast(DeltaTime);
+            if (KeyBindDelegate.Contains(Key))
+            {
+                KeyBindDelegate[Key].Broadcast(DeltaTime);
+            }
+            else if (MouseButtonBindDelegate.Contains(EKeys::ToMouseButton(Key)))
+            {
+                MouseButtonBindDelegate[EKeys::ToMouseButton(Key)].Broadcast(DeltaTime);
+            }
         }
-        else if (MouseButtonBindDelegate.Contains(EKeys::ToMouseButton(Key)))
-        {
-            MouseButtonBindDelegate[EKeys::ToMouseButton(Key)].Broadcast(DeltaTime);
-        }
+
+        MouseMoveBindDelegate.Broadcast(MouseDeltaX, MouseDeltaY);
     }
 
-    MouseMoveBindDelegate.Broadcast(MouseX, MouseY);
-
-    MouseX = 0.f;
-    MouseY = 0.f;
+    if (PressedKeys.Contains(EKeys::Escape))
+    {
+        PressedKeys.Remove(EKeys::Escape);
+        bShowCursor = !bShowCursor;
+        if (bShowCursor)
+        {
+            FWindowsCursor::SetPosition(MouseX, MouseY);
+        }
+        else
+        {
+            MouseX = FWindowsCursor::GetPosition().X;
+            MouseY = FWindowsCursor::GetPosition().Y;
+        }
+    }
+    
+    FWindowsCursor::SetShowMouseCursor(bShowCursor);
+    
+    if (!bShowCursor)
+    {
+        FWindowsCursor::SetPosition(MouseX, MouseY);
+    }
+    MouseDeltaX = 0.f;
+    MouseDeltaY = 0.f;
     return;
 }
 
 void UInputComponent::SetPossess()
 {
+    PressedKeys.Empty();
     BindInputDelegate();
 
-    PressedKeys.Empty();
-    MouseX = 0.f;
-    MouseY = 0.f;
+    MouseDeltaX = 0.f;
+    MouseDeltaY = 0.f;
     //TODO: Possess일때 기존에 있던거 다시 넣어줘야할수도
 }
 
@@ -45,16 +76,12 @@ void UInputComponent::BindInputDelegate()
         InputKey(InKeyEvent);
     }));
 
-    BindMouseMoveDelegateHandles.Add(Handler->OnMouseMoveDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
+    BindMouseMoveDelegateHandles.Add(Handler->OnRawMouseInputDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
     {
         InputMouseMove(InMouseEvent);
     }));
 
-    BindMouseDownDelegateHandles.Add(Handler->OnMouseDownDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
-    {
-        InputMouseButton(InMouseEvent);
-    }));
-    BindMouseUpDelegateHandles.Add(Handler->OnMouseUpDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
+    BindMouseDownDelegateHandles.Add(Handler->OnRawMouseInputDelegate.AddLambda([this](const FPointerEvent& InMouseEvent)
     {
         InputMouseButton(InMouseEvent);
     }));
@@ -82,24 +109,24 @@ void UInputComponent::ClearBindDelegate()
 
     for (FDelegateHandle DelegateHandle : BindMouseMoveDelegateHandles)
     {
-        Handler->OnMouseMoveDelegate.Remove(DelegateHandle);
+        Handler->OnRawMouseInputDelegate.Remove(DelegateHandle);
     }
 
     for (FDelegateHandle DelegateHandle : BindMouseDownDelegateHandles)
     {
-        Handler->OnMouseDownDelegate.Remove(DelegateHandle);
+        Handler->OnRawMouseInputDelegate.Remove(DelegateHandle);
     }
 
-    for (FDelegateHandle DelegateHandle : BindMouseUpDelegateHandles)
-    {
-        Handler->OnMouseUpDelegate.Remove(DelegateHandle);
-    }
+    //for (FDelegateHandle DelegateHandle : BindMouseUpDelegateHandles)
+    //{
+    //    Handler->OnMouseUpDelegate.Remove(DelegateHandle);
+    //}
 
     BindKeyDownDelegateHandles.Empty();
     BindKeyUpDelegateHandles.Empty();
     BindMouseMoveDelegateHandles.Empty();
     BindMouseDownDelegateHandles.Empty();
-    BindMouseUpDelegateHandles.Empty();
+    //BindMouseUpDelegateHandles.Empty();
 }
 
 void UInputComponent::InputKey(const FKeyEvent& InKeyEvent)
@@ -126,8 +153,8 @@ void UInputComponent::InputKey(const FKeyEvent& InKeyEvent)
 void UInputComponent::InputMouseMove(const FPointerEvent& InMouseEvent)
 {
     FVector2D Delta = InMouseEvent.GetCursorDelta();
-    MouseX = Delta.X;
-    MouseY = Delta.Y;       
+    MouseDeltaX = Delta.X;
+    MouseDeltaY = Delta.Y;       
 }
 
 void UInputComponent::InputMouseButton(const FPointerEvent& InMouseEvent)

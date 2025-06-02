@@ -16,7 +16,6 @@ void APlayerController::PostSpawnInitialize()
 
 void APlayerController::BeginPlay()
 {
-    //InputComponent->
 }
 
 void APlayerController::Tick(float DeltaTime)

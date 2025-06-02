@@ -1,4 +1,4 @@
-﻿#include "WindowsCursor.h"
+#include "WindowsCursor.h"
 
 #include "Define.h"
 #include "UObject/Object.h"

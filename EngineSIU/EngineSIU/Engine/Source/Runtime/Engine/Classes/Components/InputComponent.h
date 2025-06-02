@@ -15,7 +15,7 @@ class UInputComponent : public UActorComponent
     DECLARE_CLASS(UInputComponent, UActorComponent)
 
 public:
-    UInputComponent() = default;
+    UInputComponent();
     virtual ~UInputComponent() override = default;
 
     template<typename Func>
@@ -54,8 +54,13 @@ private:
 
     TSet<EKeys::Type> PressedKeys;
     //TSet<EMouseButtons::Type> PressedMouseButtons;
-    float MouseX = 0.0f;
-    float MouseY = 0.0f;
+    float MouseDeltaX = 0.0f;
+    float MouseDeltaY = 0.0f;
+
+    float MouseX = 0.0f; // 현재 마우스 X 위치
+    float MouseY = 0.0f; // 현재 마우스 Y 위치
+
+    bool bShowCursor = false;
 };
 
 template<typename Func>
