@@ -47,13 +47,29 @@ public:
     {
         return bLooping;
     }
+    float GetPlayRate() const { return PlayRate; }
+    void SetPlayRate(float InRate) { PlayRate = InRate; }
 
+    float GetElapsedTime() const { return ElapsedTime; }
+    void SetElapsedTime(float InTime) { ElapsedTime = InTime; }
+
+    int32 GetLoopStartFrame() const { return LoopStartFrame; }
+    void SetLoopStartFrame(int32 InFrame) { LoopStartFrame = InFrame; }
+
+    int32 GetLoopEndFrame() const { return LoopEndFrame; }
+    void SetLoopEndFrame(int32 InFrame) { LoopEndFrame = InFrame; }
+
+    int32 GetCurrentKey() const { return CurrentKey; }
+    void SetCurrentKey(int32 InKey) { CurrentKey = InKey; }
+
+    UAnimSequence* GetCurrentAnim() const { return CurrAnim; }
     void SetAnimation(UAnimSequence* NewAnim, float BlendingTime, float LoopAnim = false, bool ReverseAnim = false);
 
 public:
     UAnimStateMachine* GetStateMachine() const { return StateMachine; }
 
 private:
+    float PreviousTime;
     float ElapsedTime;
     float PlayRate;
     
