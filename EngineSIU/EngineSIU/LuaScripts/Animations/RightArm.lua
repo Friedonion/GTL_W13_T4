@@ -16,6 +16,7 @@ AnimFSM = {
         -- self.current = "Contents/Human/FastRun"
         -- self.current = "Contents/Human/NarutoRun"
         
+        self.current = "Idle"
         print(self.Owner)
         print(self.Owner.State)
         if(self.Owner.State == PlayerState.Shooting) then

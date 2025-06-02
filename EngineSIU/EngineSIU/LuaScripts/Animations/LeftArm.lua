@@ -6,6 +6,7 @@ setmetatable(_ENV, {
     end
 })
 
+local AnimTimeLeft = 1
 
 AnimFSM = {
     current = "Idle",
@@ -16,6 +17,7 @@ AnimFSM = {
         -- self.current = "Contents/Human/FastRun"
         -- self.current = "Contents/Human/NarutoRun"
         
+        self.current = "Idle"
         if(self.Owner.State == PlayerState.Stabbing) then
             self.current = "Contents/Player/Armature|Armature|mixamo.com|Layer0"
         end

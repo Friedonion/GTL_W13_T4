@@ -29,6 +29,7 @@ function ReturnTable:InitializeCallback()
 
     RegisterKeyCallback("D", function(dt)
         self:MoveRight(dt)
+
     end)
 
     RegisterMouseMoveCallback(function(dx, dy)
@@ -39,14 +40,15 @@ function ReturnTable:InitializeCallback()
     end)
 
     RegisterKeyCallback("RightMouseButton", function(dt)
+        self.this:Shoot()
         -- 우클릭에 대한 처리
         self.this.State = PlayerState.Shooting
     end)
     
     
     RegisterKeyCallback("LeftMouseButton", function(dt)
+        self.this:Punch()
         -- 우클릭에 대한 처리
-        print(111111111111111111111111111111)
         self.this.State = PlayerState.Stabbing
     end)
     -- RegisterKeyCallback("LeftMouseButton", function(dt)

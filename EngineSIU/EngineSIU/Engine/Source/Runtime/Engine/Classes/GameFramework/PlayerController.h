@@ -83,7 +83,7 @@ inline void APlayerController::BindAction(const FString& Key, Func&& Callback)
         }
         else if (EKeys::ToMouseButton(KeyType) != EMouseButtons::Type::Invalid)
         {
-            EMouseButtons::Type ButtonType = EKeys::ToMouseButton(KeyType);
+            EMouseButtons::Type ButtonType = EKeys::ToMouseButton(KeyType); 
             // 마우스 버튼에 대한 콜백 바인딩
             InputComponent->BindMouseDown(ButtonType, Callback);
         }

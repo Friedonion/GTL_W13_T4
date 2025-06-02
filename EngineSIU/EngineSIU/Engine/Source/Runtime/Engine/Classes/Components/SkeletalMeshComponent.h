@@ -168,6 +168,8 @@ public:
 
     UAnimSingleNodeInstance* GetSingleNodeInstance() const;
 
+    ULuaScriptAnimInstance* GetLuaScriptAnimInstance() const;
+
     void SetAnimClass(UClass* NewClass);
     
     UClass* GetAnimClass() const;

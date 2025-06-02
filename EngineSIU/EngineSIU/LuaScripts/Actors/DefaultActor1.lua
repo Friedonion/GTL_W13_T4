@@ -24,6 +24,7 @@ function ReturnTable:InitializeCallback()
 
     RegisterKeyCallback("D", function(dt)
         self:MoveRight(dt)
+        self:Punch()
     end)
 
     RegisterMouseMoveCallback(function(dx, dy)

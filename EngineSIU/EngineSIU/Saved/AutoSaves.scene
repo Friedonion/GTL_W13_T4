@@ -75,6 +75,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "APlayerCharacter_393",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UCapsuleComponent",
                     "ComponentID": "UCapsuleComponent_370",
                     "Properties": {
@@ -100,31 +113,6 @@
                 },
                 {
                     "ComponentClass": "USkeletalMeshComponent",
-                    "ComponentID": "RightArm",
-                    "Properties": {
-                        "AABB_max": "X=13.130 Y=97.343 Z=152.728",
-                        "AABB_min": "X=-13.214 Y=9.759 Z=127.923",
-                        "AnimClass": "ULuaScriptAnimInstance",
-                        "AnimationMode": "0",
-                        "AttachParentID": "USkeletalMeshComponent_372",
-                        "ComponentClass": "USkeletalMeshComponent",
-                        "ComponentName": "RightArm",
-                        "ComponentOwner": "APlayerCharacter_393",
-                        "ComponentOwnerClass": "APlayerCharacter",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/GunPlay",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                },
-                {
-                    "ComponentClass": "USkeletalMeshComponent",
                     "ComponentID": "USkeletalMeshComponent_372",
                     "Properties": {
                         "AABB_max": "X=0.000 Y=0.000 Z=0.000",
@@ -141,9 +129,69 @@
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "SkeletalMeshKey": "None",
+                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
                         "bApplyGravity": "false",
                         "bAutoActive": "true",
                         "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "USkeletalMeshComponent_405",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AnimClass": "None",
+                        "AnimationMode": "0",
+                        "AttachParentID": "UCapsuleComponent_403",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "USkeletalMeshComponent_405",
+                        "ComponentOwner": "APlayerCharacter_393",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "None",
+                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "RightArm",
+                    "Properties": {
+                        "AABB_max": "X=13.130 Y=97.343 Z=152.728",
+                        "AABB_min": "X=-13.214 Y=9.759 Z=127.923",
+                        "AnimClass": "None",
+                        "AnimToPlay": "Contents/Armature|GunPlay",
+                        "AnimationMode": "1",
+                        "AttachParentID": "USkeletalMeshComponent_372",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "RightArm",
+                        "ComponentOwner": "APlayerCharacter_393",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "LoopEndFrame": "76",
+                        "LoopStartFrame": "0",
+                        "PlayRate": "1.000000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "Contents/GunPlay",
+                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bLooping": "false",
+                        "bPlaying": "false",
+                        "bReverse": "false",
                         "bSimulate": "false",
                         "m_Type": ""
                     }
@@ -155,17 +203,73 @@
                         "AABB_max": "X=7.109 Y=-9.803 Z=152.728",
                         "AABB_min": "X=-13.225 Y=-97.342 Z=128.793",
                         "AnimClass": "None",
-                        "AnimationMode": "0",
+                        "AnimToPlay": "Contents/Player/Armature|Armature|mixamo.com|Layer0",
+                        "AnimationMode": "1",
                         "AttachParentID": "USkeletalMeshComponent_372",
                         "ComponentClass": "USkeletalMeshComponent",
                         "ComponentName": "LeftArm",
+                        "ComponentOwner": "APlayerCharacter_393",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "LoopEndFrame": "31",
+                        "LoopStartFrame": "0",
+                        "PlayRate": "1.000000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "Contents/Player/Punch",
+                        "StateMachineFileName": "LuaScripts/Animations/LeftArm.lua",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bLooping": "false",
+                        "bPlaying": "false",
+                        "bReverse": "false",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "UCapsuleComponent",
+                    "ComponentID": "UCapsuleComponent_403",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "UCapsuleComponent_394",
+                        "CapsuleHalfHeight": "0.880000",
+                        "CapsuleRadius": "0.340000",
+                        "ComponentClass": "UCapsuleComponent",
+                        "ComponentName": "UCapsuleComponent_403",
                         "ComponentOwner": "APlayerCharacter_393",
                         "ComponentOwnerClass": "APlayerCharacter",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/Player/Punch",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "UCapsuleComponent",
+                    "ComponentID": "UCapsuleComponent_399",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "UCapsuleComponent_394",
+                        "CapsuleHalfHeight": "0.880000",
+                        "CapsuleRadius": "0.340000",
+                        "ComponentClass": "UCapsuleComponent",
+                        "ComponentName": "UCapsuleComponent_399",
+                        "ComponentOwner": "APlayerCharacter_393",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
                         "bApplyGravity": "false",
                         "bAutoActive": "true",
                         "bIsActive": "true",
@@ -191,6 +295,7 @@
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "SkeletalMeshKey": "None",
+                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
                         "bApplyGravity": "false",
                         "bAutoActive": "true",
                         "bIsActive": "true",
@@ -199,16 +304,29 @@
                     }
                 },
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "USkeletalMeshComponent_401",
                     "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AnimClass": "None",
+                        "AnimationMode": "0",
+                        "AttachParentID": "UCapsuleComponent_399",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "USkeletalMeshComponent_401",
                         "ComponentOwner": "APlayerCharacter_393",
                         "ComponentOwnerClass": "APlayerCharacter",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "None",
+                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
+                        "bApplyGravity": "false",
                         "bAutoActive": "true",
-                        "bIsActive": "true"
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
                     }
                 },
                 {
@@ -245,19 +363,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_439",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -278,6 +383,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_439",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 }
             ],

@@ -7,6 +7,7 @@
 #include "Lua/LuaUtils/LuaTypeMacros.h"
 #include "Classes/Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Animation/AnimSingleNodeInstance.h"
 
 APlayerCharacter::APlayerCharacter()
     : ACharacter()
@@ -48,6 +49,14 @@ void APlayerCharacter::BeginPlay()
 
     // C++코드를 호출
     LuaScriptComponent->ActivateFunction("InitializeCallback");
+
+    // 현재 각 팔에 할당되어있는 애니메이션의 시간을 interval로 지정
+    if (LeftArm)
+    {
+        //LeftArm->AnimClass->asset
+    }
+
+
 }
 
 UObject* APlayerCharacter::Duplicate(UObject* InOuter)
@@ -56,7 +65,19 @@ UObject* APlayerCharacter::Duplicate(UObject* InOuter)
 
     //NewActor->LeftArm = Cast<USkeletalMeshComponent>(LeftArm->Duplicate(NewActor));
     //NewActor->RightArm = Cast<USkeletalMeshComponent>(RightArm->Duplicate(NewActor));
+    // 위치 기반으로 연결
 
+    for (USkeletalMeshComponent* SkelComp : NewActor->GetComponentsByClass<USkeletalMeshComponent>())
+    {
+        if (SkelComp->GetName() == LeftArm->GetName())
+        {
+            NewActor->LeftArm = SkelComp;
+        }
+        else if (SkelComp->GetName() == RightArm->GetName())
+        {
+            NewActor->RightArm = SkelComp;
+        }
+    }
 
     return NewActor;
 }
@@ -69,7 +90,9 @@ void APlayerCharacter::Tick(float DeltaTime)
 void APlayerCharacter::RegisterLuaType(sol::state& Lua)
 {
     DEFINE_LUA_TYPE_WITH_PARENT(APlayerCharacter, (sol::bases<AActor, APawn, ACharacter>()),
-        "State", &APlayerCharacter::State
+        "State", &APlayerCharacter::State,
+        "Punch", &APlayerCharacter::Punch,
+        "Shoot", &APlayerCharacter::Shoot
     )
 }
 
@@ -99,4 +122,28 @@ bool APlayerCharacter::BindSelfLuaProperties()
     // 이 아래에서 또는 하위 클래스 함수에서 멤버 변수 등록.
 
     return true;
+}
+
+void APlayerCharacter::Punch()
+{
+    if(UAnimSingleNodeInstance* Instance = LeftArm->GetSingleNodeInstance())
+    {
+        Instance->SetPlaying(true);
+        if (bAnimRestart)
+        {
+            Instance->SetElapsedTime(0.f);
+        }
+    }
+}
+
+void APlayerCharacter::Shoot()
+{
+    if (UAnimSingleNodeInstance* Instance = RightArm->GetSingleNodeInstance())
+    {
+        Instance->SetPlaying(true);
+        if (bAnimRestart)
+        {
+            Instance->SetElapsedTime(0.f);
+        }
+    }
 }

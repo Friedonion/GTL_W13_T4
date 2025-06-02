@@ -32,7 +32,7 @@ UObject::UObject()
 
 UObject* UObject::Duplicate(UObject* InOuter)
 {
-    return FObjectFactory::ConstructObject(GetClass(), InOuter);
+    return FObjectFactory::ConstructObject(GetClass(), InOuter, NamePrivate);
 }
 
 void UObject::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)

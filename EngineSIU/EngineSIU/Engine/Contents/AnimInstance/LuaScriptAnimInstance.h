@@ -66,7 +66,7 @@ public:
     void SetCurrentKey(int32 InKey) { CurrentKey = InKey; }
 
     UAnimSequence* GetCurrentAnim() const { return CurrAnim; }
-    void SetAnimation(UAnimSequence* NewAnim, float BlendingTime, float LoopAnim = false, bool ReverseAnim = false);
+    void SetAnimation(UAnimSequence* NewAnim, float BlendingTime, bool LoopAnim = false, bool ReverseAnim = false);
 
 
 private:
