@@ -9,6 +9,10 @@
 #include "Editor/LevelEditor/SLevelEditor.h"
 #include "Engine/Engine.h"
 
+#include "Actors/GameManager.h"
+#include "World/World.h"
+#include "Launch/EngineLoop.h"
+
 void LuaUIManager::CreateUI(FName InName)
 {
     UpdateUIArrayForSort();
@@ -114,6 +118,34 @@ void LuaUIManager::DrawLuaUIs()
 {
     ImGuiIO& io = ImGui::GetIO();
 
+    CanvasRectTransform.Size.X = io.DisplaySize.x; // 게임 화면의 너비(X)를 가져와 CanvasRectTransform에 설정
+    CanvasRectTransform.Size.Y = io.DisplaySize.y; // 게임 화면의 높이(Y)를 가져와 CanvasRectTransform에 설정
+
+    //// AGameManager 스폰 로직을 추가
+    //static bool bGameManagerSpawnedOnce = false;
+
+    //// 현재 활성화된 게임 월드의 포인터를 가져옵니다.
+    //// GEngine은 엔진의 전역 포인터이며, ActiveWorld를 통해 현재 월드를 가져옵니다.
+    //UWorld* CurrentWorld = GEngine->ActiveWorld;
+    //if (GEngine != nullptr) // GEngine 전역 객체가 유효한지 먼저 확인
+    //{
+    //    CurrentWorld = GEngine->ActiveWorld; // GEngine이 유효하다면 ActiveWorld를 시도
+    //    // 또는, 여러분의 엔진에 UWorld* GetWorld() 함수가 전역적으로 제공된다면 그것을 사용합니다.
+    //    // 예를 들어, Unrean Engine은 GWorld 같은 전역 포인터가 있습니다.
+    //}
+
+    //// 만약 월드가 유효하고, AGameManager가 아직 스폰되지 않았다면
+    //if (CurrentWorld != nullptr && !bGameManagerSpawnedOnce)
+    //{
+    //    AGameManager* SpawnedManager = CurrentWorld->SpawnActor<AGameManager>();
+
+    //    if (SpawnedManager) // 액터 스폰에 성공했다면
+    //    {
+    //        SpawnedManager->SetActorLabel(TEXT("AGameManager_AutoSpawned"));
+    //        bGameManagerSpawnedOnce = true;
+    //    }
+    //}
+
     ImGuiWindowFlags WindowFlags =
         ImGuiWindowFlags_NoTitleBar |
         ImGuiWindowFlags_NoResize |
@@ -128,7 +160,6 @@ void LuaUIManager::DrawLuaUIs()
     ImGui::SetNextWindowSize(ImVec2(io.DisplaySize.x + 10, io.DisplaySize.y + 10), ImGuiCond_Always);
 
     ImGui::Begin("LuaUI", nullptr, WindowFlags);
-
 
     for (LuaUI* UI : UIArrayForSort)
     {
@@ -215,43 +246,61 @@ FTexture* LuaUIManager::GetTextureByName(FName TextureName)
     return nullptr;
 }
 
+void LuaUIManager::InitializeResourcesAndGameManager()
+{
+    /* Pre Setup */
+    ImGuiIO& io = ImGui::GetIO(); // ImGuiIO는 GenerateResource에서 필요하므로 이곳에 둡니다.
+
+    /** Font load */
+    ImFont* AddFont = io.Fonts->Fonts[0];
+    FontMap.Add(FName("Default"), AddFont);
+
+    /* Texture Setup*/
+    TextureMap.Add(FName("ExplosionColor"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/T_Explosion_SubUV.png"));
+    TextureMap.Add(FName("Aim"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Aim.png"));
+    TextureMap.Add(FName("HP_SubUV_Effect"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/VFX/T_FX_Heal_SubUV.png"));
+    // ----------------------------------------------------
+
+    static bool bGameManagerSpawnedOnce = false;
+
+    // 현재 활성화된 게임 월드의 포인터를 가져옵니다.
+    UWorld* CurrentWorld = GEngine->ActiveWorld;
+
+    if (CurrentWorld != nullptr && !bGameManagerSpawnedOnce)
+    {
+        AGameManager* SpawnedManager = CurrentWorld->SpawnActor<AGameManager>();
+
+        if (SpawnedManager)
+        {
+            SpawnedManager->SetActorLabel(TEXT("AGameManager_AutoSpawned"));
+            bGameManagerSpawnedOnce = true;
+        }
+    }
+}
+
 LuaUIManager::LuaUIManager()
 {
     CanvasRectTransform.AnchorDir = TopLeft;
     CanvasRectTransform.Position.X = 0.f;
     CanvasRectTransform.Position.Y = 0.f;
 
-    uint32 width = 0;
-    uint32 height = 0;
-    GEngineLoop.GetLevelEditor()->GetViewportSize(width, height);
+    //uint32 width = 0;
+    //uint32 height = 0;
+    //GEngineLoop.GetLevelEditor()->GetViewportSize(width, height);
 
-    CanvasRectTransform.Size.X = width;
-    CanvasRectTransform.Size.Y = height;
+    //CanvasRectTransform.Size.X = width;
+    //CanvasRectTransform.Size.Y = height;
 
-    GenerateResource();
+    CanvasRectTransform.Size.X = 0;
+    CanvasRectTransform.Size.Y = 0;
 
+    //GenerateResource();
 
-
-    TestCODE();
+    //TestCODE();
 }
 
 void LuaUIManager::GenerateResource()
 {
-    /* Pre Setup */
-    ImGuiIO& io = ImGui::GetIO();
-
-    /** Font load */
-    ImFont* AddFont = io.Fonts->Fonts[0];
-
-    FontMap.Add(FName("Default"), AddFont);
-
-    /* Texture Setup*/
-    
-    auto TEstt = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/T_Explosion_SubUV.png");
-    TextureMap.Add(FName("ExplosionColor"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/T_Explosion_SubUV.png"));
-    auto AimTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Aim.png");
-    TextureMap.Add(FName("Aim"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Aim.png"));
-
 }
 
 void LuaUIManager::UpdateUIArrayForSort()

@@ -451,6 +451,7 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <None Include="Shaders\GaussianBlurShader.hlsl" />
     <None Include="Shaders\DepthOfFieldShader.hlsl" />
     <None Include="Shaders\FullScreenQuadVertexShader.hlsl" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\GameManager.cpp" />
     <ClCompile Include="LuaScripts\LuaUIBind.cpp" />
     <ClCompile Include="LuaScripts\LuaUIManager.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Components\SocketComponent.cpp" />
@@ -870,6 +871,7 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Velocity\ParticleModuleVelocityOverLife.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAcceleration.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAccelerationBase.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\GameManager.h" />
     <ClInclude Include="LuaScripts\LuaUIBind.h" />
     <ClInclude Include="LuaScripts\LuaUIManager.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Components\SocketComponent.h" />

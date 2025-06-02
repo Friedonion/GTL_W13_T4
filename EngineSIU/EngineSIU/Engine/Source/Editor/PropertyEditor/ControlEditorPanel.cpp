@@ -47,6 +47,8 @@
 
 #include "PhysicsManager.h"
 
+#include "Actors/GameManager.h"
+
 ControlEditorPanel::ControlEditorPanel()
 {
     SetSupportedWorldTypes(EWorldTypeBitFlag::Editor | EWorldTypeBitFlag::PIE | EWorldTypeBitFlag::SkeletalViewer | EWorldTypeBitFlag::PhysicsAssetViewer);
@@ -414,6 +416,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "SequencerPlayer",   .OBJ = OBJ_SEQUENCERPLAYER },
             { .Label = "EnemySpawner",      .OBJ = OBJ_ENEMYSPAWNER },
             { .Label = "Bullet",            .OBJ = OBJ_BULLET },
+            { .Label = "Game Manager",      .OBJ = OBJ_GAMEMANAGER }
         };
 
         for (const auto& primitive : primitives)
@@ -553,6 +556,16 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                     SpawnedActor->SetActorLabel(TEXT("OBJ_ENEMYSPAWNER"));
                     break;
                 }
+                case OBJ_GAMEMANAGER: // ImGui 버튼에서 "Game Manager"를 선택했을 때
+                {
+                    // World->SpawnActor<T>(); 는 지정된 클래스 T의 새로운 인스턴스를 월드에 생성합니다.
+                    // AGameManager는 AActor를 상속하므로, 이 함수를 사용하여 스폰할 수 있습니다.
+                    SpawnedActor = World->SpawnActor<AGameManager>();
+                    // 스폰된 액터에 식별 가능한 라벨을 붙여줍니다. (월드 아웃라이너 등에서 보임)
+                    SpawnedActor->SetActorLabel(TEXT("AGameManager_Instance"));
+                    break;
+                }
+
                 case OBJ_CAMERA:
                 case OBJ_END:
                     break;

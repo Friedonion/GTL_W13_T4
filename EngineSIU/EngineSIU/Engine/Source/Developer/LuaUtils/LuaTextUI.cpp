@@ -28,7 +28,6 @@ void LuaTextUI::DrawImGuiUI()
 
     ImDrawList* drawList = ImGui::GetWindowDrawList();
     drawList->AddText(fontToUse, sizeToUse, textPos, textColor, *Text);
-
 }
 
 void LuaTextUI::SetText(FString& InText)

@@ -49,6 +49,8 @@ public:
     ImFont* GetFontStyleByName(FName FontName);
     FTexture* GetTextureByName(FName TextureName);
 
+    void InitializeResourcesAndGameManager();
+
 private:
     LuaUIManager();
     ~LuaUIManager() = default;

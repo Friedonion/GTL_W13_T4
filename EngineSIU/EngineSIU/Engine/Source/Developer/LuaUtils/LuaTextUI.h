@@ -13,6 +13,8 @@ public:
 
     virtual void DrawImGuiUI() override;
 
+    //void SetText(FString InText);
+
 public:
     FString Text;
     ImFont* FontSytle;

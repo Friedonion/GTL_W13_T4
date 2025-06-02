@@ -23,6 +23,7 @@ enum OBJECTS : uint8
     OBJ_ENEMY,
     OBJ_ENEMYSPAWNER,
     OBJ_BULLET,
+    OBJ_GAMEMANAGER,
     OBJ_END
 };
 
