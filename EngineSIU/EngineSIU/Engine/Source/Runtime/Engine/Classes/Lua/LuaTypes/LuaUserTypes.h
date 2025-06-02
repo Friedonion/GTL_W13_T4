@@ -9,6 +9,7 @@ struct FVector2D;
 struct FVector;
 struct FLinearColor;
 struct FColor;
+class FString;
 
 namespace LuaTypes
 {
@@ -30,5 +31,6 @@ namespace LuaTypes
     template <> struct FBindLua<FRotator> { static void Bind(sol::table& Table); };
     template <> struct FBindLua<FQuat> { static void Bind(sol::table& Table); };
     template <> struct FBindLua<FMatrix> { static void Bind(sol::table& Table); };
+    template <> struct FBindLua<FString> { static void Bind(sol::table& Table); };
 
 }
