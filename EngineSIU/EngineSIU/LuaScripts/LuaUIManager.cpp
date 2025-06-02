@@ -6,12 +6,11 @@
 #include "Engine/Source/Developer/LuaUtils/LuaButtonUI.h"
 #include "Engine/Classes/Engine/Texture.h"
 #include "Engine/EditorEngine.h"
+#include "Editor/LevelEditor/SLevelEditor.h"
 #include "Engine/Engine.h"
 
 void LuaUIManager::CreateUI(FName InName)
 {
-
-
     UpdateUIArrayForSort();
 }
 
@@ -144,21 +143,29 @@ void LuaUIManager::DrawLuaUIs()
 
 void LuaUIManager::TestCODE()
 {
-    CreateText("TestTEXT", RectTransform(0, 0, 100, 100, AnchorDirection::MiddleCenter), 10, FString("Chan GOOOD!"), FName("Default"), 30, FLinearColor(1, 0, 0, 1));
-    CreateImage("TestImage", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter), 3, FName("ExplosionColor"), FLinearColor(1, 1, 1, 1));
-    CreateButton("TestButton", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter), 15, FString("TEstbutonFUn"));
+   // CreateText("TestTEXT", RectTransform(0, 0, 100, 100, AnchorDirection::MiddleCenter), 10, FString("+"), FName("Default"), 100, FLinearColor(1, 0, 0, 1));
+    //CreateImage("TestImage", RectTransform(0, 0, 200, 200, AnchorDirection::MiddleCenter), 3, FName("ExplosionColor"), FLinearColor(1, 1, 1, 1));
+    //CreateButton("TestButton", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter), 15, FString("TEstbutonFUn"));
+    CreateImage("TestImage2", RectTransform(0, 0, 50, 50, AnchorDirection::MiddleCenter), 3, FName("Aim"), FLinearColor(1, 0, 0, 1));
 
     auto GotsText = GetTextUI("TestTEXT");
     auto GotsImage = GetImageUI("TestImage");
     auto GotsButton = GetButtonUI("TestButton");
 
+    if (GotsImage)
+    {
+        // 4x4 SubUV 애니메이션 설정 (16프레임, 0.05초 간격, 루프)
+        GotsImage->SetSubUVAnimation(6, 6, 0.05f, true);
+        GotsImage->PlaySubUV();
+    }
+
     /*DeleteUI("TestTEXT");
     DeleteUI("TestImage");
     DeleteUI("TestButton");*/
 
-    auto GotText = GetTextUI("TestTEXT");
-    auto GotImage = GetImageUI("TestImage");
-    auto GotButton = GetButtonUI("TestButton");
+    //auto GotText = GetTextUI("TestTEXT");
+    //auto GotImage = GetImageUI("TestImage");
+    //auto GotButton = GetButtonUI("TestButton");
 
 }
 
@@ -169,9 +176,12 @@ void LuaUIManager::UpdateCanvasRectTransform(HWND hWnd)
 
     RECT clientRect;
     GetClientRect(hWnd, &clientRect);
+    uint32 width = 0;
+    uint32 height = 0;
+    GEngineLoop.GetLevelEditor()->GetViewportSize(width, height);
 
-    CanvasRectTransform.Size.X = clientRect.right - clientRect.left;
-    CanvasRectTransform.Size.Y = clientRect.bottom - clientRect.top;
+    CanvasRectTransform.Size.X = width;
+    CanvasRectTransform.Size.Y = height;
 }
 
 ImFont* LuaUIManager::GetFontStyleByName(FName FontName)
@@ -211,12 +221,12 @@ LuaUIManager::LuaUIManager()
     CanvasRectTransform.Position.X = 0.f;
     CanvasRectTransform.Position.Y = 0.f;
 
-    uint32 ClientWidth, ClientHeight;
+    uint32 width = 0;
+    uint32 height = 0;
+    GEngineLoop.GetLevelEditor()->GetViewportSize(width, height);
 
-    GEngineLoop.GetClientSize(ClientWidth, ClientHeight);
-
-    CanvasRectTransform.Size.X = ClientWidth;
-    CanvasRectTransform.Size.Y = ClientHeight;
+    CanvasRectTransform.Size.X = width;
+    CanvasRectTransform.Size.Y = height;
 
     GenerateResource();
 
@@ -238,8 +248,9 @@ void LuaUIManager::GenerateResource()
     /* Texture Setup*/
     
     auto TEstt = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/T_Explosion_SubUV.png");
-    
     TextureMap.Add(FName("ExplosionColor"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/T_Explosion_SubUV.png"));
+    auto AimTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Aim.png");
+    TextureMap.Add(FName("Aim"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Aim.png"));
 
 }
 
