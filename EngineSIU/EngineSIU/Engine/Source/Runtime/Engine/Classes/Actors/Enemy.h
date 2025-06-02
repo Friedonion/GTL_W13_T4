@@ -21,6 +21,7 @@ class AEnemy : public AActor
 
 public:
     AEnemy();
+    ~AEnemy();
 
     virtual UObject* Duplicate(UObject* InOuter) override;
 
@@ -54,10 +55,11 @@ private:
     // Begin Test
     void CreateCollisionShapes();
     void CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase, FVector InFullSize, FName& BoneName);
-    void CreateCollisionConstraint_Internal(const TArray< UBodySetup*>BodySetups);
+    void CreateCollisionConstraint_Internal(const TArray<UBodySetup*>& InBodySetups);
     void DestroyCollisions();
 
-    FString GetCleanBoneName(const FString& InFullName); // FIX-ME plz
+    // FIX-ME
+    FString GetCleanBoneName(const FString& InFullName); 
 
     TArray<FBodyInstance*> BodyInstances;
     TArray<UBodySetup*> BodySetups;

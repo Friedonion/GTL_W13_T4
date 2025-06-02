@@ -36,6 +36,21 @@ AEnemy::AEnemy()
 {
 }
 
+AEnemy::~AEnemy()
+{
+    for (FConstraintSetup* Setup : ConstraintSetups)
+    {
+        delete Setup;
+    }
+    ConstraintSetups.Empty();
+
+    for (FConstraintInstance* Instance : ConstraintInstances)
+    {
+        delete Instance;
+    }
+    ConstraintInstances.Empty();
+}
+
 UObject* AEnemy::Duplicate(UObject* InOuter)
 {
     ThisClass* NewActor = Cast<ThisClass>(Super::Duplicate(InOuter));
@@ -160,9 +175,9 @@ void AEnemy::SetLuaToPlayAnim()
 
 void AEnemy::CreateCollisionShapes()
 {
-    FName HEAD = TEXT("HEAD");
-    FName BODY = TEXT("BODY");
-    FName LEG = TEXT("LEG");
+    FName HEAD = TEXT("Head");
+    FName BODY = TEXT("Body");
+    FName LEG = TEXT("Leg");
 
     FVector LegSize = FVector(40.f, 40.f, 90.f); 
     FVector BodySize = FVector(40.f, 40.f, 100.f);
@@ -188,6 +203,7 @@ void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase
 {
     // Begin Body
     UBodySetup* BodySetup = FObjectFactory::ConstructObject<UBodySetup>(this);
+    BodySetup->BoneName = BoneName;
     FBodyInstance* BodyInstance = new FBodyInstance(SkeletalMeshComponent); 
     BodyInstance->bSimulatePhysics = true;
     BodyInstance->bEnableGravity = false;
@@ -218,35 +234,44 @@ void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase
     CollisionRigidBodies.Add(GEngine->PhysicsManager->CreateGameObject(PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC));
 }
 
-void AEnemy::CreateCollisionConstraint_Internal(const TArray<UBodySetup*> BodySetups)
+void AEnemy::CreateCollisionConstraint_Internal(const TArray<UBodySetup*>& InBodySetups)
 {
     // Begin Constraint
-    FConstraintInstance* NewConstraintInstance = new FConstraintInstance();
-    FConstraintSetup* NewConstraint = new FConstraintSetup();
-    FBodyInstance* BodyInstance1 = nullptr;
-    FBodyInstance* BodyInstance2 = nullptr;
 
-    for (int Index = 0; Index < BodyInstances.Num()-1; Index++)
+    for (int Index = 0; Index < BodyInstances.Num() - 1; ++Index)
     {
-        // 0: Leg
-        // 1: Body
-        // 2: Head
-        BodyInstance1 = BodyInstances[Index];
-        BodyInstance2 = BodyInstances[Index + 1];
-
-        NewConstraint->JointName = GetCleanBoneName(BodySetups[Index]->BoneName.ToString()) + " : " + GetCleanBoneName(BodySetups[Index + 1]->BoneName.ToString());
-        NewConstraint->ConstraintBone1 = BodySetups[Index]->BoneName.ToString();
-        NewConstraint->ConstraintBone2 = BodySetups[Index + 1]->BoneName.ToString();
-
-        if (BodyInstance1 && BodyInstance2)
+        if (Index + 1 >= BodyInstances.Num() || !BodyInstances[Index] || !BodyInstances[Index + 1])
         {
-            ConstraintSetups.Add(NewConstraint);
-            ConstraintInstances.Add(NewConstraintInstance);
-
-            GEngine->PhysicsManager->CreateJoint(BodyInstance1->BIGameObject, BodyInstance2->BIGameObject, NewConstraintInstance, ConstraintSetups[Index]);
-
+            continue;
         }
 
+        if (Index + 1 >= BodySetups.Num() || !BodySetups[Index] || !BodySetups[Index + 1])
+        {
+            continue;
+        }
+
+        FBodyInstance* BodyInstance1 = BodyInstances[Index];
+        FBodyInstance* BodyInstance2 = BodyInstances[Index + 1];
+
+        FConstraintSetup* NewConstraintSetup = new FConstraintSetup();
+        FConstraintInstance* NewConstraintInstance = new FConstraintInstance();
+
+        FString BoneName1Str = GetCleanBoneName(BodySetups[Index]->BoneName.ToString());
+        FString BoneName2Str = GetCleanBoneName(BodySetups[Index + 1]->BoneName.ToString());
+
+        NewConstraintSetup->JointName = FName(*(BoneName1Str + " : " + BoneName2Str)).ToString();
+        NewConstraintSetup->ConstraintBone1 = BodySetups[Index]->BoneName.ToString();
+        NewConstraintSetup->ConstraintBone2 = BodySetups[Index + 1]->BoneName.ToString();
+
+        ConstraintSetups.Add(NewConstraintSetup);
+        ConstraintInstances.Add(NewConstraintInstance);
+
+        GEngine->PhysicsManager->CreateJoint(
+            BodyInstance1->BIGameObject,
+            BodyInstance2->BIGameObject,
+            NewConstraintInstance,
+            NewConstraintSetup
+        );
     }
     // End Constraint
 }
