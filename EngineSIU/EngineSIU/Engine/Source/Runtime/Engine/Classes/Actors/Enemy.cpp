@@ -82,11 +82,11 @@ void AEnemy::Tick(float DeltaTime)
 
 void AEnemy::BeginPlay()
 {
+    SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
+    SetRootComponent(SkeletalMeshComponent);
     Super::BeginPlay();
     UE_LOG(ELogLevel::Display, TEXT("AEnemy has been spawned."));
 
-    SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
-    SetRootComponent(SkeletalMeshComponent);
 
     SetLuaToPlayAnim();
 
@@ -152,8 +152,13 @@ void AEnemy::SetLuaToPlayAnim()
     SkeletalMesh = UAssetManager::Get().GetSkeletalMesh(FName("Contents/Enemy/Pistol_Idle"));
     SkeletalMeshComponent->SetSkeletalMeshAsset(SkeletalMesh);
     SkeletalMeshComponent->StateMachineFileName = "LuaScripts/Animations/EnemyStateMachine.lua";
-    Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance())->GetStateMachine()->SetLuaScriptName(SkeletalMeshComponent->StateMachineFileName);
-    Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance())->GetStateMachine()->InitLuaStateMachine();
+    SkeletalMeshComponent->SetAnimClass(UClass::FindClass(FName("ULuaScriptAnimInstance")));
+    SkeletalMeshComponent->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+    if (ULuaScriptAnimInstance* AnimInstance = SkeletalMeshComponent->GetLuaScriptAnimInstance())
+    {
+        AnimInstance->GetStateMachine()->SetLuaScriptName(SkeletalMeshComponent->StateMachineFileName);
+        AnimInstance->GetStateMachine()->InitLuaStateMachine(this);
+    }
 }
 
 void AEnemy::CreateCollisionCapsule()
