@@ -4,8 +4,6 @@
 class ACharacter;
 class AEnemy;
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnSpawnedEnemyDestroyed, const bool /*bDestroyed*/);
-
 class AEnemySpawner : public AActor
 {
     DECLARE_CLASS(AEnemySpawner, AActor)
@@ -33,7 +31,5 @@ public:
     UPROPERTY(VisibleAnywhere, AEnemy*, SpawnedEnemy,)
 
     float CurrentSpawnTimer;
-
-    int count = 0;
 };
 

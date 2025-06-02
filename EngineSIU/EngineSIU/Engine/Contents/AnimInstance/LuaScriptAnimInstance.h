@@ -68,6 +68,8 @@ public:
     UAnimSequence* GetCurrentAnim() const { return CurrAnim; }
     void SetAnimation(UAnimSequence* NewAnim, float BlendingTime, bool LoopAnim = false, bool ReverseAnim = false);
 
+public:
+    UAnimStateMachine* GetStateMachine() const { return StateMachine; }
 
 private:
     float PreviousTime;

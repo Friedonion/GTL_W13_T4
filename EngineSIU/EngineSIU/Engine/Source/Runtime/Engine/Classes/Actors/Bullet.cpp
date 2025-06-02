@@ -5,6 +5,9 @@
 #include "Engine/FObjLoader.h"
 #include "Enemy.h"
 
+#include "PhysicsManager.h"
+#include "PhysicsEngine/BodyInstance.h"
+
 ABullet::ABullet()
     : StaticMeshComponent(nullptr)
     , ProjectileMovement(nullptr)
@@ -15,6 +18,7 @@ ABullet::ABullet()
     , Gravity(0.f)
     , AccumulatedTime(0.f)
 {
+    
 }
 
 ABullet::~ABullet()
@@ -41,6 +45,8 @@ void ABullet::BeginPlay()
 {
     Super::BeginPlay();
 
+    AEnemy* Owner = Cast<AEnemy>(GetOwner());
+    FVector TempVelocity;
     StaticMeshComponent = AddComponent<UStaticMeshComponent>(TEXT("BulletMesh"));
     SetRootComponent(StaticMeshComponent);
 
@@ -48,18 +54,18 @@ void ABullet::BeginPlay()
     StaticMeshComponent->SetStaticMesh(StaticMesh);
 
     ProjectileMovement = AddComponent<UProjectileMovementComponent>(TEXT("BulletMovement"));
-    if (ProjectileMovement)
-    {
-        ProjectileMovement->SetInitialSpeed(InitialSpeed);
-        ProjectileMovement->SetMaxSpeed(MaxSpeed);
-        AEnemy* Owner = Cast<AEnemy>(GetOwner());
-        FVector TempVelocity = Owner->Direction.ToVector() * InitialSpeed;
-        ProjectileMovement->SetVelocity(TempVelocity);
-        ProjectileMovement->SetGravity(Gravity);
-    }
 
-	SetActorLocation(GetOwner()->GetActorLocation());
-    SetActorRotation(GetOwner()->GetRootComponent()->GetRelativeRotation());
+    TempVelocity = Owner->Direction.ToVector() * InitialSpeed;
+	SetActorLocation(Owner->GetActorLocation());
+    SetActorRotation(Owner->Direction);
+
+    StaticMeshComponent->bSimulate = true;
+    StaticMeshComponent->CreatePhysXGameObject();
+
+    StaticMeshComponent->BodyInstance->CollisionEnabled = ECollisionEnabled::QueryOnly;
+    PxRigidDynamic* RigidBody = StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody;
+
+    RigidBody->setLinearVelocity(PxVec3(TempVelocity.X, TempVelocity.Y, TempVelocity.Z));
 }
 
 void ABullet::EndPlay(const EEndPlayReason::Type EndPlayReason)

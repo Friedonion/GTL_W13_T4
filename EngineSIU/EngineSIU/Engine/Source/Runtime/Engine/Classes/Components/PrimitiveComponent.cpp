@@ -226,7 +226,7 @@ void UPrimitiveComponent::EndPhysicsTickComponent(float DeltaTime)
         FRotator Rotator = MyQuat.Rotator();
         
         // ✅ Unreal Engine에 적용 (라디안 → 도 변환)
-        SetWorldLocation(FVector(pos.x, -pos.y, pos.z));
+        SetWorldLocation(FVector(pos.x, pos.y, pos.z));
         SetWorldRotation(Rotator);
     }
 }
