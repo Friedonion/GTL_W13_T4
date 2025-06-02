@@ -17,7 +17,7 @@
                         "ComponentName": "StaticMeshComponent_0",
                         "ComponentOwner": "ACube_438",
                         "ComponentOwnerClass": "ACube",
-                        "RelativeLocation": "X=200.000 Y=100.000 Z=-50.000",
+                        "RelativeLocation": "X=200.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
@@ -114,9 +114,9 @@
             "RootComponentID": "UBillboardComponent_0"
         },
         {
-            "ActorClass": "AEnemySpawner",
-            "ActorID": "AEnemySpawner_372",
-            "ActorLabel": "OBJ_ENEMYSPAWNER_372",
+            "ActorClass": "ACube",
+            "ActorID": "ACube_371",
+            "ActorLabel": "OBJ_CUBE_371",
             "ActorTickInEditor": "false",
             "Components": [
                 {
@@ -125,7 +125,52 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEnemySpawner_372",
+                        "ComponentOwner": "ACube_371",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.500 Y=0.500 Z=0.500",
+                        "AABB_min": "X=-0.500 Y=-0.500 Z=-0.500",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ACube_371",
+                        "ComponentOwnerClass": "ACube",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=800.000 Y=800.000 Z=1.000",
+                        "RigidBodyType": "0",
+                        "StaticMeshPath": "Contents/Primitives/CubePrimitive.obj",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "true",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "RootComponentID": "StaticMeshComponent_0"
+        },
+        {
+            "ActorClass": "AEnemySpawner",
+            "ActorID": "AEnemySpawner_383",
+            "ActorLabel": "OBJ_ENEMYSPAWNER_383",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemySpawner_383",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
@@ -134,15 +179,15 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_369",
+                    "ComponentID": "USceneComponent_373",
                     "Properties": {
-                        "AttachParentID": "USceneComponent_374",
+                        "AttachParentID": "USceneComponent_385",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_369",
-                        "ComponentOwner": "AEnemySpawner_372",
+                        "ComponentName": "USceneComponent_373",
+                        "ComponentOwner": "AEnemySpawner_383",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -150,14 +195,14 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_374",
+                    "ComponentID": "USceneComponent_385",
                     "Properties": {
                         "AttachParentID": "nullptr",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_374",
-                        "ComponentOwner": "AEnemySpawner_372",
+                        "ComponentName": "USceneComponent_385",
+                        "ComponentOwner": "AEnemySpawner_383",
                         "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=200.000 Y=100.000 Z=0.000",
+                        "RelativeLocation": "X=200.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
@@ -165,7 +210,7 @@
                     }
                 }
             ],
-            "RootComponentID": "USceneComponent_374"
+            "RootComponentID": "USceneComponent_385"
         }
     ],
     "NextUUID": 0,
