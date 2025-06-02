@@ -27,23 +27,29 @@ AEnemy::AEnemy()
     , bShouldFire(false)
     , Character(nullptr)
     , Direction(FRotator::ZeroRotator)
+    , bCapsuleCreated(false)
     , bRagDollCreated(false)
     , bIsAlive(false)
+    , BodyInstance(nullptr)
+    , BodySetup(nullptr)
 {
 }
 
 UObject* AEnemy::Duplicate(UObject* InOuter)
 {
     ThisClass* NewActor = Cast<ThisClass>(Super::Duplicate(InOuter));
+    NewActor->SkeletalMeshComponent = SkeletalMeshComponent;
+    NewActor->SkeletalMesh = SkeletalMesh;
     NewActor->FireInterval = FireInterval;
     NewActor->CurrentFireTimer = CurrentFireTimer;
     NewActor->bShouldFire = bShouldFire;
-    NewActor->SkeletalMeshComponent = SkeletalMeshComponent;
-    NewActor->SkeletalMesh = SkeletalMesh;
     NewActor->Character = Character;
     NewActor->Direction = Direction;
+    NewActor->bCapsuleCreated = bCapsuleCreated;
     NewActor->bRagDollCreated = bRagDollCreated;
     NewActor->bIsAlive = bIsAlive;
+    NewActor->BodyInstance = BodyInstance;
+    NewActor->BodySetup = BodySetup;
 
     return NewActor;
 }
@@ -56,15 +62,17 @@ void AEnemy::Tick(float DeltaTime)
     SetActorRotation(FRotator(0, Direction.Yaw, 0));
 
     // Destroy로직은 다른 곳에 추가할 예정
-    //if (CurrentFireTimer >= 2.f && !bRagDollCreated)
-    //{
-    //    //Destroy();
-    //    SkeletalMeshComponent->CreatePhysXGameObject();
-    //    SkeletalMeshComponent->bSimulate = true;
-    //    SkeletalMeshComponent->bApplyGravity = true;
+    if (CurrentFireTimer >= 3.f && !bRagDollCreated)
+    {
+        //Destroy();
+        DestroyCollisionCapsule();
+     
+        SkeletalMeshComponent->CreatePhysXGameObject();
+        SkeletalMeshComponent->bSimulate = true;
+        SkeletalMeshComponent->bApplyGravity = true;
 
-    //    bRagDollCreated = true;
-    //}
+        bRagDollCreated = true;
+    }
         
     CalculateTimer(DeltaTime);
     if (!bShouldFire) return;
@@ -80,11 +88,7 @@ void AEnemy::BeginPlay()
     SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
     SetRootComponent(SkeletalMeshComponent);
 
-    SkeletalMesh = UAssetManager::Get().GetSkeletalMesh(FName("Contents/Enemy/Pistol_Idle"));
-    SkeletalMeshComponent->SetSkeletalMeshAsset(SkeletalMesh);
-    SkeletalMeshComponent->StateMachineFileName = "LuaScripts/Animations/EnemyStateMachine.lua";
-    Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance())->GetStateMachine()->SetLuaScriptName(SkeletalMeshComponent->StateMachineFileName);
-    Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance())->GetStateMachine()->InitLuaStateMachine();
+    SetLuaToPlayAnim();
 
     SetActorLocation(GetOwner()->GetRootComponent()->GetRelativeLocation());
     GetActorRotation();
@@ -143,6 +147,15 @@ void AEnemy::CalculateTimer(float DeltaTime)
     }
 }
 
+void AEnemy::SetLuaToPlayAnim()
+{
+    SkeletalMesh = UAssetManager::Get().GetSkeletalMesh(FName("Contents/Enemy/Pistol_Idle"));
+    SkeletalMeshComponent->SetSkeletalMeshAsset(SkeletalMesh);
+    SkeletalMeshComponent->StateMachineFileName = "LuaScripts/Animations/EnemyStateMachine.lua";
+    Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance())->GetStateMachine()->SetLuaScriptName(SkeletalMeshComponent->StateMachineFileName);
+    Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance())->GetStateMachine()->InitLuaStateMachine();
+}
+
 void AEnemy::CreateCollisionCapsule()
 {
     BodySetup = FObjectFactory::ConstructObject<UBodySetup>(this);
@@ -173,7 +186,14 @@ void AEnemy::CreateCollisionCapsule()
     PxShape* PxCapsule = GEngine->PhysicsManager->CreateCapsuleShape(Offset, GeomPQuat, Extent.x, Extent.z);
     BodySetup->AggGeom.CapsuleElems.Add(PxCapsule);
 
-    GameObject* Obj = GEngine->PhysicsManager->CreateGameObject(PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC);
+    Capsule = GEngine->PhysicsManager->CreateGameObject(PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC);
+
+    bCapsuleCreated = true;
+}
+
+void AEnemy::DestroyCollisionCapsule()
+{
+    GEngine->PhysicsManager->DestroyGameObject(Capsule);
 }
 
 void AEnemy::Fire()

@@ -9,6 +9,7 @@ class ABullet;
 class UPrimitiveComponent;
 class UBodySetup;
 struct FBodyInstance;
+struct GameObject;
 
 class AEnemy : public AActor
 {
@@ -30,10 +31,12 @@ public:
 private:
     void Fire();
     void CalculateTimer(float DeltaTime);
-    // SpawnProjectile
+    
+    void SetLuaToPlayAnim();
 
 private:
     float CurrentFireTimer;
+    bool bCapsuleCreated;
     bool bRagDollCreated;
 
     UPROPERTY(VisibleAnywhere, USkeletalMeshComponent*, SkeletalMeshComponent,)
@@ -41,18 +44,17 @@ private:
     UPROPERTY(VisibleAnywhere, ACharacter*, Character, )
     UPROPERTY(EditAnywhere, float, FireInterval,)
     UPROPERTY(VisibleAnywhere, bool, bShouldFire, )
-    UPROPERTY(VisibleAnywhere, bool, bIsAlive, )
-    //UPROPERTY(VisibleAnywhere, UCapsuleComponent*, CapsuleComponent, )
-
+    UPROPERTY(VisibleAnywhere, bool, bIsAlive, ) // 아직 Destroy되지 않았지만 Fire()하지 않아야 하므로
 
     // Begin Test
     void CreateCollisionCapsule();
+    void DestroyCollisionCapsule();
 
-    FBodyInstance* BodyInstance = nullptr;
-    UBodySetup* BodySetup = nullptr;
-    UPROPERTY(VisibleAnywhere, UPrimitiveComponent*, PrimitiveComponent, )
+    FBodyInstance* BodyInstance;
+    UBodySetup* BodySetup;
     // End Test
 
+    GameObject* Capsule;
 
 public:
     UPROPERTY(VisibleAnywhere, FRotator, Direction, )
