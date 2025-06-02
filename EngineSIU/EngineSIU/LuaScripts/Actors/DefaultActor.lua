@@ -17,12 +17,10 @@ local FRotator = EngineTypes.FRotator
 function ReturnTable:InitializeCallback()
     RegisterKeyCallback("W", function(dt)
         self:MoveForward(dt)
-        self.this:SetWorldTickRate(5)
     end)
 
     RegisterKeyCallback("S", function(dt)
         self:MoveBackward(dt)
-        self.this:SetWorldTickRate(1)
     end)
 
     RegisterKeyCallback("A", function(dt)

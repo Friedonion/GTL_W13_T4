@@ -89,15 +89,15 @@ void APlayerCharacter::Tick(float DeltaTime)
 
     if (IsPunching())
     {
-        this->SetWorldTickRate(3);
+        this->SetWorldTickRate(1);
     }
     else if (IsShooting())
     {
-        this->SetWorldTickRate(3);
+        this->SetWorldTickRate(1);
     }
     else
     {
-        this->SetWorldTickRate(1);
+        this->SetWorldTickRate(0.3);
     }
 }
 

@@ -640,7 +640,8 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                         continue;
                     }
 
-                    if (ImGui::Selectable(GetData(Asset.Value.AssetName.ToString()), false))
+                    FString NameWithId = Asset.Value.AssetName.ToString() + " (" + Asset.Value.SourceFilePath + ")";
+                    if (ImGui::Selectable(GetData(NameWithId), false))
                     {
                         FString AssetName = Asset.Value.PackagePath.ToString() + "/" + Asset.Value.AssetName.ToString();
 
