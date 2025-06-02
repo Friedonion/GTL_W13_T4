@@ -30,6 +30,12 @@ public:
 
     void SetPlayRate(float PlayRate);
 
+    void SetWorldTickRate(float TickRate);
+
+    bool IsPunching();
+    
+    bool IsShooting();
+
     PlayerState State = PlayerState::Idle; // 플레이어의 현재 상태를 나타내는 변수.
 
 protected:

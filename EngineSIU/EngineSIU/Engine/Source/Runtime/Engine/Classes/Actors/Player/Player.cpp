@@ -8,6 +8,7 @@
 #include "Classes/Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Animation/AnimSingleNodeInstance.h"
+#include "EngineLoop.h"
 
 APlayerCharacter::APlayerCharacter()
     : ACharacter()
@@ -85,6 +86,19 @@ UObject* APlayerCharacter::Duplicate(UObject* InOuter)
 void APlayerCharacter::Tick(float DeltaTime)
 {
     AActor::Tick(DeltaTime);
+
+    if (IsPunching())
+    {
+        this->SetWorldTickRate(3);
+    }
+    else if (IsShooting())
+    {
+        this->SetWorldTickRate(3);
+    }
+    else
+    {
+        this->SetWorldTickRate(1);
+    }
 }
 
 void APlayerCharacter::RegisterLuaType(sol::state& Lua)
@@ -93,7 +107,8 @@ void APlayerCharacter::RegisterLuaType(sol::state& Lua)
         "State", &APlayerCharacter::State,
         "Punch", &APlayerCharacter::Punch,
         "Shoot", &APlayerCharacter::Shoot,
-        "SetPlayRate", &APlayerCharacter::SetPlayRate
+        "SetPlayRate", &APlayerCharacter::SetPlayRate,
+        "SetWorldTickRate", &APlayerCharacter::SetWorldTickRate
     )
 }
 
@@ -159,4 +174,27 @@ void APlayerCharacter::SetPlayRate(float PlayRate)
     {
         Instance->SetPlayRate(PlayRate);
     }
+}
+
+void APlayerCharacter::SetWorldTickRate(float TickRate)
+{
+    GEngineLoop.DeltaTimeMultiplier = TickRate;
+}
+
+bool APlayerCharacter::IsPunching()
+{
+    if (UAnimSingleNodeInstance* Instance = LeftArm->GetSingleNodeInstance())
+    {
+        return Instance->IsPlaying();
+    }
+    return false;
+}
+
+bool APlayerCharacter::IsShooting()
+{
+    if (UAnimSingleNodeInstance* Instance = RightArm->GetSingleNodeInstance())
+    {
+        return Instance->IsPlaying();
+    }
+    return false;
 }

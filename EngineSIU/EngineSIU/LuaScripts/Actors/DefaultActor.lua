@@ -17,12 +17,12 @@ local FRotator = EngineTypes.FRotator
 function ReturnTable:InitializeCallback()
     RegisterKeyCallback("W", function(dt)
         self:MoveForward(dt)
-        self.this:SetPlayRate(3)
+        self.this:SetWorldTickRate(5)
     end)
 
     RegisterKeyCallback("S", function(dt)
         self:MoveBackward(dt)
-        self.this:SetPlayRate(1)
+        self.this:SetWorldTickRate(1)
     end)
 
     RegisterKeyCallback("A", function(dt)
@@ -111,6 +111,8 @@ end
 function ReturnTable:Move(dv)
     local this = self.this
     local Rot = this.ActorRotation;
+    Rot.Pitch = 0
+    Rot.Roll = 0
     local LocalMovement = Rot:RotateVector(dv)
     this.ActorLocation = this.ActorLocation + LocalMovement
 end

@@ -327,12 +327,9 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
         ImGui::Spacing();
 
         ImGui::Text("Game Speed");
-        float DeltaTimeDenom = GEngineLoop.DelaTimeDenom;
-        float DeltaTimeNumerator = 1 / DeltaTimeDenom;
         ImGui::SetNextItemWidth(120.0f);
-        if (ImGui::DragFloat("##GameSpeed", &DeltaTimeNumerator, 0.1f, -10.f, 10.f, "%.1f"))
+        if (ImGui::DragFloat("##GameSpeed", &GEngineLoop.DeltaTimeMultiplier, 0.1f, -10.f, 10.f, "%.1f"))
         {
-            GEngineLoop.DelaTimeDenom = 1 / DeltaTimeNumerator;
         }
 
         ImGui::Text("F-Stop");
