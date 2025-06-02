@@ -5,6 +5,7 @@
 #include "Math/Color.h"
 #include "Math/Matrix.h"
 #include "Math/Quat.h"
+#include "Engine/Source/Runtime/Core/Container/String.h"
 
 void LuaTypes::FBindLua<FColor>::Bind(sol::table& Table)
 {
@@ -240,5 +241,30 @@ void LuaTypes::FBindLua<FMatrix>::Bind(sol::table& Table)
 
         // Static functions
         LUA_BIND_STATIC(FMatrix::Identity)
+    );
+}
+
+void LuaTypes::FBindLua<FString>::Bind(sol::table& Table)
+{
+    Table.Lua_NewUserType(
+        FString,
+
+        // Constructors
+        sol::constructors<FString(), FString(const ANSICHAR*), FString(const FString&)
+                        , FString(const std::string&), FString(const std::wstring&)>(),
+
+        LUA_BIND_MEMBER(&FString::Len),
+        LUA_BIND_MEMBER(&FString::IsEmpty),
+        LUA_BIND_MEMBER(&FString::Empty),
+        LUA_BIND_MEMBER(&FString::Equals),
+        LUA_BIND_MEMBER(&FString::Contains),
+
+        LUA_BIND_MEMBER(&FString::Mid),
+        LUA_BIND_MEMBER(&FString::Left),
+        LUA_BIND_MEMBER(&FString::RightChop),
+
+        LUA_BIND_MEMBER(&FString::ToAnsiString),
+        LUA_BIND_MEMBER(&FString::ToWideString),
+        LUA_BIND_MEMBER(&FString::ToBool)
     );
 }

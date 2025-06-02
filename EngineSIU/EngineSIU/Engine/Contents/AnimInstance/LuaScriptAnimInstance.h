@@ -18,6 +18,9 @@ public:
 
     virtual void NativeUpdateAnimation(float DeltaSeconds, FPoseContext& OutPose) override;
     
+    template <typename T>
+    void BindLua(T* Owner);
+
     void SetPlaying(bool bIsPlaying)
     {
         bPlaying = bIsPlaying;
@@ -63,7 +66,7 @@ public:
     void SetCurrentKey(int32 InKey) { CurrentKey = InKey; }
 
     UAnimSequence* GetCurrentAnim() const { return CurrAnim; }
-    void SetAnimation(UAnimSequence* NewAnim, float BlendingTime, float LoopAnim = false, bool ReverseAnim = false);
+    void SetAnimation(UAnimSequence* NewAnim, float BlendingTime, bool LoopAnim = false, bool ReverseAnim = false);
 
 public:
     UAnimStateMachine* GetStateMachine() const { return StateMachine; }
@@ -95,3 +98,9 @@ private:
     UPROPERTY(EditAnywhere, UAnimStateMachine*, StateMachine, = nullptr)
     
 };
+
+template<typename T>
+inline void ULuaScriptAnimInstance::BindLua(T* Owner)
+{
+    StateMachine->InitLuaStateMachine(Owner);
+}

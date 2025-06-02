@@ -12,6 +12,7 @@
 #include "InteractiveToolsFramework/BaseGizmos/GizmoBaseComponent.h"
 #include "Engine/Engine.h"
 #include "Engine/SkeletalMesh.h"
+#include "CoreUObject/UObject/Casts.h"
 
 void FDepthPrePass::PrepareRenderArr()
 {

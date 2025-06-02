@@ -1,14 +1,10 @@
 #pragma once
 
-#include "Actors/Player.h"
 #include "Components/ActorComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SceneComponent.h"
 #include "GameFramework/Actor.h"
 #include "UnrealEd/EditorPanel.h"
-#include "Math/Rotator.h"
-#include "UObject/Casts.h"
-
 class UParticleSystemComponent;
 class USkeletalMeshComponent;
 class USpringArmComponent;
@@ -22,6 +18,7 @@ class UProjectileMovementComponent;
 class UTextComponent;
 class UHeightFogComponent;
 class AEditorPlayer;
+class APlayerCharacter;
 class UStaticMeshComponent;
 class UMaterial;
 class USocketComponent;
@@ -60,7 +57,7 @@ private:
 
     void RenderForSceneComponent(USceneComponent* SceneComponent, AEditorPlayer* Player) const;
     void RenderForCameraComponent(UCameraComponent* InCameraComponent);
-    void RenderForPlayerActor(APlayer* InPlayerActor);
+    void RenderForPlayerActor(APlayerCharacter* InPlayerActor);
     void RenderForActor(AActor* SelectedActor, USceneComponent* TargetComponent) const;
     
     /* Static Mesh Settings */

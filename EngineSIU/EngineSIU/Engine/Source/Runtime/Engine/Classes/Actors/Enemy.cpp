@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Math/Rotator.h"
 #include "EnemySpawner.h"
-
+#include "Actors/Player/Player.h"
 #include "Actors/Bullet.h"
 #include "Engine/EditorEngine.h"
 

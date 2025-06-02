@@ -1,6 +1,5 @@
 #pragma once
 #include "Engine.h"
-#include "Actors/Player.h"
 #include "World/SkeletalViewerWorld.h"
 #include "World/PhysicsViewerWorld.h"
 
@@ -15,6 +14,7 @@ class UParticleSystem;
 class AActor;
 class USceneComponent;
 class UPhysicsAsset;
+class AEditorPlayer;
 
 enum class EViewerType : uint8
 {

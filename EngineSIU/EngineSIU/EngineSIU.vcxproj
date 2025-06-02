@@ -207,9 +207,14 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClCompile Include="Engine\Contents\AnimInstance\LuaScriptAnimInstance.cpp" />
     <ClCompile Include="Engine\Contents\Objects\DamageCameraShake.cpp" />
     <ClCompile Include="Engine\Source\Developer\AnimDataController\AnimDataController.cpp" />
+    <ClCompile Include="Engine\Source\Developer\LuaUtils\LuaButtonUI.cpp" />
+    <ClCompile Include="Engine\Source\Developer\LuaUtils\LuaImageUI.cpp" />
+    <ClCompile Include="Engine\Source\Developer\LuaUtils\LuaTextUI.cpp" />
+    <ClCompile Include="Engine\Source\Developer\LuaUtils\LuaUI.cpp" />
     <ClCompile Include="Engine\Source\Editor\LevelEditor\SlateAppMessageHandler.cpp" />
     <ClCompile Include="Engine\Source\Editor\LevelEditor\SLevelEditor.cpp" />
     <ClCompile Include="Engine\Source\Editor\PropertyEditor\ControlEditorPanel.cpp" />
+    <ClCompile Include="Engine\Source\Editor\PropertyEditor\LuaUIPanel.cpp" />
     <ClCompile Include="Engine\Source\Editor\PropertyEditor\OutlinerEditorPanel.cpp" />
     <ClCompile Include="Engine\Source\Editor\PropertyEditor\ParticleViewerPanel.cpp" />
     <ClCompile Include="Engine\Source\Editor\PropertyEditor\PhysicsAssetViewerPanel.cpp" />
@@ -268,8 +273,10 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\FireballActor.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\HeightFogActor.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\LightActor.cpp" />
-    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\Player.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\EditorPlayer.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\Player\Player.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\PointLightActor.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\SequencePlayer.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\SphereActor.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\SpotLightActor.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimationAsset.cpp" />
@@ -446,6 +453,8 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <None Include="Shaders\GaussianBlurShader.hlsl" />
     <None Include="Shaders\DepthOfFieldShader.hlsl" />
     <None Include="Shaders\FullScreenQuadVertexShader.hlsl" />
+    <ClCompile Include="LuaScripts\LuaUIBind.cpp" />
+    <ClCompile Include="LuaScripts\LuaUIManager.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Components\SocketComponent.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <None Include="Shaders\CompositingShader.hlsl">
@@ -520,6 +529,11 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
   <ItemGroup>
     <ClInclude Include="Engine\Contents\AnimInstance\LuaScriptAnimInstance.h" />
     <ClInclude Include="Engine\Contents\Objects\DamageCameraShake.h" />
+    <ClInclude Include="Engine\Source\Developer\LuaUtils\LuaButtonUI.h" />
+    <ClInclude Include="Engine\Source\Developer\LuaUtils\LuaImageUI.h" />
+    <ClInclude Include="Engine\Source\Developer\LuaUtils\LuaTextUI.h" />
+    <ClInclude Include="Engine\Source\Developer\LuaUtils\LuaUI.h" />
+    <ClInclude Include="Engine\Source\Editor\PropertyEditor\LuaUIPanel.h" />
     <ClInclude Include="Engine\Source\Editor\PropertyEditor\PhysicsAssetViewerPanel.h" />
     <ClInclude Include="Engine\Source\Runtime\CoreUObject\UObject\PropertyEvent.h" />
     <ClInclude Include="Engine\Source\Developer\AnimDataController\AnimDataController.h" />
@@ -617,8 +631,11 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\FireballActor.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\HeightFogActor.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\LightActor.h" />
-    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\Player.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\EditorPlayer.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\Player\Player.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\Player\PlayerDefine.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\PointLightActor.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\SequencePlayer.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\SphereActor.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\SpotLightActor.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Animation\AnimationAsset.h" />
@@ -858,6 +875,8 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Velocity\ParticleModuleVelocityOverLife.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAcceleration.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Particles\Acceleration\ParticleModuleAccelerationBase.h" />
+    <ClInclude Include="LuaScripts\LuaUIBind.h" />
+    <ClInclude Include="LuaScripts\LuaUIManager.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Components\SocketComponent.h" />
     <ClInclude Include="SoundManager.h" />
     <None Include="Shaders\EditorShaderConstants.hlsli">

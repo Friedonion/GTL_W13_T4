@@ -31,6 +31,7 @@ public:
 
 private:
     void SetLuaDefaultTypes();
+    void SetLuaCustomTypes();
 
 public:
 
