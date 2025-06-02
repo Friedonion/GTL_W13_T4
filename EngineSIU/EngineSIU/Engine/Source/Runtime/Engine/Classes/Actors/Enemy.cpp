@@ -79,11 +79,10 @@ void AEnemy::Tick(float DeltaTime)
     SetActorRotation(FRotator(0, Direction.Yaw, 0));
 
     // Destroy로직은 다른 곳에 추가할 예정
-    if (CurrentFireTimer >= 30.f && !bRagDollCreated)
+    if (CurrentFireTimer >= 3.f && !bRagDollCreated)
     {
         //Destroy();
-        //DestroyCollisionCapsule();
-     
+        DestroyCollisions();
         SkeletalMeshComponent->CreatePhysXGameObject();
         SkeletalMeshComponent->bSimulate = true;
         SkeletalMeshComponent->bApplyGravity = true;
@@ -184,9 +183,9 @@ void AEnemy::CreateCollisionShapes()
     FName BODY = TEXT("Body");
     FName LEG = TEXT("Leg");
 
-    FVector LegSize = FVector(40.f, 40.f, 90.f); 
-    FVector BodySize = FVector(40.f, 40.f, 100.f);
-    FVector HeadSize = FVector(30.f, 30.f, 40.f); 
+    FVector LegSize = FVector(40.f, 40.f, 70.f); 
+    FVector BodySize = FVector(40.f, 40.f, 70.f);
+    FVector HeadSize = FVector(20.f, 20.f, 30.f); 
 
     float currentZOffset = 0.f;
     float legCenterZ = currentZOffset + LegSize.Z / 2.f;
