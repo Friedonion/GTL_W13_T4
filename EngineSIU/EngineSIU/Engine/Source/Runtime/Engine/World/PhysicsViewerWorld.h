@@ -1,6 +1,8 @@
 #pragma once
 #include "World.h"
 
+class USkeletalMeshComponent;
+
 class UPhysicsAssetViewerWorld : public UWorld
 {
     DECLARE_CLASS(UPhysicsAssetViewerWorld, UWorld)

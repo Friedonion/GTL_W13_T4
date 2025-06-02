@@ -13,7 +13,7 @@
 #include "RendererHelpers.h"
 #include "Math/JungleMath.h"
 
-#include "Actors/Player.h"
+#include "Actors/EditorPlayer.h"
 
 #include "BaseGizmos/GizmoBaseComponent.h"
 

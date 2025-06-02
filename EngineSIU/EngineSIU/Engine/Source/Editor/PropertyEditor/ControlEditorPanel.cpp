@@ -2,7 +2,9 @@
 
 #include "World/World.h"
 
-#include "Actors/Player.h"
+#include "Actors/Player/Player.h"
+#include "Actors/EditorPlayer.h"
+#include "Actors/SequencePlayer.h"
 #include "Actors/LightActor.h"
 #include "Actors/FireballActor.h"
 
@@ -325,12 +327,9 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
         ImGui::Spacing();
 
         ImGui::Text("Game Speed");
-        float DeltaTimeDenom = GEngineLoop.DelaTimeDenom;
-        float DeltaTimeNumerator = 1 / DeltaTimeDenom;
         ImGui::SetNextItemWidth(120.0f);
-        if (ImGui::DragFloat("##GameSpeed", &DeltaTimeNumerator, 0.1f, -10.f, 10.f, "%.1f"))
+        if (ImGui::DragFloat("##GameSpeed", &GEngineLoop.DeltaTimeMultiplier, 0.1f, -10.f, 10.f, "%.1f"))
         {
-            GEngineLoop.DelaTimeDenom = 1 / DeltaTimeNumerator;
         }
 
         ImGui::Text("F-Stop");
@@ -426,7 +425,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                 {
                 case OBJ_PLAYER:
                 {
-                    SpawnedActor = World->SpawnActor<APlayer>();
+                    SpawnedActor = World->SpawnActor<APlayerCharacter>();
                     SpawnedActor->SetActorLabel(TEXT("OBJ_PLAYER"));
                     break;
                 }

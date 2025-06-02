@@ -1,11 +1,10 @@
-
 AnimFSM = {
     current = "Idle",
     
     Update = function(self, dt)
         -- self.current = "Contents/Fbx/Capoeira.fbx"
 
-        self.current = "Contents/Human/NarutoRun"
+        self.current = "Contents/Human/FastRun"
 
         return {
             anim = self.current,
@@ -13,7 +12,7 @@ AnimFSM = {
         }
     end,
 
-    ChangeMode = function(self)
+    ChangeMode = function()
         self.current = "Contents/Armature|GunPlay"
     end,
 }

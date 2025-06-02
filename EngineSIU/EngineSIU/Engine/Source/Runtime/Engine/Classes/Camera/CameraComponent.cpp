@@ -3,6 +3,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "UObject/Casts.h"
 #include "World/World.h"
+#include "Actors/Player/Player.h"
 
 UObject* UCameraComponent::Duplicate(UObject* InOuter)
 {

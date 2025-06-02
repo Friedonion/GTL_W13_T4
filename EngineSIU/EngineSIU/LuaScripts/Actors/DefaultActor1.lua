@@ -1,10 +1,5 @@
-local EngineTypes = EngineTypes
-local CustomEnums = CustomEnums
-setmetatable(_ENV, {
-    __index = function(t, k)
-        return rawget(EngineTypes, k) or rawget(CustomEnums, k)
-    end
-})
+
+setmetatable(_ENV, { __index = EngineTypes })
 
 -- Template은 AActor라는 가정 하에 작동.
 
@@ -17,12 +12,10 @@ local FRotator = EngineTypes.FRotator
 function ReturnTable:InitializeCallback()
     RegisterKeyCallback("W", function(dt)
         self:MoveForward(dt)
-        self.this:SetWorldTickRate(5)
     end)
 
     RegisterKeyCallback("S", function(dt)
         self:MoveBackward(dt)
-        self.this:SetWorldTickRate(1)
     end)
 
     RegisterKeyCallback("A", function(dt)
@@ -31,29 +24,19 @@ function ReturnTable:InitializeCallback()
 
     RegisterKeyCallback("D", function(dt)
         self:MoveRight(dt)
-
+        self:Punch()
     end)
 
     RegisterMouseMoveCallback(function(dx, dy)
         -- 마우스 이동에 대한 처리
-        self:Turn(dx/10)
-        self:Lookup(dy/10)
+        self:Turn(dx/1)
+        self:Lookup(dy/1)
         -- print("Mouse moved: ", dtX, dtY) -- 디버깅용 출력
     end)
 
     RegisterKeyCallback("RightMouseButton", function(dt)
-        self.this:Shoot()
         -- 우클릭에 대한 처리
     end)
-    
-    
-    RegisterKeyCallback("LeftMouseButton", function(dt)
-        self.this:Punch()
-        -- 우클릭에 대한 처리
-    end)
-    -- RegisterKeyCallback("LeftMouseButton", function(dt)
-    --     self.this.State = PlayerState.Stabbing
-    -- end)
 end
 
 -- BeginPlay: Actor가 처음 활성화될 때 호출
@@ -87,34 +70,25 @@ function ReturnTable:Attack(AttackDamage)
 end
 
 function ReturnTable:MoveForward(DeltaTime)
--- print(123)    
--- print(self.this.State)
-    -- self.this.State = PlayerState.Hit
     self:Move(FVector(30.0, 0.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveBackward(DeltaTime)
-    -- self.this.State = PlayerState.Idle
     self:Move(FVector(-30.0, 0.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveLeft(DeltaTime)
-    -- self.this.State = PlayerState.Shooting
     self:Move(FVector(0.0, -30.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:MoveRight(DeltaTime)
-    -- self.this.State = PlayerState.Stabbing
     self:Move(FVector(0.0, 30.0, 0.0) * DeltaTime)
 end
 
 function ReturnTable:Move(dv)
     local this = self.this
-
-    local yawOnlyRot = FRotator(0.0, this.ActorRotation.Yaw, 0.0)
-    local LocalMovement = yawOnlyRot:RotateVector(dv)
-    LocalMovement.Z = 0.0
-
+    local Rot = this.ActorRotation;
+    local LocalMovement = Rot:RotateVector(dv)
     this.ActorLocation = this.ActorLocation + LocalMovement
 end
 

@@ -6,6 +6,7 @@
 #include "Lua/LuaScriptComponent.h"
 #include "Animation/AnimStateMachine.h"
 #include "GameFramework/Actor.h"
+#include "Actors/Player/PlayerDefine.h"
 
 #include "LuaScripts/LuaUIBind.h"
 
@@ -32,6 +33,7 @@ FLuaScriptManager::FLuaScriptManager()
     );
 
     SetLuaDefaultTypes();
+    SetLuaCustomTypes();
 }
 
 FLuaScriptManager::~FLuaScriptManager()
@@ -57,6 +59,16 @@ void FLuaScriptManager::SetLuaDefaultTypes()
     LuaTypes::FBindLua<FString>::Bind(TypeTable);
 
     LuaUIBind::Bind(TypeTable);
+}
+
+void FLuaScriptManager::SetLuaCustomTypes()
+{
+    sol::table EnumTable = LuaState.create_table("CustomEnums");
+
+    EnumTable.new_enum("PlayerState",
+        "Idle", PlayerState::Idle,
+		"Move", PlayerState::Move
+    );
 }
 
 FLuaScriptManager& FLuaScriptManager::Get()
@@ -173,7 +185,7 @@ void FLuaScriptManager::HotReloadLuaScript()
         {
             if (AnimStateMachine->GetLuaScriptName() == ChangedScript)
             {
-                AnimStateMachine->InitLuaStateMachine();
+                //AnimStateMachine->InitLuaStateMachine();
                 UE_LOG(ELogLevel::Display, TEXT("Lua Script Reloaded: %s"), *ChangedScript);
             }
         }

@@ -18,7 +18,6 @@
 ULuaScriptAnimInstance::ULuaScriptAnimInstance()
     : PrevAnim(nullptr)
     , CurrAnim(nullptr)
-    , PreviousTime(0.f)
     , ElapsedTime(0.f)
     , PlayRate(1.f)
     , bLooping(true)
@@ -37,13 +36,14 @@ ULuaScriptAnimInstance::ULuaScriptAnimInstance()
 void ULuaScriptAnimInstance::InitializeAnimation()
 {
     UAnimInstance::InitializeAnimation();
-    
+
     StateMachine = FObjectFactory::ConstructObject<UAnimStateMachine>(this);
     StateMachine->Initialize(Cast<USkeletalMeshComponent>(GetOuter()), this);
 }
 
 void ULuaScriptAnimInstance::NativeInitializeAnimation()
 {
+
 }
 
 void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseContext& OutPose)
@@ -95,7 +95,7 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
         }
     }
 
-    
+
 
     CurrAnim->EvaluateAnimNotifies(CurrAnim->Notifies, ElapsedTime, PreviousTime, DeltaTime, SkeletalMeshComp, CurrAnim, bLooping);
 
@@ -143,36 +143,35 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
 }
 
 
-
-void ULuaScriptAnimInstance::SetAnimation(UAnimSequence* NewAnim, float BlendingTime, float LoopAnim, bool ReverseAnim)
+void ULuaScriptAnimInstance::SetAnimation(UAnimSequence* NewAnim, float BlendingTime, bool LoopAnim, bool ReverseAnim)
 {
-    if (!NewAnim || CurrAnim == NewAnim)
-        return;
+    if (CurrAnim == NewAnim)
+    {
+        return; // 이미 같은 애니메이션이 설정되어 있다면 아무 작업도 하지 않음.
+    }
 
-    // 이전 애니메이션 설정
     if (!PrevAnim && !CurrAnim)
     {
         PrevAnim = NewAnim;
+        CurrAnim = NewAnim;
     }
-    else
+    else if (PrevAnim == nullptr)
     {
-        PrevAnim = CurrAnim ? CurrAnim : NewAnim;
+        PrevAnim = CurrAnim; // 이전 애니메이션이 없으면 현재 애니메이션을 이전으로 설정.
+    }
+    else if (CurrAnim)
+    {
+        PrevAnim = CurrAnim; // 현재 애니메이션이 있으면 현재를 이전으로 설정.
     }
 
     CurrAnim = NewAnim;
-
-    // 루프/역재생/블렌딩 설정
+    BlendDuration = BlendingTime;
     bLooping = LoopAnim;
     bReverse = ReverseAnim;
-    BlendDuration = FMath::Max(BlendingTime, 0.001f); // 0 나누기 방지
-    bPlaying = true;
 
-    // 블렌딩 시작
+    //ElapsedTime = 0.0f;
+    BlendStartTime = ElapsedTime;
+    BlendAlpha = 0.0f;
     bIsBlending = true;
-    BlendAlpha = 0.f;
-
-    // 타이밍 리셋
-    ElapsedTime = 0.f;
-    PreviousTime = 0.f;
+    bPlaying = true;
 }
-

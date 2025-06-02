@@ -17,7 +17,7 @@
 #include "D3D11RHI/GraphicDevice.h"
 #include "Engine/FObjLoader.h"
 #include "Engine/SkeletalMesh.h"
-#include "Engine/Classes/Actors/Player.h"
+#include "Engine/Classes/Actors/EditorPlayer.h"
 #include "Engine/Classes/Components/Light/LightComponent.h"
 #include "Engine/Classes/Components/Light/DirectionalLightComponent.h"
 #include "Engine/Classes/Components/Light/SpotLightComponent.h"

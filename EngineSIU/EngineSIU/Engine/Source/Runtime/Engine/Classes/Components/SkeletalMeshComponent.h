@@ -1,17 +1,17 @@
 #pragma once
 #include "SkinnedMeshComponent.h"
-#include "Actors/Player.h"
+#include "CoreUObject/UObject/Casts.h"
 #include "Engine/AssetManager.h"
 #include "Engine/Asset/SkeletalMeshAsset.h"
 #include "Template/SubclassOf.h"
 #include "Animation/AnimNodeBase.h"
+#include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 
 struct FConstraintInstance;
 class UAnimSequence;
 class USkeletalMesh;
 struct FAnimNotifyEvent;
 class UAnimSequenceBase;
-class UAnimInstance;
 class UAnimSingleNodeInstance;
 
 enum class EAnimationMode : uint8
@@ -47,6 +47,9 @@ public:
     bool ShouldTickAnimation() const;
 
     bool InitializeAnimScriptInstance();
+
+    template <typename T>
+    void BindAnimScriptInstance(T* Owner);
 
     void ClearAnimScriptInstance();
 
@@ -161,9 +164,11 @@ public:
 public:
     TSubclassOf<UAnimInstance> AnimClass;
     
-    UAnimInstance* AnimScriptInstance;
+    UAnimInstance* AnimScriptInstance = nullptr;
 
     UAnimSingleNodeInstance* GetSingleNodeInstance() const;
+
+    ULuaScriptAnimInstance* GetLuaScriptAnimInstance() const;
 
     void SetAnimClass(UClass* NewClass);
     
@@ -171,3 +176,15 @@ public:
     
     void SetAnimInstanceClass(class UClass* NewClass);
 };
+
+template<typename T>
+inline void USkeletalMeshComponent::BindAnimScriptInstance(T* Owner)
+{
+    if (AnimScriptInstance != nullptr)
+    {
+        if (ULuaScriptAnimInstance* LuaAnimScriptInstance = Cast<ULuaScriptAnimInstance>(AnimScriptInstance))
+        {
+            LuaAnimScriptInstance->BindLua(Owner);
+        }
+    }
+}

@@ -6,7 +6,9 @@
 //#include <tchar.h>
 
 #include "World/World.h"
-#include "Actors/Player.h"
+#include "Actors/Player/Player.h"
+#include "Actors/SequencePlayer.h"
+#include "Actors/EditorPlayer.h"
 #include "Animation/AnimationAsset.h"
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimSingleNodeInstance.h"
@@ -30,6 +32,8 @@
 #include "Components/SphereComponent.h"
 #include "Engine/AssetManager.h"
 #include "Engine/SkeletalMesh.h"
+#include "Math/Rotator.h"
+#include "UObject/Casts.h"
 #include "Engine/Asset/SkeletalMeshAsset.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "LevelEditor/SLevelEditor.h"
@@ -45,6 +49,7 @@
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Components/SocketComponent.h"
+#include "Engine/Contents/AnimInstance/LuaScriptAnimInstance.h"
 
 PropertyEditorPanel::PropertyEditorPanel()
 {
@@ -334,7 +339,7 @@ void PropertyEditorPanel::RenderForCameraComponent(UCameraComponent* InCameraCom
 
 }
 
-void PropertyEditorPanel::RenderForPlayerActor(APlayer* InPlayerActor)
+void PropertyEditorPanel::RenderForPlayerActor(APlayerCharacter* InPlayerActor)
 {
     if (ImGui::Button("SetMainPlayer"))
     {
@@ -450,7 +455,8 @@ void PropertyEditorPanel::RenderForStaticMesh(UStaticMeshComponent* StaticMeshCo
 void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* SkeletalMeshComp) const
 {
     ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-    if (ImGui::TreeNodeEx("Skeletal Mesh", ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
+    FString TreeNodeName = SkeletalMeshComp->GetName();
+    if (ImGui::TreeNodeEx(*TreeNodeName, ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen)) // 트리 노드 생성
     {
         ImGui::Text("SkeletalMesh");
         ImGui::SameLine();
@@ -522,7 +528,7 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
             {
                 for (int i = 0; i < CompClasses.Num(); ++i)
                 {
-                    if (CompClasses[i] == UAnimInstance::StaticClass() || CompClasses[i] == UAnimSingleNodeInstance::StaticClass())
+                    if (CompClasses[i] == UAnimInstance::StaticClass()/* || CompClasses[i] == UAnimSingleNodeInstance::StaticClass()*/)
                     {
                         continue;
                     }
@@ -530,6 +536,16 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                     if (ImGui::Selectable(*CompClasses[i]->GetName(), bIsSelected))
                     {
                         SelectedIndex = i;
+                        // 현재의 SkeletalMeshComponent의 AnimInstance를 해당 인스턴스 종류로 변경
+                        // 현재는 하드코딩으로 되어있음
+                        if (CompClasses[i] == UAnimSingleNodeInstance::StaticClass())
+                        {
+                            SkeletalMeshComp->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+                        }
+                        else if (CompClasses[i] == ULuaScriptAnimInstance::StaticClass())
+                        {
+                            SkeletalMeshComp->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+                        }
                     }
                     if (bIsSelected)
                     {
@@ -584,6 +600,19 @@ void PropertyEditorPanel::RenderForSkeletalMesh(USkeletalMeshComponent* Skeletal
                 }
                 */
             }
+
+            // 스크립트 파일 위치
+            char buf[256] = { 0 };
+            std::string FileName = SkeletalMeshComp->StateMachineFileName.ToAnsiString();
+
+            // Copy FileName to buf safely
+            strncpy(buf, FileName.c_str(), sizeof(buf) - 1);
+            buf[sizeof(buf) - 1] = '\0'; // Null-terminate for safety
+
+            ImGui::InputText("##LuaScriptAnimInstanceFileDirectory", buf, sizeof(buf));
+
+            FileName = std::string(buf);
+            SkeletalMeshComp->StateMachineFileName = FileName;
         }
         else
         {

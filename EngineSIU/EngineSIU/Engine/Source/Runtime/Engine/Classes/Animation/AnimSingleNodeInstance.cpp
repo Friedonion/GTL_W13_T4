@@ -112,6 +112,7 @@ void UAnimSingleNodeInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCon
         }
         else
         {
+            // Play 시간 종료
             if (!bReverse && ElapsedTime >= EndTime)
             {
                 ElapsedTime = StartTime;
