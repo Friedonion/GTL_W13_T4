@@ -54,16 +54,8 @@ void ABullet::BeginPlay()
     StaticMeshComponent->SetStaticMesh(StaticMesh);
 
     ProjectileMovement = AddComponent<UProjectileMovementComponent>(TEXT("BulletMovement"));
-    if (ProjectileMovement)
-    {
-        ProjectileMovement->SetInitialSpeed(InitialSpeed);
-        ProjectileMovement->SetMaxSpeed(MaxSpeed);
-        
-        TempVelocity = Owner->Direction.ToVector() * InitialSpeed;
-        ProjectileMovement->SetVelocity(TempVelocity);
-        ProjectileMovement->SetGravity(Gravity);
-    }
 
+    TempVelocity = Owner->Direction.ToVector() * InitialSpeed;
 	SetActorLocation(Owner->GetActorLocation());
     SetActorRotation(Owner->Direction);
 
