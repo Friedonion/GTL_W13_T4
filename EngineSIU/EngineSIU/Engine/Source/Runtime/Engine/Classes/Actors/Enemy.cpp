@@ -27,11 +27,12 @@ AEnemy::AEnemy()
     , bShouldFire(false)
     , Character(nullptr)
     , Direction(FRotator::ZeroRotator)
-    , bCapsuleCreated(false)
+    , bCollisionShapesCreated(false)
     , bRagDollCreated(false)
     , bIsAlive(false)
-    , BodyInstance(nullptr)
-    , BodySetup(nullptr)
+    , BodyInstances()
+    , BodySetups()
+    , CollisionRigidBodies()
 {
 }
 
@@ -45,11 +46,12 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
     NewActor->bShouldFire = bShouldFire;
     NewActor->Character = Character;
     NewActor->Direction = Direction;
-    NewActor->bCapsuleCreated = bCapsuleCreated;
+    NewActor->bCollisionShapesCreated = bCollisionShapesCreated;
     NewActor->bRagDollCreated = bRagDollCreated;
     NewActor->bIsAlive = bIsAlive;
-    NewActor->BodyInstance = BodyInstance;
-    NewActor->BodySetup = BodySetup;
+    NewActor->BodyInstances = BodyInstances;
+    NewActor->BodySetups = BodySetups;
+    NewActor->CollisionRigidBodies = CollisionRigidBodies;
 
     return NewActor;
 }
@@ -62,10 +64,10 @@ void AEnemy::Tick(float DeltaTime)
     SetActorRotation(FRotator(0, Direction.Yaw, 0));
 
     // Destroy로직은 다른 곳에 추가할 예정
-    if (CurrentFireTimer >= 3.f && !bRagDollCreated)
+    if (CurrentFireTimer >= 30.f && !bRagDollCreated)
     {
         //Destroy();
-        DestroyCollisionCapsule();
+        //DestroyCollisionCapsule();
      
         SkeletalMeshComponent->CreatePhysXGameObject();
         SkeletalMeshComponent->bSimulate = true;
@@ -101,7 +103,7 @@ void AEnemy::BeginPlay()
     SkeletalMeshComponent->bSimulate = false;
     SkeletalMeshComponent->bApplyGravity = false;
 
-    CreateCollisionCapsule();
+    CreateCollisionShapes();
 }
 
 void AEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -156,44 +158,105 @@ void AEnemy::SetLuaToPlayAnim()
     Cast<ULuaScriptAnimInstance>(SkeletalMeshComponent->GetAnimInstance())->GetStateMachine()->InitLuaStateMachine();
 }
 
-void AEnemy::CreateCollisionCapsule()
+void AEnemy::CreateCollisionShapes()
 {
-    BodySetup = FObjectFactory::ConstructObject<UBodySetup>(this);
+    FName HEAD = TEXT("HEAD");
+    FName BODY = TEXT("BODY");
+    FName LEG = TEXT("LEG");
 
-    BodyInstance = new FBodyInstance(SkeletalMeshComponent);
+    FVector LegSize = FVector(40.f, 40.f, 90.f); 
+    FVector BodySize = FVector(40.f, 40.f, 100.f);
+    FVector HeadSize = FVector(30.f, 30.f, 40.f); 
+
+    float currentZOffset = 0.f;
+    float legCenterZ = currentZOffset + LegSize.Z / 2.f;
+    CreateCollisionBox_Body_Internal(legCenterZ, LegSize, LEG);
+    currentZOffset += LegSize.Z;
+
+    float bodyCenterZ = currentZOffset + BodySize.Z / 2.f;
+    CreateCollisionBox_Body_Internal(bodyCenterZ, BodySize, BODY);
+    currentZOffset += BodySize.Z;
+
+    float headCenterZ = currentZOffset + HeadSize.Z / 2.f;
+    CreateCollisionBox_Body_Internal(headCenterZ, HeadSize, HEAD);
+
+    CreateCollisionConstraint_Internal(BodySetups);
+    bCollisionShapesCreated = true;
+}
+
+void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase, FVector InFullSize, FName& BoneName)
+{
+    // Begin Body
+    UBodySetup* BodySetup = FObjectFactory::ConstructObject<UBodySetup>(this);
+    FBodyInstance* BodyInstance = new FBodyInstance(SkeletalMeshComponent); 
     BodyInstance->bSimulatePhysics = true;
     BodyInstance->bEnableGravity = false;
 
-    FVector Location = GetActorLocation();
-    PxVec3 PPos = PxVec3(Location.X, Location.Y, Location.Z);
+    FVector BoxWorldCenterLocation = GetActorLocation() + FVector(0, 0, InCenterZOffsetFromActorBase);
+    PxVec3 PPos = PxVec3(BoxWorldCenterLocation.X, BoxWorldCenterLocation.Y, BoxWorldCenterLocation.Z);
 
-    //FQuat Quat = GetActorRotation().Quaternion();
-    FQuat Quat = FRotator(0.f, 90.f, 90.f).Quaternion();
-    PxQuat PQuat = PxQuat(Quat.X, Quat.Y, Quat.Z, Quat.W);
+    FQuat ActorQuat = GetActorRotation().Quaternion();
+    PxQuat PQuat = PxQuat(ActorQuat.X, ActorQuat.Y, ActorQuat.Z, ActorQuat.W);
 
-    AggregateGeomAttributes DefaultAttribute; 
-    DefaultAttribute.GeomType = EGeomType::ECapsule;
+    AggregateGeomAttributes DefaultAttribute;
+    DefaultAttribute.GeomType = EGeomType::EBox;
     DefaultAttribute.Offset = FVector::ZeroVector;
-    DefaultAttribute.Extent = FVector(80.f, 80.f, 200.f) / 2 * GetActorScale();
-    //DefaultAttribute.Rotation = GetActorRotation();
-    DefaultAttribute.Rotation = FRotator(0.f, 90.f, 90.f);
+    DefaultAttribute.Extent = InFullSize / 2.f * GetActorScale();
+    DefaultAttribute.Rotation = FRotator::ZeroRotator;
 
-    PxVec3 Offset = PxVec3(DefaultAttribute.Offset.X, DefaultAttribute.Offset.Y, DefaultAttribute.Offset.Z);
-    FQuat GeomQuat = DefaultAttribute.Rotation.Quaternion();
-    PxQuat GeomPQuat = PxQuat(GeomQuat.X, GeomQuat.Y, GeomQuat.Z, GeomQuat.W);
-    PxVec3 Extent = PxVec3(DefaultAttribute.Extent.X, DefaultAttribute.Extent.Y, DefaultAttribute.Extent.Z);
+    PxVec3 PxShapeLocalOffset = PxVec3(DefaultAttribute.Offset.X, DefaultAttribute.Offset.Y, DefaultAttribute.Offset.Z);
+    FQuat ShapeLocalGeomQuat = DefaultAttribute.Rotation.Quaternion(); // FRotator::ZeroRotator.Quaternion() -> FQuat::Identity
+    PxQuat PxShapeLocalGeomPQuat = PxQuat(ShapeLocalGeomQuat.X, ShapeLocalGeomQuat.Y, ShapeLocalGeomQuat.Z, ShapeLocalGeomQuat.W);
+    PxVec3 PxExtent = PxVec3(DefaultAttribute.Extent.X, DefaultAttribute.Extent.Y, DefaultAttribute.Extent.Z);
 
-    PxShape* PxCapsule = GEngine->PhysicsManager->CreateCapsuleShape(Offset, GeomPQuat, Extent.x, Extent.z);
-    BodySetup->AggGeom.CapsuleElems.Add(PxCapsule);
+    PxShape* PxBoxShape = GEngine->PhysicsManager->CreateBoxShape(PxShapeLocalOffset, PxShapeLocalGeomPQuat, PxExtent);
+    BodySetup->AggGeom.BoxElems.Add(PxBoxShape);
 
-    Capsule = GEngine->PhysicsManager->CreateGameObject(PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC);
+    BodySetups.Add(BodySetup);
+    BodyInstances.Add(BodyInstance);
 
-    bCapsuleCreated = true;
+    CollisionRigidBodies.Add(GEngine->PhysicsManager->CreateGameObject(PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC));
 }
 
-void AEnemy::DestroyCollisionCapsule()
+void AEnemy::CreateCollisionConstraint_Internal(const TArray<UBodySetup*> BodySetups)
 {
-    GEngine->PhysicsManager->DestroyGameObject(Capsule);
+    // Begin Constraint
+    FConstraintInstance* NewConstraintInstance = new FConstraintInstance();
+    FConstraintSetup* NewConstraint = new FConstraintSetup();
+    FBodyInstance* BodyInstance1 = nullptr;
+    FBodyInstance* BodyInstance2 = nullptr;
+
+    for (int Index = 0; Index < BodyInstances.Num()-1; Index++)
+    {
+        // 0: Leg
+        // 1: Body
+        // 2: Head
+        BodyInstance1 = BodyInstances[Index];
+        BodyInstance2 = BodyInstances[Index + 1];
+
+        NewConstraint->JointName = GetCleanBoneName(BodySetups[Index]->BoneName.ToString()) + " : " + GetCleanBoneName(BodySetups[Index + 1]->BoneName.ToString());
+        NewConstraint->ConstraintBone1 = BodySetups[Index]->BoneName.ToString();
+        NewConstraint->ConstraintBone2 = BodySetups[Index + 1]->BoneName.ToString();
+
+        if (BodyInstance1 && BodyInstance2)
+        {
+            ConstraintSetups.Add(NewConstraint);
+            ConstraintInstances.Add(NewConstraintInstance);
+
+            GEngine->PhysicsManager->CreateJoint(BodyInstance1->BIGameObject, BodyInstance2->BIGameObject, NewConstraintInstance, ConstraintSetups[Index]);
+
+        }
+
+    }
+    // End Constraint
+}
+
+void AEnemy::DestroyCollisions()
+{
+    for (auto Collision : CollisionRigidBodies)
+    {
+        GEngine->PhysicsManager->DestroyGameObject(Collision);
+    }
 }
 
 void AEnemy::Fire()
@@ -205,4 +268,25 @@ void AEnemy::Fire()
     Bullet->SetOwner(this);
 
     bShouldFire = false;
+}
+
+FString AEnemy::GetCleanBoneName(const FString& InFullName)
+{
+    // 1) 계층 구분자 '|' 뒤 이름만 취하기
+    int32 barIdx = InFullName.FindChar(TEXT('|'),
+        /*case*/ ESearchCase::CaseSensitive,
+        /*dir*/  ESearchDir::FromEnd);
+    FString name = (barIdx != INDEX_NONE)
+        ? InFullName.RightChop(barIdx + 1)
+        : InFullName;
+
+    // 2) 네임스페이스 구분자 ':' 뒤 이름만 취하기
+    int32 colonIdx = name.FindChar(TEXT(':'),
+        /*case*/ ESearchCase::CaseSensitive,
+        /*dir*/  ESearchDir::FromEnd);
+    if (colonIdx != INDEX_NONE)
+    {
+        return name.RightChop(colonIdx + 1);
+    }
+    return name;
 }
