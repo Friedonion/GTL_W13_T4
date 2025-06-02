@@ -1,0 +1,415 @@
+{
+    "Actors": [
+        {
+            "ActorClass": "ACube",
+            "ActorID": "ACube_389",
+            "ActorLabel": "OBJ_CUBE_389",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.500 Y=0.500 Z=0.500",
+                        "AABB_min": "X=-0.500 Y=-0.500 Z=-0.500",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ACube_389",
+                        "ComponentOwnerClass": "ACube",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=-145.713 Roll=-0.000",
+                        "RelativeScale3D": "X=1000.000 Y=1000.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "StaticMeshPath": "Contents/Primitives/CubePrimitive.obj",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_389",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "StaticMeshComponent_0"
+        },
+        {
+            "ActorClass": "ASpotLight",
+            "ActorID": "ASpotLight_393",
+            "ActorLabel": "OBJ_SPOTLIGHT_393",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "USpotLightComponent",
+                    "ComponentID": "USpotLightComponent_0",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "AttachParentID": "UBillboardComponent_0",
+                        "Attenuation": "20.000000",
+                        "ComponentClass": "USpotLightComponent",
+                        "ComponentName": "USpotLightComponent_0",
+                        "ComponentOwner": "ASpotLight_393",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "Direction": "X=0.021 Y=-0.000 Z=-1.000",
+                        "InnerRad": "0.261800",
+                        "Intensity": "1000.000000",
+                        "LightColor": "R=1.000 G=0.000 B=0.000 A=1.000",
+                        "OuterRad": "0.523600",
+                        "Position": "X=80.488 Y=0.000 Z=18.910",
+                        "Radius": "43.500000",
+                        "RelativeLocation": "X=15.017 Y=0.000 Z=5.583",
+                        "RelativeRotation": "Pitch=-88.808 Yaw=-0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Type": "2",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "UBillboardComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "BufferKey": "Assets/Editor/Icon/S_LightSpot.PNG",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "UBillboardComponent_0",
+                        "ComponentOwner": "ASpotLight_393",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=65.471 Y=0.000 Z=13.327",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": "UBillboardComponent"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ASpotLight_393",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "UBillboardComponent_0"
+        },
+        {
+            "ActorClass": "ADirectionalLight",
+            "ActorID": "ADirectionalLight_398",
+            "ActorLabel": "OBJ_DIRECTIONALLGIHT_398",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "UDirectionalLightComponent",
+                    "ComponentID": "UDirectionalLightComponent_0",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "AttachParentID": "UBillboardComponent_0",
+                        "ComponentClass": "UDirectionalLightComponent",
+                        "ComponentName": "UDirectionalLightComponent_0",
+                        "ComponentOwner": "ADirectionalLight_398",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "Direction": "X=-1.000 Y=-0.000 Z=-0.000",
+                        "Intensity": "10.000000",
+                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "UBillboardComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "BufferKey": "Assets/Editor/Icon/S_LightDirectional.PNG",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "UBillboardComponent_0",
+                        "ComponentOwner": "ADirectionalLight_398",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=-1.487 Y=0.000 Z=-3.674",
+                        "RelativeRotation": "Pitch=10.886 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": "UBillboardComponent"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ADirectionalLight_398",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "UBillboardComponent_0"
+        },
+        {
+            "ActorClass": "ASpotLight",
+            "ActorID": "ASpotLight_403",
+            "ActorLabel": "ASpotLight403",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "USpotLightComponent",
+                    "ComponentID": "USpotLightComponent_0",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "AttachParentID": "UBillboardComponent_0",
+                        "Attenuation": "20.000000",
+                        "ComponentClass": "USpotLightComponent",
+                        "ComponentName": "USpotLightComponent_0",
+                        "ComponentOwner": "ASpotLight_403",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "Direction": "X=0.021 Y=-0.000 Z=-1.000",
+                        "InnerRad": "0.637045",
+                        "Intensity": "1000.000000",
+                        "LightColor": "R=1.000 G=0.000 B=0.000 A=1.000",
+                        "OuterRad": "1.117011",
+                        "Position": "X=11.631 Y=83.771 Z=18.910",
+                        "Radius": "43.500000",
+                        "RelativeLocation": "X=15.017 Y=0.000 Z=5.583",
+                        "RelativeRotation": "Pitch=-88.808 Yaw=-0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Type": "2",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "UBillboardComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "BufferKey": "Assets/Editor/Icon/S_LightSpot.PNG",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "UBillboardComponent_0",
+                        "ComponentOwner": "ASpotLight_403",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=-3.386 Y=83.771 Z=13.327",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": "UBillboardComponent"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_410",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_410",
+                        "ComponentOwner": "ASpotLight_403",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "UBillboardComponent_0"
+        },
+        {
+            "ActorClass": "ASpotLight",
+            "ActorID": "ASpotLight_411",
+            "ActorLabel": "ASpotLight411",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "USpotLightComponent",
+                    "ComponentID": "USpotLightComponent_0",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "AttachParentID": "UBillboardComponent_0",
+                        "Attenuation": "20.000000",
+                        "ComponentClass": "USpotLightComponent",
+                        "ComponentName": "USpotLightComponent_0",
+                        "ComponentOwner": "ASpotLight_411",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "Direction": "X=0.021 Y=-0.000 Z=-1.000",
+                        "InnerRad": "0.785398",
+                        "Intensity": "1000.000000",
+                        "LightColor": "R=1.000 G=0.000 B=0.000 A=1.000",
+                        "OuterRad": "0.951204",
+                        "Position": "X=-59.253 Y=-1.099 Z=18.910",
+                        "Radius": "41.700001",
+                        "RelativeLocation": "X=15.017 Y=0.000 Z=5.583",
+                        "RelativeRotation": "Pitch=-88.808 Yaw=-0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Type": "2",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "UBillboardComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "BufferKey": "Assets/Editor/Icon/S_LightSpot.PNG",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "UBillboardComponent_0",
+                        "ComponentOwner": "ASpotLight_411",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=-74.270 Y=-1.099 Z=13.327",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": "UBillboardComponent"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_418",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_418",
+                        "ComponentOwner": "ASpotLight_411",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "UBillboardComponent_0"
+        },
+        {
+            "ActorClass": "ASpotLight",
+            "ActorID": "ASpotLight_419",
+            "ActorLabel": "ASpotLight419",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "USpotLightComponent",
+                    "ComponentID": "USpotLightComponent_0",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "AttachParentID": "UBillboardComponent_0",
+                        "Attenuation": "20.000000",
+                        "ComponentClass": "USpotLightComponent",
+                        "ComponentName": "USpotLightComponent_0",
+                        "ComponentOwner": "ASpotLight_419",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "Direction": "X=0.021 Y=-0.000 Z=-1.000",
+                        "InnerRad": "0.261800",
+                        "Intensity": "1000.000000",
+                        "LightColor": "R=1.000 G=0.000 B=0.000 A=1.000",
+                        "OuterRad": "0.523600",
+                        "Position": "X=5.536 Y=-68.844 Z=18.910",
+                        "Radius": "43.500000",
+                        "RelativeLocation": "X=15.017 Y=0.000 Z=5.583",
+                        "RelativeRotation": "Pitch=-88.808 Yaw=-0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Type": "2",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UBillboardComponent",
+                    "ComponentID": "UBillboardComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "BufferKey": "Assets/Editor/Icon/S_LightSpot.PNG",
+                        "ComponentClass": "UBillboardComponent",
+                        "ComponentName": "UBillboardComponent_0",
+                        "ComponentOwner": "ASpotLight_419",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "FinalIndexU": "0.000000",
+                        "FinalIndexV": "0.000000",
+                        "RelativeLocation": "X=-9.481 Y=-68.844 Z=13.327",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": "UBillboardComponent"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_426",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_426",
+                        "ComponentOwner": "ASpotLight_419",
+                        "ComponentOwnerClass": "ASpotLight",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "UBillboardComponent_0"
+        }
+    ],
+    "NextUUID": 0,
+    "Version": 1
+}

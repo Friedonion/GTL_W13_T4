@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Container/Map.h"
 #include "Container/String.h"
 
@@ -19,4 +19,6 @@ public:
 
 private:
     TMap<FString, std::shared_ptr<UEditorPanel>> Panels;
+    TMap<FString, std::shared_ptr<UEditorPanel>> PreRenderPanels;    // 먼저 렌더링되어야 하는 패널
+
 };
