@@ -5,7 +5,6 @@
 #include "UObject/ObjectMacros.h"
 #include "WorldType.h"
 #include "Level.h"
-#include "Actors/Player.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/EventManager.h"
 #include "UObject/UObjectIterator.h"
@@ -20,6 +19,7 @@ class USceneComponent;
 class FCollisionManager;
 class AGameMode;
 class UTextComponent;
+class APlayerCharacter;
 
 class UWorld : public UObject
 {
@@ -69,8 +69,8 @@ public:
     
     FEventManager EventManager;
 
-    void SetMainPlayer(APlayer* InPlayer){ MainPlayer = InPlayer; }
-    APlayer* GetMainPlayer() const;
+    void SetMainPlayer(APlayerCharacter* InPlayer){ MainPlayer = InPlayer; }
+    APlayerCharacter* GetMainPlayer() const;
 
     void SetPlayerController(APlayerController* InPlayerController){ PlayerController = InPlayerController; }
     APlayerController* GetPlayerController() const;
@@ -98,7 +98,7 @@ private:
     // TODO: 싱글 플레이어면 상관 없지만, 로컬 멀티 플레이어인 경우를 위해 배열로 관리하는 방법을 고려하기.
     APlayerController* PlayerController = nullptr;
 
-    APlayer* MainPlayer = nullptr;
+    APlayerCharacter* MainPlayer = nullptr;
 
     UTextComponent* MainTextComponent = nullptr;
 

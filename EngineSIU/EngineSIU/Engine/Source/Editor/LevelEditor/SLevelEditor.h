@@ -27,6 +27,12 @@ public:
 
     void RegisterEditorInputDelegates();
     void RegisterPIEInputDelegates();
+    
+    void GetViewportSize(uint32& OutWidth, uint32& OutHeight) const
+    {
+        OutWidth = EditorWidth;
+        OutHeight = EditorHeight;
+    }
 
 private:
     SSplitterH* HSplitter;

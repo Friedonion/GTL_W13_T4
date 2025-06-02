@@ -88,6 +88,11 @@ void USkeletalMeshComponent::SetProperties(const TMap<FString, FString>& InPrope
         SetAnimClass(InAnimClass);
     }
 
+    if (InProperties.Contains("StateMachineFileName"))
+    {
+        StateMachineFileName = (InProperties["StateMachineFileName"]);
+    }
+
     if (AnimationMode == EAnimationMode::AnimationSingleNode)
     {
         if (InProperties.Contains("AnimToPlay"))
@@ -134,6 +139,7 @@ void USkeletalMeshComponent::GetProperties(TMap<FString, FString>& OutProperties
     OutProperties.Add(TEXT("SkeletalMeshKey"), SkelMeshKey.ToString());
 
     OutProperties.Add(TEXT("AnimationMode"), FString::FromInt(static_cast<uint8>(AnimationMode)));
+    OutProperties.Add(TEXT("StateMachineFileName"), StateMachineFileName);
 
     FString AnimClassStr = FName().ToString();
     if (AnimationMode == EAnimationMode::AnimationBlueprint)
@@ -158,6 +164,7 @@ void USkeletalMeshComponent::GetProperties(TMap<FString, FString>& OutProperties
         OutProperties.Add(TEXT("LoopEndFrame"), std::to_string(GetLoopEndFrame()));
     }
 }
+
 
 void USkeletalMeshComponent::TickComponent(float DeltaTime)
 {
@@ -320,7 +327,7 @@ bool USkeletalMeshComponent::InitializeAnimScriptInstance()
         bool bShouldSpawnSingleNodeInstance = !AnimScriptInstance && SkelMesh && SkelMesh->GetSkeleton();
         if (bShouldSpawnSingleNodeInstance)
         {
-            AnimScriptInstance = FObjectFactory::ConstructObject<ULuaScriptAnimInstance>(this);
+            AnimScriptInstance = FObjectFactory::ConstructObject<UAnimSingleNodeInstance>(this);
 
             if (AnimScriptInstance)
             {
@@ -783,6 +790,11 @@ UAnimSingleNodeInstance* USkeletalMeshComponent::GetSingleNodeInstance() const
     return Cast<UAnimSingleNodeInstance>(AnimScriptInstance);
 }
 
+ULuaScriptAnimInstance* USkeletalMeshComponent::GetLuaScriptAnimInstance() const
+{
+    return Cast<ULuaScriptAnimInstance>(AnimScriptInstance);
+}
+
 void USkeletalMeshComponent::SetAnimClass(UClass* NewClass)
 {
     SetAnimInstanceClass(NewClass);
@@ -826,6 +838,11 @@ void USkeletalMeshComponent::SetAnimation(UAnimationAsset* NewAnimToPlay)
         SingleNodeInstance->SetPlaying(false);
 
         // TODO: Force Update Pose and CPU Skinning
+    }
+    if (ULuaScriptAnimInstance* LuaScriptInstance = GetLuaScriptAnimInstance())
+    {
+        LuaScriptInstance->SetAnimation(Cast<UAnimSequence>(NewAnimToPlay), 0.2f);
+        LuaScriptInstance->SetPlaying(false);
     }
 }
 
@@ -965,6 +982,10 @@ int32 USkeletalMeshComponent::GetLoopStartFrame() const
     {
         return SingleNodeInstance->GetLoopStartFrame();
     }
+    if (ULuaScriptAnimInstance* LuaScriptInstance = GetLuaScriptAnimInstance())
+    {
+        return LuaScriptInstance->GetLoopStartFrame();
+    }
     return 0;
 }
 
@@ -974,6 +995,10 @@ void USkeletalMeshComponent::SetLoopStartFrame(int32 InLoopStartFrame)
     {
         SingleNodeInstance->SetLoopStartFrame(InLoopStartFrame);
     }
+    if (ULuaScriptAnimInstance* LuaScriptInstance = GetLuaScriptAnimInstance())
+    {
+        LuaScriptInstance->SetLoopStartFrame(InLoopStartFrame);
+    }
 }
 
 int32 USkeletalMeshComponent::GetLoopEndFrame() const
@@ -981,6 +1006,10 @@ int32 USkeletalMeshComponent::GetLoopEndFrame() const
     if (UAnimSingleNodeInstance* SingleNodeInstance = GetSingleNodeInstance())
     {
         return SingleNodeInstance->GetLoopEndFrame();
+    }
+    if (ULuaScriptAnimInstance* LuaScriptInstance = GetLuaScriptAnimInstance())
+    {
+        return LuaScriptInstance->GetLoopEndFrame();
     }
     return 0;
 }
@@ -990,5 +1019,9 @@ void USkeletalMeshComponent::SetLoopEndFrame(int32 InLoopEndFrame)
     if (UAnimSingleNodeInstance* SingleNodeInstance = GetSingleNodeInstance())
     {
         SingleNodeInstance->SetLoopEndFrame(InLoopEndFrame);
+    }
+    if (ULuaScriptAnimInstance* LuaScriptInstance = GetLuaScriptAnimInstance())
+    {
+        LuaScriptInstance->SetLoopEndFrame(InLoopEndFrame);
     }
 }

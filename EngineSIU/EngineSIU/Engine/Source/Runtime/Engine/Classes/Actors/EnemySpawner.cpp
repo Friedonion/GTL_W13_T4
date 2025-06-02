@@ -1,7 +1,7 @@
 #include "EnemySpawner.h"
 #include "Enemy.h"
 #include "Engine/EditorEngine.h"
-//#include "Actors/Character.h"
+#include "Actors/Player/Player.h"
 
 // 스폰한 액터가 없어지고 나면 다시 카운트다운하도록 변경함.
 AEnemySpawner::AEnemySpawner()

@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Source/Runtime/Core/HAL/PlatformType.h"
 
 enum class EWorldType
 {
