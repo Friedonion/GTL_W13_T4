@@ -103,6 +103,10 @@ void UnrealEd::OnResize(HWND hWnd) const
     {
         Panel.Value->OnResize(hWnd);
     }
+    for (auto& Panel : PreRenderPanels)
+    {
+        Panel.Value->OnResize(hWnd);
+    }
 }
 
 std::shared_ptr<UEditorPanel> UnrealEd::GetEditorPanel(const FString& PanelId)
