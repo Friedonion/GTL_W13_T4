@@ -1,5 +1,6 @@
 #pragma once
 #include "GameFramework/Actor.h"
+#include "Core/TimerManager.h"
 
 class USkeletalMeshComponent;
 class USkeletalMesh;
@@ -71,6 +72,12 @@ private:
     // End Test
 
     TArray<GameObject*> CollisionRigidBodies;
+
+    void DelayedDestroy();
+    void PeriodicAttackCheck();
+
+    FTimerHandle DestroyDelayTimerHandle;
+    FTimerHandle AttackCheckTimerHandle;
 
 public:
     UPROPERTY(VisibleAnywhere, FRotator, Direction, )

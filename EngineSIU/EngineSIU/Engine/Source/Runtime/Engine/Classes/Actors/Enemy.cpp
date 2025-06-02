@@ -47,6 +47,19 @@ AEnemy::~AEnemy()
         delete Instance;
     }
     ConstraintInstances.Empty();
+
+    FTimerManager* TM = GEngine->TimerManager;
+    if (TM)
+    {
+        if (DestroyDelayTimerHandle.IsValid())
+        {
+            TM->ClearTimer(DestroyDelayTimerHandle);
+        }
+        if (AttackCheckTimerHandle.IsValid())
+        {
+            TM->ClearTimer(AttackCheckTimerHandle);
+        }
+    }
 }
 
 UObject* AEnemy::Duplicate(UObject* InOuter)
@@ -118,8 +131,6 @@ bool AEnemy::Destroy()
 void AEnemy::Destroyed()
 {
     Super::Destroyed();
-
-    // 여기다가 파티클 넣으면 될 것 같기도 하고
 }
 
 void AEnemy::SetRandomFireInterval()
@@ -292,7 +303,17 @@ void AEnemy::Die()
     SkeletalMeshComponent->bSimulate = true;
     SkeletalMeshComponent->bApplyGravity = true;
 
-    //Destroy();
+    // TO-DO: 파티클 추가 위치
+
+    FTimerManager* TM = GEngine->TimerManager;
+    if (TM)
+    {
+        if (DestroyDelayTimerHandle.IsValid())
+        {
+            TM->ClearTimer(DestroyDelayTimerHandle);
+        }
+        DestroyDelayTimerHandle = TM->SetTimer(this, &AEnemy::DelayedDestroy, 3.0f, false);
+    }
 }
 
 void AEnemy::Fire()
@@ -331,16 +352,34 @@ void AEnemy::HandleCollision(AActor* SelfActor, AActor* OtherActor)
 {
     if (!bIsAlive) return;
 
-    // SelfActor는 이 AEnemy 인스턴스여야 합니다.
-    // 또는, 이 함수는 AEnemy의 여러 콜리전 박스 중 하나에 의해 호출될 수 있으므로,
-    // OtherActor가 ABullet인지 확인하는 것이 더 중요할 수 있습니다.
-    // if (SelfActor != this) return; // 이 조건은 상황에 따라 필요 없을 수 있음
+    if (SelfActor != this) return;
 
     ABullet* HittingBullet = Cast<ABullet>(OtherActor);
     if (HittingBullet)
     {
         Die();
-        HittingBullet->Destroy();
+
+        // 여기에서 직접, 간접적으로 destroy하지 말 것
+        //HittingBullet->Destroy();
     }
-    // 플레이어가 충돌한 경우 체력 감소 로직 추가 가능.
+
+    // TO-DO: 플레이어가 충돌한 경우 체력 감소 로직
+}
+
+void AEnemy::DelayedDestroy()
+{
+    Destroy();
+}
+
+void AEnemy::PeriodicAttackCheck()
+{
+    if (!bIsAlive) // 죽었으면 더 이상 실행 안 함
+    {
+        FTimerManager* TM = GEngine->TimerManager;
+        if (TM && AttackCheckTimerHandle.IsValid())
+        {
+            TM->ClearTimer(AttackCheckTimerHandle);
+        }
+        return;
+    }
 }

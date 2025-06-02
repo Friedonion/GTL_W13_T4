@@ -18,6 +18,8 @@
 #include "SoundManager.h"
 #include "Lua/LuaScriptManager.h"
 
+#include "Core/TimerManager.h"
+
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 
 FGraphicsDevice FEngineLoop::GraphicDevice;
@@ -174,6 +176,11 @@ void FEngineLoop::Tick()
 
         GEngine->Tick(DeltaTime);
         LevelEditor->Tick(DeltaTime);
+
+        if (GEngine && GEngine->TimerManager)
+        {
+            GEngine->TimerManager->Tick(DeltaTime);
+        }
         Render();
         UIManager->BeginFrame();
         UnrealEditor->Render();

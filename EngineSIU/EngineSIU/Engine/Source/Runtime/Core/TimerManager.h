@@ -16,7 +16,7 @@ private:
 
 public:
     FTimerManager();
-    ~FTimerManager() = default; // 실제로는 Timers 벡터 내의 Callback 정리 등이 필요할 수 있음
+    ~FTimerManager() = default;
 
     void Tick(float DeltaTime);
 
@@ -43,10 +43,8 @@ public:
         return NewHandle;
     }
 
-    // 타이머 제거
     void ClearTimer(FTimerHandle Handle);
 
-    // 타이머 일시 정지/재개 (선택적 기능)
     void PauseTimer(FTimerHandle Handle);
     void UnPauseTimer(FTimerHandle Handle);
     bool IsTimerPaused(FTimerHandle Handle) const;
