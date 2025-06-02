@@ -22,7 +22,7 @@ void USocketComponent::TickComponent(float DeltaTime)
     {
         const FTransform SocketTransform = SkeletalMeshComponent->GetSocketTransform(Socket);
         SetRelativeRotation(SocketTransform.GetRotation().Rotator());
-        SetRelativeLocation(SocketTransform.GetTranslation());
+        SetRelativeLocation(SocketTransform.GetTranslation() * GetComponentScale3D());
         SetRelativeScale3D(SocketTransform.GetScale3D());
     }
 }
