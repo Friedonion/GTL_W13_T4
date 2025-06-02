@@ -92,7 +92,8 @@ void APlayerCharacter::RegisterLuaType(sol::state& Lua)
     DEFINE_LUA_TYPE_WITH_PARENT(APlayerCharacter, (sol::bases<AActor, APawn, ACharacter>()),
         "State", &APlayerCharacter::State,
         "Punch", &APlayerCharacter::Punch,
-        "Shoot", &APlayerCharacter::Shoot
+        "Shoot", &APlayerCharacter::Shoot,
+        "SetPlayRate", &APlayerCharacter::SetPlayRate
     )
 }
 
@@ -145,5 +146,17 @@ void APlayerCharacter::Shoot()
         {
             Instance->SetElapsedTime(0.f);
         }
+    }
+}
+
+void APlayerCharacter::SetPlayRate(float PlayRate)
+{
+    if (UAnimSingleNodeInstance* Instance = LeftArm->GetSingleNodeInstance())
+    {
+        Instance->SetPlayRate(PlayRate);
+    }
+    if (UAnimSingleNodeInstance* Instance = RightArm->GetSingleNodeInstance())
+    {
+        Instance->SetPlayRate(PlayRate);
     }
 }

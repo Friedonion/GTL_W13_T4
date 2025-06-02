@@ -62,9 +62,7 @@ void FLuaScriptManager::SetLuaCustomTypes()
 
     EnumTable.new_enum("PlayerState",
         "Idle", PlayerState::Idle,
-        "Shooting", PlayerState::Shooting,
-        "Stabbing", PlayerState::Stabbing,
-        "Hit", PlayerState::Hit
+		"Move", PlayerState::Move
     );
 }
 

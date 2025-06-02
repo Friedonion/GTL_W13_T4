@@ -3,8 +3,5 @@
 enum class PlayerState
 {
     Idle,
-    Shooting,
-    Stabbing,
-    Hit,
-    NONE
+    Move,
 };

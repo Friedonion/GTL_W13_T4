@@ -17,10 +17,12 @@ local FRotator = EngineTypes.FRotator
 function ReturnTable:InitializeCallback()
     RegisterKeyCallback("W", function(dt)
         self:MoveForward(dt)
+        self.this:SetPlayRate(3)
     end)
 
     RegisterKeyCallback("S", function(dt)
         self:MoveBackward(dt)
+        self.this:SetPlayRate(1)
     end)
 
     RegisterKeyCallback("A", function(dt)
@@ -42,14 +44,12 @@ function ReturnTable:InitializeCallback()
     RegisterKeyCallback("RightMouseButton", function(dt)
         self.this:Shoot()
         -- 우클릭에 대한 처리
-        self.this.State = PlayerState.Shooting
     end)
     
     
     RegisterKeyCallback("LeftMouseButton", function(dt)
         self.this:Punch()
         -- 우클릭에 대한 처리
-        self.this.State = PlayerState.Stabbing
     end)
     -- RegisterKeyCallback("LeftMouseButton", function(dt)
     --     self.this.State = PlayerState.Stabbing
