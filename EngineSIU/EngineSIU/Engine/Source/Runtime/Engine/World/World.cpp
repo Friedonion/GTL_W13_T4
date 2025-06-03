@@ -9,7 +9,7 @@
 #include "Engine/FObjLoader.h"
 #include "Engine/Engine.h"
 #include "UnrealEd/SceneManager.h"
-#include "GameFramework/GameMode.h"
+#include "GameFramework/UncannyGameMode.h"
 #include "Classes/Components/TextComponent.h"
 
 class UEditorEngine;
@@ -72,7 +72,7 @@ void UWorld::BeginPlay()
 {
     if (!GameMode && this->WorldType == EWorldType::PIE)
     {
-        GameMode = this->SpawnActor<AGameMode>();
+        GameMode = this->SpawnActor<AUncannyGameMode>();
         GameMode->SetActorLabel(TEXT("OBJ_GAMEMODE"));
         GameMode->InitializeComponent();
 

@@ -144,7 +144,7 @@ void LuaUIManager::DrawLuaUIs()
 void LuaUIManager::TestCODE()
 {
    // CreateText("TestTEXT", RectTransform(0, 0, 100, 100, AnchorDirection::MiddleCenter), 10, FString("+"), FName("Default"), 100, FLinearColor(1, 0, 0, 1));
-    //CreateImage("TestImage", RectTransform(0, 0, 200, 200, AnchorDirection::MiddleCenter), 3, FName("ExplosionColor"), FLinearColor(1, 1, 1, 1));
+    CreateImage("TestImage", RectTransform(0, 0, 200, 200, AnchorDirection::MiddleCenter), 3, FName("ExplosionColor"), FLinearColor(1, 1, 1, 1));
     //CreateButton("TestButton", RectTransform(-100, -100, 200, 200, AnchorDirection::MiddleCenter), 15, FString("TEstbutonFUn"));
     CreateImage("TestImage2", RectTransform(0, 0, 50, 50, AnchorDirection::MiddleCenter), 3, FName("Aim"), FLinearColor(1, 0, 0, 1));
 
@@ -230,9 +230,7 @@ LuaUIManager::LuaUIManager()
 
     GenerateResource();
 
-
-
-    TestCODE();
+    //TestCODE();
 }
 
 void LuaUIManager::GenerateResource()
