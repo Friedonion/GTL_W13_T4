@@ -246,9 +246,13 @@ void LuaUIManager::GenerateResource()
     /* Texture Setup*/
     
     auto TEstt = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/T_Explosion_SubUV.png");
-    TextureMap.Add(FName("ExplosionColor"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/T_Explosion_SubUV.png"));
+    TextureMap.Add(FName("ExplosionColor"), TEstt);
     auto AimTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Aim.png");
-    TextureMap.Add(FName("Aim"), FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Aim.png"));
+    TextureMap.Add(FName("Aim"), AimTexture);
+    auto NoiseTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Noise.png");
+    TextureMap.Add(FName("Noise"), NoiseTexture);
+    auto titleTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Title.png");
+    TextureMap.Add(FName("Title"), titleTexture);
 
 }
 
