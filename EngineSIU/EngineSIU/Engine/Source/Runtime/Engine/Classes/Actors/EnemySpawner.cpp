@@ -99,5 +99,11 @@ void AEnemySpawner::Spawn()
     SpawnedEnemy = World->SpawnActor<AEnemy>();
     SpawnedEnemy->SetActorLabel(TEXT("OBJ_ENEMY"));
     SpawnedEnemy->SetOwner(this);
+
+    // Test Code
+    // SpawnedEnemy->SetActorLocation(FVector(1000.f, 0.f, 100.f)); // X=1000, Y=0, Z=100 (높이 100)
+
+    SpawnedEnemy->SetActorLocation(this->GetActorLocation());
+
     bShouldSpawn = false;
 }

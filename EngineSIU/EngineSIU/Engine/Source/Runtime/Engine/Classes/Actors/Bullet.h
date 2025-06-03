@@ -25,7 +25,9 @@ private:
     UPROPERTY(EditAnywhere, UStaticMesh*, StaticMesh, )
 
     // 총알 이동 (속도 궤적) 용 컴포넌트
-    UProjectileMovementComponent* ProjectileMovement = nullptr;
+    UPROPERTY(VisibleAnywhere, UProjectileMovementComponent*, ProjectileMovement, )
+
+    //UProjectileMovementComponent* ProjectileMovement = nullptr;
 
     void OnBulletHit(AActor* SelfActor, AActor* OtherActor);
 

@@ -18,7 +18,6 @@ ABullet::ABullet()
     , Gravity(0.f)
     , AccumulatedTime(0.f)
 {
-    
 }
 
 ABullet::~ABullet()
@@ -45,22 +44,42 @@ void ABullet::BeginPlay()
 {
     Super::BeginPlay();
 
-    AEnemy* Owner = Cast<AEnemy>(GetOwner());
-    FVector TempVelocity;
-    StaticMeshComponent = AddComponent<UStaticMeshComponent>(TEXT("BulletMesh"));
-    SetRootComponent(StaticMeshComponent);
+    //AEnemy* Owner = Cast<AEnemy>(GetOwner());
+    //FVector TempVelocity;
 
+    if (!StaticMeshComponent)
+    {
+        StaticMeshComponent = AddComponent<UStaticMeshComponent>(TEXT("BulletMesh"));
+        SetRootComponent(StaticMeshComponent);
+    }
     StaticMesh = FObjManager::GetStaticMesh(L"Contents/Bullet/Bullet.obj");
     StaticMeshComponent->SetStaticMesh(StaticMesh);
 
-    ProjectileMovement = AddComponent<UProjectileMovementComponent>(TEXT("BulletMovement"));
+    if (!ProjectileMovement)
+    {
+        ProjectileMovement = AddComponent<UProjectileMovementComponent>(TEXT("BulletMovement"));
+        if (!ProjectileMovement)
+        {
+            UE_LOG(ELogLevel::Error, TEXT("ABullet::BeginPlay - Failed to create ProjectileMovementComponent!"));
+            return;
+        }
+    }
 
-    TempVelocity = Owner->Direction.ToVector() * InitialSpeed;
+    ProjectileMovement->SetInitialSpeed(InitialSpeed);
+    ProjectileMovement->SetMaxSpeed(MaxSpeed);
+    ProjectileMovement->SetGravity(Gravity);
+    
+    Velocity = GetActorForwardVector() * InitialSpeed;
+    ProjectileMovement->SetVelocity(Velocity);
 
-    // TO-DO: Muzzle 위치에 맞게 수정 필요
-    FVector Test = Owner->GetActorLocation() + Owner->Direction.ToVector().GetSafeNormal() * 30.f;
-    SetActorLocation(Test);
-    SetActorRotation(Owner->Direction);
+    //FVector TempVelocity;
+    //TempVelocity = GetActorForwardVector() * InitialSpeed;
+    //ProjectileMovement->SetVelocity(TempVelocity);
+
+    //// TO-DO: Muzzle 위치에 맞게 수정 필요
+    //FVector Test = Owner->GetActorLocation() + Owner->Direction.ToVector().GetSafeNormal() * 30.f;
+    //SetActorLocation(Test);
+    //SetActorRotation(Owner->Direction);
 
     StaticMeshComponent->bSimulate = true;
     StaticMeshComponent->CreatePhysXGameObject();
@@ -68,8 +87,20 @@ void ABullet::BeginPlay()
     StaticMeshComponent->BodyInstance->CollisionEnabled = ECollisionEnabled::QueryOnly;
     StaticMeshComponent->BodyInstance->OwnerActor = this;
     PxRigidDynamic* RigidBody = StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody;
+    if (RigidBody)
+    {
+        //RigidBody->setLinearVelocity(PxVec3(TempVelocity.X, TempVelocity.Y, TempVelocity.Z));
+        RigidBody->setLinearVelocity(PxVec3(Velocity.X, Velocity.Y, Velocity.Z));
+        UE_LOG(ELogLevel::Display, TEXT("Bullet PhysX RigidBody Velocity Set: %s"), *Velocity.ToString());
+    }
+    else
+    {
+        UE_LOG(ELogLevel::Error, TEXT("ABullet::BeginPlay - PhysX RigidBody is null!"));
+    }
 
-    RigidBody->setLinearVelocity(PxVec3(TempVelocity.X, TempVelocity.Y, TempVelocity.Z));
+    UE_LOG(ELogLevel::Display, TEXT("Bullet BeginPlay finished at %s with Final Velocity %s"),
+        *GetActorLocation().ToString(),
+        *Velocity.ToString());
 }
 
 void ABullet::EndPlay(const EEndPlayReason::Type EndPlayReason)

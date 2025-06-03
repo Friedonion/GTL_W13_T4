@@ -51,6 +51,8 @@ private:
     UPROPERTY(VisibleAnywhere, bool, bShouldFire, )
     UPROPERTY(VisibleAnywhere, bool, bIsAlive, ) // 아직 Destroy되지 않았지만 Fire()하지 않아야 하므로
 
+    UPROPERTY(EditAnywhere, FName, MuzzleSocketName, )
+
     // Begin Test
     void CreateCollisionShapes();
     void CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase, FVector InFullSize, FName& BoneName);

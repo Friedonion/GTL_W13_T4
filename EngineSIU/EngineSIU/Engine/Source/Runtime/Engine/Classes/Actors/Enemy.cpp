@@ -28,6 +28,7 @@ AEnemy::AEnemy()
     , Character(nullptr)
     , Direction(FRotator::ZeroRotator)
     , bIsAlive(false)
+    , MuzzleSocketName(TEXT("RightArm"))
     , BodyInstances()
     , BodySetups()
     , CollisionRigidBodies()
@@ -101,6 +102,18 @@ void AEnemy::BeginPlay()
     UE_LOG(ELogLevel::Display, TEXT("AEnemy has been spawned."));
 
     SetLuaToPlayAnim();
+
+    if (SkeletalMeshComponent && SkeletalMeshComponent->GetSkeletalMeshAsset())
+    {
+        UE_LOG(ELogLevel::Display, TEXT("SkeletalMesh loaded successfully: %s"), *SkeletalMeshComponent->GetSkeletalMeshAsset()->GetName());
+    }
+    else
+    {
+        UE_LOG(ELogLevel::Error, TEXT("SkeletalMesh failed to load or assign to SkeletalMeshComponent!"));
+    }
+
+    // ★★★ AEnemy의 월드 위치 확인 로그 추가 ★★★
+    UE_LOG(ELogLevel::Display, TEXT("AEnemy World Location at BeginPlay: %s"), *GetActorLocation().ToString());
 
     SetActorLocation(GetOwner()->GetRootComponent()->GetRelativeLocation());
     GetActorRotation();
@@ -320,9 +333,30 @@ void AEnemy::Fire()
 {
     UWorld* World = GEngine->ActiveWorld;
 
+    if (!SkeletalMeshComponent)
+    {
+        UE_LOG(ELogLevel::Error, TEXT("AEnemy::Fire - SkeletalMeshComponent is null!"));
+        bShouldFire = false;
+        return;
+    }
+
+    FVector MuzzleLocation = FVector::ZeroVector;
+    FRotator MuzzleRotation = FRotator::ZeroRotator;
+
+    FTransform MuzzleTransform = SkeletalMeshComponent->GetSocketTransform(MuzzleSocketName);
+
+    MuzzleLocation = MuzzleTransform.GetTranslation();
+    MuzzleRotation = MuzzleTransform.Rotator();
+
+    UE_LOG(ELogLevel::Display, TEXT("Bullet spawned from MuzzleSocket: %s at Location: %s, Rotation: %s"),
+        *MuzzleSocketName.ToString(), *MuzzleLocation.ToString(), *MuzzleRotation.ToString());
+
     ABullet* Bullet = World->SpawnActor<ABullet>();
     Bullet->SetActorLabel(TEXT("OBJ_BULLET"));
     Bullet->SetOwner(this);
+
+    Bullet->SetActorLocation(MuzzleLocation);
+    Bullet->SetActorRotation(MuzzleRotation);
 
     bShouldFire = false;
 }
