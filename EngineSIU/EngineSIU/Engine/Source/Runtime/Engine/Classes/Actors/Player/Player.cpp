@@ -94,7 +94,8 @@ void APlayerCharacter::BeginPlay()
         }
     }
 
-     GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass()); 
+    // GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass()); 
+     //GetWorld()->GetPlayerController()->PlayerCameraManager->StartCameraFade(255.0f, 0.0f, 1.f, FLinearColor::Black, false);
      // To-Do 맞았을때 실행하도록
 
     // C++코드를 호출
