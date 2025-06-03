@@ -31,6 +31,7 @@ AEnemy::AEnemy()
     , BodyInstances()
     , BodySetups()
     , CollisionRigidBodies()
+    , bRagDollCreated(false)
 {
 }
 
@@ -76,21 +77,40 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
     NewActor->BodyInstances = BodyInstances;
     NewActor->BodySetups = BodySetups;
     NewActor->CollisionRigidBodies = CollisionRigidBodies;
+    NewActor->bRagDollCreated = bRagDollCreated;
 
     return NewActor;
 }
 
 void AEnemy::Tick(float DeltaTime)
 {
-    FVector PlayerLocation = GEngine->ActiveWorld->GetMainPlayer()->GetActorLocation();
-    Direction = FRotator::MakeLookAtRotation(this->GetActorLocation(), PlayerLocation);
-    
-    SetActorRotation(FRotator(0, Direction.Yaw, 0));
+    if (bIsAlive)
+    {
+        FVector PlayerLocation = GEngine->ActiveWorld->GetMainPlayer()->GetActorLocation();
+        Direction = FRotator::MakeLookAtRotation(this->GetActorLocation(), PlayerLocation);
 
-    CalculateTimer(DeltaTime);
-    if (!bShouldFire) return;
+        SetActorRotation(FRotator(0, Direction.Yaw, 0));
 
-    Fire();
+        CalculateTimer(DeltaTime);
+        if (!bShouldFire) return;
+
+        Fire();
+    }
+
+    if (bRagDollCreated)
+    {
+        // 기존 콜리전들 삭제하고
+        DestroyCollisions();
+        // 래그돌 세팅 다시 다이내믹으로
+        //for (auto BodyInstance : BodyInstances)
+        //{
+        //    BodyInstance->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
+        //}
+        for (auto Body : SkeletalMeshComponent->GetBodies())
+        {
+            Body->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
+        }
+    }
 }
 
 void AEnemy::BeginPlay()
@@ -106,6 +126,7 @@ void AEnemy::BeginPlay()
     GetActorRotation();
 
     bIsAlive = true;
+    bRagDollCreated = false;
     CurrentFireTimer = 0.0f;
     SetRandomFireInterval();
 
@@ -118,7 +139,7 @@ void AEnemy::BeginPlay()
 
 void AEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    DestroyCollisions();
+    //DestroyCollisions(); // 사실상 의미 없음
 
     Super::EndPlay(EndPlayReason);
 }
@@ -289,6 +310,7 @@ void AEnemy::DestroyCollisions()
     {
         GEngine->PhysicsManager->DestroyGameObject(Collision);
     }
+    CollisionRigidBodies.Empty();
 }
 
 void AEnemy::Die()
@@ -296,8 +318,9 @@ void AEnemy::Die()
     if (!bIsAlive) return;
 
     bIsAlive = false;
-
+    bRagDollCreated = true;
     // Ragdoll 생성
+    SkeletalMeshComponent->RigidBodyType = ERigidBodyType::KINEMATIC;
     SkeletalMeshComponent->CreatePhysXGameObject();
 
     SkeletalMeshComponent->bSimulate = true;
