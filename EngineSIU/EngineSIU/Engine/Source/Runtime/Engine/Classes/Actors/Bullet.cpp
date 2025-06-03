@@ -99,18 +99,16 @@ void ABullet::BeginPlay()
     RigidBody->setLinearVelocity(PxVec3(Velocity.X, Velocity.Y, Velocity.Z));
     // Begin Test
     ParticleSystem = FObjectFactory::ConstructObject<UParticleSystem>(this);
-    ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_999");
+    ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_1103");
     //ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_999.particlesystem");
     if (this == nullptr)
         return;
     ParticleSystemComponent = AddComponent<UParticleSystemComponent>(TEXT("ParticleSystemComp"));
     ParticleSystemComponent->SetOwner(this);
-    ParticleSystemComponent->SetupAttachment(GetOwner()->GetRootComponent());
-    ParticleSystemComponent->SetRelativeLocation(GetOwner()->GetActorLocation());
+    ParticleSystemComponent->SetupAttachment(StaticMeshComponent);
     ParticleSystemComponent->SetParticleSystem(ParticleSystem);
     ParticleSystemComponent->InitializeSystem();
     // End Test
-
     StaticMeshComponent->BodyInstance->BIGameObject->OnHit.AddUObject(this, &ABullet::HandleCollision);
 }
 
@@ -142,8 +140,12 @@ void ABullet::Tick(float DeltaTime)
 {
     AccumulatedTime += DeltaTime;
     ParticleSystemComponent->TickComponent(DeltaTime);
-    FVector Loc=ParticleSystemComponent->GetComponentLocation();
+    FVector Loc = ParticleSystemComponent->GetComponentLocation(); // 변경값
     UE_LOG(ELogLevel::Display, "%f, %f, %f", Loc.X, Loc.Y, Loc.Z);
+
+
+    //FVector Loc = RootComponent->GetComponentLocation();// 고정값
+    //UE_LOG(ELogLevel::Display, "%f, %f, %f", Loc.X, Loc.Y, Loc.Z);
 
     if (bDestroy)
     {

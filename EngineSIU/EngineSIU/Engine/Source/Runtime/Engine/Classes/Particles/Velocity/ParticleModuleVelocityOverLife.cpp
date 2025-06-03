@@ -47,9 +47,9 @@ void UParticleModuleVelocityOverLife::DisplayProperty()
 void UParticleModuleVelocityOverLife::Update(FParticleEmitterInstance* Owner, int32 Offset, float DeltaTime)
 {
     BEGIN_UPDATE_LOOP
-    
-    // payload 위치 계산
-    uint8* writableBase = const_cast<uint8*>(ParticleBase);
+
+        // payload 위치 계산
+        uint8* writableBase = const_cast<uint8*>(ParticleBase);
     FVector* InitialVelPtr = reinterpret_cast<FVector*>(writableBase + ModulePayloadOffset);
 
     float RelTime = Particle.RelativeTime;
@@ -68,7 +68,7 @@ void UParticleModuleVelocityOverLife::Update(FParticleEmitterInstance* Owner, in
     FVector NewVelocity = FVector::ZeroVector;
     if (bUseConstantChange)
     {
-        float Alpha = FMath::Clamp(RelTime, 0.0f, 1.0f);    
+        float Alpha = FMath::Clamp(RelTime, 0.0f, 1.0f);
         NewVelocity = FMath::Lerp(InitialVelocity, EndVelocity, Alpha);
     }
     else if (bUseVelocityCurve)
@@ -82,17 +82,17 @@ void UParticleModuleVelocityOverLife::Update(FParticleEmitterInstance* Owner, in
     }
 
     // 월드공간 변환 및 오너 스케일 적용
-    if (bInWorldSpace)
-    {
-        NewVelocity = Owner->Component->GetComponentToWorld().TransformVector(NewVelocity);
-    }
-    if (bApplyOwnerScale)
-    {
-        NewVelocity *= Owner->Component->GetComponentToWorld().GetScale3D();
-    }
+    //if (bInWorldSpace)
+    //{
+    //    NewVelocity = Owner->Component->GetComponentToWorld().TransformVector(NewVelocity);
+    //}
+    //if (bApplyOwnerScale)
+    //{
+    //    NewVelocity *= Owner->Component->GetComponentToWorld().GetScale3D();
+    //}
 
     Particle.BaseVelocity = NewVelocity;
-            
+
     END_UPDATE_LOOP
 }
 

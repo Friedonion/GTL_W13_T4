@@ -1,4 +1,4 @@
-﻿#include "ParticleSpriteRenderPass.h"
+#include "ParticleSpriteRenderPass.h"
 
 #include "RendererHelpers.h"
 #include "UnrealClient.h"
@@ -61,7 +61,7 @@ void FParticleSpriteRenderPass::PrepareRenderArr()
 
             const float DistA = (LocCam - LocA).SquaredLength();
             const float DistB = (LocCam - LocB).SquaredLength();
-            
+
             return DistA > DistB;
         }
     );
@@ -90,7 +90,7 @@ void FParticleSpriteRenderPass::PrepareRender(const std::shared_ptr<FEditorViewp
     {
         return;
     }
-    
+
     const FRenderTargetRHI* RenderTargetRHI = ViewportResource->GetRenderTarget(EResourceType::ERT_Translucent);
     const FDepthStencilRHI* DepthStencilRHI = ViewportResource->GetDepthStencil(EResourceType::ERT_Scene);
 
@@ -106,7 +106,7 @@ void FParticleSpriteRenderPass::PrepareRender(const std::shared_ptr<FEditorViewp
     Graphics->DeviceContext->VSSetShader(VertexShader, nullptr, 0);
     Graphics->DeviceContext->PSSetShader(PixelShader, nullptr, 0);
     Graphics->DeviceContext->IASetInputLayout(nullptr);
-    
+
     BufferManager->BindStructuredBufferSRV("ParticleSpriteInstanceBuffer", 1, EShaderStage::Vertex);
 
     BufferManager->BindConstantBuffer(TEXT("FObjectConstantBuffer"), 12, EShaderStage::Vertex);
@@ -130,8 +130,9 @@ void FParticleSpriteRenderPass::DrawParticles()
         FParticleDynamicData* Particle = PSC->GetParticleDynamicData();
         if (Particle)
         {
-            UpdateObjectConstant(PSC->GetWorldMatrix(), FVector4(), false);
-            
+            //UpdateObjectConstant(PSC->GetWorldMatrix(), FVector4(), false);
+            UpdateObjectConstant(FMatrix::Identity, FVector4(), false);
+
             for (auto Emitter : Particle->DynamicEmitterDataArray)
             {
                 const FDynamicEmitterReplayDataBase& ReplayData = Emitter->GetSource();
@@ -159,10 +160,10 @@ void FParticleSpriteRenderPass::ProcessParticles(const FDynamicSpriteEmitterRepl
     }
 
     TArray<FParticleSpriteVertex> SpriteVertices;
-    
+
     const uint8* ParticleData = ReplayData->DataContainer.ParticleData;
     const int32 ParticleStride = ReplayData->ParticleStride;
-    
+
     const int32 SubImages_Horizontal = ReplayData->SubImages_Horizontal;
     const int32 SubImages_Vertical = ReplayData->SubImages_Vertical;
     const int32 SubUVDataOffset = ReplayData->SubUVDataOffset;
@@ -170,7 +171,7 @@ void FParticleSpriteRenderPass::ProcessParticles(const FDynamicSpriteEmitterRepl
     for (int32 i = 0; i < ReplayData->ActiveParticleCount; i++)
     {
         const uint8* ParticleBase = ParticleData + i * ParticleStride;
-        
+
         DECLARE_PARTICLE_CONST(Particle, ParticleBase)
         FParticleSpriteVertex SpriteVertex = {};
         SpriteVertex.Position = Particle.Location;
@@ -188,26 +189,26 @@ void FParticleSpriteRenderPass::ProcessParticles(const FDynamicSpriteEmitterRepl
 
         SpriteVertices.Add(SpriteVertex);
     }
-    
-    SpriteVertices.Sort(
-    [](const FParticleSpriteVertex& A, const FParticleSpriteVertex& B)
-    {
-        const FVector LocA = A.Position;
-        const FVector LocB = B.Position;
-        const FVector LocCam = GEngineLoop.GetLevelEditor()->GetActiveViewportClient()->GetCameraLocation();
 
-        const float DistA = (LocCam - LocA).SquaredLength();
-        const float DistB = (LocCam - LocB).SquaredLength();
-        
-        return DistA > DistB;
-    });
-    
+    SpriteVertices.Sort(
+        [](const FParticleSpriteVertex& A, const FParticleSpriteVertex& B)
+        {
+            const FVector LocA = A.Position;
+            const FVector LocB = B.Position;
+            const FVector LocCam = GEngineLoop.GetLevelEditor()->GetActiveViewportClient()->GetCameraLocation();
+
+            const float DistA = (LocCam - LocA).SquaredLength();
+            const float DistB = (LocCam - LocB).SquaredLength();
+
+            return DistA > DistB;
+        });
+
     BufferManager->UpdateStructuredBuffer("ParticleSpriteInstanceBuffer", SpriteVertices);
 
     if (UMaterial* Material = ReplayData->MaterialInterface)
     {
         const FMaterialInfo& MaterialInfo = Material->GetMaterialInfo();
-        
+
         MaterialUtils::UpdateMaterial(BufferManager, Graphics, MaterialInfo);
     }
 
@@ -216,7 +217,7 @@ void FParticleSpriteRenderPass::ProcessParticles(const FDynamicSpriteEmitterRepl
 
     FSubUVConstant SubUVConstant = {
         FVector2D(0.0f, 0.0f),
-        FVector2D(SubUVScale_Horizontal, SubUVScale_Vertical)   
+        FVector2D(SubUVScale_Horizontal, SubUVScale_Vertical)
     };
     BufferManager->UpdateConstantBuffer(TEXT("FSubUVConstant"), SubUVConstant);
 

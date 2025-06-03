@@ -22,7 +22,7 @@ void UParticleModuleLocation::DisplayProperty()
 {
     Super::DisplayProperty();
     for (const auto& Property : StaticClass()->GetProperties())
-    {  
+    {
         ImGui::PushID(Property);
         Property->DisplayInImGui(this);
         ImGui::PopID();
@@ -36,15 +36,17 @@ void UParticleModuleLocation::Spawn(FParticleEmitterInstance* Owner, int32 Offse
 
     Location += OffsetLocation;
 
-    if (bInWorldSpace)
-    {
-        Location = Owner->Component->GetComponentToWorld().TransformPosition(Location);
-    }
+    //if (bInWorldSpace)
+    //{
+    //    Location = Owner->Component->GetComponentToWorld().TransformPosition(Location);
+    //}
 
-    if (bApplyEmitterLocation)
-    {
-        Location += Owner->Component->GetComponentToWorld().GetTranslation();
-    }
+    //if (bApplyEmitterLocation)
+    //{
+    //    Location += Owner->Component->GetComponentToWorld().GetTranslation();
+    //}
+
+    Location = Owner->Component->GetComponentTransform().TransformPosition(Location);
 
     ParticleBase->Location = Location;
 }
