@@ -8,8 +8,12 @@
 #include "Classes/Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Animation/AnimSingleNodeInstance.h"
+#include "Animation/AnimSequence.h"
 #include "EngineLoop.h"
 #include "Actors/Bullet.h"
+#include "Engine/Classes/Animation/AnimTypes.h"
+#include "Animation/AnimSoundNotify.h"
+#include "Engine/Contents/Objects/DamageCameraShake.h"
 
 APlayerCharacter::APlayerCharacter()
     : ACharacter()
@@ -50,6 +54,48 @@ void APlayerCharacter::BeginPlay()
     {
         SkelComp->BindAnimScriptInstance(this);
     }
+
+    PunchAnim = Cast<UAnimSequence>(LeftArm->GetAnimation());
+    ShootAnim = Cast<UAnimSequence>(RightArm->GetAnimation());
+
+    int32 NewTrackIdx = INDEX_NONE;
+
+    if (PunchAnim && ShootAnim)
+    {
+        PunchAnim->AddNotifyTrack("NewTrackName", NewTrackIdx);
+        ShootAnim->AddNotifyTrack("NewTrackName", NewTrackIdx);
+
+        // Punch Notify
+        {
+            int32 NotifyIndex = 0;
+            if (!PunchAnim->GetNotifyEvent(NotifyIndex))
+                PunchAnim->AddNotifyEvent(0, 0.168f, 0, "PunchNotify", NotifyIndex);
+
+            if (FAnimNotifyEvent* NotifyEvent = PunchAnim->GetNotifyEvent(NotifyIndex))
+            {
+                auto* Notify = FObjectFactory::ConstructObject<UAnimSoundNotify>(nullptr);
+                Notify->SetSoundName(FName("Punch"));
+                NotifyEvent->SetAnimNotify(Notify);
+            }
+        }
+
+        // Shoot Notify
+        {
+            int32 NotifyIndex = 0;
+            if (!ShootAnim->GetNotifyEvent(NotifyIndex))
+                ShootAnim->AddNotifyEvent(0, 0.168f, 0, "ShootNotify", NotifyIndex);
+
+            if (FAnimNotifyEvent* NotifyEvent = ShootAnim->GetNotifyEvent(NotifyIndex))
+            {
+                auto* Notify = FObjectFactory::ConstructObject<UAnimSoundNotify>(nullptr);
+                Notify->SetSoundName(FName("Pistol"));
+                NotifyEvent->SetAnimNotify(Notify);
+            }
+        }
+    }
+
+     GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass()); 
+     // To-Do 맞았을때 실행하도록
 
     // C++코드를 호출
     LuaScriptComponent->ActivateFunction("InitializeCallback");
