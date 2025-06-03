@@ -18,11 +18,22 @@ public:
     virtual void Destroyed() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+    bool bVisible = true;
+    float InitialSpeed = 0.3f;
+    float WaitTime = 0.f;
+    bool bSpawned = true;
+    float Lifetime = 0.5f; // Fist의 생명주기
+
+    void SetShooter(AActor* InShooter)
+    {
+        Shooter = InShooter;
+    }
 private:
     UPROPERTY(EditAnywhere, UStaticMeshComponent*, StaticMeshComponent, = nullptr)
 
     GameObject* GameObject = nullptr; // Fist의 게임 오브젝트
 
-    float Lifetime = 0.5f; // Fist의 생명주기
-
+    void SpawnObject();
+    
+    AActor* Shooter = nullptr;
 };

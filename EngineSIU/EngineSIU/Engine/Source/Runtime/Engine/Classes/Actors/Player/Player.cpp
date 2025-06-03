@@ -154,6 +154,11 @@ void APlayerCharacter::Punch()
     AFist* Fist = GetWorld()->SpawnActor<AFist>();
     Fist->SetActorLabel(TEXT("Fist"));
     Fist->SetOwner(this);
+    Fist->SetShooter(this);
+    Fist->bVisible = false;
+    Fist->bSpawned = false;
+    Fist->WaitTime = 0.3f;
+    Fist->SetShooter(this);
 }
 
 void APlayerCharacter::Shoot()
@@ -166,6 +171,15 @@ void APlayerCharacter::Shoot()
             Instance->SetElapsedTime(0.f);
         }
     }
+    AFist* Fist = GetWorld()->SpawnActor<AFist>();
+    Fist->SetActorLabel(TEXT("Bullet"));
+    Fist->SetOwner(this);
+    Fist->bVisible = true;
+    Fist->bSpawned = false;
+    Fist->WaitTime = 1.f;
+    Fist->InitialSpeed = 30.f;
+    Fist->Lifetime = 5.f;
+    Fist->SetShooter(this);
 }
 
 void APlayerCharacter::SetPlayRate(float PlayRate)
