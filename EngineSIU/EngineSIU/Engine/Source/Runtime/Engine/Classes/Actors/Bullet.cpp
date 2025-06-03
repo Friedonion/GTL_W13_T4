@@ -56,13 +56,17 @@ void ABullet::BeginPlay()
     ProjectileMovement = AddComponent<UProjectileMovementComponent>(TEXT("BulletMovement"));
 
     TempVelocity = Owner->Direction.ToVector() * InitialSpeed;
-	SetActorLocation(Owner->GetActorLocation());
+
+    // TO-DO: Muzzle 위치에 맞게 수정 필요
+    FVector Test = Owner->GetActorLocation() + Owner->Direction.ToVector().GetSafeNormal() * 30.f;
+    SetActorLocation(Test);
     SetActorRotation(Owner->Direction);
 
     StaticMeshComponent->bSimulate = true;
     StaticMeshComponent->CreatePhysXGameObject();
 
     StaticMeshComponent->BodyInstance->CollisionEnabled = ECollisionEnabled::QueryOnly;
+    StaticMeshComponent->BodyInstance->OwnerActor = this;
     PxRigidDynamic* RigidBody = StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody;
 
     RigidBody->setLinearVelocity(PxVec3(TempVelocity.X, TempVelocity.Y, TempVelocity.Z));
@@ -88,4 +92,13 @@ void ABullet::Tick(float DeltaTime)
     {
         Destroy();
     }
+}
+
+
+void ABullet::OnBulletHit(AActor* SelfActor, AActor* OtherActor)
+{
+    // 여기에 총알이 어딘가에 맞았을 때의 로직 (예: 파티클 생성, 스스로 파괴)
+    // if (Cast<AEnemy>(OtherActor)) { /* Enemy를 맞췄을 때 특별한 처리 (선택 사항) */ }
+    // else { /* 다른 것에 맞았을 때 */ }
+    Destroy();
 }

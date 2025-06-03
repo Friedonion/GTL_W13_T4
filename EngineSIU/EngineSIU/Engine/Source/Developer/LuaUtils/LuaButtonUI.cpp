@@ -29,7 +29,7 @@ void LuaButtonUI::DrawImGuiUI()
     ImGui::SetCursorScreenPos(screenPos);
 
 
-    bool isClicked = ImGui::InvisibleButton(*GetName().ToString(), size);
+    bool isClicked = ImGui::Button(*GetName().ToString(), size);
 
     bool isHovered = ImGui::IsItemHovered();
     bool isMouseDown = ImGui::IsMouseDown(ImGuiMouseButton_Left);

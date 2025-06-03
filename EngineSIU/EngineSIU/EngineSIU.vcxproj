@@ -261,6 +261,7 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClCompile Include="Engine\Source\Runtime\Core\Stats\GPUTimingManager.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Core\Stats\ProfilerStatsManager.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Core\Stats\Stats.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Core\TimerManager.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\ActorEditor.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\AmbientLightActor.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\Bullet.cpp" />
@@ -373,6 +374,7 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\BodyInstance.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\ConstraintInstance.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\SimulationEventCallback.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\ParticleEmitterInstance.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\ParticleHelper.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Particles\ParticleSystemRender.cpp" />
@@ -440,6 +442,7 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClCompile Include="Engine\Source\ThirdParty\ImGui\include\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Engine\Source\ThirdParty\ImGui\include\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Engine\Source\ThirdParty\tinyfiledialogs\include\tinyfiledialogs.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\GameFramework\UncannyGameMode.cpp" />
     <None Include="Shaders\ParticleSpriteVertexShader.hlsl" />
     <None Include="Shaders\ParticleSpritePixelShader.hlsl" />
     <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Particles\Velocity\ParticleModuleVelocity.cpp" />
@@ -620,6 +623,8 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClInclude Include="Engine\Source\Runtime\Core\Templates\IsCharType.h" />
     <ClInclude Include="Engine\Source\Runtime\Core\Templates\TemplateUtilities.h" />
     <ClInclude Include="Engine\Source\Runtime\Core\Templates\TypeUtilities.h" />
+    <ClInclude Include="Engine\Source\Runtime\Core\TimerManager.h" />
+    <ClInclude Include="Engine\Source\Runtime\Core\TimerData.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\BoneContainer.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\AmbientLightActor.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\Bullet.h" />
@@ -746,6 +751,7 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\BodyInstance.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\ConstraintInstance.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\PhysicsAsset.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\PhysicsEngine\SimulationEventCallback.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\ParticleEmitterInstance.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\ParticleHelper.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\ReferenceSkeleton.h" />
@@ -881,6 +887,7 @@ xcopy /y /d "$(SolutionDir)$(ProjectName)\Engine\Source\ThirdParty\FBX\lib\x64\$
     <ClInclude Include="LuaScripts\LuaUIManager.h" />
     <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Components\SocketComponent.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\GameFramework\UncannyGameMode.h" />
     <None Include="Shaders\EditorShaderConstants.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

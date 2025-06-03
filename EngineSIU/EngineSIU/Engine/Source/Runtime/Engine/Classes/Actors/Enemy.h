@@ -1,5 +1,6 @@
 #pragma once
 #include "GameFramework/Actor.h"
+#include "Core/TimerManager.h"
 
 class USkeletalMeshComponent;
 class USkeletalMesh;
@@ -7,9 +8,13 @@ class ACharacter;
 class ABullet;
 
 class UPrimitiveComponent;
+struct GameObject;
+
 class UBodySetup;
 struct FBodyInstance;
-struct GameObject;
+
+struct FConstraintSetup;
+struct FConstraintInstance;
 
 class AEnemy : public AActor
 {
@@ -17,6 +22,7 @@ class AEnemy : public AActor
 
 public:
     AEnemy();
+    ~AEnemy();
 
     virtual UObject* Duplicate(UObject* InOuter) override;
 
@@ -34,10 +40,9 @@ private:
     
     void SetLuaToPlayAnim();
 
+
 private:
     float CurrentFireTimer;
-    bool bCapsuleCreated;
-    bool bRagDollCreated;
 
     UPROPERTY(VisibleAnywhere, USkeletalMeshComponent*, SkeletalMeshComponent,)
     UPROPERTY(VisibleAnywhere, USkeletalMesh*, SkeletalMesh, )
@@ -47,14 +52,32 @@ private:
     UPROPERTY(VisibleAnywhere, bool, bIsAlive, ) // 아직 Destroy되지 않았지만 Fire()하지 않아야 하므로
 
     // Begin Test
-    void CreateCollisionCapsule();
-    void DestroyCollisionCapsule();
+    void CreateCollisionShapes();
+    void CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase, FVector InFullSize, FName& BoneName);
+    void CreateCollisionConstraint_Internal(const TArray<UBodySetup*>& InBodySetups);
+    void DestroyCollisions();
 
-    FBodyInstance* BodyInstance;
-    UBodySetup* BodySetup;
+    void Die();
+
+    // FIX-ME
+    FString GetCleanBoneName(const FString& InFullName);
+
+    void HandleCollision(AActor* SelfActor, AActor* OtherActor);
+
+    TArray<FBodyInstance*> BodyInstances;
+    TArray<UBodySetup*> BodySetups;
+
+    TArray<FConstraintInstance*> ConstraintInstances;
+    TArray<FConstraintSetup*> ConstraintSetups;
     // End Test
 
-    GameObject* Capsule;
+    TArray<GameObject*> CollisionRigidBodies;
+
+    void DelayedDestroy();
+    void PeriodicAttackCheck();
+
+    FTimerHandle DestroyDelayTimerHandle;
+    FTimerHandle AttackCheckTimerHandle;
 
 public:
     UPROPERTY(VisibleAnywhere, FRotator, Direction, )
