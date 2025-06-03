@@ -1,6 +1,7 @@
 #pragma once
 #include "GameMode.h"
 
+class LuaUIManager;
 class AUncannyGameMode : public AGameMode
 {
     DECLARE_CLASS(AUncannyGameMode, AGameMode)
@@ -38,4 +39,6 @@ private:
     FString BulletTextName = "UI_BulletText";
     FString TitleImageName = "UI_TitleImage";
     FString SubUVImageName = "UI_SubUVImage";
+    
+    LuaUIManager* UIManager = nullptr;
 };

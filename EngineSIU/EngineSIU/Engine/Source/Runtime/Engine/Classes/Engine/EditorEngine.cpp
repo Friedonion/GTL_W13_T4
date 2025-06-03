@@ -613,6 +613,7 @@ void UEditorEngine::EndPIE()
     FSlateAppMessageHandler* Handler = GEngineLoop.GetAppMessageHandler();
 
     LuaUIManager::Get().ClearLuaUI(); // Lua UI 닫기
+    FSoundManager::GetInstance().StopAllSounds(); 
     Handler->OnPIEModeEnd();
     // 다시 EditorWorld로 돌아옴.
     ActiveWorld = EditorWorld;

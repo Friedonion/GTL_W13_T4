@@ -17,7 +17,6 @@
 
 #include "SoundManager.h"
 #include "Lua/LuaScriptManager.h"
-
 #include "Core/TimerManager.h"
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
@@ -105,6 +104,7 @@ int32 FEngineLoop::Init(HINSTANCE hInstance)
     FSoundManager::GetInstance().LoadSound("Pistol", "Contents/Sounds/Pistol.mp3");
     FSoundManager::GetInstance().LoadSound("Crash", "Contents/Sounds/Crash.mp3");
     FSoundManager::GetInstance().LoadSound("Punch", "Contents/Sounds/Punch.mp3");
+    FSoundManager::GetInstance().LoadSound("BGM", "Contents/Sounds/BackGround.mp3", true);
     //FSoundManager::GetInstance().PlaySound("fishdream");
 
     UpdateUI();
