@@ -37,5 +37,5 @@ private:
     FString HPTextName = "UI_HPText";
     FString BulletTextName = "UI_BulletText";
     FString TitleImageName = "UI_TitleImage";
-
+    FString SubUVImageName = "UI_SubUVImage";
 };

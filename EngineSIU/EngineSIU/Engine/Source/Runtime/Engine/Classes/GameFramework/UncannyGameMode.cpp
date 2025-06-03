@@ -21,6 +21,19 @@ void AUncannyGameMode::PostSpawnInitialize()
         FName("Title"), // 리소스 이름이 "Title"인 이미지 필요 (예: T_Title.png)
         FLinearColor(1, 1, 1, 1)
     );
+
+    LuaUIManager::Get().CreateImage(
+        FName(*SubUVImageName),
+        RectTransform(-Width * 0.2, Height, Width*0.4, Height*0.3, AnchorDirection::TopCenter),
+        2,
+        FName("TitleSubUV"), 
+        FLinearColor(1, 1, 1, 1)
+    );
+    if (LuaImageUI* SubUVImage = LuaUIManager::Get().GetImageUI(*SubUVImageName))
+    {
+        SubUVImage->SetSubUVAnimation(5, 19, 0.05f, true);
+        SubUVImage->PlaySubUV();
+    }
 }
 
 void AUncannyGameMode::StartMatch()
@@ -29,7 +42,7 @@ void AUncannyGameMode::StartMatch()
 
     // 타이틀 이미지 제거
     LuaUIManager::Get().DeleteUI(FName(*TitleImageName));
-
+    LuaUIManager::Get().DeleteUI(FName(*SubUVImageName));
     // 게임 UI 생성
     LuaUIManager::Get().CreateText(
         FName(*HPTextName),
@@ -60,6 +73,7 @@ void AUncannyGameMode::StartMatch()
         22,
         FLinearColor(1, 1, 1, 1)
     );
+
 
     LuaUIManager::Get().CreateImage("TestImage2", RectTransform(0, 0, 50, 50, AnchorDirection::MiddleCenter), 3, FName("Aim"), FLinearColor(1, 0, 0, 1));
 
