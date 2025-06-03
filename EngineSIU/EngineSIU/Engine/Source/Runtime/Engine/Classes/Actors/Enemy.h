@@ -1,6 +1,7 @@
 #pragma once
 #include "GameFramework/Actor.h"
 #include "Core/TimerManager.h"
+#include "PhysicsManager.h"
 
 class USkeletalMeshComponent;
 class USkeletalMesh;
@@ -15,7 +16,6 @@ struct FBodyInstance;
 
 struct FConstraintSetup;
 struct FConstraintInstance;
-
 class AEnemy : public AActor
 {
     DECLARE_CLASS(AEnemy, AActor)
@@ -85,6 +85,9 @@ private:
     FTimerHandle DestroyDelayTimerHandle;
     FTimerHandle AttackCheckTimerHandle;
 
+    void ApplyRagdollImpulse(ECollisionPart HitPart, const FVector& ImpulseDirection, float ImpulseMagnitude);
+    GameObject* GetRagdollBodyPartByIndex(int32 BodyIndex); // 헬퍼 함수 (선택 사항)
+    GameObject* GetRandomLegRagdollBodyPart();              // Leg 랜덤 선택 함수
 public:
     UPROPERTY(VisibleAnywhere, FRotator, Direction, )
 };

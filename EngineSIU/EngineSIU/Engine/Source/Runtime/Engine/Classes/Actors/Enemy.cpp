@@ -379,6 +379,101 @@ FString AEnemy::GetCleanBoneName(const FString& InFullName)
     return name;
 }
 
+void AEnemy::DelayedDestroy()
+{
+    Destroy();
+}
+
+void AEnemy::PeriodicAttackCheck()
+{
+    if (!bIsAlive) // 죽었으면 더 이상 실행 안 함
+    {
+        FTimerManager* TM = GEngine->TimerManager;
+        if (TM && AttackCheckTimerHandle.IsValid())
+        {
+            TM->ClearTimer(AttackCheckTimerHandle);
+        }
+        return;
+    }
+}
+
+GameObject* AEnemy::GetRagdollBodyPartByIndex(int32 BodyIndex)
+{
+    if (SkeletalMeshComponent &&
+        SkeletalMeshComponent->GetSkeletalMeshAsset() &&
+        SkeletalMeshComponent->GetSkeletalMeshAsset()->GetPhysicsAsset())
+    {
+        TArray<FBodyInstance*> Bodies = SkeletalMeshComponent->GetBodies();
+        if (Bodies.IsValidIndex(BodyIndex) && Bodies[BodyIndex] != nullptr && Bodies[BodyIndex]->BIGameObject != nullptr)
+        {
+            return Bodies[BodyIndex]->BIGameObject;
+        }
+    }
+    return nullptr;
+}
+
+GameObject* AEnemy::GetRandomLegRagdollBodyPart()
+{
+    // Leg 인덱스 범위: 8 ~ 17 (총 10개)
+    constexpr int32 LegMinIndex = 8;
+    constexpr int32 LegMaxIndex = 17;
+    if (LegMaxIndex < LegMinIndex) return nullptr;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int32> distrib(LegMinIndex, LegMaxIndex);
+
+    int32 RandomLegIndex = distrib(gen);
+    return GetRagdollBodyPartByIndex(RandomLegIndex);
+}
+
+
+void AEnemy::ApplyRagdollImpulse(ECollisionPart HitBodyPartType, const FVector& ImpulseDirection, float ImpulseMagnitude)
+{
+    if (!SkeletalMeshComponent)
+    {
+        return;
+    }
+
+    GameObject* TargetRagdollBodyPart = nullptr;
+
+    switch (HitBodyPartType)
+    {
+    case ECollisionPart::Head:
+        TargetRagdollBodyPart = GetRagdollBodyPartByIndex(0); // 머리는 인덱스 0으로 가정
+        break;
+    case ECollisionPart::Body:
+        TargetRagdollBodyPart = GetRagdollBodyPartByIndex(20); // 몸통은 인덱스 20으로 가정
+        break;
+    case ECollisionPart::Leg:
+        TargetRagdollBodyPart = GetRandomLegRagdollBodyPart(); // 다리는 8~17 중 랜덤
+        break;
+    case ECollisionPart::None:
+    default:
+        return;
+    }
+
+    if (TargetRagdollBodyPart && TargetRagdollBodyPart->DynamicRigidBody)
+    {
+        for (auto BodyInstance : SkeletalMeshComponent->GetBodies())
+        {
+            if (BodyInstance && BodyInstance->BIGameObject)
+            {
+                BodyInstance->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
+            }
+        }
+
+        PxVec3 PxImpulse(ImpulseDirection.X * ImpulseMagnitude,
+            ImpulseDirection.Y * ImpulseMagnitude,
+            ImpulseDirection.Z * ImpulseMagnitude);
+
+        PxTransform RagdollPartGlobalPose = TargetRagdollBodyPart->DynamicRigidBody->getGlobalPose();
+        PxVec3 PxImpulseLocation = RagdollPartGlobalPose.p;
+
+        GEngine->PhysicsManager->AddImpulseAtLocation(TargetRagdollBodyPart, PxImpulse, PxImpulseLocation);
+    }
+}
+
 void AEnemy::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActor* OtherActor)
 {
     if (!bIsAlive) // 이미 죽었거나, 죽음 처리 요청 중이면 무시
@@ -395,123 +490,12 @@ void AEnemy::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActo
     if (HittingBullet)
     {
         Die();
-        bIsAlive = false;
 
-        ECollisionPart HitPart = HitGameObject->PartIdentifier;
-
-        GameObject* TargetRagdollBodyPart = nullptr;
-        switch (HitPart)
-        {
-        case ECollisionPart::Head: 
-        {
-            if (SkeletalMeshComponent->GetSkeletalMeshAsset()->GetPhysicsAsset())
-            {
-                for (auto Body : SkeletalMeshComponent->GetBodies())
-                {
-                    Body->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
-                }
-                TargetRagdollBodyPart = SkeletalMeshComponent->GetBodies()[1]->BIGameObject;
-
-                if (TargetRagdollBodyPart && TargetRagdollBodyPart->DynamicRigidBody)
-                {
-                    FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
-                    float ImpulseMagnitude = 20000.0f;
-
-                    PxVec3 PxImpulse(ImpulseDirection.X * ImpulseMagnitude,
-                        ImpulseDirection.Y * ImpulseMagnitude,
-                        ImpulseDirection.Z * ImpulseMagnitude);
-
-                    PxVec3 PxImpulseLocation;
-                    PxTransform RagdollPartGlobalPose = TargetRagdollBodyPart->DynamicRigidBody->getGlobalPose();
-                    PxImpulseLocation = RagdollPartGlobalPose.p;
-                    GEngine->PhysicsManager->AddImpulseAtLocation(TargetRagdollBodyPart, PxImpulse, PxImpulseLocation);
-                }
-            }
-            break;
-        }
-        case ECollisionPart::Body:
-        {
-            if (SkeletalMeshComponent->GetSkeletalMeshAsset()->GetPhysicsAsset())
-            {
-                for (auto Body : SkeletalMeshComponent->GetBodies())
-                {
-                    Body->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
-                }
-                TargetRagdollBodyPart = SkeletalMeshComponent->GetBodies()[20]->BIGameObject;
-
-                if (TargetRagdollBodyPart && TargetRagdollBodyPart->DynamicRigidBody)
-                {
-                    FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
-                    float ImpulseMagnitude = 20000.0f;
-
-                    PxVec3 PxImpulse(ImpulseDirection.X * ImpulseMagnitude,
-                        ImpulseDirection.Y * ImpulseMagnitude,
-                        ImpulseDirection.Z * ImpulseMagnitude);
-
-                    PxVec3 PxImpulseLocation;
-                    PxTransform RagdollPartGlobalPose = TargetRagdollBodyPart->DynamicRigidBody->getGlobalPose();
-                    PxImpulseLocation = RagdollPartGlobalPose.p;
-                    GEngine->PhysicsManager->AddImpulseAtLocation(TargetRagdollBodyPart, PxImpulse, PxImpulseLocation);
-                }
-            }
-            break;
-        }
-        case ECollisionPart::Leg:
-        {
-            if (SkeletalMeshComponent->GetSkeletalMeshAsset()->GetPhysicsAsset())
-            {
-                for (auto Body : SkeletalMeshComponent->GetBodies())
-                {
-                    Body->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
-                }
-                TargetRagdollBodyPart = SkeletalMeshComponent->GetBodies()[12]->BIGameObject;
-
-                if (TargetRagdollBodyPart && TargetRagdollBodyPart->DynamicRigidBody)
-                {
-                    FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
-                    float ImpulseMagnitude = 20000.0f;
-
-                    PxVec3 PxImpulse(ImpulseDirection.X * ImpulseMagnitude,
-                        ImpulseDirection.Y * ImpulseMagnitude,
-                        ImpulseDirection.Z * ImpulseMagnitude);
-
-                    PxVec3 PxImpulseLocation;
-                    PxTransform RagdollPartGlobalPose = TargetRagdollBodyPart->DynamicRigidBody->getGlobalPose();
-                    PxImpulseLocation = RagdollPartGlobalPose.p;
-                    GEngine->PhysicsManager->AddImpulseAtLocation(TargetRagdollBodyPart, PxImpulse, PxImpulseLocation);
-                }
-            }
-            break;
-        }
-        case ECollisionPart::None:
-        {
-            break;
-        }
-        default:
-        {
-            int a = 0;
-            break;
-        }
-        }
+        ECollisionPart InitialHitPart = HitGameObject->PartIdentifier;
+        FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
+        float ImpulseMagnitude = 20000.0f; // 기본 임펄스 크기
+        ApplyRagdollImpulse(InitialHitPart, ImpulseDirection, ImpulseMagnitude);
 
         // HittingBullet->Destroy();
-    }
-}
-
-void AEnemy::DelayedDestroy()
-{
-    Destroy();
-}
-
-void AEnemy::PeriodicAttackCheck()
-{
-    if (!bIsAlive) // 죽었으면 더 이상 실행 안 함
-    {
-        FTimerManager* TM = GEngine->TimerManager;
-        if (TM && AttackCheckTimerHandle.IsValid())
-        {
-            TM->ClearTimer(AttackCheckTimerHandle);
-        }
-        return;
     }
 }
