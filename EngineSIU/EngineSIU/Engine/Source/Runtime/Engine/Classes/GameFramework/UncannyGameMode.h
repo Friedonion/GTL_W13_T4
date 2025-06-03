@@ -15,6 +15,7 @@ public:
     void SetCurrentHP(int32 NewHP);
     void SetMaxHP(int32 NewMaxHP);
     void SetBulletCount(int32 NewCount);
+    void AddKill();
 
 protected:
     void UpdateUI();
@@ -25,7 +26,7 @@ private:
     int32 BulletCount = 30;
     int32 KillCount = 0;
 
-    FString KillCountName = "UI_KillCount";
+    FString KillTextName = TEXT("UI_KillText");
     FString HPTextName = "UI_HPText";
     FString BulletTextName = "UI_BulletText";
 };

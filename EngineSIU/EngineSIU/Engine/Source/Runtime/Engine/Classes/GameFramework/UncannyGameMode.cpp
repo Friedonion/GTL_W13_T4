@@ -17,21 +17,22 @@ void AUncannyGameMode::PostSpawnInitialize()
     );
 
     LuaUIManager::Get().CreateText(
-        FName(*BulletTextName),
-        RectTransform(-100, -40, 200, 30, AnchorDirection::TopCenter),
+        FName(*KillTextName),
+        RectTransform(10, 70, 200, 30, AnchorDirection::TopLeft),
         1,
-        FString::Printf(TEXT("Bullet: %d"), BulletCount),
+        FString::Printf(TEXT("Kills: %d"), KillCount),
         FName("Default"),
         22,
-        FLinearColor(1, 1, 1, 1)
+        FLinearColor(1, 1, 0, 1)
     );
+
 
     LuaUIManager::Get().CreateText(
         FName(*BulletTextName),
         RectTransform(-200, -10, 200, 30, AnchorDirection::BottomRight),
         1,
         FString::Printf(TEXT("Bullet: %d"), BulletCount),
-        FName("KillCountName"),
+        FName("Default"),
         22,
         FLinearColor(1, 1, 1, 1)
     );
@@ -78,9 +79,17 @@ void AUncannyGameMode::UpdateUI()
         BulletText->SetText(Text);
     }
 
-    if (LuaTextUI* KillCountText = LuaUIManager::Get().GetTextUI(FName(*KillCountName)))
+    if (LuaTextUI* KillText = LuaUIManager::Get().GetTextUI(FName(*KillTextName)))
     {
-        FString Text = FString::Printf(TEXT("Kill Count: %d"), KillCount);
-        KillCountText->SetText(Text);
+        FString Text = FString::Printf(TEXT("Kills: %d"), KillCount);
+        KillText->SetText(Text);
     }
+
 }
+
+void AUncannyGameMode::AddKill()
+{
+    KillCount++;
+    UpdateUI();
+}
+
