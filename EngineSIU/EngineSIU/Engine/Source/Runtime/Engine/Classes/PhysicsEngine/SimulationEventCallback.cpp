@@ -11,52 +11,33 @@ void FSimulationEventCallback::onContact(const physx::PxContactPairHeader& pairH
         return;
     }
 
-    physx::PxRigidActor* actor0 = pairHeader.actors[0];
-    physx::PxRigidActor* actor1 = pairHeader.actors[1];
+    physx::PxRigidActor* pxActor0 = pairHeader.actors[0];
+    physx::PxRigidActor* pxActor1 = pairHeader.actors[1];
 
-    if (!actor0 || !actor1)
+    if (!pxActor0 || !pxActor1) return;
+
+    GameObject* gameObject0 = static_cast<GameObject*>(pxActor0->userData);
+    GameObject* gameObject1 = static_cast<GameObject*>(pxActor1->userData);
+
+    if (!gameObject0 || !gameObject1) return;
+
+    AActor* ownerActor0 = gameObject0->OwnerActor;
+    AActor* ownerActor1 = gameObject1->OwnerActor;
+
+    if (!ownerActor0 || !ownerActor1) return;
+
+    if (ownerActor0 == ownerActor1)
     {
+        // 필요한 경우 로그 남기고 return
         return;
     }
 
-    FBodyInstance* bodyInstance0 = static_cast<FBodyInstance*>(actor0->userData);
-    FBodyInstance* bodyInstance1 = static_cast<FBodyInstance*>(actor1->userData);
-
-    if (!bodyInstance0 || !bodyInstance1)
-    {
-        return;
-    }
-
-    AActor* gameActor0 = nullptr;
-    AActor* gameActor1 = nullptr;
-
-    if (bodyInstance0->OwnerComponent)
-    {
-        gameActor0 = bodyInstance0->OwnerComponent->GetOwner();
-    }
-
-    if (bodyInstance1->OwnerComponent)
-    {
-        gameActor1 = bodyInstance1->OwnerComponent->GetOwner();
-    }
-
-    if (!gameActor0 || !gameActor1)
-    {
-        return;
-    }
-
-    if (gameActor0 == gameActor1)
-    {
-        return;
-    }
-
-    if (bodyInstance0->BIGameObject && bodyInstance0->OwnerComponent->GetOwner() == gameActor0 &&
-        bodyInstance1->BIGameObject && bodyInstance1->OwnerComponent->GetOwner() == gameActor1)
-    {
-        bodyInstance0->BIGameObject->OnHit.Broadcast(gameActor0, gameActor1);
-
-        bodyInstance1->BIGameObject->OnHit.Broadcast(gameActor1, gameActor0);
-    }
+    // 4. 각 GameObject의 OnHit 델리게이트 브로드캐스트 (변경된 시그니처 사용)
+    //    첫 번째 인자: 충돌이 발생한 GameObject 자신
+    //    두 번째 인자: 해당 GameObject의 소유자 AActor
+    //    세 번째 인자: 충돌 상대방 AActor
+    gameObject0->OnHit.Broadcast(gameObject0, ownerActor0, ownerActor1);
+    gameObject1->OnHit.Broadcast(gameObject1, ownerActor1, ownerActor0);
 }
 
 void FSimulationEventCallback::onConstraintBreak(physx::PxConstraintInfo* constraints, physx::PxU32 count)

@@ -119,7 +119,7 @@ void UCapsuleComponent::CreatePhysXGameObject()
         }
     }
 
-    GameObject* Obj = GEngine->PhysicsManager->CreateGameObject(PPos, PQuat, BodyInstance, BodySetup, RigidBodyType);
+    GameObject* Obj = GEngine->PhysicsManager->CreateGameObject(this->GetOwner(), PPos, PQuat, BodyInstance, BodySetup, RigidBodyType);
 
 	if (bLockZAxis)
 	{

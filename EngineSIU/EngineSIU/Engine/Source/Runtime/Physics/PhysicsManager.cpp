@@ -177,10 +177,12 @@ GameObject FPhysicsManager::CreateBox(const PxVec3& Pos, const PxVec3& HalfExten
     return Obj;
 }
 
-GameObject* FPhysicsManager::CreateGameObject(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetup, ERigidBodyType RigidBodyType) const
+GameObject* FPhysicsManager::CreateGameObject(AActor* InOwnerActor, const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetup, ERigidBodyType RigidBodyType) const
 {
     GameObject* Obj = new GameObject();
-    
+    Obj->OwnerActor = InOwnerActor;
+    BodyInstance->BIGameObject = Obj; //////////
+
     // RigidBodyType에 따라 다른 타입의 Actor 생성
     switch (RigidBodyType)
     {
@@ -192,25 +194,24 @@ GameObject* FPhysicsManager::CreateGameObject(const PxVec3& Pos, const PxQuat& R
     }
     case ERigidBodyType::DYNAMIC:
     {
-        Obj->DynamicRigidBody = CreateDynamicRigidBody(Pos, Rot, BodyInstance, BodySetup);
+        Obj->DynamicRigidBody = CreateDynamicRigidBody(Obj, Pos, Rot, BodyInstance, BodySetup);
         ApplyBodyInstanceSettings(Obj->DynamicRigidBody, BodyInstance);
         break;
     }
     case ERigidBodyType::KINEMATIC:
     {
-        Obj->DynamicRigidBody = CreateDynamicRigidBody(Pos, Rot, BodyInstance, BodySetup);
+        Obj->DynamicRigidBody = CreateDynamicRigidBody(Obj, Pos, Rot, BodyInstance, BodySetup);
         Obj->DynamicRigidBody->setRigidBodyFlag(PxRigidBodyFlag::eKINEMATIC, true);
         ApplyBodyInstanceSettings(Obj->DynamicRigidBody, BodyInstance);
         break;
     }
     }
 
-    BodyInstance->BIGameObject = Obj;
     
     return Obj;
 }
 
-PxRigidDynamic* FPhysicsManager::CreateDynamicRigidBody(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetup) const
+PxRigidDynamic* FPhysicsManager::CreateDynamicRigidBody(GameObject* InOwningGameObject, const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetup) const
 {
     const PxTransform Pose(Pos, Rot);
     PxRigidDynamic* DynamicRigidBody = Physics->createRigidDynamic(Pose);
@@ -223,9 +224,10 @@ PxRigidDynamic* FPhysicsManager::CreateDynamicRigidBody(const PxVec3& Pos, const
     
     // Scene에 추가
     CurrentScene->addActor(*DynamicRigidBody);
-    DynamicRigidBody->userData = (void*)BodyInstance;
 
+    DynamicRigidBody->userData = InOwningGameObject;
     return DynamicRigidBody;
+
 }
 
 PxRigidStatic* FPhysicsManager::CreateStaticRigidBody(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetup) const
@@ -699,6 +701,20 @@ FVector FPhysicsManager::GetGravity(UWorld* World)
     }
     UE_LOG(ELogLevel::Error, TEXT("Invalid World"));
     return FVector::ZeroVector;
+}
+
+void FPhysicsManager::AddImpulseAtLocation(GameObject* TargetObject, const PxVec3& Impulse, const PxVec3& Location, bool bWakeUp) const
+{
+    if (!TargetObject || !TargetObject->DynamicRigidBody) return;
+
+    PxRigidBodyExt::addForceAtPos(*TargetObject->DynamicRigidBody, Impulse, Location, PxForceMode::eIMPULSE, bWakeUp);
+}
+
+void FPhysicsManager::AddImpulse(GameObject* TargetObject, const PxVec3& Impulse, bool bWakeUp) const
+{
+    if (!TargetObject || !TargetObject->DynamicRigidBody) return;
+
+    TargetObject->DynamicRigidBody->addForce(Impulse, PxForceMode::eIMPULSE, bWakeUp);
 }
 
 void FPhysicsManager::DestroyGameObject(GameObject* GameObject) const

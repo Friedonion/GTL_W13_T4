@@ -627,7 +627,7 @@ void USkeletalMeshComponent::CreatePhysXGameObject()
         //FVector Location = GetComponentLocation();
         PxVec3 Pos = PxVec3(Location.X, Location.Y, Location.Z);
         PxQuat Quat = PxQuat(Rotation.X, Rotation.Y, Rotation.Z, Rotation.W);
-        GameObject* Obj = GEngine->PhysicsManager->CreateGameObject(Pos, Quat, NewBody, BodySetups[i], RigidBodyType);
+        GameObject* Obj = GEngine->PhysicsManager->CreateGameObject(this->GetOwner(), Pos, Quat, NewBody, BodySetups[i], RigidBodyType);
 
         if (RigidBodyType != ERigidBodyType::STATIC)
         {

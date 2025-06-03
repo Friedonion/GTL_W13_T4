@@ -58,8 +58,7 @@ void ABullet::BeginPlay()
     TempVelocity = Owner->Direction.ToVector() * InitialSpeed;
 
     // TO-DO: Muzzle 위치에 맞게 수정 필요
-    FVector Test = Owner->GetActorLocation() + Owner->Direction.ToVector().GetSafeNormal() * 30.f;
-    SetActorLocation(Test);
+    SetActorLocation(Owner->GetActorLocation() + Owner->Direction.ToVector().GetSafeNormal() * 30.f);
     SetActorRotation(Owner->Direction);
 
     StaticMeshComponent->bSimulate = true;
