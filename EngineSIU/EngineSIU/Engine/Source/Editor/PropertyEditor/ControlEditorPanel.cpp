@@ -61,7 +61,7 @@ void ControlEditorPanel::Render()
     ImFont* IconFont = IO.Fonts->Fonts[FEATHER_FONT];
     constexpr ImVec2 IconSize = ImVec2(32, 32);
 
-    const float PanelWidth = (Width) * 0.8f;
+    const float PanelWidth = Width;
     constexpr float PanelHeight = 72.0f;
 
     constexpr float PanelPosX = 0.0f;
@@ -659,7 +659,7 @@ void ControlEditorPanel::CreatePIEButton(const ImVec2 ButtonSize, ImFont* IconFo
         return;
     }
 
-    const float WindowSizeX = Width * 0.8f;
+    const float WindowSizeX = Width;
     const float CenterX = WindowSizeX * 0.5f - ButtonSize.x;
     
     if (Width >= 1200.f)
@@ -741,6 +741,7 @@ void ControlEditorPanel::OnResize(const HWND hWnd)
     RECT ClientRect;
     GetClientRect(hWnd, &ClientRect);
     Width = static_cast<float>(ClientRect.right - ClientRect.left);
+    Width = (GEngine && GEngine->ActiveWorld->WorldType == EWorldType::PIE) ? Width : (Width * 0.8f);
     Height = static_cast<float>(ClientRect.bottom - ClientRect.top);
 }
 

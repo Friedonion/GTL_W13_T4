@@ -259,6 +259,7 @@ void UEditorEngine::StartPIE()
         UE_LOG(ELogLevel::Warning, TEXT("PIEWorld already exists!"));
         return;
     }
+   
 
     if (!PhysicsManager->GetPhysics())
     {
@@ -282,6 +283,8 @@ void UEditorEngine::StartPIE()
     PIEWorldContext.SetCurrentWorld(PIEWorld);
     ActiveWorld = PIEWorld;
 
+    FEngineLoop::GraphicDevice.SetFullScreen(GEngineLoop.AppWnd, true); // FullScreen 모드로 전환
+
     SetPhysXScene(PIEWorld);
     
     BindEssentialObjects();
@@ -289,6 +292,7 @@ void UEditorEngine::StartPIE()
     PIEWorld->BeginPlay();
     // 여기서 Actor들의 BeginPlay를 해줄지 안에서 해줄 지 고민.
     // WorldList.Add(GetWorldContextFromWorld(PIEWorld));
+
 }
 
 void UEditorEngine::StartSkeletalMeshViewer(FName SkeletalMeshName, UAnimationAsset* AnimAsset)
@@ -617,6 +621,8 @@ void UEditorEngine::EndPIE()
     Handler->OnPIEModeEnd();
     // 다시 EditorWorld로 돌아옴.
     ActiveWorld = EditorWorld;
+
+    FEngineLoop::GraphicDevice.SetFullScreen(GEngineLoop.AppWnd, false); // FullScreen 모드로 전환
 }
 
 void UEditorEngine::EndSkeletalMeshViewer()

@@ -122,9 +122,17 @@ void SLevelEditor::ResizeEditor(uint32 InEditorWidth, uint32 InEditorHeight)
     {
         return;
     }
-    
-    EditorWidth = static_cast<uint32>(static_cast<float>(InEditorWidth) * 0.8f);
-    EditorHeight = static_cast<uint32>(static_cast<float>(InEditorHeight) - 104.f);
+    if (GEngine && GEngine->ActiveWorld->WorldType == EWorldType::PIE)
+    {
+        EditorWidth = static_cast<uint32>(static_cast<float>(InEditorWidth));
+        EditorHeight = static_cast<uint32>(static_cast<float>(InEditorHeight));
+    }
+    else
+    {
+        EditorWidth = static_cast<uint32>(static_cast<float>(InEditorWidth) * 0.8f);
+        EditorHeight = static_cast<uint32>(static_cast<float>(InEditorHeight) - 104.f);
+       
+    }
 
     if (UEditorEngine* EditorEngine = Cast<UEditorEngine>(GEngine))
     {
@@ -179,7 +187,8 @@ void SLevelEditor::ResizeViewports()
     }
     else
     {
-        ActiveViewportClient->GetViewport()->ResizeViewport(FRect(0.0f, 72.f, static_cast<float>(EditorWidth) , static_cast<float>(EditorHeight)));
+        float y = (GEngine && GEngine->ActiveWorld->WorldType == EWorldType::PIE) ? 0.f : 72.f;
+        ActiveViewportClient->GetViewport()->ResizeViewport(FRect(0.0f, y, static_cast<float>(EditorWidth) , static_cast<float>(EditorHeight)));
     }
 }
 

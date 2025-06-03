@@ -72,6 +72,7 @@ public:
 
     ID3D11SamplerState* GetSamplerState(ESamplerType SamplerType) const;
     
+    void SetFullScreen(HWND hWnd, bool bFullScreen);
     /*
     uint32 GetPixelUUID(POINT pt) const;
     uint32 DecodeUUIDColor(FVector4 UUIDColor) const;
@@ -96,5 +97,8 @@ private:
 
     const DXGI_FORMAT BackBufferFormat = DXGI_FORMAT_B8G8R8A8_UNORM;
     const DXGI_FORMAT BackBufferRTVFormat = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
+
+    bool bIsFullScreen = false; // 전체 화면 전환 전 상태를 저장하기 위한 변수
+    RECT BeforeFullScreen = { 0, 0, 0, 0 }; // 전체 화면 전환 전의 윈도우 위치와 크기를 저장하기 위한 변수
 };
 

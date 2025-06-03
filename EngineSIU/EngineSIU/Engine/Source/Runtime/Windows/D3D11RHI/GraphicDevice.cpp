@@ -30,6 +30,59 @@ ID3D11SamplerState* FGraphicsDevice::GetSamplerState(ESamplerType SamplerType) c
     return nullptr;
 }
 
+void FGraphicsDevice::SetFullScreen(HWND hWindow, bool bFullScreen)
+{
+    if (bFullScreen)
+    {
+        // 현재 윈도우 위치 저장
+        GetWindowRect(hWindow, &BeforeFullScreen);
+
+        // 테두리 제거
+        LONG Style = GetWindowLong(hWindow, GWL_STYLE);
+        Style &= ~(WS_OVERLAPPEDWINDOW);
+        Style |= WS_POPUP;
+        SetWindowLong(hWindow, GWL_STYLE, Style);
+
+        // 모니터 해상도 가져오기
+        HMONITOR Monitor = MonitorFromWindow(hWindow, MONITOR_DEFAULTTONEAREST);
+        MONITORINFOEX MonitorInfo = {};
+        MonitorInfo.cbSize = sizeof(MONITORINFOEX);
+        GetMonitorInfo(Monitor, &MonitorInfo);
+        RECT MonitorRect = MonitorInfo.rcMonitor;
+
+        // 윈도우 크기 조정
+        SetWindowPos(
+            hWindow,
+            HWND_TOP,
+            MonitorRect.left,
+            MonitorRect.top,
+            MonitorRect.right - MonitorRect.left,
+            MonitorRect.bottom - MonitorRect.top,
+            SWP_NOOWNERZORDER | SWP_FRAMECHANGED
+        );
+    }
+    else
+    {
+        // 원래 스타일 복원
+        LONG Style = GetWindowLong(hWindow, GWL_STYLE);
+        Style &= ~(WS_POPUP);
+        Style |= WS_OVERLAPPEDWINDOW;
+        SetWindowLong(hWindow, GWL_STYLE, Style);
+
+        // 원래 위치와 크기 복원
+        SetWindowPos(
+            hWindow,
+            HWND_NOTOPMOST,
+            BeforeFullScreen.left,
+            BeforeFullScreen.top,
+            BeforeFullScreen.right - BeforeFullScreen.left,
+            BeforeFullScreen.bottom - BeforeFullScreen.top,
+            SWP_NOOWNERZORDER | SWP_FRAMECHANGED
+        );
+    }
+    bIsFullScreen = bFullScreen;
+}
+
 void FGraphicsDevice::CreateDeviceAndSwapChain(HWND hWindow)
 {
     // 지원하는 Direct3D 기능 레벨을 정의
