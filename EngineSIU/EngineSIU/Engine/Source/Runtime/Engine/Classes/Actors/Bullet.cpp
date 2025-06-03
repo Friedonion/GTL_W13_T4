@@ -78,7 +78,7 @@ void ABullet::BeginPlay()
     {
         StaticMesh = FObjManager::GetStaticMesh(L"Contents/EmptyObject/EmptyObject.obj");
         StaticMeshComponent->SetStaticMesh(StaticMesh);
-        StaticMeshComponent->AABB = FBoundingBox(FVector(-5.f, -5.f, -5.f), FVector(5.f, 5.f, 5.f));
+        StaticMeshComponent->AABB = FBoundingBox(FVector(-0.5f, -0.5f, -0.5f), FVector(0.5f, 0.5f, 0.5f));
     }
 
     //ProjectileMovement = AddComponent<UProjectileMovementComponent>(TEXT("BulletMovement"));
@@ -94,7 +94,7 @@ void ABullet::BeginPlay()
     StaticMeshComponent->BodyInstance->OwnerActor = this;
     PxRigidDynamic* RigidBody = StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody;
 
-    FVector Velocity = GetActorForwardVector() * 600.f;
+    FVector Velocity = GetActorForwardVector() * 1000.f;
 
     RigidBody->setLinearVelocity(PxVec3(Velocity.X, Velocity.Y, Velocity.Z));
     // Begin Test

@@ -13,7 +13,6 @@
 #include "Actors/Bullet.h"
 #include "Engine/Classes/Animation/AnimTypes.h"
 #include "Animation/AnimSoundNotify.h"
-#include "Engine/Contents/Objects/DamageCameraShake.h"
 #include "Components/CapsuleComponent.h"
 #include "PhysicsManager.h"
 #include "GameFramework/UncannyGameMode.h"
@@ -75,7 +74,7 @@ void APlayerCharacter::BeginPlay()
 
             if (FAnimNotifyEvent* NotifyEvent = PunchAnim->GetNotifyEvent(NotifyIndex))
             {
-                auto* Notify = FObjectFactory::ConstructObject<UAnimSoundNotify>(nullptr);
+                UAnimSoundNotify* Notify = FObjectFactory::ConstructObject<UAnimSoundNotify>(nullptr);
                 Notify->SetSoundName(FName("Punch"));
                 NotifyEvent->SetAnimNotify(Notify);
             }
@@ -89,9 +88,13 @@ void APlayerCharacter::BeginPlay()
 
             if (FAnimNotifyEvent* NotifyEvent = ShootAnim->GetNotifyEvent(NotifyIndex))
             {
-                auto* Notify = FObjectFactory::ConstructObject<UAnimSoundNotify>(nullptr);
+                UAnimSoundNotify* Notify = FObjectFactory::ConstructObject<UAnimSoundNotify>(nullptr);
                 Notify->SetSoundName(FName("Pistol"));
                 NotifyEvent->SetAnimNotify(Notify);
+                if (AUncannyGameMode* GameMode = Cast<AUncannyGameMode>(GetWorld()->GetGameMode()))
+                {
+                    GameMode->ShootNotify = Notify;
+                }
             }
         }
     }
@@ -288,6 +291,28 @@ void APlayerCharacter::ProcessAttack(float DeltaTime)
         {
             bShootingPending = false;
             ShootInternal();
+			/*if (AUncannyGameMode* GameMode = Cast<AUncannyGameMode>(GetWorld()->GetGameMode()))
+			{
+				int32 NotifyIndex = 0;
+				if (!ShootAnim->GetNotifyEvent(NotifyIndex))
+					ShootAnim->AddNotifyEvent(0, 0.168f, 0, "ShootNotify", NotifyIndex);
+				if (FAnimNotifyEvent* NotifyEvent = ShootAnim->GetNotifyEvent(NotifyIndex))
+				{
+					auto* Notify = FObjectFactory::ConstructObject<UAnimSoundNotify>(nullptr);
+					if (GameMode->GetBulletCount() == 0)
+					{
+						Notify->SetSoundName(FName("Empty"));
+					}
+					else
+					{
+						Notify->SetSoundName(FName("Pistol"));
+					}
+					
+					NotifyEvent->SetAnimNotify(Notify);
+				}
+				
+			}*/
+
         }
     }
     
@@ -299,10 +324,10 @@ void APlayerCharacter::PunchInternal()
     Bullet->SetActorLabel(TEXT("OBJ_BULLET"));
     Bullet->SetOwner(this);
     Bullet->SetActorLocation(this->Head->GetComponentLocation() +
-        this->Head->GetForwardVector() * 30.f);
+        this->Head->GetForwardVector() * 40.f);
     Bullet->SetVisible(false);
     Bullet->SetActorRotation(this->Head->GetComponentRotation());
-
+    Bullet->SetLifeTime(0.05f);
     //AFist* Fist = GetWorld()->SpawnActor<AFist>();
     //Fist->SetActorLabel(TEXT("Fist"));
     //Fist->SetOwner(this);
@@ -318,17 +343,27 @@ void APlayerCharacter::PunchInternal()
 
 void APlayerCharacter::ShootInternal()
 {
+    if (AUncannyGameMode* GameMode = Cast<AUncannyGameMode>(GetWorld()->GetGameMode()))
+    {
+        int32 bullets = GameMode->GetBulletCount();
+
+        GameMode->SetBulletCount(--bullets);
+        if (bullets <= 0)
+        {
+            return;
+        }
+    }
     ABullet* Bullet = GetWorld()->SpawnActor<ABullet>();
     Bullet->SetActorLabel(TEXT("OBJ_BULLET"));
     Bullet->SetOwner(this);
     Bullet->SetActorLocation(this->Head->GetComponentLocation() +
-        this->Head->GetForwardVector() * 30.f);
+    this->Head->GetForwardVector() * 40.f);
     Bullet->SetActorRotation(this->Head->GetComponentRotation());
+
 }
 
 void APlayerCharacter::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActor* OtherActor)
 {
-    GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass());
 
     if (ABullet* Bullet = Cast<ABullet>(OtherActor))
     {

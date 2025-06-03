@@ -74,7 +74,7 @@ private:
     float bShootingTimeLeft = 0.f;
 
     UPROPERTY(EditAnywhere, float, bPunchingWaitTime, = 0.3f)
-    UPROPERTY(EditAnywhere, float, bShootingWaitTime, = 0.3f)
+    UPROPERTY(EditAnywhere, float, bShootingWaitTime, = 0.16f)
 
     void ProcessAttack(float DeltaTime);
 

@@ -4,6 +4,9 @@
 #include "Developer/LuaUtils/LuaImageUI.h"
 #include "Developer/LuaUtils/LuaButtonUI.h"
 #include "SoundManager.h"
+#include "World/World.h"
+#include "Engine/Contents/Objects/DamageCameraShake.h"
+#include "Animation/AnimSoundNotify.h"
 
 void AUncannyGameMode::PostSpawnInitialize()
 {
@@ -134,12 +137,21 @@ void AUncannyGameMode::SetCurrentHP(int32 NewHP)
 {
     CurrentHP = FMath::Clamp(NewHP, 0, MaxHP);
     UpdateUI();
+    if(CurrentHP <= 0)
+    {
+        OnDeath();
+    }
 }
 
 void AUncannyGameMode::OnPlayerHit(float Damage)
 {
     CurrentHP -= FMath::Max(0, (int32)Damage);
     UpdateUI();
+    GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass());
+    if (CurrentHP <= 0)
+    {
+        OnDeath();
+    }
 }
 
 void AUncannyGameMode::SetMaxHP(int32 NewMaxHP)
@@ -152,8 +164,21 @@ void AUncannyGameMode::SetMaxHP(int32 NewMaxHP)
 
 void AUncannyGameMode::SetBulletCount(int32 NewCount)
 {
+    if (ShootNotify)
+    {
+        if (BulletCount <= 0)
+        {
+             ShootNotify->SetSoundName(FName("Empty"));
+        }
+        else
+        {
+            ShootNotify->SetSoundName(FName("Pistol"));
+        }
+    }
     BulletCount = FMath::Max(0, NewCount);
     UpdateUI();
+
+    // 0이 들어온 것은 1발이 남았을 때 발사한것 -> 0까지는 소리 바꾸지않음.
 }
 
 void AUncannyGameMode::UpdateUI()
@@ -206,6 +231,14 @@ void AUncannyGameMode::PlayHitNoiseEffect()
 
     bNoisePlaying = true;
     NoiseEffectElapsed = 0.f;
+}
+
+void AUncannyGameMode::OnDeath()
+{
+    APlayerController* Controller = GetWorld()->GetPlayerController();
+    Controller->PlayerCameraManager->StartCameraFade(0.f, 1.0f, 10.f, FLinearColor::Black, false);
+
+    Controller->UnPossess();
 }
 
 
