@@ -573,8 +573,16 @@ void FObjLoader::ComputeBoundingBox(const TArray<FStaticMeshVertex>& InVertices,
         MaxVector.Z = std::max(MaxVector.Z, InVertices[Idx].Z);
     }
 
-    OutMinVector = MinVector;
-    OutMaxVector = MaxVector;
+    if (MinVector == FVector{ FLT_MAX, FLT_MAX, FLT_MAX } && MaxVector == FVector{ -FLT_MAX, -FLT_MAX, -FLT_MAX })
+    {
+        OutMinVector = FVector::ZeroVector;
+        OutMaxVector = FVector::ZeroVector;
+    }
+    else
+    {
+        OutMinVector = MinVector;
+        OutMaxVector = MaxVector;
+    }
 }
 
 void FObjLoader::CalculateTangent(FStaticMeshVertex& PivotVertex, const FStaticMeshVertex& Vertex1, const FStaticMeshVertex& Vertex2)

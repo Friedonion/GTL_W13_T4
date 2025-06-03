@@ -109,7 +109,7 @@ end
 function ReturnTable:Move(dv)
     local this = self.this
 
-    local yawOnlyRot = FRotator(0.0, this.ActorRotation.Yaw, 0.0)
+    local yawOnlyRot = FRotator(0.0, this.HeadRotation.Yaw, 0.0)
     local LocalMovement = yawOnlyRot:RotateVector(dv)
     LocalMovement.Z = 0.0
 
@@ -118,14 +118,22 @@ end
 
 -- 좌우 움직임
 function ReturnTable:Turn(Delta)
-    local this = self.this 
-    this.ActorRotation = this.ActorRotation + FRotator(0, Delta, 0)
+    local this = self.this
+    this.HeadRotation = this.HeadRotation + FRotator(0, Delta, 0)
 end
 
 -- 위아래 움직임
 function ReturnTable:Lookup(Delta)
     local this = self.this
-    this.ActorRotation = this.ActorRotation + FRotator(-Delta, 0, 0)
+    this.HeadRotation = this.HeadRotation + FRotator(-Delta, 0, 0)
+    print(this.HeadRotation.Pitch)
+    if this.HeadRotation.Pitch < -60 then
+        this.HeadRotation = FRotator(-60, this.HeadRotation.Yaw, this.HeadRotation.Roll)
+    end
+    if this.HeadRotation.Pitch > 80 then
+        this.HeadRotation = FRotator(80, this.HeadRotation.Yaw, this.HeadRotation.Roll)
+    end
+    
 end
 
 

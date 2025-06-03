@@ -248,11 +248,13 @@ void LuaUIManager::GenerateResource()
     TextureMap.Add(FName("Aim"), AimTexture);
     auto NoiseTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Noise.png");
     TextureMap.Add(FName("Noise"), NoiseTexture);
-    auto titleTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Title.png");
+    auto titleTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Title2.png");
     TextureMap.Add(FName("Title"), titleTexture);
     auto StartTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/StartButton.png");
     TextureMap.Add(FName("Start"), StartTexture);
 
+    auto SubUVTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/TitleSubUV.png");
+    TextureMap.Add(FName("TitleSubUV"), SubUVTexture);
 
 }
 

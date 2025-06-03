@@ -45,7 +45,6 @@ struct GameObject {
     void SetRigidBodyType(ERigidBodyType RigidBody) const;
 
     //OnHit
-
 };
 
 class FPhysicsManager
