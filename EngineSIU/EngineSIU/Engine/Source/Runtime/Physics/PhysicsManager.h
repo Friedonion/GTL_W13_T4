@@ -25,7 +25,16 @@ using namespace DirectX;
 class UPrimitiveComponent;
 class FSimulationEventCallback;
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnSimpleActorHit, AActor* /*HitActor*/, AActor* /*OtherActor*/);
+enum class ECollisionPart : uint8
+{
+    None,
+    Head,
+    Body,
+    Leg,
+};
+
+struct GameObject;
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnGameObjectHit, GameObject* /*HitGameObject*/, AActor* /*HitActor*/, AActor* /*OtherActor*/);
 
 // 게임 오브젝트
 struct GameObject {
@@ -33,7 +42,9 @@ struct GameObject {
     PxRigidStatic* StaticRigidBody = nullptr;
     XMMATRIX WorldMatrix = XMMatrixIdentity();
 
-    FOnSimpleActorHit OnHit;
+    AActor* OwnerActor = nullptr;
+    ECollisionPart PartIdentifier = ECollisionPart::None; // 이 GameObject가 나타내는 신체 부위
+    FOnGameObjectHit OnHit;
 
     void UpdateFromPhysics(PxScene* Scene) {
         PxSceneReadLock scopedReadLock(*Scene);
@@ -63,17 +74,14 @@ public:
     void SetCurrentScene(PxScene* Scene) { CurrentScene = Scene; }
     void SetGravity(UWorld* World, FVector Gravity);
     FVector GetGravity(UWorld* World);
-    
+
+    void AddImpulseAtLocation(GameObject* TargetObject, const PxVec3& Impulse, const PxVec3& Location, bool bWakeUp = true) const;
+    void AddImpulse(GameObject* TargetObject, const PxVec3& Impulse, bool bWakeUp = true) const;
+
     void DestroyGameObject(GameObject* GameObject) const;
     
     GameObject CreateBox(const PxVec3& Pos, const PxVec3& HalfExtents) const;
-    GameObject* CreateGameObject(
-        const PxVec3& Pos,
-        const PxQuat& Rot,
-        FBodyInstance* BodyInstance,
-        UBodySetup* BodySetup,
-        ERigidBodyType RigidBodyType = ERigidBodyType::DYNAMIC
-    ) const;
+    GameObject* CreateGameObject(AActor* InOwnerActor, const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetup, ERigidBodyType RigidBodyType) const;
     void CreateJoint(const GameObject* Obj1, const GameObject* Obj2, FConstraintInstance* ConstraintInstance, const FConstraintSetup* ConstraintSetup) const;
 
     PxShape* CreateBoxShape(const PxVec3& Pos, const PxQuat& Quat, const PxVec3& HalfExtents) const;
@@ -104,7 +112,7 @@ private:
 
     FSimulationEventCallback* SimulationEventCallback;
 
-    PxRigidDynamic* CreateDynamicRigidBody(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetups) const;
+    PxRigidDynamic* CreateDynamicRigidBody(GameObject* InOwningGameObject, const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetup) const;
     PxRigidStatic* CreateStaticRigidBody(const PxVec3& Pos, const PxQuat& Rot, FBodyInstance* BodyInstance, UBodySetup* BodySetups) const;
     void AttachShapesToActor(PxRigidActor* Actor, UBodySetup* BodySetup) const;
     void ApplyMassAndInertiaSettings(PxRigidDynamic* DynamicBody, const FBodyInstance* BodyInstance) const;

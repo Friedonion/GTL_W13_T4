@@ -1,6 +1,7 @@
 #pragma once
 #include "GameFramework/Actor.h"
 #include "Core/TimerManager.h"
+#include "PhysicsManager.h"
 
 class USkeletalMeshComponent;
 class USkeletalMesh;
@@ -15,7 +16,6 @@ struct FBodyInstance;
 
 struct FConstraintSetup;
 struct FConstraintInstance;
-
 class AEnemy : public AActor
 {
     DECLARE_CLASS(AEnemy, AActor)
@@ -50,6 +50,12 @@ private:
     UPROPERTY(EditAnywhere, float, FireInterval,)
     UPROPERTY(VisibleAnywhere, bool, bShouldFire, )
     UPROPERTY(VisibleAnywhere, bool, bIsAlive, ) // 아직 Destroy되지 않았지만 Fire()하지 않아야 하므로
+    UPROPERTY(VisibleAnywhere, bool, bRagDollCreated, )
+
+    // Alive를 어떻게 정의를 하는게 맞을까
+    // State를 아래와 같이 나눌 예정
+    // None
+    // 
 
     // Begin Test
     void CreateCollisionShapes();
@@ -62,7 +68,7 @@ private:
     // FIX-ME
     FString GetCleanBoneName(const FString& InFullName);
 
-    void HandleCollision(AActor* SelfActor, AActor* OtherActor);
+    void HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActor* OtherActor);
 
     TArray<FBodyInstance*> BodyInstances;
     TArray<UBodySetup*> BodySetups;
@@ -79,6 +85,9 @@ private:
     FTimerHandle DestroyDelayTimerHandle;
     FTimerHandle AttackCheckTimerHandle;
 
+    void ApplyRagdollImpulse(ECollisionPart HitPart, const FVector& ImpulseDirection, float ImpulseMagnitude);
+    GameObject* GetRagdollBodyPartByIndex(int32 BodyIndex); // 헬퍼 함수 (선택 사항)
+    GameObject* GetRandomLegRagdollBodyPart();              // Leg 랜덤 선택 함수
 public:
     UPROPERTY(VisibleAnywhere, FRotator, Direction, )
 };
