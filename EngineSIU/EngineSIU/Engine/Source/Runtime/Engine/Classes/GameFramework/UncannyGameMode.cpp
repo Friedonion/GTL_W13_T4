@@ -2,6 +2,7 @@
 #include "LuaScripts/LuaUIManager.h"
 #include "Developer/LuaUtils/LuaTextUI.h"
 #include "Developer/LuaUtils/LuaImageUI.h"
+#include "Developer/LuaUtils/LuaButtonUI.h"
 
 void AUncannyGameMode::PostSpawnInitialize()
 {
@@ -14,14 +15,49 @@ void AUncannyGameMode::PostSpawnInitialize()
     int Width = LuaUIManager::Get().GetCanvasRectTransform().Size.X;
     int Height = LuaUIManager::Get().GetCanvasRectTransform().Size.Y;
 
+    //// 타이틀 전체 화면 이미지
     LuaUIManager::Get().CreateImage(
         FName(*TitleImageName),
-        RectTransform(-Width / 2, -Height / 2, Width, Height, AnchorDirection::MiddleCenter),
+        RectTransform(0, 0, Width, Height, AnchorDirection::TopLeft),
         1,
-        FName("Title"), // 리소스 이름이 "Title"인 이미지 필요 (예: T_Title.png)
+        FName("Title"),
         FLinearColor(1, 1, 1, 1)
     );
+
+    LuaUIManager::Get().CreateImage(
+        FName(*SubUVImageName),
+        RectTransform(-Width * 0.25, Height * 0.1, Width*0.5, Height*0.4, AnchorDirection::TopCenter),
+        3,
+        FName("TitleSubUV"), 
+        FLinearColor(1, 1, 1, 1)
+    );
+    if (LuaImageUI* SubUVImage = LuaUIManager::Get().GetImageUI(*SubUVImageName))
+    {
+        SubUVImage->SetSubUVAnimation(5, 19, 0.05f, true);
+        SubUVImage->PlaySubUV();
+    }
+
+    // GameStart 버튼 생성
+    LuaUIManager::Get().CreateButton(
+        "UI_GameStartButton",
+        RectTransform(-128, -200, 256, 128, AnchorDirection::BottomCenter),
+        2,
+        "" // Lua 함수 안 씀
+    );
+
+    // 버튼 포인터 획득 후 설정
+    if (LuaButtonUI* Btn = LuaUIManager::Get().GetButtonUI("UI_GameStartButton"))
+    {
+        FTexture* Tex = LuaUIManager::Get().GetTextureByName("Start");
+        if (Tex)
+            Btn->SetTexture((ImTextureID)(intptr_t)Tex->TextureSRV);
+
+        Btn->SetOnClick([this]() {
+            this->StartMatch();
+            });
+    }
 }
+
 
 void AUncannyGameMode::StartMatch()
 {
@@ -29,7 +65,8 @@ void AUncannyGameMode::StartMatch()
 
     // 타이틀 이미지 제거
     LuaUIManager::Get().DeleteUI(FName(*TitleImageName));
-
+    LuaUIManager::Get().DeleteUI("UI_GameStartButton");
+    LuaUIManager::Get().DeleteUI(FName(*SubUVImageName));
     // 게임 UI 생성
     LuaUIManager::Get().CreateText(
         FName(*HPTextName),
@@ -61,7 +98,7 @@ void AUncannyGameMode::StartMatch()
         FLinearColor(1, 1, 1, 1)
     );
 
-    LuaUIManager::Get().CreateImage("TestImage2", RectTransform(0, 0, 50, 50, AnchorDirection::MiddleCenter), 3, FName("Aim"), FLinearColor(1, 0, 0, 1));
+    LuaUIManager::Get().CreateImage("TestImage2", RectTransform(-25, -25, 50, 50, AnchorDirection::MiddleCenter), 3, FName("Aim"), FLinearColor(1, 0, 0, 1));
 
     UpdateUI();
 }

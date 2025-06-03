@@ -7,11 +7,12 @@
 #include "Engine/Classes/Engine/Texture.h"
 #include "Engine/EditorEngine.h"
 #include "Editor/LevelEditor/SLevelEditor.h"
+#include "Engine/Classes/GameFramework/GameMode.h"
 #include "Engine/Engine.h"
 
 void LuaUIManager::CreateUI(FName InName)
 {
-    UpdateUIArrayForSort();
+    //UpdateUIArrayForSort();
 }
 
 void LuaUIManager::CreateText(FName InName, RectTransform InRectTransform, int InSortOrder, FString InText, FName FontStyleName, float InFontSize, FLinearColor InFontColor)
@@ -21,7 +22,7 @@ void LuaUIManager::CreateText(FName InName, RectTransform InRectTransform, int I
     LuaTextUI* NewTextUI =  new LuaTextUI(InName, InRectTransform, InText, InSortOrder, FindFont, InFontSize, InFontColor);
 
     UIMap.Add(InName, NewTextUI);
-    UpdateUIArrayForSort();
+   // UpdateUIArrayForSort();
 }
 
 void LuaUIManager::CreateImage(FName InName, RectTransform InRectTransform, int InSortOrder, FName TextureName, FLinearColor InTextureColor)
@@ -31,7 +32,7 @@ void LuaUIManager::CreateImage(FName InName, RectTransform InRectTransform, int 
     LuaImageUI* NewImageUI = new LuaImageUI(InName, InRectTransform, InSortOrder, FindTexture, InTextureColor);
 
     UIMap.Add(InName, NewImageUI);
-    UpdateUIArrayForSort();
+    //UpdateUIArrayForSort();
 }
 
 void LuaUIManager::CreateButton(FName InName,  RectTransform InRectTransform, int InSortOrder, FString LuaFunctionName)
@@ -39,7 +40,7 @@ void LuaUIManager::CreateButton(FName InName,  RectTransform InRectTransform, in
     LuaButtonUI* NewButtonUI = new LuaButtonUI(InName, InRectTransform, InSortOrder, LuaFunctionName);
 
     UIMap.Add(InName, NewButtonUI);
-    UpdateUIArrayForSort();
+    //UpdateUIArrayForSort();
 }
 
 void LuaUIManager::DeleteUI(FName InName)
@@ -62,13 +63,10 @@ void LuaUIManager::ActualDeleteUIs()
         {
             delete* FoundPtr;
         }
-
         UIMap.Remove(DestroyName);
     }
 
     PendingDestroyUIs.Empty();
-
-    UpdateUIArrayForSort();
 }
 
 LuaTextUI* LuaUIManager::GetTextUI(FName FindName)
@@ -100,7 +98,6 @@ LuaButtonUI* LuaUIManager::GetButtonUI(FName FindName)
     {
         return nullptr;
     }
-
     return static_cast<LuaButtonUI*>(*FoundPtr);
 }
 
@@ -113,6 +110,7 @@ void LuaUIManager::ClearLuaUI()
 void LuaUIManager::DrawLuaUIs()
 {
     ImGuiIO& io = ImGui::GetIO();
+    UpdateUIArrayForSort();
 
     ImGuiWindowFlags WindowFlags =
         ImGuiWindowFlags_NoTitleBar |
@@ -121,8 +119,13 @@ void LuaUIManager::DrawLuaUIs()
         ImGuiWindowFlags_NoScrollbar |
         ImGuiWindowFlags_NoScrollWithMouse |
         ImGuiWindowFlags_NoCollapse |
-        ImGuiWindowFlags_NoBackground | 
-        ImGuiWindowFlags_NoInputs;  // 일단 입력 가로채는 문제 있어서 추가함 이후에 수정 필요할지도
+        ImGuiWindowFlags_NoBackground;
+
+    if(GEngine->ActiveWorld->GetGameMode()->IsGameRunning())
+        {
+        WindowFlags |= ImGuiWindowFlags_NoInputs; // 게임이 실행 중일 때는 입력을 받지 않음
+        }
+        
 
     ImGui::SetNextWindowPos(ImVec2(-5, -5), ImGuiCond_Always);
     ImGui::SetNextWindowSize(ImVec2(io.DisplaySize.x + 10, io.DisplaySize.y + 10), ImGuiCond_Always);
@@ -251,8 +254,13 @@ void LuaUIManager::GenerateResource()
     TextureMap.Add(FName("Aim"), AimTexture);
     auto NoiseTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Noise.png");
     TextureMap.Add(FName("Noise"), NoiseTexture);
-    auto titleTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Title.png");
+    auto titleTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Title2.png");
     TextureMap.Add(FName("Title"), titleTexture);
+    auto StartTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/StartButton.png");
+    TextureMap.Add(FName("Start"), StartTexture);
+
+    auto SubUVTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/TitleSubUV.png");
+    TextureMap.Add(FName("TitleSubUV"), SubUVTexture);
 
 }
 

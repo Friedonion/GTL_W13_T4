@@ -79,7 +79,7 @@ void ABullet::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void ABullet::Destroyed()
 {
     Super::Destroyed();
-    
+
 }
 
 void ABullet::Tick(float DeltaTime)

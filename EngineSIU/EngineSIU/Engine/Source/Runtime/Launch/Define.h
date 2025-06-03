@@ -492,7 +492,7 @@ struct FTextureUVConstants
 struct FLinePrimitiveBatchArgs
 {
     FGridParameters GridParam;
-    ID3D11Buffer* VertexBuffer;
+    ID3D11Buffer* VertexBuffer = nullptr;
     int BoundingBoxCount;
     int ConeCount;
     int ConeSegmentCount;
@@ -510,13 +510,13 @@ struct FVertexInfo
 {
     uint32_t NumVertices;
     uint32_t Stride;
-    ID3D11Buffer* VertexBuffer;
+    ID3D11Buffer* VertexBuffer = nullptr;
 };
 
 struct FIndexInfo
 {
     uint32_t NumIndices;
-    ID3D11Buffer* IndexBuffer;
+    ID3D11Buffer* IndexBuffer = nullptr;
 };
 
 struct FBufferInfo

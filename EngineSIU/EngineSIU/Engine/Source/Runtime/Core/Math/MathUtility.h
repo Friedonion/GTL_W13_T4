@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <cmath>
 #include <concepts>
 #include <numbers>
@@ -538,15 +538,10 @@ struct FMath
 
     [[nodiscard]] static FORCEINLINE float UnwindDegrees(float A)
     {
-        while (A > 180.0f)
-        {
-            A -= 360.0f;
-        }
-        while (A < -180.0f)
-        {
+        A = FMath::Fmod(A + 180.0f, 360.0f);
+        if (A < 0)
             A += 360.0f;
-        }
-        return A;
+        return A - 180.0f;
     }
 
     [[nodiscard]] static float Fmod(float X, float Y)
