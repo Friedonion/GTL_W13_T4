@@ -42,6 +42,8 @@ public:
 
     virtual void Tick(float DeltaTime) override;
 
+    bool IsGameRunning() const { return bGameRunning; }
+
     void Reset();
 
     FOnGameInit OnGameInit;
