@@ -26,7 +26,7 @@ void AGameMode::PostSpawnInitialize()
             if (KeyEvent.GetKeyCode() == VK_SPACE &&
                 !bGameRunning && bGameEnded)
             {
-                StartMatch();
+                 StartMatch();
             }
         });
 

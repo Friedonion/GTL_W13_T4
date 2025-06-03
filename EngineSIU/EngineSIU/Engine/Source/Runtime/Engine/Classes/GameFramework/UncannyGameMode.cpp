@@ -1,11 +1,36 @@
 #include "UncannyGameMode.h"
 #include "LuaScripts/LuaUIManager.h"
 #include "Developer/LuaUtils/LuaTextUI.h"
+#include "Developer/LuaUtils/LuaImageUI.h"
 
 void AUncannyGameMode::PostSpawnInitialize()
 {
     Super::PostSpawnInitialize();
 
+    LuaUIManager::Get().DeleteUI(FName(*KillTextName));
+    LuaUIManager::Get().DeleteUI(FName(*HPTextName));
+    LuaUIManager::Get().DeleteUI(FName(*BulletTextName));
+
+    int Width = LuaUIManager::Get().GetCanvasRectTransform().Size.X;
+    int Height = LuaUIManager::Get().GetCanvasRectTransform().Size.Y;
+
+    LuaUIManager::Get().CreateImage(
+        FName(*TitleImageName),
+        RectTransform(-Width / 2, -Height / 2, Width, Height, AnchorDirection::MiddleCenter),
+        1,
+        FName("Title"), // 리소스 이름이 "Title"인 이미지 필요 (예: T_Title.png)
+        FLinearColor(1, 1, 1, 1)
+    );
+}
+
+void AUncannyGameMode::StartMatch()
+{
+    Super::StartMatch();
+
+    // 타이틀 이미지 제거
+    LuaUIManager::Get().DeleteUI(FName(*TitleImageName));
+
+    // 게임 UI 생성
     LuaUIManager::Get().CreateText(
         FName(*HPTextName),
         RectTransform(10, -10, 200, 30, AnchorDirection::BottomLeft),
@@ -17,13 +42,13 @@ void AUncannyGameMode::PostSpawnInitialize()
     );
 
     LuaUIManager::Get().CreateText(
-        FName(*BulletTextName),
-        RectTransform(-100, -40, 200, 30, AnchorDirection::TopCenter),
+        FName(*KillTextName),
+        RectTransform(10, 70, 200, 30, AnchorDirection::TopCenter),
         1,
-        FString::Printf(TEXT("Bullet: %d"), BulletCount),
+        FString::Printf(TEXT("Kills: %d"), KillCount),
         FName("Default"),
         22,
-        FLinearColor(1, 1, 1, 1)
+        FLinearColor(1, 1, 0, 1)
     );
 
     LuaUIManager::Get().CreateText(
@@ -31,18 +56,32 @@ void AUncannyGameMode::PostSpawnInitialize()
         RectTransform(-200, -10, 200, 30, AnchorDirection::BottomRight),
         1,
         FString::Printf(TEXT("Bullet: %d"), BulletCount),
-        FName("KillCountName"),
+        FName("Default"),
         22,
         FLinearColor(1, 1, 1, 1)
     );
 
+    LuaUIManager::Get().CreateImage("TestImage2", RectTransform(0, 0, 50, 50, AnchorDirection::MiddleCenter), 3, FName("Aim"), FLinearColor(1, 0, 0, 1));
+
     UpdateUI();
 }
+
 
 void AUncannyGameMode::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
+
+    if (bNoisePlaying)
+    {
+        NoiseEffectElapsed += DeltaTime;
+        if (NoiseEffectElapsed >= 0.15f) // 약 15프레임 * 0.05초
+        {
+            LuaUIManager::Get().DeleteUI("Noise");
+            bNoisePlaying = false;
+        }
+    }
 }
+
 
 void AUncannyGameMode::SetCurrentHP(int32 NewHP)
 {
@@ -78,9 +117,42 @@ void AUncannyGameMode::UpdateUI()
         BulletText->SetText(Text);
     }
 
-    if (LuaTextUI* KillCountText = LuaUIManager::Get().GetTextUI(FName(*KillCountName)))
+    if (LuaTextUI* KillText = LuaUIManager::Get().GetTextUI(FName(*KillTextName)))
     {
-        FString Text = FString::Printf(TEXT("Kill Count: %d"), KillCount);
-        KillCountText->SetText(Text);
+        FString Text = FString::Printf(TEXT("Kills: %d"), KillCount);
+        KillText->SetText(Text);
     }
+
 }
+
+void AUncannyGameMode::AddKill()
+{
+    KillCount++;
+    UpdateUI();
+}
+
+void AUncannyGameMode::PlayHitNoiseEffect()
+{
+    if (bNoisePlaying) return;
+
+    int Width = LuaUIManager::Get().GetCanvasRectTransform().Size.X;
+    int Height = LuaUIManager::Get().GetCanvasRectTransform().Size.Y;
+
+    LuaUIManager::Get().CreateImage("Noise",
+        RectTransform(-Width / 2, -Height / 2, Width, Height, AnchorDirection::MiddleCenter),
+        3,
+        FName("Noise"),
+        FLinearColor(1, 0, 0, 1)
+    );
+
+    if (LuaImageUI* NoiseImage = LuaUIManager::Get().GetImageUI("Noise"))
+    {
+        NoiseImage->SetSubUVAnimation(5, 3, 0.05f, true); 
+        NoiseImage->PlaySubUV();
+    }
+
+    bNoisePlaying = true;
+    NoiseEffectElapsed = 0.f;
+}
+
+
