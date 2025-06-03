@@ -14,8 +14,11 @@ public:
     virtual void Tick(float DeltaTime) override;
 
     void SetCurrentHP(int32 NewHP);
+    int32 GetCurrentHP() const { return CurrentHP; }
+    void OnPlayerHit(float Damage = 10.f);
     void SetMaxHP(int32 NewMaxHP);
     void SetBulletCount(int32 NewCount);
+    int32 GetBulletCount() const { return BulletCount; }
     void AddKill();
     void PlayHitNoiseEffect();
 

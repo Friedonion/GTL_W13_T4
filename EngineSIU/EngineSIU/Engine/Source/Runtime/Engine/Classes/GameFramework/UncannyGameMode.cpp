@@ -136,6 +136,12 @@ void AUncannyGameMode::SetCurrentHP(int32 NewHP)
     UpdateUI();
 }
 
+void AUncannyGameMode::OnPlayerHit(float Damage)
+{
+    CurrentHP -= FMath::Max(0, (int32)Damage);
+    UpdateUI();
+}
+
 void AUncannyGameMode::SetMaxHP(int32 NewMaxHP)
 {
     MaxHP = FMath::Max(1, NewMaxHP);
