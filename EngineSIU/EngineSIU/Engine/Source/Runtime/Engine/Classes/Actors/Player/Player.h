@@ -6,6 +6,7 @@
 
 class USkeletalMeshComponent;
 class UCameraComponent;
+class UAnimSequence;
 
 // ACharacter를 상속받는 게임 내에서의 플레이어 캐릭터.
 class APlayerCharacter : public ACharacter
@@ -38,9 +39,13 @@ public:
 
     PlayerState State = PlayerState::Idle; // 플레이어의 현재 상태를 나타내는 변수.
 
+
 protected:
     USkeletalMeshComponent* LeftArm = nullptr;
     USkeletalMeshComponent* RightArm = nullptr;
+    UAnimSequence* PunchAnim = nullptr;
+    UAnimSequence* ShootAnim = nullptr;
+
     USceneComponent* Head = nullptr;
 
     UPROPERTY(
