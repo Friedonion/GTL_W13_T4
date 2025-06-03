@@ -26,6 +26,11 @@ void AEditorPlayer::Input()
     if (io.WantCaptureMouse) return;
     if (io.WantCaptureKeyboard) return;
 
+    if (GEngine->ActiveWorld && GEngine->ActiveWorld->WorldType != EWorldType::Editor)
+    {
+        return;
+    }
+
     if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
     {
         if (!bLeftMouseDown)

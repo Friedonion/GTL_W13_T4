@@ -93,7 +93,7 @@ void AFist::SpawnObject()
     StaticMeshComponent->BodyInstance->bEnableGravity = StaticMeshComponent->bApplyGravity;
 
     FVector Pos = Shooter->GetActorLocation();
-    Pos += Shooter->GetActorForwardVector() * 0.5;
+    Pos += Shooter->GetActorForwardVector() * 20;
     SetActorLocation(Pos);
     SetActorRotation(Shooter->GetActorRotation());
 
