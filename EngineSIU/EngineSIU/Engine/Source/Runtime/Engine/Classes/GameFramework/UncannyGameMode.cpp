@@ -85,7 +85,7 @@ void AUncannyGameMode::StartMatch()
         FLinearColor(1, 1, 1, 1)
     );
 
-    LuaUIManager::Get().CreateImage("TestImage2", RectTransform(0, 0, 50, 50, AnchorDirection::MiddleCenter), 3, FName("Aim"), FLinearColor(1, 0, 0, 1));
+    LuaUIManager::Get().CreateImage("TestImage2", RectTransform(-25, -25, 50, 50, AnchorDirection::MiddleCenter), 3, FName("Aim"), FLinearColor(1, 0, 0, 1));
 
     UpdateUI();
 }
