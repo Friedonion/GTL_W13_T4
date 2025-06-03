@@ -4,6 +4,7 @@
 #include "Engine/Engine.h"
 #include "UObject/UObjectIterator.h"
 #include "World/World.h"
+#include "Windows/WindowsCursor.h"
 
 
 void APlayerController::PostSpawnInitialize()
@@ -16,6 +17,7 @@ void APlayerController::PostSpawnInitialize()
 
 void APlayerController::BeginPlay()
 {
+    FWindowsCursor::SetPosition(400, 400);
 }
 
 void APlayerController::Tick(float DeltaTime)
