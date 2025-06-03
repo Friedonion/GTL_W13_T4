@@ -11,6 +11,8 @@ public:
 
     virtual UObject* Duplicate(UObject* InOuter) override;
 
+    virtual void BeginPlay() override;
+
     virtual void SetProperties(const TMap<FString, FString>& InProperties) override;
     virtual void GetProperties(TMap<FString, FString>& OutProperties) const override;
 
@@ -30,7 +32,11 @@ public:
 
     void GetEndPoints(FVector& OutStart, FVector& OutEnd) const;
     
+    virtual void CreatePhysXGameObject();
+
+    UPROPERTY_WITH_FLAGS(EditAnywhere, bool, bLockZAxis, = true)
 private:
     float CapsuleHalfHeight = 0.88f;
     float CapsuleRadius = 0.34f;
+
 };

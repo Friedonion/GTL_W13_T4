@@ -23,6 +23,7 @@
 #include "SoundManager.h"
 #include "Actors/EditorPlayer.h"
 #include "Actors/Player/Player.h"
+#include "LuaScripts/LuaUIManager.h"
 
 extern FEngineLoop GEngineLoop;
 
@@ -611,6 +612,7 @@ void UEditorEngine::EndPIE()
 
     FSlateAppMessageHandler* Handler = GEngineLoop.GetAppMessageHandler();
 
+    LuaUIManager::Get().ClearLuaUI(); // Lua UI 닫기
     Handler->OnPIEModeEnd();
     // 다시 EditorWorld로 돌아옴.
     ActiveWorld = EditorWorld;

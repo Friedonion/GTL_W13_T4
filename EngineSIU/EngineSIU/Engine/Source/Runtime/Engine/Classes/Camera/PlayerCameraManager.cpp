@@ -4,7 +4,8 @@
 #include "GameFramework/PlayerController.h"
 #include "Camera/CameraModifier_CameraShake.h"
 #include "World/World.h"
-#include "GameFramework/Character.h"
+#include "Actors/Player/Player.h"
+#include "Components/SkeletalMeshComponent.h"
 
 bool FTViewTarget::Equal(const FTViewTarget& OtherTarget) const
 {
@@ -333,11 +334,13 @@ void APlayerCameraManager::UpdateViewTarget(FTViewTarget& OutVT, float DeltaTime
 	bool bDoNotApplyModifiers = false;
 
     OutVT.POV.Location = OutVT.Target->GetActorLocation();
-    if (ACharacter* Character = Cast<ACharacter>(OutVT.Target))
-    {
-        OutVT.POV.Location += FVector(0.f, 0.f, Character->BaseEyeHeight);
-    }
     OutVT.POV.Rotation = OutVT.Target->GetActorRotation();
+    if (APlayerCharacter* Player = Cast<APlayerCharacter>(OutVT.Target))
+    {
+		OutVT.POV.Location = Player->GetHeadLocation();
+        OutVT.POV.Location += FVector(0.f, 0.f, Player->BaseEyeHeight);
+		OutVT.POV.Rotation = Player->GetHeadRotation();
+    }
     OutVT.POV.Rotation.Roll = 0.0f;
     
 	if (UCameraComponent* CamComp = OutVT.Target->GetComponentByClass<UCameraComponent>())

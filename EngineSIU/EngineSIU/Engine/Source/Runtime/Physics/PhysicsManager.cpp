@@ -3,7 +3,7 @@
 #include "PhysicsEngine/BodyInstance.h"
 #include "PhysicsEngine/ConstraintInstance.h"
 #include "PhysicsEngine/PhysicsAsset.h"
-
+#include "Engine/Engine.h"
 #include "World/World.h"
 #include <thread>
 #include "PhysicsEngine/SimulationEventCallback.h"  
@@ -703,14 +703,22 @@ FVector FPhysicsManager::GetGravity(UWorld* World)
 
 void FPhysicsManager::DestroyGameObject(GameObject* GameObject) const
 {
-    // TODO: StaticRigidBody 분기 처리 필요
-    if (GameObject && GameObject->DynamicRigidBody)
-    {
-        CurrentScene->removeActor(*GameObject->DynamicRigidBody);
-        GameObject->DynamicRigidBody->release();
-        GameObject->DynamicRigidBody = nullptr;
-    }
-    delete GameObject;
+	if (GameObject)
+	{
+		if (GameObject->StaticRigidBody)
+		{
+			CurrentScene->removeActor(*GameObject->StaticRigidBody);
+			GameObject->StaticRigidBody->release();
+			GameObject->StaticRigidBody = nullptr;
+		}
+		if (GameObject->DynamicRigidBody)
+		{
+			CurrentScene->removeActor(*GameObject->DynamicRigidBody);
+			GameObject->DynamicRigidBody->release();
+			GameObject->DynamicRigidBody = nullptr;
+		}
+		delete GameObject;
+	}
 }
 
 PxShape* FPhysicsManager::CreateBoxShape(const PxVec3& Pos, const PxQuat& Quat, const PxVec3& HalfExtents) const

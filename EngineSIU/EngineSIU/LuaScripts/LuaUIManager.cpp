@@ -7,6 +7,7 @@
 #include "Engine/Classes/Engine/Texture.h"
 #include "Engine/EditorEngine.h"
 #include "Editor/LevelEditor/SLevelEditor.h"
+#include "Engine/Classes/GameFramework/GameMode.h"
 #include "Engine/Engine.h"
 
 void LuaUIManager::CreateUI(FName InName)
@@ -119,6 +120,11 @@ void LuaUIManager::DrawLuaUIs()
         ImGuiWindowFlags_NoScrollWithMouse |
         ImGuiWindowFlags_NoCollapse |
         ImGuiWindowFlags_NoBackground;
+
+    if(GEngine->ActiveWorld->GetGameMode()->IsGameRunning())
+        {
+        WindowFlags |= ImGuiWindowFlags_NoInputs; // 게임이 실행 중일 때는 입력을 받지 않음
+        }
         
 
     ImGui::SetNextWindowPos(ImVec2(-5, -5), ImGuiCond_Always);
@@ -248,11 +254,13 @@ void LuaUIManager::GenerateResource()
     TextureMap.Add(FName("Aim"), AimTexture);
     auto NoiseTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Noise.png");
     TextureMap.Add(FName("Noise"), NoiseTexture);
-    auto titleTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Title.png");
+    auto titleTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/Title2.png");
     TextureMap.Add(FName("Title"), titleTexture);
     auto StartTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/StartButton.png");
     TextureMap.Add(FName("Start"), StartTexture);
 
+    auto SubUVTexture = FEngineLoop::ResourceManager.GetTexture(L"Assets/Texture/TitleSubUV.png");
+    TextureMap.Add(FName("TitleSubUV"), SubUVTexture);
 
 }
 

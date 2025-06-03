@@ -24,6 +24,19 @@ void AUncannyGameMode::PostSpawnInitialize()
         FLinearColor(1, 1, 1, 1)
     );
 
+    LuaUIManager::Get().CreateImage(
+        FName(*SubUVImageName),
+        RectTransform(-Width * 0.25, Height * 0.1, Width*0.5, Height*0.4, AnchorDirection::TopCenter),
+        3,
+        FName("TitleSubUV"), 
+        FLinearColor(1, 1, 1, 1)
+    );
+    if (LuaImageUI* SubUVImage = LuaUIManager::Get().GetImageUI(*SubUVImageName))
+    {
+        SubUVImage->SetSubUVAnimation(5, 19, 0.05f, true);
+        SubUVImage->PlaySubUV();
+    }
+
     // GameStart 버튼 생성
     LuaUIManager::Get().CreateButton(
         "UI_GameStartButton",
@@ -53,7 +66,7 @@ void AUncannyGameMode::StartMatch()
     // 타이틀 이미지 제거
     LuaUIManager::Get().DeleteUI(FName(*TitleImageName));
     LuaUIManager::Get().DeleteUI("UI_GameStartButton");
-
+    LuaUIManager::Get().DeleteUI(FName(*SubUVImageName));
     // 게임 UI 생성
     LuaUIManager::Get().CreateText(
         FName(*HPTextName),

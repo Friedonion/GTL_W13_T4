@@ -24,6 +24,9 @@ void FResourceManager::Initialize(FRenderer* Renderer, FGraphicsDevice* Device)
     LoadTextureFromFile(Device->Device, L"Assets/Texture/Noise.png");
     LoadTextureFromFile(Device->Device, L"Assets/Texture/Title.png");
     LoadTextureFromFile(Device->Device, L"Assets/Texture/StartButton.png");
+    LoadTextureFromFile(Device->Device, L"Assets/Texture/Title2.png");
+    LoadTextureFromFile(Device->Device, L"Assets/Texture/TitleSubUV.png");
+
 
     LoadTextureFromFile(Device->Device, L"Assets/Editor/Icon/S_Actor.PNG");
     LoadTextureFromFile(Device->Device, L"Assets/Editor/Icon/S_LightSpot.PNG");
