@@ -90,8 +90,13 @@ void ABullet::BeginPlay()
     StaticMeshComponent->bSimulate = true;
     StaticMeshComponent->CreatePhysXGameObject();
 
-    StaticMeshComponent->BodyInstance->CollisionEnabled = ECollisionEnabled::QueryOnly;
+    StaticMeshComponent->BodyInstance->CollisionEnabled = ECollisionEnabled::QueryAndPhysics;
     StaticMeshComponent->BodyInstance->OwnerActor = this;
+
+    StaticMeshComponent->BodyInstance->bUseCCD = true;                                        // CCD 활성화
+    StaticMeshComponent->BodyInstance->bStartAwake = true;                                    // 항상 깨어있는 상태로 시작
+    StaticMeshComponent->BodyInstance->PositionSolverIterationCount = 8;                     // 위치 솔버 반복 횟수 증가
+    StaticMeshComponent->BodyInstance->VelocitySolverIterationCount = 4;                     // 속도 솔버 반복 횟수 증가
     PxRigidDynamic* RigidBody = StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody;
 
     FVector Velocity = GetActorForwardVector() * 1000.f;
