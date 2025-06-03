@@ -83,7 +83,7 @@ void AUncannyGameMode::StartMatch()
     // 게임 UI 생성
     UIManager->CreateText(
         FName(*HPTextName),
-        RectTransform(10, -10, 200, 30, AnchorDirection::BottomLeft),
+        RectTransform(100, -40, 200, 30, AnchorDirection::BottomLeft),
         1,
         FString::Printf(TEXT("HP: %d / %d"), CurrentHP, MaxHP),
         FName("Default"),
@@ -93,7 +93,7 @@ void AUncannyGameMode::StartMatch()
 
     UIManager->CreateText(
         FName(*KillTextName),
-        RectTransform(10, 70, 200, 30, AnchorDirection::TopCenter),
+        RectTransform(-100, 70, 200, 30, AnchorDirection::TopCenter),
         1,
         FString::Printf(TEXT("Kills: %d"), KillCount),
         FName("Default"),
@@ -103,7 +103,7 @@ void AUncannyGameMode::StartMatch()
 
     UIManager->CreateText(
         FName(*BulletTextName),
-        RectTransform(-200, -10, 200, 30, AnchorDirection::BottomRight),
+        RectTransform(-100, -40, 200, 30, AnchorDirection::BottomRight),
         1,
         FString::Printf(TEXT("Bullet: %d"), BulletCount),
         FName("Default"),

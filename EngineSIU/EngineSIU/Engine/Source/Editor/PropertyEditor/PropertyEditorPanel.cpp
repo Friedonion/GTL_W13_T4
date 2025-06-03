@@ -53,7 +53,7 @@
 
 PropertyEditorPanel::PropertyEditorPanel()
 {
-    SetSupportedWorldTypes(EWorldTypeBitFlag::Editor | EWorldTypeBitFlag::PIE);
+    SetSupportedWorldTypes(EWorldTypeBitFlag::Editor);
 }
 
 void PropertyEditorPanel::Render()
