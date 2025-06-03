@@ -31,8 +31,6 @@ public:
 private:
     UPROPERTY(EditAnywhere, UStaticMeshComponent*, StaticMeshComponent, = nullptr)
 
-    GameObject* GameObject = nullptr; // Fist의 게임 오브젝트
-
     void SpawnObject();
     
     AActor* Shooter = nullptr;

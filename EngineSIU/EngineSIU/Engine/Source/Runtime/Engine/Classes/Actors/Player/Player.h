@@ -41,6 +41,7 @@ public:
 protected:
     USkeletalMeshComponent* LeftArm = nullptr;
     USkeletalMeshComponent* RightArm = nullptr;
+    USceneComponent* Head = nullptr;
 
     UPROPERTY(
         EditAnywhere,
@@ -48,4 +49,11 @@ protected:
         bAnimRestart,
         = true
     )
+    
+public:
+    FVector GetHeadLocation() { return Head->GetComponentLocation(); }
+    void SetHeadLocation(const FVector& Location) { Head->SetWorldLocation(Location); }
+
+    void SetHeadRotation(const FRotator& Rotation) { Head->SetWorldRotation(Rotation); }
+    FRotator GetHeadRotation() { return Head->GetComponentRotation(); }
 };

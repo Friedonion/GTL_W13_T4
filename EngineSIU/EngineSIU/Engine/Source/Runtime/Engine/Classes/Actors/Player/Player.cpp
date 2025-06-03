@@ -14,15 +14,19 @@
 APlayerCharacter::APlayerCharacter()
     : ACharacter()
 {
+    Head = AddComponent<USceneComponent>(FName("Head"));
     LeftArm = AddComponent<USkeletalMeshComponent>(FName("LeftArm"));
     RightArm = AddComponent<USkeletalMeshComponent>(FName("RightArm"));
     
-    LeftArm->SetupAttachment(Super::Mesh);
-    RightArm->SetupAttachment(Super::Mesh);
+    Head->SetupAttachment(Super::Mesh);
+    LeftArm->SetupAttachment(Head);
+    RightArm->SetupAttachment(Head);
 }
 
 void APlayerCharacter::BeginPlay()
 {
+    Super::BeginPlay();
+
     RegisterLuaType(FLuaScriptManager::Get().GetLua());
 
     sol::state& Lua = FLuaScriptManager::Get().GetLua();
@@ -42,7 +46,6 @@ void APlayerCharacter::BeginPlay()
         }
     );
 
-    Super::BeginPlay();
 
     for (USkeletalMeshComponent* SkelComp : GetComponentsByClass<USkeletalMeshComponent>())
     {
@@ -81,6 +84,15 @@ UObject* APlayerCharacter::Duplicate(UObject* InOuter)
         }
     }
 
+    for (USceneComponent* Comp : NewActor->GetComponentsByClass<USceneComponent>())
+    {
+        if (Comp->GetName() == Head->GetName())
+        {
+            NewActor->Head = Comp;
+        }
+    }
+
+
     return NewActor;
 }
 
@@ -109,7 +121,9 @@ void APlayerCharacter::RegisterLuaType(sol::state& Lua)
         "Punch", &APlayerCharacter::Punch,
         "Shoot", &APlayerCharacter::Shoot,
         "SetPlayRate", &APlayerCharacter::SetPlayRate,
-        "SetWorldTickRate", &APlayerCharacter::SetWorldTickRate
+        "SetWorldTickRate", &APlayerCharacter::SetWorldTickRate,
+        "HeadLocation", sol::property(&APlayerCharacter::GetHeadLocation, &APlayerCharacter::SetHeadLocation),
+        "HeadRotation", sol::property(&APlayerCharacter::GetHeadRotation, &APlayerCharacter::SetHeadRotation)
     )
 }
 

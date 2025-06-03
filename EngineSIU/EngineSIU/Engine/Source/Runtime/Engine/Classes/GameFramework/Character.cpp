@@ -18,12 +18,18 @@ void ACharacter::PostSpawnInitialize()
 
 UObject* ACharacter::Duplicate(UObject* InOuter)
 {
-    return Super::Duplicate(InOuter);
+    ThisClass* NewActor = Cast<ThisClass>(Super::Duplicate(InOuter));
+
+    NewActor->BaseEyeHeight = BaseEyeHeight;
+
+    return NewActor;
 }
 
 void ACharacter::BeginPlay()
 {
     Super::BeginPlay();
+
+    RegisterLuaType(FLuaScriptManager::Get().GetLua());
 
     for (USkeletalMeshComponent* SkelComp : GetComponentsByClass<USkeletalMeshComponent>())
     {
@@ -71,4 +77,24 @@ void ACharacter::RegisterLuaType(sol::state& Lua)
 {
     DEFINE_LUA_TYPE_WITH_PARENT_ONLY(ACharacter, (sol::bases<AActor, APawn>()))
 }
+
+//FRotator ACharacter::GetMeshRotation() const
+//{
+//    return Mesh->GetRelativeRotation();
+//}
+//
+//void ACharacter::SetMeshRotation(FRotator InRotation)
+//{
+//    return Mesh->SetRelativeRotation(InRotation);
+//}
+//
+//FVector ACharacter::GetMeshLocation() const
+//{
+//    return Mesh->GetRelativeLocation();
+//}
+//
+//void ACharacter::SetMeshLocation(FVector InLocation)
+//{
+//    Mesh->SetRelativeLocation(InLocation);
+//}
  

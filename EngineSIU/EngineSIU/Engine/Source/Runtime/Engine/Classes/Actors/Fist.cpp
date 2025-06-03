@@ -55,7 +55,7 @@ void AFist::Tick(float DeltaTime)
 
 void AFist::Destroyed()
 {
-    GEngine->PhysicsManager->DestroyGameObject(GameObject);
+    GEngine->PhysicsManager->DestroyGameObject(StaticMeshComponent->BodyInstance->BIGameObject);
     Super::Destroyed();
 }
 

@@ -46,7 +46,7 @@
                         "Intensity": "3.300000",
                         "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -86,7 +86,7 @@
                         "ComponentOwner": "ACube_414",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=3.951 Y=103.216 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building1.obj",
@@ -131,7 +131,7 @@
                         "ComponentOwner": "ACube_427",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=27.048 Y=102.645 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building2.obj",
@@ -189,7 +189,7 @@
                         "ComponentOwner": "ACube_422",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=50.096 Y=103.216 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building3.obj",
@@ -234,7 +234,7 @@
                         "ComponentOwner": "ACube_428",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=72.929 Y=103.216 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building4.obj",
@@ -282,10 +282,10 @@
             "Components": [
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_439",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_439",
                         "ComponentOwner": "ACube_434",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -305,7 +305,7 @@
                         "ComponentOwner": "ACube_434",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=95.078 Y=103.216 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building5.obj",
@@ -318,10 +318,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_439",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_439",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_434",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -350,7 +350,7 @@
                         "ComponentOwner": "ACube_446",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-117.463 Y=80.825 Z=-4.423",
-                        "RelativeRotation": "Pitch=0.000 Yaw=-91.060 Roll=0.000",
+                        "RelativeRotation": "Pitch=-0.000 Yaw=-91.060 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Lamp.obj",
@@ -363,10 +363,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_449",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_449",
                         "ComponentOwner": "ACube_446",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -376,10 +376,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_449",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_449",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_446",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -424,19 +424,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_447",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/LuaUISample.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -448,7 +435,7 @@
                         "ComponentOwner": "ACube_447",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-0.950 Y=15.994 Z=-24.795",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/Reference/Reference.obj",
@@ -457,6 +444,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_447",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/LuaUISample.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 }
             ],
@@ -480,7 +480,7 @@
                         "ComponentOwner": "ACube_451",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-18.242 Y=103.216 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building1.obj",
@@ -493,10 +493,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_456",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_456",
                         "ComponentOwner": "ACube_451",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -506,10 +506,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_456",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_456",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_451",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -527,6 +527,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_462",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_462",
+                        "ComponentOwner": "ACube_457",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -538,7 +551,7 @@
                         "ComponentOwner": "ACube_457",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-41.386 Y=102.645 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building2.obj",
@@ -561,19 +574,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_462",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_462",
-                        "ComponentOwner": "ACube_457",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -584,19 +584,6 @@
             "ActorLabel": "ACube463",
             "ActorTickInEditor": "false",
             "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_466",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_466",
-                        "ComponentOwner": "ACube_463",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -609,7 +596,7 @@
                         "ComponentOwner": "ACube_463",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-63.996 Y=103.216 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building3.obj",
@@ -645,6 +632,19 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_466",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_466",
+                        "ComponentOwner": "ACube_463",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -667,7 +667,7 @@
                         "ComponentOwner": "ACube_470",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-86.582 Y=103.220 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building5.obj",
@@ -676,6 +676,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_473",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_473",
+                        "ComponentOwner": "ACube_470",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -703,19 +716,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_473",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_473",
-                        "ComponentOwner": "ACube_470",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -726,19 +726,6 @@
             "ActorLabel": "ACube477",
             "ActorTickInEditor": "false",
             "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_483",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_483",
-                        "ComponentOwner": "ACube_477",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -751,7 +738,7 @@
                         "ComponentOwner": "ACube_477",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-109.193 Y=103.216 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building6.obj",
@@ -768,6 +755,19 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_477",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_483",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_483",
                         "ComponentOwner": "ACube_477",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -798,6 +798,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_490",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_490",
+                        "ComponentOwner": "ACube_484",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -809,7 +822,7 @@
                         "ComponentOwner": "ACube_484",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=83.570 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building6.obj",
@@ -826,19 +839,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_484",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_490",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_490",
                         "ComponentOwner": "ACube_484",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -869,19 +869,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_496",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_496",
-                        "ComponentOwner": "ACube_491",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -893,7 +880,7 @@
                         "ComponentOwner": "ACube_491",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=37.515 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building4.obj",
@@ -910,6 +897,19 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_491",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_496",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_496",
                         "ComponentOwner": "ACube_491",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -951,7 +951,7 @@
                         "ComponentOwner": "ACube_498",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=60.478 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building5.obj",
@@ -977,10 +977,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_503",
+                    "ComponentID": "ULuaScriptComponent_504",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_503",
+                        "ComponentName": "ULuaScriptComponent_504",
                         "ComponentOwner": "ACube_498",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -990,10 +990,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_504",
+                    "ComponentID": "ULuaScriptComponent_503",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_504",
+                        "ComponentName": "ULuaScriptComponent_503",
                         "ComponentOwner": "ACube_498",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1022,7 +1022,7 @@
                         "ComponentOwner": "ACube_505",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=-100.899 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building3.obj",
@@ -1082,6 +1082,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_517",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_517",
+                        "ComponentOwner": "ACube_512",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1093,7 +1106,7 @@
                         "ComponentOwner": "ACube_512",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=-8.953 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building2.obj",
@@ -1129,19 +1142,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_517",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_517",
-                        "ComponentOwner": "ACube_512",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -1152,6 +1152,19 @@
             "ActorLabel": "ACube519",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_524",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_524",
+                        "ComponentOwner": "ACube_519",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -1164,7 +1177,7 @@
                         "ComponentOwner": "ACube_519",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=-32.130 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building1.obj",
@@ -1173,19 +1186,6 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_525",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_525",
-                        "ComponentOwner": "ACube_519",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
                     }
                 },
                 {
@@ -1203,10 +1203,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_524",
+                    "ComponentID": "ULuaScriptComponent_525",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_524",
+                        "ComponentName": "ULuaScriptComponent_525",
                         "ComponentOwner": "ACube_519",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1224,19 +1224,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_531",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_531",
-                        "ComponentOwner": "ACube_526",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1248,7 +1235,7 @@
                         "ComponentOwner": "ACube_526",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=-55.099 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building1.obj",
@@ -1265,6 +1252,19 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_526",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_531",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_531",
                         "ComponentOwner": "ACube_526",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1306,7 +1306,7 @@
                         "ComponentOwner": "ACube_533",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=-77.689 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building2.obj",
@@ -1367,10 +1367,23 @@
             "Components": [
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_545",
+                    "ComponentID": "ULuaScriptComponent_546",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_545",
+                        "ComponentName": "ULuaScriptComponent_546",
+                        "ComponentOwner": "ACube_540",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_540",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1390,7 +1403,7 @@
                         "ComponentOwner": "ACube_540",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=14.507 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building3.obj",
@@ -1403,23 +1416,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_545",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_540",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_546",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_546",
+                        "ComponentName": "ULuaScriptComponent_545",
                         "ComponentOwner": "ACube_540",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1448,7 +1448,7 @@
                         "ComponentOwner": "ACube_547",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=-123.227 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building4.obj",
@@ -1461,10 +1461,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_553",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_553",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_547",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1474,10 +1474,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_553",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_553",
                         "ComponentOwner": "ACube_547",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1508,6 +1508,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_554",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1519,7 +1532,7 @@
                         "ComponentOwner": "ACube_554",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-127.000 Y=-145.961 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building5.obj",
@@ -1536,19 +1549,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "ULuaScriptComponent_560",
-                        "ComponentOwner": "ACube_554",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_554",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1579,42 +1579,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "UStaticMeshComponent",
-                    "ComponentID": "StaticMeshComponent_0",
-                    "Properties": {
-                        "AABB_max": "X=12.047 Y=5.485 Z=47.183",
-                        "AABB_min": "X=-11.050 Y=-7.110 Z=-0.005",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "UStaticMeshComponent",
-                        "ComponentName": "StaticMeshComponent_0",
-                        "ComponentOwner": "ACube_561",
-                        "ComponentOwnerClass": "ACube",
-                        "RelativeLocation": "X=-127.000 Y=-168.980 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "StaticMeshPath": "Contents/SuperHot/Building6.obj",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_561",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "ULuaScriptComponent_566",
                     "Properties": {
@@ -1628,11 +1592,47 @@
                     }
                 },
                 {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=12.047 Y=5.485 Z=47.183",
+                        "AABB_min": "X=-11.050 Y=-7.110 Z=-0.005",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ACube_561",
+                        "ComponentOwnerClass": "ACube",
+                        "RelativeLocation": "X=-127.000 Y=-168.980 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "StaticMeshPath": "Contents/SuperHot/Building6.obj",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "ULuaScriptComponent_567",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "ULuaScriptComponent_567",
+                        "ComponentOwner": "ACube_561",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_561",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1650,19 +1650,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_573",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_573",
-                        "ComponentOwner": "ACube_568",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1674,7 +1661,7 @@
                         "ComponentOwner": "ACube_568",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=117.500 Y=103.216 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building6.obj",
@@ -1683,6 +1670,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_568",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -1700,10 +1700,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_573",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_573",
                         "ComponentOwner": "ACube_568",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1732,7 +1732,7 @@
                         "ComponentOwner": "ACube_575",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-109.193 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building6.obj",
@@ -1792,6 +1792,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_586",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_586",
+                        "ComponentOwner": "ACube_582",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1803,7 +1816,7 @@
                         "ComponentOwner": "ACube_582",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-86.582 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building5.obj",
@@ -1839,19 +1852,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_586",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_586",
-                        "ComponentOwner": "ACube_582",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -1862,6 +1862,19 @@
             "ActorLabel": "ACube589",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_595",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_595",
+                        "ComponentOwner": "ACube_589",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -1874,7 +1887,7 @@
                         "ComponentOwner": "ACube_589",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-63.996 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building3.obj",
@@ -1891,19 +1904,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_589",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_595",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_595",
                         "ComponentOwner": "ACube_589",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1934,6 +1934,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_596",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1945,7 +1958,7 @@
                         "ComponentOwner": "ACube_596",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-41.386 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building2.obj",
@@ -1954,19 +1967,6 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_596",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
                     }
                 },
                 {
@@ -2003,7 +2003,7 @@
                         "ComponentOwner": "ACube_602",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=3.951 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building1.obj",
@@ -2061,7 +2061,7 @@
                         "ComponentOwner": "ACube_608",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-18.242 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building1.obj",
@@ -2119,7 +2119,7 @@
                         "ComponentOwner": "ACube_614",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=27.048 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building2.obj",
@@ -2177,7 +2177,7 @@
                         "ComponentOwner": "ACube_620",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=50.096 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building3.obj",
@@ -2248,7 +2248,7 @@
                         "ComponentOwner": "ACube_627",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=72.929 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building4.obj",
@@ -2261,10 +2261,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_632",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_632",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_627",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2274,10 +2274,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_632",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_632",
                         "ComponentOwner": "ACube_627",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2308,6 +2308,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_637",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_637",
+                        "ComponentOwner": "ACube_634",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -2319,7 +2332,7 @@
                         "ComponentOwner": "ACube_634",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=95.078 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building5.obj",
@@ -2336,19 +2349,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_634",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_637",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_637",
                         "ComponentOwner": "ACube_634",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2379,19 +2379,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_641",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -2403,7 +2390,7 @@
                         "ComponentOwner": "ACube_641",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=117.500 Y=-187.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building6.obj",
@@ -2420,6 +2407,19 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "ULuaScriptComponent_646",
+                        "ComponentOwner": "ACube_641",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_641",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2450,19 +2450,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_685",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_685",
-                        "ComponentOwner": "ACube_679",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -2474,7 +2461,7 @@
                         "ComponentOwner": "ACube_679",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=134.083 Y=83.570 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building6.obj",
@@ -2487,10 +2474,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_684",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_684",
                         "ComponentOwner": "ACube_679",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2513,10 +2500,23 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_684",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_684",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_679",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_685",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_685",
                         "ComponentOwner": "ACube_679",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2545,7 +2545,7 @@
                         "ComponentOwner": "ACube_687",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=134.080 Y=60.478 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building5.obj",
@@ -2571,10 +2571,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_694",
+                    "ComponentID": "ULuaScriptComponent_693",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_694",
+                        "ComponentName": "ULuaScriptComponent_693",
                         "ComponentOwner": "ACube_687",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2597,10 +2597,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_693",
+                    "ComponentID": "ULuaScriptComponent_694",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_693",
+                        "ComponentName": "ULuaScriptComponent_694",
                         "ComponentOwner": "ACube_687",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2618,6 +2618,32 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_701",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_701",
+                        "ComponentOwner": "ACube_695",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_695",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -2629,7 +2655,7 @@
                         "ComponentOwner": "ACube_695",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=134.080 Y=37.515 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building4.obj",
@@ -2642,10 +2668,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_700",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_700",
                         "ComponentOwner": "ACube_695",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2665,32 +2691,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_701",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_701",
-                        "ComponentOwner": "ACube_695",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_700",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_700",
-                        "ComponentOwner": "ACube_695",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -2703,10 +2703,10 @@
             "Components": [
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_709",
+                    "ComponentID": "ULuaScriptComponent_710",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_709",
+                        "ComponentName": "ULuaScriptComponent_710",
                         "ComponentOwner": "ACube_703",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2726,7 +2726,7 @@
                         "ComponentOwner": "ACube_703",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=134.080 Y=14.507 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building3.obj",
@@ -2735,6 +2735,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_708",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_708",
+                        "ComponentOwner": "ACube_703",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -2752,23 +2765,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_710",
+                    "ComponentID": "ULuaScriptComponent_709",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_710",
-                        "ComponentOwner": "ACube_703",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_708",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_708",
+                        "ComponentName": "ULuaScriptComponent_709",
                         "ComponentOwner": "ACube_703",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2797,7 +2797,7 @@
                         "ComponentOwner": "ACube_711",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=134.080 Y=-8.953 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building2.obj",
@@ -2806,19 +2806,6 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_717",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_717",
-                        "ComponentOwner": "ACube_711",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
                     }
                 },
                 {
@@ -2859,6 +2846,19 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_717",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_717",
+                        "ComponentOwner": "ACube_711",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -2881,7 +2881,7 @@
                         "ComponentOwner": "ACube_719",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=134.080 Y=-32.130 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building1.obj",
@@ -2890,6 +2890,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_719",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -2911,19 +2924,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "ULuaScriptComponent_722",
-                        "ComponentOwner": "ACube_719",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_719",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2965,7 +2965,7 @@
                         "ComponentOwner": "ACube_727",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=134.080 Y=-55.099 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building1.obj",
@@ -2991,10 +2991,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_732",
+                    "ComponentID": "ULuaScriptComponent_734",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_732",
+                        "ComponentName": "ULuaScriptComponent_734",
                         "ComponentOwner": "ACube_727",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3017,10 +3017,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_734",
+                    "ComponentID": "ULuaScriptComponent_732",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_734",
+                        "ComponentName": "ULuaScriptComponent_732",
                         "ComponentOwner": "ACube_727",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3038,19 +3038,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_741",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_741",
-                        "ComponentOwner": "ACube_735",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -3062,7 +3049,7 @@
                         "ComponentOwner": "ACube_735",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=134.080 Y=-100.899 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building3.obj",
@@ -3088,10 +3075,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_738",
+                    "ComponentID": "ULuaScriptComponent_742",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_738",
+                        "ComponentName": "ULuaScriptComponent_742",
                         "ComponentOwner": "ACube_735",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3101,10 +3088,23 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_742",
+                    "ComponentID": "ULuaScriptComponent_741",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_742",
+                        "ComponentName": "ULuaScriptComponent_741",
+                        "ComponentOwner": "ACube_735",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_738",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_738",
                         "ComponentOwner": "ACube_735",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3122,6 +3122,29 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=12.047 Y=5.485 Z=21.983",
+                        "AABB_min": "X=-11.050 Y=-7.110 Z=-0.005",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ACube_743",
+                        "ComponentOwnerClass": "ACube",
+                        "RelativeLocation": "X=134.080 Y=-77.689 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "StaticMeshPath": "Contents/SuperHot/Building2.obj",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "ULuaScriptComponent_748",
                     "Properties": {
@@ -3135,47 +3158,11 @@
                     }
                 },
                 {
-                    "ComponentClass": "UStaticMeshComponent",
-                    "ComponentID": "StaticMeshComponent_0",
-                    "Properties": {
-                        "AABB_max": "X=12.047 Y=5.485 Z=21.983",
-                        "AABB_min": "X=-11.050 Y=-7.110 Z=-0.005",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "UStaticMeshComponent",
-                        "ComponentName": "StaticMeshComponent_0",
-                        "ComponentOwner": "ACube_743",
-                        "ComponentOwnerClass": "ACube",
-                        "RelativeLocation": "X=134.080 Y=-77.689 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "StaticMeshPath": "Contents/SuperHot/Building2.obj",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                },
-                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_743",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_749",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_749",
                         "ComponentOwner": "ACube_743",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3195,6 +3182,19 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_749",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_749",
+                        "ComponentOwner": "ACube_743",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -3205,6 +3205,19 @@
             "ActorLabel": "ACube751",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_758",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_758",
+                        "ComponentOwner": "ACube_751",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -3217,7 +3230,7 @@
                         "ComponentOwner": "ACube_751",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=134.080 Y=-123.227 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Building4.obj",
@@ -3234,19 +3247,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_751",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_758",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_758",
                         "ComponentOwner": "ACube_751",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3290,6 +3290,29 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=12.047 Y=5.485 Z=39.983",
+                        "AABB_min": "X=-11.050 Y=-7.110 Z=-0.005",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ACube_759",
+                        "ComponentOwnerClass": "ACube",
+                        "RelativeLocation": "X=134.080 Y=-145.961 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "StaticMeshPath": "Contents/SuperHot/Building5.obj",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
@@ -3303,26 +3326,16 @@
                     }
                 },
                 {
-                    "ComponentClass": "UStaticMeshComponent",
-                    "ComponentID": "StaticMeshComponent_0",
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_764",
                     "Properties": {
-                        "AABB_max": "X=12.047 Y=5.485 Z=39.983",
-                        "AABB_min": "X=-11.050 Y=-7.110 Z=-0.005",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "UStaticMeshComponent",
-                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_764",
                         "ComponentOwner": "ACube_759",
                         "ComponentOwnerClass": "ACube",
-                        "RelativeLocation": "X=134.080 Y=-145.961 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=90.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "StaticMeshPath": "Contents/SuperHot/Building5.obj",
-                        "bApplyGravity": "false",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -3344,19 +3357,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "ULuaScriptComponent_766",
-                        "ComponentOwner": "ACube_759",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_764",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_764",
                         "ComponentOwner": "ACube_759",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3398,19 +3398,6 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_774",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_774",
-                        "ComponentOwner": "ACube_767",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
@@ -3424,10 +3411,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_772",
+                    "ComponentID": "ULuaScriptComponent_773",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_772",
+                        "ComponentName": "ULuaScriptComponent_773",
                         "ComponentOwner": "ACube_767",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3437,10 +3424,23 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_773",
+                    "ComponentID": "ULuaScriptComponent_774",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_773",
+                        "ComponentName": "ULuaScriptComponent_774",
+                        "ComponentOwner": "ACube_767",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_772",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_772",
                         "ComponentOwner": "ACube_767",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3471,12 +3471,12 @@
                         "RelativeLocation": "X=0.000 Y=-37.061 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=300.000 Y=300.000 Z=1.000",
-                        "RigidBodyType": "0",
+                        "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/Primitives/CubePrimitive.obj",
                         "bApplyGravity": "false",
                         "bAutoActive": "true",
                         "bIsActive": "true",
-                        "bSimulate": "true",
+                        "bSimulate": "false",
                         "m_Type": ""
                     }
                 },
@@ -3514,7 +3514,7 @@
                         "ComponentOwner": "ACube_780",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=-117.463 Y=-161.498 Z=-4.423",
-                        "RelativeRotation": "Pitch=0.000 Yaw=-91.060 Roll=0.000",
+                        "RelativeRotation": "Pitch=-0.000 Yaw=-91.060 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Lamp.obj",
@@ -3531,6 +3531,32 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_780",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_785",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_785",
+                        "ComponentOwner": "ACube_780",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_786",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_786",
                         "ComponentOwner": "ACube_780",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3564,32 +3590,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_785",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_785",
-                        "ComponentOwner": "ACube_780",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_786",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_786",
-                        "ComponentOwner": "ACube_780",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -3600,33 +3600,6 @@
             "ActorLabel": "ACube788",
             "ActorTickInEditor": "false",
             "Components": [
-                {
-                    "ComponentClass": "USpotLightComponent",
-                    "ComponentID": "USpotLightComponent_795",
-                    "Properties": {
-                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
-                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
-                        "AttachParentID": "StaticMeshComponent_0",
-                        "Attenuation": "20.000000",
-                        "ComponentClass": "USpotLightComponent",
-                        "ComponentName": "USpotLightComponent_795",
-                        "ComponentOwner": "ACube_788",
-                        "ComponentOwnerClass": "ACube",
-                        "Direction": "X=-0.296 Y=-0.036 Z=-0.955",
-                        "InnerRad": "0.506145",
-                        "Intensity": "1000.000000",
-                        "LightColor": "R=1.000 G=0.000 B=0.000 A=1.000",
-                        "OuterRad": "0.994838",
-                        "Position": "X=118.010 Y=-163.224 Z=8.515",
-                        "Radius": "113.500000",
-                        "RelativeLocation": "X=0.001 Y=7.267 Z=12.938",
-                        "RelativeRotation": "Pitch=-72.682 Yaw=83.108 Roll=-83.249",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "Type": "2",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -3639,7 +3612,7 @@
                         "ComponentOwner": "ACube_788",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=125.069 Y=-161.498 Z=-4.423",
-                        "RelativeRotation": "Pitch=0.000 Yaw=103.745 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=103.745 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Lamp.obj",
@@ -3672,6 +3645,33 @@
                         "ComponentOwner": "ACube_788",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USpotLightComponent",
+                    "ComponentID": "USpotLightComponent_795",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "AttachParentID": "StaticMeshComponent_0",
+                        "Attenuation": "20.000000",
+                        "ComponentClass": "USpotLightComponent",
+                        "ComponentName": "USpotLightComponent_795",
+                        "ComponentOwner": "ACube_788",
+                        "ComponentOwnerClass": "ACube",
+                        "Direction": "X=-0.296 Y=-0.036 Z=-0.955",
+                        "InnerRad": "0.506145",
+                        "Intensity": "1000.000000",
+                        "LightColor": "R=1.000 G=0.000 B=0.000 A=1.000",
+                        "OuterRad": "0.994838",
+                        "Position": "X=118.010 Y=-163.224 Z=8.515",
+                        "Radius": "113.500000",
+                        "RelativeLocation": "X=0.001 Y=7.267 Z=12.938",
+                        "RelativeRotation": "Pitch=-72.682 Yaw=83.108 Roll=-83.249",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Type": "2",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
@@ -3710,7 +3710,7 @@
                         "ComponentOwner": "ACube_796",
                         "ComponentOwnerClass": "ACube",
                         "RelativeLocation": "X=125.069 Y=85.946 Z=-4.423",
-                        "RelativeRotation": "Pitch=0.000 Yaw=103.745 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=103.745 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StaticMeshPath": "Contents/SuperHot/Lamp.obj",
@@ -3727,6 +3727,32 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_796",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_802",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_802",
+                        "ComponentOwner": "ACube_796",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_801",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_801",
                         "ComponentOwner": "ACube_796",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -3760,32 +3786,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_802",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_802",
-                        "ComponentOwner": "ACube_796",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_801",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_801",
-                        "ComponentOwner": "ACube_796",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -3796,19 +3796,6 @@
             "ActorLabel": "OBJ_FOG_701",
             "ActorTickInEditor": "false",
             "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AHeightFogActor_701",
-                        "ComponentOwnerClass": "AHeightFogActor",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
                 {
                     "ComponentClass": "UHeightFogComponent",
                     "ComponentID": "UHeightFogComponent_0",
@@ -3826,7 +3813,7 @@
                         "FogInscatteringColor": "R=0.972 G=0.972 B=0.972 A=1.000",
                         "FogMaxOpacity": "0.100000",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=7.319",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
                         "StartDistance": "0.000000",
@@ -3835,6 +3822,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AHeightFogActor_701",
+                        "ComponentOwnerClass": "AHeightFogActor",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 }
             ],
@@ -3848,15 +3848,15 @@
             "Components": [
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_1057",
+                    "ComponentID": "USceneComponent_702",
                     "Properties": {
                         "AttachParentID": "USceneComponent_1165",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_1057",
+                        "ComponentName": "USceneComponent_702",
                         "ComponentOwner": "AEnemySpawner_1163",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3877,22 +3877,6 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_705",
-                    "Properties": {
-                        "AttachParentID": "USceneComponent_1165",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_705",
-                        "ComponentOwner": "AEnemySpawner_1163",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_701",
                     "Properties": {
                         "AttachParentID": "USceneComponent_1165",
@@ -3901,55 +3885,7 @@
                         "ComponentOwner": "AEnemySpawner_1163",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_702",
-                    "Properties": {
-                        "AttachParentID": "USceneComponent_1165",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_702",
-                        "ComponentOwner": "AEnemySpawner_1163",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_1165",
-                    "Properties": {
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_1165",
-                        "ComponentOwner": "AEnemySpawner_1163",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_722",
-                    "Properties": {
-                        "AttachParentID": "USceneComponent_1165",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_722",
-                        "ComponentOwner": "AEnemySpawner_1163",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3965,7 +3901,39 @@
                         "ComponentOwner": "AEnemySpawner_1163",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_722",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_1165",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_722",
+                        "ComponentOwner": "AEnemySpawner_1163",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_1165",
+                    "Properties": {
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_1165",
+                        "ComponentOwner": "AEnemySpawner_1163",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3975,113 +3943,11 @@
             "RootComponentID": "USceneComponent_1165"
         },
         {
-            "ActorClass": "ACube",
-            "ActorID": "ACube_2650",
-            "ActorLabel": "OBJ_CUBE_2650",
-            "ActorTickInEditor": "false",
-            "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_2650",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "UStaticMeshComponent",
-                    "ComponentID": "StaticMeshComponent_0",
-                    "Properties": {
-                        "AABB_max": "X=1.287 Y=1.199 Z=2.555",
-                        "AABB_min": "X=-1.287 Y=-1.199 Z=-0.000",
-                        "AttachParentID": "nullptr",
-                        "ComponentClass": "UStaticMeshComponent",
-                        "ComponentName": "StaticMeshComponent_0",
-                        "ComponentOwner": "ACube_2650",
-                        "ComponentOwnerClass": "ACube",
-                        "RelativeLocation": "X=15.873 Y=0.000 Z=36.584",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "StaticMeshPath": "Contents/Reference/Reference.obj",
-                        "bApplyGravity": "true",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "true",
-                        "m_Type": ""
-                    }
-                }
-            ],
-            "RootComponentID": "StaticMeshComponent_0"
-        },
-        {
             "ActorClass": "APlayerCharacter",
-            "ActorID": "APlayerCharacter_727",
-            "ActorLabel": "OBJ_PLAYER_727",
+            "ActorID": "APlayerCharacter_724",
+            "ActorLabel": "OBJ_PLAYER_724",
             "ActorTickInEditor": "false",
             "Components": [
-                {
-                    "ComponentClass": "UCapsuleComponent",
-                    "ComponentID": "CapsuleComponent",
-                    "Properties": {
-                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
-                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
-                        "AttachParentID": "nullptr",
-                        "CapsuleHalfHeight": "90.000000",
-                        "CapsuleRadius": "15.870000",
-                        "ComponentClass": "UCapsuleComponent",
-                        "ComponentName": "CapsuleComponent",
-                        "ComponentOwner": "APlayerCharacter_727",
-                        "ComponentOwnerClass": "APlayerCharacter",
-                        "RelativeLocation": "X=44.500 Y=-100.191 Z=155.663",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "bApplyGravity": "true",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "true",
-                        "m_Type": ""
-                    }
-                },
-                {
-                    "ComponentClass": "USkeletalMeshComponent",
-                    "ComponentID": "RightArm",
-                    "Properties": {
-                        "AABB_max": "X=13.130 Y=97.343 Z=152.728",
-                        "AABB_min": "X=-13.214 Y=9.759 Z=127.923",
-                        "AnimClass": "None",
-                        "AnimToPlay": "Contents/Armature|Armature|Armature|GunPlay",
-                        "AnimationMode": "1",
-                        "AttachParentID": "Head",
-                        "ComponentClass": "USkeletalMeshComponent",
-                        "ComponentName": "RightArm",
-                        "ComponentOwner": "APlayerCharacter_727",
-                        "ComponentOwnerClass": "APlayerCharacter",
-                        "LoopEndFrame": "30",
-                        "LoopStartFrame": "0",
-                        "PlayRate": "1.000000",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=-140.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "SkeletalMeshKey": "Contents/GunPlay",
-                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bLooping": "false",
-                        "bPlaying": "false",
-                        "bReverse": "false",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                },
                 {
                     "ComponentClass": "USkeletalMeshComponent",
                     "ComponentID": "Mesh",
@@ -4093,9 +3959,9 @@
                         "AttachParentID": "CapsuleComponent",
                         "ComponentClass": "USkeletalMeshComponent",
                         "ComponentName": "Mesh",
-                        "ComponentOwner": "APlayerCharacter_727",
+                        "ComponentOwner": "APlayerCharacter_724",
                         "ComponentOwnerClass": "APlayerCharacter",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=-90.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=-5.657",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "RigidBodyType": "1",
@@ -4109,19 +3975,53 @@
                     }
                 },
                 {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "Head",
+                    "ComponentClass": "UCapsuleComponent",
+                    "ComponentID": "CapsuleComponent",
                     "Properties": {
-                        "AttachParentID": "Mesh",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "Head",
-                        "ComponentOwner": "APlayerCharacter_727",
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "UCapsuleComponent_725",
+                        "CapsuleHalfHeight": "2.800000",
+                        "CapsuleRadius": "0.900000",
+                        "ComponentClass": "UCapsuleComponent",
+                        "ComponentName": "CapsuleComponent",
+                        "ComponentOwner": "APlayerCharacter_724",
                         "ComponentOwnerClass": "APlayerCharacter",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=140.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "bApplyGravity": "false",
                         "bAutoActive": "true",
-                        "bIsActive": "true"
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "USkeletalMeshComponent_727",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AnimClass": "None",
+                        "AnimationMode": "0",
+                        "AttachParentID": "UCapsuleComponent_725",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "USkeletalMeshComponent_727",
+                        "ComponentOwner": "APlayerCharacter_724",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=-6.700",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "None",
+                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
                     }
                 },
                 {
@@ -4131,19 +4031,19 @@
                         "AABB_max": "X=7.109 Y=-9.803 Z=152.728",
                         "AABB_min": "X=-13.225 Y=-97.342 Z=128.793",
                         "AnimClass": "None",
-                        "AnimToPlay": "Contents/Player/Armature|Armature|Armature|Armature|mixamo.com|Layer0",
+                        "AnimToPlay": "None",
                         "AnimationMode": "1",
-                        "AttachParentID": "Head",
+                        "AttachParentID": "Mesh",
                         "ComponentClass": "USkeletalMeshComponent",
                         "ComponentName": "LeftArm",
-                        "ComponentOwner": "APlayerCharacter_727",
+                        "ComponentOwner": "APlayerCharacter_724",
                         "ComponentOwnerClass": "APlayerCharacter",
-                        "LoopEndFrame": "15",
+                        "LoopEndFrame": "31",
                         "LoopStartFrame": "0",
                         "PlayRate": "1.000000",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=-140.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RelativeScale3D": "X=0.050 Y=0.050 Z=0.050",
                         "RigidBodyType": "1",
                         "SkeletalMeshKey": "Contents/Player/Punch",
                         "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
@@ -4158,20 +4058,185 @@
                     }
                 },
                 {
+                    "ComponentClass": "USkeletalMeshComponent",
+                    "ComponentID": "RightArm",
+                    "Properties": {
+                        "AABB_max": "X=13.130 Y=97.343 Z=152.728",
+                        "AABB_min": "X=-13.214 Y=9.759 Z=127.923",
+                        "AnimClass": "None",
+                        "AnimToPlay": "None",
+                        "AnimationMode": "1",
+                        "AttachParentID": "Mesh",
+                        "ComponentClass": "USkeletalMeshComponent",
+                        "ComponentName": "RightArm",
+                        "ComponentOwner": "APlayerCharacter_724",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "LoopEndFrame": "76",
+                        "LoopStartFrame": "0",
+                        "PlayRate": "1.000000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=0.050 Y=0.050 Z=0.050",
+                        "RigidBodyType": "1",
+                        "SkeletalMeshKey": "Contents/GunPlay",
+                        "StateMachineFileName": "LuaScripts/Animations/DefaultStateMachine.lua",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bLooping": "false",
+                        "bPlaying": "false",
+                        "bReverse": "false",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "USocketComponent",
+                    "ComponentID": "USocketComponent_742",
+                    "Properties": {
+                        "AttachParentID": "RightArm",
+                        "ComponentClass": "USocketComponent",
+                        "ComponentName": "USocketComponent_742",
+                        "ComponentOwner": "APlayerCharacter_724",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Socket": "mixamorig:Weapon",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "APlayerCharacter_727",
+                        "ComponentOwner": "APlayerCharacter_724",
                         "ComponentOwnerClass": "APlayerCharacter",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "UStaticMeshComponent_743",
+                    "Properties": {
+                        "AABB_max": "X=0.464 Y=2.202 Z=1.430",
+                        "AABB_min": "X=-0.444 Y=-2.202 Z=-5.099",
+                        "AttachParentID": "USocketComponent_742",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "UStaticMeshComponent_743",
+                        "ComponentOwner": "APlayerCharacter_724",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "RelativeLocation": "X=-0.009 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=28.846 Yaw=-86.922 Roll=11.862",
+                        "RelativeScale3D": "X=4.000 Y=4.000 Z=4.000",
+                        "RigidBodyType": "1",
+                        "StaticMeshPath": "Contents/Glock18/Glock17.obj",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "UCapsuleComponent",
+                    "ComponentID": "UCapsuleComponent_725",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "CapsuleHalfHeight": "0.340000",
+                        "CapsuleRadius": "0.000000",
+                        "ComponentClass": "UCapsuleComponent",
+                        "ComponentName": "UCapsuleComponent_725",
+                        "ComponentOwner": "APlayerCharacter_724",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "RelativeLocation": "X=-1.077 Y=0.000 Z=5.204",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "UStaticMeshComponent_734",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=-0.000 Y=-0.000 Z=-0.000",
+                        "AttachParentID": "UCapsuleComponent_725",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "UStaticMeshComponent_734",
+                        "ComponentOwner": "APlayerCharacter_724",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "StaticMeshPath": "Contents/SmallObject/SmallObject.obj",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                }
+            ],
+            "RootComponentID": "UCapsuleComponent_725"
+        },
+        {
+            "ActorClass": "ACube",
+            "ActorID": "ACube_2650",
+            "ActorLabel": "OBJ_CUBE_2650",
+            "ActorTickInEditor": "false",
+            "Components": [
+                {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "StaticMeshComponent_0",
+                    "Properties": {
+                        "AABB_max": "X=1.287 Y=1.199 Z=2.555",
+                        "AABB_min": "X=-1.287 Y=-1.199 Z=-0.000",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "StaticMeshComponent_0",
+                        "ComponentOwner": "ACube_2650",
+                        "ComponentOwnerClass": "ACube",
+                        "RelativeLocation": "X=15.873 Y=0.000 Z=36.584",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "StaticMeshPath": "Contents/Reference/Reference.obj",
+                        "bApplyGravity": "true",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "true",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_2650",
+                        "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
                 }
             ],
-            "RootComponentID": "CapsuleComponent"
+            "RootComponentID": "StaticMeshComponent_0"
         }
     ],
     "NextUUID": 0,
