@@ -93,6 +93,7 @@ void UInputComponent::BindInputDelegate()
 void UInputComponent::UnPossess()
 { 
     ClearBindDelegate();
+    FWindowsCursor::SetShowMouseCursor(true);
 }
 
 void UInputComponent::ClearBindDelegate()

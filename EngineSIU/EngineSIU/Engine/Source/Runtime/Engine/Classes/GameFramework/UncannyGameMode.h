@@ -2,6 +2,8 @@
 #include "GameMode.h"
 
 class LuaUIManager;
+class UAnimSoundNotify;
+
 class AUncannyGameMode : public AGameMode
 {
     DECLARE_CLASS(AUncannyGameMode, AGameMode)
@@ -21,8 +23,11 @@ public:
     int32 GetBulletCount() const { return BulletCount; }
     void AddKill();
     void PlayHitNoiseEffect();
+    void OnDeath();
 
     virtual void StartMatch() override;
+
+    UAnimSoundNotify* ShootNotify = nullptr;
 
 protected:
     void UpdateUI();
@@ -44,4 +49,5 @@ private:
     FString SubUVImageName = "UI_SubUVImage";
     
     LuaUIManager* UIManager = nullptr;
+
 };
