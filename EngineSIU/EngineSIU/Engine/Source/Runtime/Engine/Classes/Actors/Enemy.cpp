@@ -226,7 +226,12 @@ void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase
     BodyInstance->OwnerActor = this;
     BodyInstance->bSimulatePhysics = true;
     BodyInstance->bEnableGravity = false;
-
+    BodyInstance->CollisionEnabled = ECollisionEnabled::QueryAndPhysics;  // 물리와 쿼리 모두 활성화
+    BodyInstance->bUseCCD = true;                                        // CCD 활성화
+    BodyInstance->bStartAwake = true;                                    // 항상 깨어있는 상태로 시작
+    BodyInstance->PositionSolverIterationCount = 8;                     // 위치 솔버 반복 횟수 증가
+    BodyInstance->VelocitySolverIterationCount = 4;                     // 속도 솔버 반복 횟수 증가
+    
     FVector BoxWorldCenterLocation = GetActorLocation() + FVector(0, 0, InCenterZOffsetFromActorBase);
     PxVec3 PPos = PxVec3(BoxWorldCenterLocation.X, BoxWorldCenterLocation.Y, BoxWorldCenterLocation.Z);
 
