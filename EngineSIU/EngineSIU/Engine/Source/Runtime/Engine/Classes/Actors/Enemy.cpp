@@ -19,6 +19,8 @@
 #include "PhysicsEngine/BodyInstance.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 
+#include "GameFramework/UncannyGameMode.h"
+
 AEnemy::AEnemy()
     : SkeletalMeshComponent(nullptr)
     , SkeletalMesh(nullptr)
@@ -499,6 +501,15 @@ void AEnemy::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActo
         FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
         float ImpulseMagnitude = 20000.0f; // 기본 임펄스 크기
         ApplyRagdollImpulse(InitialHitPart, ImpulseDirection, ImpulseMagnitude);
+
+        if (AUncannyGameMode* GameMode = Cast<AUncannyGameMode>(GetWorld()->GetGameMode()))
+        {
+            GameMode->AddKill();
+            uintptr_t Address = reinterpret_cast<uintptr_t>(OtherActor);
+            int Value = (static_cast<int>(Address) % 5) + 1; // 1~5
+            int32 BulletCount = GameMode->GetBulletCount();
+            GameMode->SetBulletCount(BulletCount + Value);
+        }
 
         // HittingBullet->Destroy();
     }

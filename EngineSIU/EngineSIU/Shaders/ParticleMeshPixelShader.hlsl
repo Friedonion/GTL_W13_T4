@@ -23,8 +23,12 @@ float4 main(PS_INPUT_CommonMesh Input) : SV_TARGET
     {
         Color *= MaterialTextures[TEXTURE_SLOT_DIFFUSE].Sample(SamplerLinearWrap, UV);        
     }
-
     FinalColor = Color;
-    
+
+    if (any(Material.EmissiveColor.rgb != 0))
+    {
+        FinalColor.rgb += Material.EmissiveColor.rgb;
+    }
+
     return FinalColor;
 }

@@ -7,6 +7,7 @@
 class USkeletalMeshComponent;
 class UCameraComponent;
 class UAnimSequence;
+class GameObject;
 
 // ACharacter를 상속받는 게임 내에서의 플레이어 캐릭터.
 class APlayerCharacter : public ACharacter
@@ -81,4 +82,8 @@ private:
     void ShootInternal();
     
     bool bMoving = false;
+
+private:
+
+    void HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActor* OtherActor);
 };

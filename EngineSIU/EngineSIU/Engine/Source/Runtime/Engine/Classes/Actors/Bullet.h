@@ -6,6 +6,7 @@ class UStaticMeshComponent;
 class UProjectileMovementComponent;
 class UParticleSystem;
 class UParticleSystemComponent;
+class GameObject;
 
 class ABullet : public AActor
 {
@@ -20,6 +21,7 @@ public:
     virtual void Tick(float DeltaTime) override;
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+    virtual bool Destroy() override;
     virtual void Destroyed() override;
     
     void SetVelocity(const FVector& InVelocity)
@@ -44,7 +46,7 @@ private:
     // 총알 이동 (속도 궤적) 용 컴포넌트
     UProjectileMovementComponent* ProjectileMovement = nullptr;
 
-    void OnBulletHit(AActor* SelfActor, AActor* OtherActor);
+    void HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActor* OtherActor);
 
 private:
     UPROPERTY(EditAnywhere, float, InitialSpeed, )
@@ -62,5 +64,6 @@ private:
 private:
     UPROPERTY(EditAnywhere, UParticleSystem*, ParticleSystem, )
     UPROPERTY(EditAnywhere, UParticleSystemComponent*, ParticleSystemComponent, )
+    bool bDestroy = false;
 };
 

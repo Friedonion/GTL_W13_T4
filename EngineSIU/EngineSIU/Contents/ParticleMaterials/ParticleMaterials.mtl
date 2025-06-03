@@ -4,6 +4,7 @@ map_Kd Smoke.png
 
 newmtl SpriteBase
 map_Kd SpriteBase.png
+Ke 3.0 0.1 0.1
 
 newmtl Explosion
 map_Kd T_Explosion_SubUV.PNG

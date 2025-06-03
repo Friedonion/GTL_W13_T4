@@ -1,6 +1,7 @@
 #pragma once
 #include "GameMode.h"
 
+class LuaUIManager;
 class AUncannyGameMode : public AGameMode
 {
     DECLARE_CLASS(AUncannyGameMode, AGameMode)
@@ -13,8 +14,11 @@ public:
     virtual void Tick(float DeltaTime) override;
 
     void SetCurrentHP(int32 NewHP);
+    int32 GetCurrentHP() const { return CurrentHP; }
+    void OnPlayerHit(float Damage = 10.f);
     void SetMaxHP(int32 NewMaxHP);
     void SetBulletCount(int32 NewCount);
+    int32 GetBulletCount() const { return BulletCount; }
     void AddKill();
     void PlayHitNoiseEffect();
 
@@ -38,4 +42,6 @@ private:
     FString BulletTextName = "UI_BulletText";
     FString TitleImageName = "UI_TitleImage";
     FString SubUVImageName = "UI_SubUVImage";
+    
+    LuaUIManager* UIManager = nullptr;
 };

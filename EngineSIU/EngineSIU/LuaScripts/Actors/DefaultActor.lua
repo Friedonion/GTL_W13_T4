@@ -121,13 +121,13 @@ end
 -- 좌우 움직임
 function ReturnTable:Turn(Delta)
     local this = self.this
-    this.HeadRotation = this.HeadRotation + FRotator(0, Delta, 0)
+    this.HeadRotation = this.HeadRotation + FRotator(0, Delta*5, 0)
 end
 
 -- 위아래 움직임
 function ReturnTable:Lookup(Delta)
     local this = self.this
-    this.HeadRotation = this.HeadRotation + FRotator(-Delta, 0, 0)
+    this.HeadRotation = this.HeadRotation + FRotator(-Delta*5, 0, 0)
     print(this.HeadRotation.Pitch)
     if this.HeadRotation.Pitch < -60 then
         this.HeadRotation = FRotator(-60, this.HeadRotation.Yaw, this.HeadRotation.Roll)

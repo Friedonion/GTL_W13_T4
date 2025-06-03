@@ -58,10 +58,17 @@ void ABullet::BeginPlay()
     Super::BeginPlay();
 
     AActor* Owner = GetOwner();
-    StaticMeshComponent = Cast<UStaticMeshComponent>(AddComponent(UStaticMeshComponent::StaticClass(), TEXT("BulletMesh"), false));
-    //StaticMeshComponent = AddComponent<UStaticMeshComponent>(TEXT("BulletMesh"));
-    StaticMeshComponent->SetupAttachment(RootComponent);
-    SetActorScale(FVector(10, 10, 10));
+    
+    FVector Location = RootComponent->GetRelativeLocation();
+    FRotator Rotation = RootComponent->GetRelativeRotation();
+    FVector Scale = RootComponent->GetRelativeScale3D();
+    StaticMeshComponent = AddComponent<UStaticMeshComponent>(TEXT("BulletMesh"));
+
+    StaticMeshComponent->SetRelativeLocation(Location);
+    StaticMeshComponent->SetRelativeRotation(Rotation);
+    StaticMeshComponent->SetRelativeScale3D(FVector(10, 10, 10));
+
+    //SetActorScale(FVector(10, 10, 10));
     if (bVisible)
     {
         StaticMesh = FObjManager::GetStaticMesh(L"Contents/Bullet/Bullet.obj");
@@ -103,6 +110,8 @@ void ABullet::BeginPlay()
     ParticleSystemComponent->SetParticleSystem(ParticleSystem);
     ParticleSystemComponent->InitializeSystem();
     // End Test
+
+    StaticMeshComponent->BodyInstance->BIGameObject->OnHit.AddUObject(this, &ABullet::HandleCollision);
 }
 
 void ABullet::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -110,10 +119,23 @@ void ABullet::EndPlay(const EEndPlayReason::Type EndPlayReason)
     Super::EndPlay(EndPlayReason);
 }
 
-void ABullet::Destroyed()
+bool ABullet::Destroy()
 {
     GEngine->PhysicsManager->DestroyGameObject(StaticMeshComponent->BodyInstance->BIGameObject);
+    return Super::Destroy();
+}
+
+void ABullet::Destroyed()
+{
     Super::Destroyed();
+}
+
+void ABullet::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActor* OtherActor)
+{
+    // 여기에 총알이 어딘가에 맞았을 때의 로직 (예: 파티클 생성, 스스로 파괴)
+// if (Cast<AEnemy>(OtherActor)) { /* Enemy를 맞췄을 때 특별한 처리 (선택 사항) */ }
+// else { /* 다른 것에 맞았을 때 */ }
+    bDestroy = true;
 }
 
 void ABullet::Tick(float DeltaTime)
@@ -123,17 +145,13 @@ void ABullet::Tick(float DeltaTime)
     FVector Loc=ParticleSystemComponent->GetComponentLocation();
     UE_LOG(ELogLevel::Display, "%f, %f, %f", Loc.X, Loc.Y, Loc.Z);
 
+    if (bDestroy)
+    {
+        Destroy();
+        return;
+    }
     if (AccumulatedTime >= ProjectileLifetime)
     {
         Destroy();
     }
-}
-
-
-void ABullet::OnBulletHit(AActor* SelfActor, AActor* OtherActor)
-{
-    // 여기에 총알이 어딘가에 맞았을 때의 로직 (예: 파티클 생성, 스스로 파괴)
-    // if (Cast<AEnemy>(OtherActor)) { /* Enemy를 맞췄을 때 특별한 처리 (선택 사항) */ }
-    // else { /* 다른 것에 맞았을 때 */ }
-    Destroy();
 }

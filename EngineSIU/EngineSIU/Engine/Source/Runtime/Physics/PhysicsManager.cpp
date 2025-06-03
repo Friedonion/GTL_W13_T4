@@ -18,6 +18,20 @@ physx::PxFilterFlags DebugAllContactsFilterShader(
     return physx::PxFilterFlag::eDEFAULT;
 }
 
+void GameObject::UpdateForPhysicsScene(PxScene* Scene) {
+    FVector Location = OwnerActor->GetActorLocation();
+    FQuat Rotation = OwnerActor->GetActorRotation().Quaternion();
+
+    PxTransform Pose(PxVec3(Location.X, Location.Y, Location.Z), PxQuat(Rotation.X, Rotation.Y, Rotation.Z, Rotation.W));
+    PxSceneWriteLock scopedWriteLock(*Scene);
+    if (DynamicRigidBody) {
+        DynamicRigidBody->setGlobalPose(Pose);
+    }
+    if (StaticRigidBody) {
+        StaticRigidBody->setGlobalPose(Pose);
+    }
+}
+
 void GameObject::SetRigidBodyType(ERigidBodyType RigidBodyType) const
 {
     switch (RigidBodyType)
@@ -416,16 +430,20 @@ void FPhysicsManager::ApplyShapeCollisionSettings(PxShape* Shape, const FBodyIns
     case ECollisionEnabled::QueryOnly:
         // 쿼리만 활성화 (트레이스, 오버랩)
         ShapeFlags |= PxShapeFlag::eSCENE_QUERY_SHAPE;
+        Shape->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, true);
         break;
         
     case ECollisionEnabled::PhysicsOnly:
         // 물리 시뮬레이션만 활성화
         ShapeFlags |= PxShapeFlag::eSIMULATION_SHAPE;
+        Shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
         break;
         
     case ECollisionEnabled::QueryAndPhysics:
         // 둘 다 활성화
         ShapeFlags |= (PxShapeFlag::eSIMULATION_SHAPE | PxShapeFlag::eSCENE_QUERY_SHAPE);
+        Shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
+        Shape->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, true);
         break;
     }
     
@@ -436,7 +454,7 @@ void FPhysicsManager::ApplyShapeCollisionSettings(PxShape* Shape, const FBodyIns
         // (구체적인 구현은 메시 충돌 시스템에 따라 다름)
     }
     
-    Shape->setFlags(ShapeFlags);
+    //Shape->setFlags(ShapeFlags);
 }
 
 // // === 런타임 설정 변경 함수들 === TODO : 필요하면 GameObject 안으로 옮기기
@@ -775,6 +793,31 @@ PxShape* FPhysicsManager::CreateCapsuleShape(const PxVec3& Pos, const PxQuat& Qu
 
 void FPhysicsManager::Simulate(float DeltaTime)
 {
+    PxU32 nbActors = CurrentScene->getNbActors(PxActorTypeFlag::eRIGID_DYNAMIC);
+    std::vector<PxActor*> actors(nbActors);
+    CurrentScene->getActors(PxActorTypeFlag::eRIGID_DYNAMIC, actors.data(), nbActors);
+
+    TArray<PxRigidDynamic*> kinematicActors;
+    for (PxU32 i = 0; i < nbActors; ++i) {
+        PxRigidDynamic* dynamic = actors[i]->is<PxRigidDynamic>();
+        if (dynamic && (dynamic->getRigidBodyFlags() & PxRigidBodyFlag::eKINEMATIC)) {
+            kinematicActors.Add(dynamic);
+        }
+    }
+
+    for (PxRigidDynamic* KinematicActor : kinematicActors)
+    {
+        // Kinematic Actor의 위치와 회전 업데이트
+        if (KinematicActor->userData)
+        {
+            GameObject* GameObj = static_cast<GameObject*>(KinematicActor->userData);
+            if (GameObj)
+            {
+                GameObj->UpdateForPhysicsScene(CurrentScene);
+            }
+        }
+    }
+
     if (CurrentScene)
     {
         QUICK_SCOPE_CYCLE_COUNTER(SimulatePass_CPU)
