@@ -68,7 +68,7 @@ private:
     // FIX-ME
     FString GetCleanBoneName(const FString& InFullName);
 
-    void HandleCollision(AActor* SelfActor, AActor* OtherActor);
+    void HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActor* OtherActor);
 
     TArray<FBodyInstance*> BodyInstances;
     TArray<UBodySetup*> BodySetups;

@@ -101,11 +101,7 @@ void AEnemy::Tick(float DeltaTime)
     {
         // 기존 콜리전들 삭제하고
         DestroyCollisions();
-        // 래그돌 세팅 다시 다이내믹으로
-        //for (auto BodyInstance : BodyInstances)
-        //{
-        //    BodyInstance->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
-        //}
+
         for (auto Body : SkeletalMeshComponent->GetBodies())
         {
             Body->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
@@ -247,15 +243,27 @@ void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase
     PxVec3 PxExtent = PxVec3(DefaultAttribute.Extent.X, DefaultAttribute.Extent.Y, DefaultAttribute.Extent.Z);
 
     PxShape* PxBoxShape = GEngine->PhysicsManager->CreateBoxShape(PxShapeLocalOffset, PxShapeLocalGeomPQuat, PxExtent);
+    if (PxBoxShape)
+    {
+        FName ShapeName = GetActorLabel() + "_" + BoneName.ToString();
+        PxBoxShape->setName(*ShapeName.ToString());
+    }
+
     BodySetup->AggGeom.BoxElems.Add(PxBoxShape);
 
     BodySetups.Add(BodySetup);
     BodyInstances.Add(BodyInstance); 
 
-    GameObject* NewRigidBodyGameObject = GEngine->PhysicsManager->CreateGameObject(PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC);
+    BodyInstance->OwnerActor = this;
+    GameObject* NewRigidBodyGameObject = GEngine->PhysicsManager->CreateGameObject(this, PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC);
 
     if (NewRigidBodyGameObject)
     {
+        if (BoneName == TEXT("Head")) NewRigidBodyGameObject->PartIdentifier = ECollisionPart::Head;
+        else if (BoneName == TEXT("Body")) NewRigidBodyGameObject->PartIdentifier = ECollisionPart::Body;
+        else if (BoneName == TEXT("Leg")) NewRigidBodyGameObject->PartIdentifier = ECollisionPart::Leg;
+        else NewRigidBodyGameObject->PartIdentifier = ECollisionPart::None;
+
         NewRigidBodyGameObject->OnHit.AddUObject(this, &AEnemy::HandleCollision);
 
         CollisionRigidBodies.Add(NewRigidBodyGameObject);
@@ -335,7 +343,7 @@ void AEnemy::Die()
         {
             TM->ClearTimer(DestroyDelayTimerHandle);
         }
-        DestroyDelayTimerHandle = TM->SetTimer(this, &AEnemy::DelayedDestroy, 3.0f, false);
+        DestroyDelayTimerHandle = TM->SetTimer(this, &AEnemy::DelayedDestroy, 6.0f, false);
     }
 }
 
@@ -371,22 +379,123 @@ FString AEnemy::GetCleanBoneName(const FString& InFullName)
     return name;
 }
 
-void AEnemy::HandleCollision(AActor* SelfActor, AActor* OtherActor)
+void AEnemy::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActor* OtherActor)
 {
-    if (!bIsAlive) return;
-
-    if (SelfActor != this) return;
-
-    if (OtherActor == nullptr)
+    if (!bIsAlive) // 이미 죽었거나, 죽음 처리 요청 중이면 무시
+    {
         return;
+    }
+
+    if (SelfActor != this || !HitGameObject)
+    {
+        return;
+    }
 
     ABullet* HittingBullet = Cast<ABullet>(OtherActor);
     if (HittingBullet)
     {
         Die();
-    }
+        bIsAlive = false;
 
-    // TO-DO: 플레이어가 충돌한 경우 체력 감소 로직
+        ECollisionPart HitPart = HitGameObject->PartIdentifier;
+
+        GameObject* TargetRagdollBodyPart = nullptr;
+        switch (HitPart)
+        {
+        case ECollisionPart::Head: 
+        {
+            if (SkeletalMeshComponent->GetSkeletalMeshAsset()->GetPhysicsAsset())
+            {
+                for (auto Body : SkeletalMeshComponent->GetBodies())
+                {
+                    Body->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
+                }
+                TargetRagdollBodyPart = SkeletalMeshComponent->GetBodies()[1]->BIGameObject;
+
+                if (TargetRagdollBodyPart && TargetRagdollBodyPart->DynamicRigidBody)
+                {
+                    FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
+                    float ImpulseMagnitude = 20000.0f;
+
+                    PxVec3 PxImpulse(ImpulseDirection.X * ImpulseMagnitude,
+                        ImpulseDirection.Y * ImpulseMagnitude,
+                        ImpulseDirection.Z * ImpulseMagnitude);
+
+                    PxVec3 PxImpulseLocation;
+                    PxTransform RagdollPartGlobalPose = TargetRagdollBodyPart->DynamicRigidBody->getGlobalPose();
+                    PxImpulseLocation = RagdollPartGlobalPose.p;
+                    GEngine->PhysicsManager->AddImpulseAtLocation(TargetRagdollBodyPart, PxImpulse, PxImpulseLocation);
+                }
+            }
+            break;
+        }
+        case ECollisionPart::Body:
+        {
+            if (SkeletalMeshComponent->GetSkeletalMeshAsset()->GetPhysicsAsset())
+            {
+                for (auto Body : SkeletalMeshComponent->GetBodies())
+                {
+                    Body->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
+                }
+                TargetRagdollBodyPart = SkeletalMeshComponent->GetBodies()[20]->BIGameObject;
+
+                if (TargetRagdollBodyPart && TargetRagdollBodyPart->DynamicRigidBody)
+                {
+                    FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
+                    float ImpulseMagnitude = 20000.0f;
+
+                    PxVec3 PxImpulse(ImpulseDirection.X * ImpulseMagnitude,
+                        ImpulseDirection.Y * ImpulseMagnitude,
+                        ImpulseDirection.Z * ImpulseMagnitude);
+
+                    PxVec3 PxImpulseLocation;
+                    PxTransform RagdollPartGlobalPose = TargetRagdollBodyPart->DynamicRigidBody->getGlobalPose();
+                    PxImpulseLocation = RagdollPartGlobalPose.p;
+                    GEngine->PhysicsManager->AddImpulseAtLocation(TargetRagdollBodyPart, PxImpulse, PxImpulseLocation);
+                }
+            }
+            break;
+        }
+        case ECollisionPart::Leg:
+        {
+            if (SkeletalMeshComponent->GetSkeletalMeshAsset()->GetPhysicsAsset())
+            {
+                for (auto Body : SkeletalMeshComponent->GetBodies())
+                {
+                    Body->BIGameObject->SetRigidBodyType(ERigidBodyType::DYNAMIC);
+                }
+                TargetRagdollBodyPart = SkeletalMeshComponent->GetBodies()[12]->BIGameObject;
+
+                if (TargetRagdollBodyPart && TargetRagdollBodyPart->DynamicRigidBody)
+                {
+                    FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
+                    float ImpulseMagnitude = 20000.0f;
+
+                    PxVec3 PxImpulse(ImpulseDirection.X * ImpulseMagnitude,
+                        ImpulseDirection.Y * ImpulseMagnitude,
+                        ImpulseDirection.Z * ImpulseMagnitude);
+
+                    PxVec3 PxImpulseLocation;
+                    PxTransform RagdollPartGlobalPose = TargetRagdollBodyPart->DynamicRigidBody->getGlobalPose();
+                    PxImpulseLocation = RagdollPartGlobalPose.p;
+                    GEngine->PhysicsManager->AddImpulseAtLocation(TargetRagdollBodyPart, PxImpulse, PxImpulseLocation);
+                }
+            }
+            break;
+        }
+        case ECollisionPart::None:
+        {
+            break;
+        }
+        default:
+        {
+            int a = 0;
+            break;
+        }
+        }
+
+        // HittingBullet->Destroy();
+    }
 }
 
 void AEnemy::DelayedDestroy()
