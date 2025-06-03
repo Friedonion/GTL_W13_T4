@@ -28,7 +28,7 @@ AEnemy::AEnemy()
     , Character(nullptr)
     , Direction(FRotator::ZeroRotator)
     , bIsAlive(false)
-    , MuzzleSocketName(TEXT("RightArm"))
+    , MuzzleSocketName(TEXT("Muzzle"))
     , BodyInstances()
     , BodySetups()
     , CollisionRigidBodies()
@@ -340,15 +340,24 @@ void AEnemy::Fire()
         return;
     }
 
-    FVector MuzzleLocation = FVector::ZeroVector;
-    FRotator MuzzleRotation = FRotator::ZeroRotator;
+    FVector EnemyBaseLocation = GetActorLocation();
+    FVector EnemyForwardVector = GetActorForwardVector();
+    FVector EnemyRightVector = GetActorRightVector();
+    FVector EnemyUpVector = GetActorUpVector();
 
-    FTransform MuzzleTransform = SkeletalMeshComponent->GetSocketTransform(MuzzleSocketName);
+    // 총구 월드 위치 계산
+    float ForwardOffset = 80.f;
+    float RightOffset = 30.f;
+    float UpOffset = 100.f;
 
-    MuzzleLocation = MuzzleTransform.GetTranslation();
-    MuzzleRotation = MuzzleTransform.Rotator();
+    FVector MuzzleLocation = EnemyBaseLocation
+        + EnemyForwardVector * ForwardOffset
+        + EnemyRightVector * RightOffset
+        + EnemyUpVector * UpOffset;
 
-    UE_LOG(ELogLevel::Display, TEXT("Bullet spawned from MuzzleSocket: %s at Location: %s, Rotation: %s"),
+    FRotator MuzzleRotation = GetActorRotation();
+
+    UE_LOG(ELogLevel::Display, TEXT("Bullet spawned from Calculated Muzzle: %s at Location: %s, Rotation: %s"),
         *MuzzleSocketName.ToString(), *MuzzleLocation.ToString(), *MuzzleRotation.ToString());
 
     ABullet* Bullet = World->SpawnActor<ABullet>();
