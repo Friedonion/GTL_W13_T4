@@ -46,7 +46,7 @@
 #include "Particles/ParticleSystemComponent.h"
 
 #include "Actors/EnemySpawner.h"
-
+#include "Actors/Enemy.h"
 #include "PhysicsManager.h"
 
 ControlEditorPanel::ControlEditorPanel()
@@ -412,6 +412,7 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
             { .Label = "SkeletalMeshActor", .OBJ = OBJ_SKELETALMESH },
             { .Label = "SequencerPlayer",   .OBJ = OBJ_SEQUENCERPLAYER },
             { .Label = "EnemySpawner",      .OBJ = OBJ_ENEMYSPAWNER },
+            { .Label = "Enemy",             .OBJ = OBJ_ENEMY },
             { .Label = "Bullet",            .OBJ = OBJ_BULLET },
         };
 
@@ -550,6 +551,12 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
                 {
                     SpawnedActor = World->SpawnActor<AEnemySpawner>();
                     SpawnedActor->SetActorLabel(TEXT("OBJ_ENEMYSPAWNER"));
+                    break;
+                }
+                case OBJ_ENEMY:
+                {
+                    SpawnedActor = World->SpawnActor<AEnemy>();
+                    SpawnedActor->SetActorLabel(TEXT("OBJ_ENEMY"));
                     break;
                 }
                 case OBJ_CAMERA:

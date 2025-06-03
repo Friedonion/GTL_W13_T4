@@ -20,6 +20,9 @@
 #include "PhysicsEngine/PhysicsAsset.h"
 
 #include "GameFramework/UncannyGameMode.h"
+#include "Components/StaticMeshComponent.h"
+#include "Classes/Engine/FObjLoader.h"
+#include "Components/SocketComponent.h"
 
 AEnemy::AEnemy()
     : SkeletalMeshComponent(nullptr)
@@ -34,6 +37,9 @@ AEnemy::AEnemy()
     , BodySetups()
     , CollisionRigidBodies()
     , bRagDollCreated(false)
+    , Weapon(nullptr)
+    , StaticMeshComponent(nullptr)
+    , SocketComponent()
 {
 }
 
@@ -80,6 +86,9 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
     NewActor->BodySetups = BodySetups;
     NewActor->CollisionRigidBodies = CollisionRigidBodies;
     NewActor->bRagDollCreated = bRagDollCreated;
+    NewActor->Weapon = Weapon;
+    NewActor->SocketComponent = SocketComponent;
+    NewActor->StaticMeshComponent = StaticMeshComponent;
 
     return NewActor;
 }
@@ -116,11 +125,16 @@ void AEnemy::BeginPlay()
     SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
     SetRootComponent(SkeletalMeshComponent);
     Super::BeginPlay();
-    UE_LOG(ELogLevel::Display, TEXT("AEnemy has been spawned."));
 
     SetLuaToPlayAnim();
+    //if (GetOwner())
+    //{
+    //    SetActorLocation(GetOwner()->GetRootComponent()->GetRelativeLocation());
+    //}
+    //else
+    //{
 
-    SetActorLocation(GetOwner()->GetRootComponent()->GetRelativeLocation());
+    //}
     GetActorRotation();
 
     bIsAlive = true;
@@ -131,6 +145,20 @@ void AEnemy::BeginPlay()
     // RagDoll을 미리 만듦
     SkeletalMeshComponent->bSimulate = false;
     SkeletalMeshComponent->bApplyGravity = false;
+
+
+    Weapon = FObjManager::GetStaticMesh(L"Contents/Glock18/Glock17.obj");
+
+    SocketComponent = AddComponent<USocketComponent>();
+    SocketComponent->SetupAttachment(SkeletalMeshComponent);
+    SocketComponent->Socket = "mixamorig:RightHandIndex1";
+
+    StaticMeshComponent = AddComponent<UStaticMeshComponent>();
+    StaticMeshComponent->SetupAttachment(SocketComponent);
+    StaticMeshComponent->SetStaticMesh(Weapon);
+
+    StaticMeshComponent->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
+    StaticMeshComponent->SetRelativeRotation(FRotator(180.f, 0.f, 0.f));
 
     CreateCollisionShapes();
 }

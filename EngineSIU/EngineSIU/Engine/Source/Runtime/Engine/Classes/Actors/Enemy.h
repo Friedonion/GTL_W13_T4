@@ -4,11 +4,14 @@
 #include "PhysicsManager.h"
 
 class USkeletalMeshComponent;
+class UStaticMeshComponent;
 class USkeletalMesh;
+class UStaticMesh;
 class ACharacter;
 class ABullet;
 
 class UPrimitiveComponent;
+class USocketComponent;
 struct GameObject;
 
 class UBodySetup;
@@ -39,7 +42,7 @@ private:
     void CalculateTimer(float DeltaTime);
     
     void SetLuaToPlayAnim();
-
+    
 
 private:
     float CurrentFireTimer;
@@ -53,6 +56,9 @@ private:
     UPROPERTY(VisibleAnywhere, bool, bRagDollCreated, )
     UPROPERTY(EditAnywhere, FVector, MuzzleOffset, = FVector(0,-4,150))
 
+    UPROPERTY(EditAnywhere, UStaticMesh*, Weapon, )
+    UPROPERTY(EditAnywhere, UStaticMeshComponent*, StaticMeshComponent, )
+    UPROPERTY(VisibleAnywhere, USocketComponent*, SocketComponent, )
     // Alive를 어떻게 정의를 하는게 맞을까
     // State를 아래와 같이 나눌 예정
     // None
