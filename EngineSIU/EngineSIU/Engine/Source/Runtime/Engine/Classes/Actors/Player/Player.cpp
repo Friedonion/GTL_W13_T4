@@ -13,6 +13,7 @@
 #include "Actors/Fist.h"
 #include "Engine/Classes/Animation/AnimTypes.h"
 #include "Animation/AnimSoundNotify.h"
+#include "Engine/Contents/Objects/DamageCameraShake.h"
 
 APlayerCharacter::APlayerCharacter()
     : ACharacter()
@@ -94,6 +95,8 @@ void APlayerCharacter::BeginPlay()
         }
     }
 
+     GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass()); 
+     // To-Do 맞았을때 실행하도록
 
     // C++코드를 호출
     LuaScriptComponent->ActivateFunction("InitializeCallback");
