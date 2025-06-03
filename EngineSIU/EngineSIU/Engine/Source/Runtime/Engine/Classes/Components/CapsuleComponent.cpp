@@ -68,6 +68,7 @@ void UCapsuleComponent::CreatePhysXGameObject()
 
     BodyInstance->bSimulatePhysics = bSimulate;
     BodyInstance->bEnableGravity = bApplyGravity;
+    BodyInstance->CollisionEnabled = CollisionEnabled;
 
     FVector Location = GetComponentLocation();
     PxVec3 PPos = PxVec3(Location.X, Location.Y, Location.Z);

@@ -22,6 +22,21 @@ UObject* ACharacter::Duplicate(UObject* InOuter)
 
     NewActor->BaseEyeHeight = BaseEyeHeight;
 
+    for (UCapsuleComponent* Capsule : NewActor->GetComponentsByClass<UCapsuleComponent>())
+    {
+        if (Capsule->GetName() == CapsuleComponent->GetName())
+        {
+            NewActor->CapsuleComponent = Capsule;
+        }
+    }
+
+    for (USkeletalMeshComponent* Comp : NewActor->GetComponentsByClass<USkeletalMeshComponent>())
+    {
+        if (Comp->GetName() == Mesh->GetName())
+        {
+            NewActor->Mesh = Comp;
+        }
+    }
     return NewActor;
 }
 

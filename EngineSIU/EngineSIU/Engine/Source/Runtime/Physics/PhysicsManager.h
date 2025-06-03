@@ -53,6 +53,8 @@ struct GameObject {
         WorldMatrix = XMLoadFloat4x4(reinterpret_cast<const XMFLOAT4X4*>(&mat));
     }
 
+    void UpdateForPhysicsScene(PxScene* Scene);
+
     void SetRigidBodyType(ERigidBodyType RigidBody) const;
 
     //OnHit

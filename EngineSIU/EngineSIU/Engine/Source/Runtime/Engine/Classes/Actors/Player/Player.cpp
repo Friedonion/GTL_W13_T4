@@ -14,7 +14,9 @@
 #include "Engine/Classes/Animation/AnimTypes.h"
 #include "Animation/AnimSoundNotify.h"
 #include "Engine/Contents/Objects/DamageCameraShake.h"
-
+#include "Components/CapsuleComponent.h"
+#include "PhysicsManager.h"
+#include "GameFramework/UncannyGameMode.h"
 APlayerCharacter::APlayerCharacter()
     : ACharacter()
 {
@@ -94,7 +96,6 @@ void APlayerCharacter::BeginPlay()
         }
     }
 
-     GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass()); 
      // To-Do 맞았을때 실행하도록
 
     // C++코드를 호출
@@ -106,7 +107,11 @@ void APlayerCharacter::BeginPlay()
         //LeftArm->AnimClass->asset
     }
 
-
+    // 충돌처리
+    if (CapsuleComponent->BodyInstance && CapsuleComponent->BodyInstance->BIGameObject)
+    {
+        CapsuleComponent->BodyInstance->BIGameObject->OnHit.AddUObject(this, &APlayerCharacter::HandleCollision);
+    }
 }
 
 UObject* APlayerCharacter::Duplicate(UObject* InOuter)
@@ -317,4 +322,17 @@ void APlayerCharacter::ShootInternal()
     Bullet->SetActorLocation(this->Head->GetComponentLocation() +
         this->Head->GetForwardVector() * 30.f);
     Bullet->SetActorRotation(this->Head->GetComponentRotation());
+}
+
+void APlayerCharacter::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActor* OtherActor)
+{
+    GetWorld()->GetPlayerController()->ClientStartCameraShake(UDamageCameraShake::StaticClass());
+
+    if (ABullet* Bullet = Cast<ABullet>(OtherActor))
+    {
+        if (AUncannyGameMode* GameMode = Cast<AUncannyGameMode>(GetWorld()->GetGameMode()))
+        {
+            GameMode->OnPlayerHit();
+        }
+    }
 }

@@ -35,6 +35,13 @@ public:
     virtual void CreatePhysXGameObject();
 
     UPROPERTY_WITH_FLAGS(EditAnywhere, bool, bLockZAxis, = true)
+
+    UPROPERTY(
+        EditAnywhere,
+        ECollisionEnabled,
+        CollisionEnabled,
+        = ECollisionEnabled::QueryOnly)
+
 private:
     float CapsuleHalfHeight = 0.88f;
     float CapsuleRadius = 0.34f;
