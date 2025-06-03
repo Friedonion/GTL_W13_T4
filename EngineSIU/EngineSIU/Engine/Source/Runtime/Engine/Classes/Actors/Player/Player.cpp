@@ -288,6 +288,28 @@ void APlayerCharacter::ProcessAttack(float DeltaTime)
         {
             bShootingPending = false;
             ShootInternal();
+			if (AUncannyGameMode* GameMode = Cast<AUncannyGameMode>(GetWorld()->GetGameMode()))
+			{
+				int32 NotifyIndex = 0;
+				if (!ShootAnim->GetNotifyEvent(NotifyIndex))
+					ShootAnim->AddNotifyEvent(0, 0.168f, 0, "ShootNotify", NotifyIndex);
+				if (FAnimNotifyEvent* NotifyEvent = ShootAnim->GetNotifyEvent(NotifyIndex))
+				{
+					auto* Notify = FObjectFactory::ConstructObject<UAnimSoundNotify>(nullptr);
+					if (GameMode->GetBulletCount() == 0)
+					{
+						Notify->SetSoundName(FName("Empty"));
+					}
+					else
+					{
+						Notify->SetSoundName(FName("Pistol"));
+					}
+					
+					NotifyEvent->SetAnimNotify(Notify);
+				}
+				
+			}
+
         }
     }
     
