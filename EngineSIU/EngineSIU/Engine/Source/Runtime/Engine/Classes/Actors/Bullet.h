@@ -19,6 +19,21 @@ public:
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
     virtual void Destroyed() override;
+    
+    void SetVelocity(const FVector& InVelocity)
+    {
+        Velocity = InVelocity;
+    }
+
+    void SetLifeTime(const float InLifeTime)
+    {
+        ProjectileLifetime = InLifeTime;
+    }
+
+    void SetVisible(bool bVisible)
+    {
+        this->bVisible = bVisible;
+    }
 
 private:
     UPROPERTY(EditAnywhere, UStaticMeshComponent*, StaticMeshComponent,)
@@ -36,5 +51,10 @@ private:
     UPROPERTY(EditAnywhere, FVector, Velocity, )
     UPROPERTY(EditAnywhere, float, ProjectileLifetime, )
     UPROPERTY(EditAnywhere, float, AccumulatedTime, )
+    UPROPERTY(EditAnywhere, bool, bVisible,)
+
+    //FVector BeginLocation = FVector::ZeroVector;
+    //FRotator BeginRotation = FRotator::ZeroRotator;
+
 };
 

@@ -29,7 +29,7 @@ public:
         EditAnywhere,
         float,
         BaseEyeHeight,
-        = 0.0f
+        = 11.0f
     )
 protected:
     UPROPERTY(

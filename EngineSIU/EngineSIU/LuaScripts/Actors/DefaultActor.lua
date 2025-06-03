@@ -114,6 +114,8 @@ function ReturnTable:Move(dv)
     LocalMovement.Z = 0.0
 
     this.ActorLocation = this.ActorLocation + LocalMovement
+
+    this.bMoving = true
 end
 
 -- 좌우 움직임
