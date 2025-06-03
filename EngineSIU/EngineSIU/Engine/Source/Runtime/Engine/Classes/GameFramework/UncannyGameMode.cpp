@@ -236,7 +236,7 @@ void AUncannyGameMode::PlayHitNoiseEffect()
 void AUncannyGameMode::OnDeath()
 {
     APlayerController* Controller = GetWorld()->GetPlayerController();
-    Controller->PlayerCameraManager->StartCameraFade(0.f, 1.0f, 10.f, FLinearColor::Black, false);
+    Controller->PlayerCameraManager->StartCameraFade(1.0f, 0.0f, 10.f, FLinearColor::Black, false);
 
     Controller->UnPossess();
 }
