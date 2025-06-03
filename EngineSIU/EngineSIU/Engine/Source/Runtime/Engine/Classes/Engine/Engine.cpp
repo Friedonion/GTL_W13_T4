@@ -5,6 +5,7 @@
 #include "UObject/Casts.h"
 #include "World/World.h"
 #include "Physics/PhysicsManager.h"
+#include "Core/TimerManager.h"
 
 UEngine* GEngine = nullptr;
 
@@ -19,6 +20,9 @@ void UEngine::Init()
     
     PhysicsManager = new FPhysicsManager();
     PhysicsManager->InitPhysX();
+
+    TimerManager = new FTimerManager();
+
 }
 
 void UEngine::Release()

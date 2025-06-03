@@ -6,7 +6,17 @@
 
 #include "World/World.h"
 #include <thread>
+#include "PhysicsEngine/SimulationEventCallback.h"  
 
+physx::PxFilterFlags DebugAllContactsFilterShader(
+    physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+    physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+    physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+{
+    // 모든 충돌에 대해 기본 물리 반응 및 onContact 알림 설정
+    pairFlags = physx::PxPairFlag::eCONTACT_DEFAULT | physx::PxPairFlag::eNOTIFY_TOUCH_FOUND | physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
+    return physx::PxFilterFlag::eDEFAULT;
+}
 
 void GameObject::SetRigidBodyType(ERigidBodyType RigidBodyType) const
 {
@@ -33,12 +43,21 @@ void GameObject::SetRigidBodyType(ERigidBodyType RigidBodyType) const
 }
 
 FPhysicsManager::FPhysicsManager()
+    : SimulationEventCallback(nullptr)
 {
+}
+
+FPhysicsManager::~FPhysicsManager()
+{
+    delete SimulationEventCallback;
+    SimulationEventCallback = nullptr;
 }
 
 void FPhysicsManager::InitPhysX()
 {
     Foundation = PxCreateFoundation(PX_PHYSICS_VERSION, Allocator, ErrorCallback);
+
+    SimulationEventCallback = new FSimulationEventCallback(this); // 필요하다면 this 전달
 
     // PVD 생성 및 연결
     Pvd = PxCreatePvd(*Foundation);
@@ -53,7 +72,6 @@ void FPhysicsManager::InitPhysX()
     Physics = PxCreatePhysics(PX_PHYSICS_VERSION, *Foundation, PxTolerancesScale(), true, Pvd);
     
     Material = Physics->createMaterial(0.5f, 0.7f, 0.1f);
-
     PxInitExtensions(*Physics, Pvd);
 }
 
@@ -81,9 +99,10 @@ PxScene* FPhysicsManager::CreateScene(UWorld* World)
     Dispatcher = PxDefaultCpuDispatcherCreate(hc-2);
     SceneDesc.cpuDispatcher = Dispatcher;
     
-    SceneDesc.filterShader = PxDefaultSimulationFilterShader;
+    //SceneDesc.filterShader = PxDefaultSimulationFilterShader;
+    SceneDesc.filterShader = DebugAllContactsFilterShader;
     
-    // sceneDesc.simulationEventCallback = gMyCallback; // TODO: 이벤트 핸들러 등록(옵저버 or component 별 override)
+    SceneDesc.simulationEventCallback = SimulationEventCallback; // TODO: 이벤트 핸들러 등록(옵저버 or component 별 override)
     
     SceneDesc.flags |= PxSceneFlag::eENABLE_ACTIVE_ACTORS;
     SceneDesc.flags |= PxSceneFlag::eENABLE_CCD;

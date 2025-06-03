@@ -117,6 +117,7 @@ struct FBodyInstance
     physx::PxRigidActor* RigidActorAsync = nullptr;  // 비동기 액터
 
     GameObject* BIGameObject = nullptr;
+    AActor* OwnerActor = nullptr;
 
     UPrimitiveComponent* OwnerComponent = nullptr;
     

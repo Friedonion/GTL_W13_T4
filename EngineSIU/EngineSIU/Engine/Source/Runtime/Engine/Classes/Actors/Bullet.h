@@ -27,6 +27,8 @@ private:
     // 총알 이동 (속도 궤적) 용 컴포넌트
     UProjectileMovementComponent* ProjectileMovement = nullptr;
 
+    void OnBulletHit(AActor* SelfActor, AActor* OtherActor);
+
 private:
     UPROPERTY(EditAnywhere, float, InitialSpeed, )
     UPROPERTY(EditAnywhere, float, MaxSpeed, )

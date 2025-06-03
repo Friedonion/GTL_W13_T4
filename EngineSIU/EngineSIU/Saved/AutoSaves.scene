@@ -75,8 +75,8 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "UStaticMeshComponent",
-                    "ComponentID": "StaticMeshComponent_0",
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
                         "AABB_max": "X=12.047 Y=5.485 Z=18.383",
                         "AABB_min": "X=-11.050 Y=-7.110 Z=-0.005",
@@ -437,15 +437,19 @@
                         "RelativeLocation": "X=-0.950 Y=15.994 Z=-24.795",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "1",
-                        "StaticMeshPath": "Contents/Reference/Reference.obj",
-                        "bApplyGravity": "false",
                         "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
+                        "bIsActive": "true"
                     }
-                },
+                }
+            ],
+            "RootComponentID": "USceneComponent_481"
+        },
+        {
+            "ActorClass": "AEnemySpawner",
+            "ActorID": "AEnemySpawner_388",
+            "ActorLabel": "OBJ_ENEMYSPAWNER_388",
+            "ActorTickInEditor": "false",
+            "Components": [
                 {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
@@ -2099,7 +2103,7 @@
                     }
                 }
             ],
-            "RootComponentID": "StaticMeshComponent_0"
+            "RootComponentID": "USceneComponent_390"
         },
         {
             "ActorClass": "ACube",
