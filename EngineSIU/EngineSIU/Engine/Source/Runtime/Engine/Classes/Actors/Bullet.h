@@ -4,6 +4,8 @@
 class UStaticMesh;
 class UStaticMeshComponent;
 class UProjectileMovementComponent;
+class UParticleSystem;
+class UParticleSystemComponent;
 
 class ABullet : public AActor
 {
@@ -36,5 +38,9 @@ private:
     UPROPERTY(EditAnywhere, FVector, Velocity, )
     UPROPERTY(EditAnywhere, float, ProjectileLifetime, )
     UPROPERTY(EditAnywhere, float, AccumulatedTime, )
+
+private:
+    UPROPERTY(EditAnywhere, UParticleSystem*, ParticleSystem, )
+    UPROPERTY(EditAnywhere, UParticleSystemComponent*, ParticleSystemComponent, )
 };
 

@@ -8,6 +8,11 @@
 #include "PhysicsManager.h"
 #include "PhysicsEngine/BodyInstance.h"
 
+#include "Particles/ParticleSystem.h"
+
+#include "Classes/Engine/AssetManager.h"
+#include "Particles/ParticleSystemComponent.h"
+
 ABullet::ABullet()
     : StaticMeshComponent(nullptr)
     , ProjectileMovement(nullptr)
@@ -17,8 +22,10 @@ ABullet::ABullet()
     , ProjectileLifetime(10.f)
     , Gravity(0.f)
     , AccumulatedTime(0.f)
+    , ParticleSystemComponent(nullptr)
+    , ParticleSystem(nullptr)
 {
-    
+
 }
 
 ABullet::~ABullet()
@@ -37,6 +44,8 @@ UObject* ABullet::Duplicate(UObject* InOuter)
     NewActor->ProjectileLifetime = ProjectileLifetime;
     NewActor->Gravity = Gravity;
     NewActor->AccumulatedTime = AccumulatedTime;
+    NewActor->ParticleSystemComponent = ParticleSystemComponent;
+    NewActor->ParticleSystem = ParticleSystem;
 
     return NewActor;
 }
@@ -69,6 +78,20 @@ void ABullet::BeginPlay()
     PxRigidDynamic* RigidBody = StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody;
 
     RigidBody->setLinearVelocity(PxVec3(TempVelocity.X, TempVelocity.Y, TempVelocity.Z));
+
+    // Begin Test
+    ParticleSystem = FObjectFactory::ConstructObject<UParticleSystem>(this);
+    ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_999");
+    //ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_999.particlesystem");
+    if (this == nullptr)
+        return;
+    ParticleSystemComponent = AddComponent<UParticleSystemComponent>(TEXT("ParticleSystemComp"));
+    ParticleSystemComponent->SetOwner(this);
+    ParticleSystemComponent->SetupAttachment(GetOwner()->GetRootComponent());
+    ParticleSystemComponent->SetRelativeLocation(GetOwner()->GetActorLocation());
+    ParticleSystemComponent->SetParticleSystem(ParticleSystem);
+    ParticleSystemComponent->InitializeSystem();
+    // End Test
 }
 
 void ABullet::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -84,8 +107,10 @@ void ABullet::Destroyed()
 
 void ABullet::Tick(float DeltaTime)
 {
-    Super::Tick(DeltaTime);
     AccumulatedTime += DeltaTime;
+    ParticleSystemComponent->TickComponent(DeltaTime);
+    FVector Loc=ParticleSystemComponent->GetComponentLocation();
+    UE_LOG(ELogLevel::Display, "%f, %f, %f", Loc.X, Loc.Y, Loc.Z);
 
     if (AccumulatedTime >= ProjectileLifetime)
     {
