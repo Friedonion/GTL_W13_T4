@@ -10,3 +10,6 @@ map_Kd T_Explosion_SubUV.PNG
 
 newmtl Flame
 map_Kd Flame.png
+
+newmtl Explosion_Alpha
+map_Kd T_Explosion_SubUV_Alpha.PNG
