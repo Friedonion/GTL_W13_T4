@@ -5,7 +5,6 @@
 #include "PhysicsEngine/BodyInstance.h"
 #include "Engine/Engine.h"
 
-
 AFist::AFist()
 {
     
@@ -55,7 +54,6 @@ void AFist::Tick(float DeltaTime)
 
 void AFist::Destroyed()
 {
-    GEngine->PhysicsManager->DestroyGameObject(StaticMeshComponent->BodyInstance->BIGameObject);
     Super::Destroyed();
 }
 
@@ -92,10 +90,10 @@ void AFist::SpawnObject()
     StaticMeshComponent->BodyInstance->bSimulatePhysics = StaticMeshComponent->bSimulate;
     StaticMeshComponent->BodyInstance->bEnableGravity = StaticMeshComponent->bApplyGravity;
 
-    FVector Pos = Shooter->GetActorLocation();
+    /*FVector Pos = Shooter->GetActorLocation();
     Pos += Shooter->GetActorForwardVector() * 20;
     SetActorLocation(Pos);
-    SetActorRotation(Shooter->GetActorRotation());
+    SetActorRotation(Shooter->GetActorRotation());*/
 
     StaticMeshComponent->CreatePhysXGameObject();
     //GameObject = GEngine->PhysicsManager->CreateGameObject(Position, Direction, StaticMeshComponent->BodyInstance, StaticMeshComponent->GetBodySetup(), ERigidBodyType::DYNAMIC);
@@ -104,6 +102,6 @@ void AFist::SpawnObject()
     StaticMeshComponent->BodyInstance->OwnerActor = this;
     PxRigidDynamic* RigidBody = StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody;
 
-    FVector Velocity = GetOwner()->GetActorForwardVector();
+    FVector Velocity = GetActorForwardVector();
     RigidBody->setLinearVelocity(PxVec3(Velocity.X, Velocity.Y, Velocity.Z) * InitialSpeed);
 }

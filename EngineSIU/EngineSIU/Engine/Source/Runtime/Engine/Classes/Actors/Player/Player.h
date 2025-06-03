@@ -37,9 +37,6 @@ public:
     
     bool IsShooting();
 
-    PlayerState State = PlayerState::Idle; // 플레이어의 현재 상태를 나타내는 변수.
-
-
 protected:
     USkeletalMeshComponent* LeftArm = nullptr;
     USkeletalMeshComponent* RightArm = nullptr;
@@ -55,10 +52,33 @@ protected:
         = true
     )
     
+    UPROPERTY(
+        EditAnywhere,
+        float,
+        DeltaTimeMultiplier,
+        = 0.1f
+    )
 public:
     FVector GetHeadLocation() { return Head->GetComponentLocation(); }
     void SetHeadLocation(const FVector& Location) { Head->SetWorldLocation(Location); }
 
     void SetHeadRotation(const FRotator& Rotation) { Head->SetWorldRotation(Rotation); }
     FRotator GetHeadRotation() { return Head->GetComponentRotation(); }
+
+private:
+    bool bPunchingPending = false;
+    bool bShootingPending = false;
+
+    float bPunchingTimeLeft = 0.f; // 애니메이션과 맞추기 위함
+    float bShootingTimeLeft = 0.f;
+
+    UPROPERTY(EditAnywhere, float, bPunchingWaitTime, = 0.3f)
+    UPROPERTY(EditAnywhere, float, bShootingWaitTime, = 0.3f)
+
+    void ProcessAttack(float DeltaTime);
+
+    void PunchInternal();
+    void ShootInternal();
+    
+    bool bMoving = false;
 };

@@ -13,6 +13,8 @@
 #include "Classes/Engine/AssetManager.h"
 #include "Particles/ParticleSystemComponent.h"
 
+#include "Engine/Engine.h"
+
 ABullet::ABullet()
     : StaticMeshComponent(nullptr)
     , ProjectileMovement(nullptr)
@@ -22,6 +24,7 @@ ABullet::ABullet()
     , ProjectileLifetime(10.f)
     , Gravity(0.f)
     , AccumulatedTime(0.f)
+    , bVisible(true)
     , ParticleSystemComponent(nullptr)
     , ParticleSystem(nullptr)
 {
@@ -54,21 +57,28 @@ void ABullet::BeginPlay()
 {
     Super::BeginPlay();
 
-    AEnemy* Owner = Cast<AEnemy>(GetOwner());
-    FVector TempVelocity;
-    StaticMeshComponent = AddComponent<UStaticMeshComponent>(TEXT("BulletMesh"));
-    SetRootComponent(StaticMeshComponent);
+    AActor* Owner = GetOwner();
+    StaticMeshComponent = Cast<UStaticMeshComponent>(AddComponent(UStaticMeshComponent::StaticClass(), TEXT("BulletMesh"), false));
+    //StaticMeshComponent = AddComponent<UStaticMeshComponent>(TEXT("BulletMesh"));
+    StaticMeshComponent->SetupAttachment(RootComponent);
+    SetActorScale(FVector(10, 10, 10));
+    if (bVisible)
+    {
+        StaticMesh = FObjManager::GetStaticMesh(L"Contents/Bullet/Bullet.obj");
+        StaticMeshComponent->SetStaticMesh(StaticMesh);
+    }
+    else
+    {
+        StaticMesh = FObjManager::GetStaticMesh(L"Contents/EmptyObject/EmptyObject.obj");
+        StaticMeshComponent->SetStaticMesh(StaticMesh);
+        StaticMeshComponent->AABB = FBoundingBox(FVector(-5.f, -5.f, -5.f), FVector(5.f, 5.f, 5.f));
+    }
 
-    StaticMesh = FObjManager::GetStaticMesh(L"Contents/Bullet/Bullet.obj");
-    StaticMeshComponent->SetStaticMesh(StaticMesh);
-
-    ProjectileMovement = AddComponent<UProjectileMovementComponent>(TEXT("BulletMovement"));
-
-    TempVelocity = Owner->Direction.ToVector() * InitialSpeed;
+    //ProjectileMovement = AddComponent<UProjectileMovementComponent>(TEXT("BulletMovement"));
 
     // TO-DO: Muzzle 위치에 맞게 수정 필요
-    SetActorLocation(Owner->GetActorLocation() + Owner->Direction.ToVector().GetSafeNormal() * 30.f);
-    SetActorRotation(Owner->Direction);
+    //SetActorLocation(Owner->GetActorLocation() + Owner->Direction.ToVector().GetSafeNormal() * 30.f);
+    //SetActorRotation(Owner->Direction);
 
     StaticMeshComponent->bSimulate = true;
     StaticMeshComponent->CreatePhysXGameObject();
@@ -77,8 +87,9 @@ void ABullet::BeginPlay()
     StaticMeshComponent->BodyInstance->OwnerActor = this;
     PxRigidDynamic* RigidBody = StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody;
 
-    RigidBody->setLinearVelocity(PxVec3(TempVelocity.X, TempVelocity.Y, TempVelocity.Z));
+    FVector Velocity = GetActorForwardVector() * 600.f;
 
+    RigidBody->setLinearVelocity(PxVec3(Velocity.X, Velocity.Y, Velocity.Z));
     // Begin Test
     ParticleSystem = FObjectFactory::ConstructObject<UParticleSystem>(this);
     ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_999");
@@ -101,8 +112,8 @@ void ABullet::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void ABullet::Destroyed()
 {
+    GEngine->PhysicsManager->DestroyGameObject(StaticMeshComponent->BodyInstance->BIGameObject);
     Super::Destroyed();
-
 }
 
 void ABullet::Tick(float DeltaTime)

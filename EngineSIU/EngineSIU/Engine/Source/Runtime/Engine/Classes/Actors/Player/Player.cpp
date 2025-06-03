@@ -10,7 +10,7 @@
 #include "Animation/AnimSingleNodeInstance.h"
 #include "Animation/AnimSequence.h"
 #include "EngineLoop.h"
-#include "Actors/Fist.h"
+#include "Actors/Bullet.h"
 #include "Engine/Classes/Animation/AnimTypes.h"
 #include "Animation/AnimSoundNotify.h"
 #include "Engine/Contents/Objects/DamageCameraShake.h"
@@ -49,7 +49,6 @@ void APlayerCharacter::BeginPlay()
             GEngine->ActiveWorld->GetPlayerController()->BindMouseMove(Callback);
         }
     );
-
 
     for (USkeletalMeshComponent* SkelComp : GetComponentsByClass<USkeletalMeshComponent>())
     {
@@ -146,24 +145,23 @@ void APlayerCharacter::Tick(float DeltaTime)
 {
     AActor::Tick(DeltaTime);
 
-    if (IsPunching())
-    {
-        this->SetWorldTickRate(1);
-    }
-    else if (IsShooting())
+    if (IsPunching() || IsShooting() || bMoving)
     {
         this->SetWorldTickRate(1);
     }
     else
     {
-        this->SetWorldTickRate(0.3);
+        this->SetWorldTickRate(DeltaTimeMultiplier);
     }
+
+    bMoving = false;
+    ProcessAttack(DeltaTime);
 }
 
 void APlayerCharacter::RegisterLuaType(sol::state& Lua)
 {
     DEFINE_LUA_TYPE_WITH_PARENT(APlayerCharacter, (sol::bases<AActor, APawn, ACharacter>()),
-        "State", &APlayerCharacter::State,
+        "bMoving", &APlayerCharacter::bMoving,
         "Punch", &APlayerCharacter::Punch,
         "Shoot", &APlayerCharacter::Shoot,
         "SetPlayRate", &APlayerCharacter::SetPlayRate,
@@ -211,14 +209,8 @@ void APlayerCharacter::Punch()
             Instance->SetElapsedTime(0.f);
         }
     }
-    AFist* Fist = GetWorld()->SpawnActor<AFist>();
-    Fist->SetActorLabel(TEXT("Fist"));
-    Fist->SetOwner(this);
-    Fist->SetShooter(this);
-    Fist->bVisible = false;
-    Fist->bSpawned = false;
-    Fist->WaitTime = 0.3f;
-    Fist->SetShooter(this);
+    bPunchingPending = true;
+    bPunchingTimeLeft = bPunchingWaitTime;
 }
 
 void APlayerCharacter::Shoot()
@@ -231,15 +223,8 @@ void APlayerCharacter::Shoot()
             Instance->SetElapsedTime(0.f);
         }
     }
-    AFist* Fist = GetWorld()->SpawnActor<AFist>();
-    Fist->SetActorLabel(TEXT("Bullet"));
-    Fist->SetOwner(this);
-    Fist->bVisible = true;
-    Fist->bSpawned = false;
-    Fist->WaitTime = 1.f;
-    Fist->InitialSpeed = 30.f;
-    Fist->Lifetime = 5.f;
-    Fist->SetShooter(this);
+    bShootingPending = true;
+    bShootingTimeLeft = bShootingWaitTime;
 }
 
 void APlayerCharacter::SetPlayRate(float PlayRate)
@@ -261,18 +246,75 @@ void APlayerCharacter::SetWorldTickRate(float TickRate)
 
 bool APlayerCharacter::IsPunching()
 {
-    if (UAnimSingleNodeInstance* Instance = LeftArm->GetSingleNodeInstance())
-    {
-        return Instance->IsPlaying();
-    }
-    return false;
+    //if (UAnimSingleNodeInstance* Instance = LeftArm->GetSingleNodeInstance())
+    //{
+    //    return Instance->IsPlaying();
+    //}
+    return bPunchingPending;
 }
 
 bool APlayerCharacter::IsShooting()
 {
-    if (UAnimSingleNodeInstance* Instance = RightArm->GetSingleNodeInstance())
+    //if (UAnimSingleNodeInstance* Instance = RightArm->GetSingleNodeInstance())
+    //{
+    //    return Instance->IsPlaying();
+    //}
+    return bShootingPending;
+}
+
+void APlayerCharacter::ProcessAttack(float DeltaTime)
+{
+    if (bPunchingPending)
     {
-        return Instance->IsPlaying();
+        bPunchingTimeLeft -= DeltaTime;
+        if (bPunchingTimeLeft <= 0.f)
+        {
+            bPunchingPending = false;
+            PunchInternal();
+        }
     }
-    return false;
+
+    if (bShootingPending)
+    {
+        bShootingTimeLeft -= DeltaTime;
+        if (bShootingTimeLeft <= 0.f)
+        {
+            bShootingPending = false;
+            ShootInternal();
+        }
+    }
+    
+}
+
+void APlayerCharacter::PunchInternal()
+{
+    ABullet* Bullet = GetWorld()->SpawnActor<ABullet>();
+    Bullet->SetActorLabel(TEXT("OBJ_BULLET"));
+    Bullet->SetOwner(this);
+    Bullet->SetActorLocation(this->Head->GetComponentLocation() +
+        this->Head->GetForwardVector() * 30.f);
+    Bullet->SetVisible(false);
+    Bullet->SetActorRotation(this->Head->GetComponentRotation());
+
+    //AFist* Fist = GetWorld()->SpawnActor<AFist>();
+    //Fist->SetActorLabel(TEXT("Fist"));
+    //Fist->SetOwner(this);
+    //Fist->SetShooter(this);
+    //Fist->bVisible = false;
+    //Fist->bSpawned = true;
+    //Fist->SetShooter(this);
+    //Fist->SetActorRotation(Head->GetComponentRotation());
+    //Fist->SetActorScale(FVector(10,10,10));
+
+    //Fist->SetActorLocation(Head->GetComponentLocation() + Head->GetForwardVector() * 40.f);
+}
+
+void APlayerCharacter::ShootInternal()
+{
+    ABullet* Bullet = GetWorld()->SpawnActor<ABullet>();
+    Bullet->SetActorLabel(TEXT("OBJ_BULLET"));
+    Bullet->SetOwner(this);
+    Bullet->SetActorLocation(this->Head->GetComponentLocation() +
+        this->Head->GetForwardVector() * 30.f);
+    Bullet->SetActorRotation(this->Head->GetComponentRotation());
 }

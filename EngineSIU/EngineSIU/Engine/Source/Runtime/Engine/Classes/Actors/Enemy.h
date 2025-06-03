@@ -51,6 +51,7 @@ private:
     UPROPERTY(VisibleAnywhere, bool, bShouldFire, )
     UPROPERTY(VisibleAnywhere, bool, bIsAlive, ) // 아직 Destroy되지 않았지만 Fire()하지 않아야 하므로
     UPROPERTY(VisibleAnywhere, bool, bRagDollCreated, )
+    UPROPERTY(EditAnywhere, FVector, MuzzleOffset, = FVector(0,-4,150))
 
     // Alive를 어떻게 정의를 하는게 맞을까
     // State를 아래와 같이 나눌 예정
