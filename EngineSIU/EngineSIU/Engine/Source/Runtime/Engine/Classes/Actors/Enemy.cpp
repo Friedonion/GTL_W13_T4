@@ -355,6 +355,10 @@ void AEnemy::Fire()
     Bullet->SetActorLabel(TEXT("OBJ_BULLET"));
     Bullet->SetOwner(this);
 
+    Bullet->SetActorLocation(this->GetActorLocation() + MuzzleOffset +
+        this->GetActorForwardVector() * 30.f);
+    Bullet->SetActorRotation(this->GetActorRotation());
+
     bShouldFire = false;
 }
 
