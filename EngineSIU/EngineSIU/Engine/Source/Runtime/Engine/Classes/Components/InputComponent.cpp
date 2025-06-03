@@ -11,7 +11,8 @@ void UInputComponent::ProcessInput(float DeltaTime)
 { 
     if (!bShowCursor)
     {
-        for (EKeys::Type Key : PressedKeys)
+        TSet<EKeys::Type> PressedKeysCopy = PressedKeys;
+        for (EKeys::Type Key : PressedKeysCopy)
         {
             if (KeyBindDelegate.Contains(Key))
             {
@@ -20,6 +21,7 @@ void UInputComponent::ProcessInput(float DeltaTime)
             else if (MouseButtonBindDelegate.Contains(EKeys::ToMouseButton(Key)))
             {
                 MouseButtonBindDelegate[EKeys::ToMouseButton(Key)].Broadcast(DeltaTime);
+                PressedKeys.Remove(Key);
             }
         }
 

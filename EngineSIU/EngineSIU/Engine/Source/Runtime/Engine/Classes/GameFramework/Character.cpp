@@ -5,9 +5,9 @@
 ACharacter::ACharacter()
     : APawn()
 {
-    CapsuleComponent = AddComponent<UCapsuleComponent>();
+    CapsuleComponent = AddComponent<UCapsuleComponent>("CapsuleComponent");
     
-    Mesh = AddComponent<USkeletalMeshComponent>();
+    Mesh = AddComponent<USkeletalMeshComponent>("Mesh");
     Mesh->SetupAttachment(CapsuleComponent);
 }
 

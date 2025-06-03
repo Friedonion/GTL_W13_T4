@@ -9,6 +9,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "EngineLoop.h"
+#include "Actors/Fist.h"
 
 APlayerCharacter::APlayerCharacter()
     : ACharacter()
@@ -150,6 +151,9 @@ void APlayerCharacter::Punch()
             Instance->SetElapsedTime(0.f);
         }
     }
+    AFist* Fist = GetWorld()->SpawnActor<AFist>();
+    Fist->SetActorLabel(TEXT("Fist"));
+    Fist->SetOwner(this);
 }
 
 void APlayerCharacter::Shoot()
