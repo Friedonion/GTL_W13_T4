@@ -354,13 +354,13 @@ void AEnemy::HandleCollision(AActor* SelfActor, AActor* OtherActor)
 
     if (SelfActor != this) return;
 
+    if (OtherActor == nullptr)
+        return;
+
     ABullet* HittingBullet = Cast<ABullet>(OtherActor);
     if (HittingBullet)
     {
         Die();
-
-        // 여기에서 직접, 간접적으로 destroy하지 말 것
-        //HittingBullet->Destroy();
     }
 
     // TO-DO: 플레이어가 충돌한 경우 체력 감소 로직

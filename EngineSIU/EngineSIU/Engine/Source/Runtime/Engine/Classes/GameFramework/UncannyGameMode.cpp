@@ -18,7 +18,7 @@ void AUncannyGameMode::PostSpawnInitialize()
 
     LuaUIManager::Get().CreateText(
         FName(*KillTextName),
-        RectTransform(10, 70, 200, 30, AnchorDirection::TopLeft),
+        RectTransform(10, 70, 200, 30, AnchorDirection::TopCenter),
         1,
         FString::Printf(TEXT("Kills: %d"), KillCount),
         FName("Default"),
