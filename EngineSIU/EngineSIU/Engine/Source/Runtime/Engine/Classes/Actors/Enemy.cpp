@@ -235,6 +235,19 @@ void AEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 bool AEnemy::Destroy()
 {
+    if (SkeletalMeshComponent->BodyInstance)
+    {
+        GEngine->PhysicsManager->DestroyGameObject(SkeletalMeshComponent->BodyInstance->BIGameObject);
+
+    }
+
+    for (FBodyInstance* BodyInstance : SkeletalMeshComponent->GetBodies())
+    {
+        if (BodyInstance && BodyInstance->BIGameObject)
+        {
+            GEngine->PhysicsManager->DestroyGameObject(BodyInstance->BIGameObject);
+        }
+    }
     return Super::Destroy();
 }
 

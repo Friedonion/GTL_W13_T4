@@ -113,8 +113,8 @@ function ReturnTable:Move(dv)
     local LocalMovement = yawOnlyRot:RotateVector(dv)
     LocalMovement.Z = 0.0
 
-    LocalMovement.X = LocalMovement.X * 2
-    LocalMovement.Y = LocalMovement.Y * 2
+    LocalMovement.X = LocalMovement.X * 6
+    LocalMovement.Y = LocalMovement.Y * 6
     
     this.ActorLocation = this.ActorLocation + LocalMovement
 
