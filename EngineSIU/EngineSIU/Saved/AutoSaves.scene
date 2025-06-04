@@ -7,6 +7,27 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "UDirectionalLightComponent",
+                    "ComponentID": "UDirectionalLightComponent_0",
+                    "Properties": {
+                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
+                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
+                        "AttachParentID": "UBillboardComponent_0",
+                        "ComponentClass": "UDirectionalLightComponent",
+                        "ComponentName": "UDirectionalLightComponent_0",
+                        "ComponentOwner": "ADirectionalLight_398",
+                        "ComponentOwnerClass": "ADirectionalLight",
+                        "Direction": "X=-1.000 Y=-0.000 Z=-0.000",
+                        "Intensity": "3.300000",
+                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UBillboardComponent",
                     "ComponentID": "UBillboardComponent_0",
                     "Properties": {
@@ -32,27 +53,6 @@
                     }
                 },
                 {
-                    "ComponentClass": "UDirectionalLightComponent",
-                    "ComponentID": "UDirectionalLightComponent_0",
-                    "Properties": {
-                        "AABB_Max": "X=1.000 Y=1.000 Z=0.100",
-                        "AABB_Min": "X=-1.000 Y=-1.000 Z=-0.100",
-                        "AttachParentID": "UBillboardComponent_0",
-                        "ComponentClass": "UDirectionalLightComponent",
-                        "ComponentName": "UDirectionalLightComponent_0",
-                        "ComponentOwner": "ADirectionalLight_398",
-                        "ComponentOwnerClass": "ADirectionalLight",
-                        "Direction": "X=-1.000 Y=-0.000 Z=-0.000",
-                        "Intensity": "3.300000",
-                        "LightColor": "R=1.000 G=1.000 B=1.000 A=1.000",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
@@ -74,19 +74,6 @@
             "ActorLabel": "ACube477",
             "ActorTickInEditor": "false",
             "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_482",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_482",
-                        "ComponentOwner": "ACube_477",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -116,6 +103,19 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_477",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_482",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_482",
                         "ComponentOwner": "ACube_477",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -218,10 +218,23 @@
             "Components": [
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_504",
+                    "ComponentID": "ULuaScriptComponent_503",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_504",
+                        "ComponentName": "ULuaScriptComponent_503",
+                        "ComponentOwner": "ACube_498",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_498",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -254,23 +267,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_504",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_498",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_503",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_503",
+                        "ComponentName": "ULuaScriptComponent_504",
                         "ComponentOwner": "ACube_498",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -397,10 +397,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_793",
+                    "ComponentID": "ULuaScriptComponent_794",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_793",
+                        "ComponentName": "ULuaScriptComponent_794",
                         "ComponentOwner": "ACube_788",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -410,10 +410,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_794",
+                    "ComponentID": "ULuaScriptComponent_793",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_794",
+                        "ComponentName": "ULuaScriptComponent_793",
                         "ComponentOwner": "ACube_788",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -430,6 +430,32 @@
             "ActorLabel": "ACube796",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_802",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_802",
+                        "ComponentOwner": "ACube_796",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_801",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_801",
+                        "ComponentOwner": "ACube_796",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -451,6 +477,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": "Static"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_796",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -479,45 +518,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_796",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_801",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_801",
-                        "ComponentOwner": "ACube_796",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_802",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_802",
-                        "ComponentOwner": "ACube_796",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -528,6 +528,51 @@
             "ActorLabel": "OBJ_ENEMYSPAWNER_1163",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemySpawner_1163",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_495",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_1165",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_495",
+                        "ComponentOwner": "AEnemySpawner_1163",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_606",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_1165",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_606",
+                        "ComponentOwner": "AEnemySpawner_1163",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_1640",
@@ -545,41 +590,12 @@
                     }
                 },
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEnemySpawner_1163",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_573",
                     "Properties": {
                         "AttachParentID": "USceneComponent_1165",
                         "ComponentClass": "USceneComponent",
                         "ComponentName": "USceneComponent_573",
-                        "ComponentOwner": "AEnemySpawner_1163",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_495",
-                    "Properties": {
-                        "AttachParentID": "USceneComponent_1165",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_495",
                         "ComponentOwner": "AEnemySpawner_1163",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
@@ -607,11 +623,11 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_783",
+                    "ComponentID": "USceneComponent_565",
                     "Properties": {
                         "AttachParentID": "USceneComponent_1165",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_783",
+                        "ComponentName": "USceneComponent_565",
                         "ComponentOwner": "AEnemySpawner_1163",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
@@ -623,11 +639,11 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_565",
+                    "ComponentID": "USceneComponent_783",
                     "Properties": {
                         "AttachParentID": "USceneComponent_1165",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_565",
+                        "ComponentName": "USceneComponent_783",
                         "ComponentOwner": "AEnemySpawner_1163",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
@@ -647,19 +663,27 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "Head",
+                    "ComponentClass": "UCapsuleComponent",
+                    "ComponentID": "CapsuleComponent",
                     "Properties": {
-                        "AttachParentID": "Mesh",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "Head",
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "CapsuleHalfHeight": "90.000000",
+                        "CapsuleRadius": "15.870000",
+                        "ComponentClass": "UCapsuleComponent",
+                        "ComponentName": "CapsuleComponent",
                         "ComponentOwner": "APlayerCharacter_727",
                         "ComponentOwnerClass": "APlayerCharacter",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=140.000",
+                        "RelativeLocation": "X=1000.000 Y=-1600.000 Z=90.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "2",
+                        "bApplyGravity": "false",
                         "bAutoActive": "true",
-                        "bIsActive": "true"
+                        "bIsActive": "true",
+                        "bSimulate": "true",
+                        "m_Type": ""
                     }
                 },
                 {
@@ -689,27 +713,19 @@
                     }
                 },
                 {
-                    "ComponentClass": "UCapsuleComponent",
-                    "ComponentID": "CapsuleComponent",
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "Head",
                     "Properties": {
-                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
-                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
-                        "AttachParentID": "nullptr",
-                        "CapsuleHalfHeight": "90.000000",
-                        "CapsuleRadius": "15.870000",
-                        "ComponentClass": "UCapsuleComponent",
-                        "ComponentName": "CapsuleComponent",
+                        "AttachParentID": "Mesh",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "Head",
                         "ComponentOwner": "APlayerCharacter_727",
                         "ComponentOwnerClass": "APlayerCharacter",
-                        "RelativeLocation": "X=1000.000 Y=-1600.000 Z=90.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=140.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "RigidBodyType": "2",
-                        "bApplyGravity": "false",
                         "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "true",
-                        "m_Type": ""
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -741,6 +757,46 @@
                         "bLooping": "false",
                         "bPlaying": "false",
                         "bReverse": "false",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "USocketComponent",
+                    "ComponentID": "USocketComponent_1049",
+                    "Properties": {
+                        "AttachParentID": "RightArm",
+                        "ComponentClass": "USocketComponent",
+                        "ComponentName": "USocketComponent_1049",
+                        "ComponentOwner": "APlayerCharacter_727",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "Socket": "mixamorig:RightHandIndex1",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UStaticMeshComponent",
+                    "ComponentID": "UStaticMeshComponent_1050",
+                    "Properties": {
+                        "AABB_max": "X=0.464 Y=2.202 Z=1.430",
+                        "AABB_min": "X=-0.444 Y=-2.202 Z=-5.099",
+                        "AttachParentID": "USocketComponent_1049",
+                        "ComponentClass": "UStaticMeshComponent",
+                        "ComponentName": "UStaticMeshComponent_1050",
+                        "ComponentOwner": "APlayerCharacter_727",
+                        "ComponentOwnerClass": "APlayerCharacter",
+                        "RelativeLocation": "X=6.939 Y=3.348 Z=2.849",
+                        "RelativeRotation": "Pitch=-59.874 Yaw=-3.530 Roll=-3.159",
+                        "RelativeScale3D": "X=5.000 Y=5.000 Z=5.000",
+                        "RigidBodyType": "1",
+                        "StaticMeshPath": "Contents/Glock18/Glock17.obj",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": ""
                     }
@@ -779,29 +835,6 @@
                     }
                 },
                 {
-                    "ComponentClass": "UStaticMeshComponent",
-                    "ComponentID": "UStaticMeshComponent_1050",
-                    "Properties": {
-                        "AABB_max": "X=0.464 Y=2.202 Z=1.430",
-                        "AABB_min": "X=-0.444 Y=-2.202 Z=-5.099",
-                        "AttachParentID": "USocketComponent_1049",
-                        "ComponentClass": "UStaticMeshComponent",
-                        "ComponentName": "UStaticMeshComponent_1050",
-                        "ComponentOwner": "APlayerCharacter_727",
-                        "ComponentOwnerClass": "APlayerCharacter",
-                        "RelativeLocation": "X=6.939 Y=3.348 Z=2.849",
-                        "RelativeRotation": "Pitch=-59.874 Yaw=-3.530 Roll=-3.159",
-                        "RelativeScale3D": "X=5.000 Y=5.000 Z=5.000",
-                        "RigidBodyType": "1",
-                        "StaticMeshPath": "Contents/Glock18/Glock17.obj",
-                        "bApplyGravity": "false",
-                        "bAutoActive": "true",
-                        "bIsActive": "true",
-                        "bSimulate": "false",
-                        "m_Type": ""
-                    }
-                },
-                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
@@ -810,23 +843,6 @@
                         "ComponentOwner": "APlayerCharacter_727",
                         "ComponentOwnerClass": "APlayerCharacter",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USocketComponent",
-                    "ComponentID": "USocketComponent_1049",
-                    "Properties": {
-                        "AttachParentID": "RightArm",
-                        "ComponentClass": "USocketComponent",
-                        "ComponentName": "USocketComponent_1049",
-                        "ComponentOwner": "APlayerCharacter_727",
-                        "ComponentOwnerClass": "APlayerCharacter",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "Socket": "mixamorig:RightHandIndex1",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
@@ -970,19 +986,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_490",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_490",
-                        "ComponentOwner": "ACube_484",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1007,6 +1010,19 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_489",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_489",
+                        "ComponentOwner": "ACube_484",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
@@ -1020,10 +1036,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_489",
+                    "ComponentID": "ULuaScriptComponent_490",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_489",
+                        "ComponentName": "ULuaScriptComponent_490",
                         "ComponentOwner": "ACube_484",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1065,6 +1081,19 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_489",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_489",
+                        "ComponentOwner": "ACube_484",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
@@ -1082,19 +1111,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "ULuaScriptComponent_490",
-                        "ComponentOwner": "ACube_484",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_489",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_489",
                         "ComponentOwner": "ACube_484",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1136,10 +1152,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_489",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_489",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_484",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1149,10 +1165,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_489",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_489",
                         "ComponentOwner": "ACube_484",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1207,6 +1223,19 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_490",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_490",
+                        "ComponentOwner": "ACube_484",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
@@ -1230,19 +1259,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_490",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_490",
-                        "ComponentOwner": "ACube_484",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -1253,6 +1269,19 @@
             "ActorLabel": "ACube3121",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_788",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -1274,19 +1303,6 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": "Static"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_788",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
                     }
                 },
                 {
@@ -1325,19 +1341,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_793",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_793",
-                        "ComponentOwner": "ACube_788",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1375,6 +1378,19 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_793",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_793",
+                        "ComponentOwner": "ACube_788",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "ULuaScriptComponent_794",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
@@ -1397,10 +1413,10 @@
             "Components": [
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_802",
+                    "ComponentID": "ULuaScriptComponent_801",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_802",
+                        "ComponentName": "ULuaScriptComponent_801",
                         "ComponentOwner": "ACube_796",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1446,10 +1462,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_801",
+                    "ComponentID": "ULuaScriptComponent_802",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_801",
+                        "ComponentName": "ULuaScriptComponent_802",
                         "ComponentOwner": "ACube_796",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1466,6 +1482,19 @@
             "ActorLabel": "ACube3220",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_484",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -1491,10 +1520,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_490",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_490",
                         "ComponentOwner": "ACube_484",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1508,19 +1537,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "ULuaScriptComponent_489",
-                        "ComponentOwner": "ACube_484",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_490",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_490",
                         "ComponentOwner": "ACube_484",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1609,6 +1625,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_449",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_449",
+                        "ComponentOwner": "ACube_446",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1637,19 +1666,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_446",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_449",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_449",
                         "ComponentOwner": "ACube_446",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1691,6 +1707,19 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_489",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_489",
+                        "ComponentOwner": "ACube_484",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
@@ -1708,19 +1737,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "ULuaScriptComponent_490",
-                        "ComponentOwner": "ACube_484",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_489",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_489",
                         "ComponentOwner": "ACube_484",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -1880,6 +1896,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_484",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1900,19 +1929,6 @@
                         "bIsActive": "true",
                         "bSimulate": "true",
                         "m_Type": "Static"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_484",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
                     }
                 },
                 {
@@ -1951,6 +1967,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_446",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -1971,19 +2000,6 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": "Static"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_446",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
                     }
                 },
                 {
@@ -2094,6 +2110,19 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_793",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_793",
+                        "ComponentOwner": "ACube_788",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -2141,19 +2170,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_793",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_793",
-                        "ComponentOwner": "ACube_788",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -2164,6 +2180,19 @@
             "ActorLabel": "ACube1030",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_788",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -2189,10 +2218,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_794",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_794",
                         "ComponentOwner": "ACube_788",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2206,19 +2235,6 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "ULuaScriptComponent_793",
-                        "ComponentOwner": "ACube_788",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_794",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_794",
                         "ComponentOwner": "ACube_788",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2235,19 +2251,6 @@
             "ActorLabel": "ACube1039",
             "ActorTickInEditor": "false",
             "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_793",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_793",
-                        "ComponentOwner": "ACube_788",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -2277,6 +2280,19 @@
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
                         "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_788",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_793",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_793",
                         "ComponentOwner": "ACube_788",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2331,10 +2347,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
+                    "ComponentID": "ULuaScriptComponent_449",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
+                        "ComponentName": "ULuaScriptComponent_449",
                         "ComponentOwner": "ACube_446",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2344,10 +2360,10 @@
                 },
                 {
                     "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_449",
+                    "ComponentID": "LuaComponent",
                     "Properties": {
                         "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_449",
+                        "ComponentName": "LuaComponent",
                         "ComponentOwner": "ACube_446",
                         "ComponentOwnerClass": "ACube",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
@@ -2364,6 +2380,19 @@
             "ActorLabel": "ACube1056",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "ULuaScriptComponent_449",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "ULuaScriptComponent_449",
+                        "ComponentOwner": "ACube_446",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
@@ -2399,19 +2428,6 @@
                         "bSimulate": "false",
                         "m_Type": "Static"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "ULuaScriptComponent_449",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "ULuaScriptComponent_449",
-                        "ComponentOwner": "ACube_446",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "StaticMeshComponent_0"
@@ -2422,19 +2438,6 @@
             "ActorLabel": "ACube1064",
             "ActorTickInEditor": "false",
             "Components": [
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_446",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
                 {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
@@ -2456,6 +2459,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": "Static"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_446",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -2539,19 +2555,6 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "ACube_446",
-                        "ComponentOwnerClass": "ACube",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "UStaticMeshComponent",
                     "ComponentID": "StaticMeshComponent_0",
                     "Properties": {
@@ -2572,6 +2575,19 @@
                         "bIsActive": "true",
                         "bSimulate": "false",
                         "m_Type": "Static"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "ACube_446",
+                        "ComponentOwnerClass": "ACube",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
                     }
                 },
                 {
@@ -2647,6 +2663,22 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_751",
+                    "Properties": {
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_751",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=-500.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
@@ -2661,14 +2693,14 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_751",
+                    "ComponentID": "USceneComponent_785",
                     "Properties": {
-                        "AttachParentID": "nullptr",
+                        "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_751",
+                        "ComponentName": "USceneComponent_785",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=-500.000 Y=0.000 Z=0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
@@ -2685,6 +2717,35 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_789",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_789",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_751",
                     "Properties": {
@@ -2694,7 +2755,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=3000.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -2715,19 +2776,6 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEnemySpawner_749",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
                 }
             ],
             "RootComponentID": "USceneComponent_751"
@@ -2739,6 +2787,35 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_794",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_794",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_758",
                     "Properties": {
@@ -2748,21 +2825,8 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEnemySpawner_749",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
@@ -2793,6 +2857,22 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_762",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_762",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "ULuaScriptComponent",
                     "ComponentID": "LuaComponent",
                     "Properties": {
@@ -2807,11 +2887,11 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_762",
+                    "ComponentID": "USceneComponent_799",
                     "Properties": {
                         "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_762",
+                        "ComponentName": "USceneComponent_799",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
@@ -2831,7 +2911,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=-283.800 Y=143.100 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -2861,6 +2941,22 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_804",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_804",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_751",
                     "Properties": {
                         "AttachParentID": "nullptr",
@@ -2869,7 +2965,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=-500.000 Y=-32.700 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -2931,6 +3027,22 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_809",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_809",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_751",
                     "Properties": {
                         "AttachParentID": "nullptr",
@@ -2939,7 +3051,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=-500.000 Y=208.400 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -2963,6 +3075,22 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_814",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_814",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
@@ -2993,7 +3121,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=-500.000 Y=144.700 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3023,11 +3151,11 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_778",
+                    "ComponentID": "USceneComponent_819",
                     "Properties": {
                         "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_778",
+                        "ComponentName": "USceneComponent_819",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
@@ -3047,7 +3175,23 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=-500.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_778",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_778",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3077,6 +3221,22 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_751",
+                    "Properties": {
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_751",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=-500.000 Y=208.500 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_782",
                     "Properties": {
                         "AttachParentID": "USceneComponent_751",
@@ -3093,15 +3253,15 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_751",
+                    "ComponentID": "USceneComponent_824",
                     "Properties": {
-                        "AttachParentID": "nullptr",
+                        "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_751",
+                        "ComponentName": "USceneComponent_824",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=-500.000 Y=208.500 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3134,15 +3294,15 @@
             "Components": [
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_751",
+                    "ComponentID": "USceneComponent_787",
                     "Properties": {
-                        "AttachParentID": "nullptr",
+                        "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_751",
+                        "ComponentName": "USceneComponent_787",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=-720.300 Y=45.800 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3163,14 +3323,30 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_787",
+                    "ComponentID": "USceneComponent_830",
                     "Properties": {
                         "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_787",
+                        "ComponentName": "USceneComponent_830",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_751",
+                    "Properties": {
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_751",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=-720.300 Y=45.800 Z=0.000",
                         "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
@@ -3217,6 +3393,22 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_836",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_836",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_792",
                     "Properties": {
                         "AttachParentID": "USceneComponent_751",
@@ -3257,7 +3449,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=-457.900 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3303,6 +3495,22 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_842",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_842",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_797",
                     "Properties": {
                         "AttachParentID": "USceneComponent_751",
@@ -3327,7 +3535,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=-664.700 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3357,6 +3565,22 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_848",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_848",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_751",
                     "Properties": {
                         "AttachParentID": "nullptr",
@@ -3365,7 +3589,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=-286.500 Y=91.300 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3427,6 +3651,22 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_778",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_778",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_751",
                     "Properties": {
                         "AttachParentID": "nullptr",
@@ -3435,7 +3675,23 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=3000.000 Y=91.300 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_854",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_854",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3448,22 +3704,6 @@
                         "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
                         "ComponentName": "USceneComponent_802",
-                        "ComponentOwner": "AEnemySpawner_749",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
-                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_778",
-                    "Properties": {
-                        "AttachParentID": "USceneComponent_751",
-                        "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_778",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
@@ -3497,11 +3737,11 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_778",
+                    "ComponentID": "USceneComponent_860",
                     "Properties": {
                         "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_778",
+                        "ComponentName": "USceneComponent_860",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
@@ -3513,15 +3753,15 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_751",
+                    "ComponentID": "USceneComponent_778",
                     "Properties": {
-                        "AttachParentID": "nullptr",
+                        "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_751",
+                        "ComponentName": "USceneComponent_778",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
-                        "RelativeLocation": "X=2889.900 Y=-21.400 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3542,6 +3782,22 @@
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_751",
+                    "Properties": {
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_751",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=2889.900 Y=-21.400 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
                 }
             ],
             "RootComponentID": "USceneComponent_751"
@@ -3552,6 +3808,35 @@
             "ActorLabel": "AEnemySpawner2792",
             "ActorTickInEditor": "false",
             "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_866",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_866",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
                 {
                     "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_778",
@@ -3569,19 +3854,6 @@
                     }
                 },
                 {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEnemySpawner_749",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
                     "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_751",
                     "Properties": {
@@ -3591,7 +3863,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=3000.000 Y=91.300 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3624,11 +3896,11 @@
             "Components": [
                 {
                     "ComponentClass": "USceneComponent",
-                    "ComponentID": "USceneComponent_778",
+                    "ComponentID": "USceneComponent_872",
                     "Properties": {
                         "AttachParentID": "USceneComponent_751",
                         "ComponentClass": "USceneComponent",
-                        "ComponentName": "USceneComponent_778",
+                        "ComponentName": "USceneComponent_872",
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
@@ -3653,6 +3925,22 @@
                 },
                 {
                     "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_778",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_778",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_751",
                     "Properties": {
                         "AttachParentID": "nullptr",
@@ -3661,7 +3949,7 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=2853.100 Y=313.600 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
                         "bAutoActive": "true",
                         "bIsActive": "true"
@@ -3693,6 +3981,35 @@
             "ActorTickInEditor": "false",
             "Components": [
                 {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_878",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_878",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
                     "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_778",
                     "Properties": {
@@ -3718,21 +4035,8 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=2941.100 Y=-34.600 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEnemySpawner_749",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
@@ -3764,6 +4068,35 @@
             "Components": [
                 {
                     "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_884",
+                    "Properties": {
+                        "AttachParentID": "USceneComponent_751",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_884",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AEnemySpawner_749",
+                        "ComponentOwnerClass": "AEnemySpawner",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
                     "ComponentID": "USceneComponent_778",
                     "Properties": {
                         "AttachParentID": "USceneComponent_751",
@@ -3788,21 +4121,8 @@
                         "ComponentOwner": "AEnemySpawner_749",
                         "ComponentOwnerClass": "AEnemySpawner",
                         "RelativeLocation": "X=3146.100 Y=91.300 Z=0.000",
-                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
                         "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
-                        "bAutoActive": "true",
-                        "bIsActive": "true"
-                    }
-                },
-                {
-                    "ComponentClass": "ULuaScriptComponent",
-                    "ComponentID": "LuaComponent",
-                    "Properties": {
-                        "ComponentClass": "ULuaScriptComponent",
-                        "ComponentName": "LuaComponent",
-                        "ComponentOwner": "AEnemySpawner_749",
-                        "ComponentOwnerClass": "AEnemySpawner",
-                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
                         "bAutoActive": "true",
                         "bIsActive": "true"
                     }
@@ -3825,6 +4145,67 @@
                 }
             ],
             "RootComponentID": "USceneComponent_751"
+        },
+        {
+            "ActorClass": "AActor",
+            "ActorID": "AActor_888",
+            "ActorLabel": "OBJ_PARTICLESYSTEM_888",
+            "ActorTickInEditor": "true",
+            "Components": [
+                {
+                    "ComponentClass": "ULuaScriptComponent",
+                    "ComponentID": "LuaComponent",
+                    "Properties": {
+                        "ComponentClass": "ULuaScriptComponent",
+                        "ComponentName": "LuaComponent",
+                        "ComponentOwner": "AActor_888",
+                        "ComponentOwnerClass": "AActor",
+                        "ScriptName": "LuaScripts/Actors/DefaultActor.lua",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                },
+                {
+                    "ComponentClass": "UParticleSystemComponent",
+                    "ComponentID": "UParticleSystemComponent_891",
+                    "Properties": {
+                        "AABB_max": "X=0.000 Y=0.000 Z=0.000",
+                        "AABB_min": "X=0.000 Y=0.000 Z=0.000",
+                        "AttachParentID": "nullptr",
+                        "ComponentClass": "UParticleSystemComponent",
+                        "ComponentName": "UParticleSystemComponent_891",
+                        "ComponentOwner": "AActor_888",
+                        "ComponentOwnerClass": "AActor",
+                        "RelativeLocation": "X=0.000 Y=-522.500 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=-0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "RigidBodyType": "1",
+                        "TemplateKey": "Contents/ParticleSystem/UParticleSystem_756",
+                        "bApplyGravity": "false",
+                        "bAutoActive": "true",
+                        "bIsActive": "true",
+                        "bSimulate": "false",
+                        "m_Type": ""
+                    }
+                },
+                {
+                    "ComponentClass": "USceneComponent",
+                    "ComponentID": "USceneComponent_890",
+                    "Properties": {
+                        "AttachParentID": "UParticleSystemComponent_891",
+                        "ComponentClass": "USceneComponent",
+                        "ComponentName": "USceneComponent_890",
+                        "ComponentOwner": "AActor_888",
+                        "ComponentOwnerClass": "AActor",
+                        "RelativeLocation": "X=0.000 Y=0.000 Z=0.000",
+                        "RelativeRotation": "Pitch=0.000 Yaw=0.000 Roll=0.000",
+                        "RelativeScale3D": "X=1.000 Y=1.000 Z=1.000",
+                        "bAutoActive": "true",
+                        "bIsActive": "true"
+                    }
+                }
+            ],
+            "RootComponentID": "UParticleSystemComponent_891"
         }
     ],
     "NextUUID": 0,
