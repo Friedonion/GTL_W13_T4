@@ -8,6 +8,8 @@ class UParticleSystem;
 class UParticleSystemComponent;
 class GameObject;
 
+#include "SoundManager.h"
+
 class ABullet : public AActor
 {
     DECLARE_CLASS(ABullet, AActor);
@@ -60,10 +62,14 @@ private:
     //FVector BeginLocation = FVector::ZeroVector;
     //FRotator BeginRotation = FRotator::ZeroRotator;
 
-
 private:
     UPROPERTY(EditAnywhere, UParticleSystem*, ParticleSystem, )
     UPROPERTY(EditAnywhere, UParticleSystemComponent*, ParticleSystemComponent, )
     bool bDestroy = false;
+
+public:
+    //* UPROPERTY(EPropertyFlags::EditAnywhere, ({ .Category = "NewCategory", .DisplayName = "MyValue" }), int, Value, = 10) // Metadata를 지정하면 Flag와 기본값은 필수
+    UPROPERTY(EditAnywhere, FName, SoundName, = NAME_None)
+    FMOD::Channel* WhizzSoundChannel;
 };
 
