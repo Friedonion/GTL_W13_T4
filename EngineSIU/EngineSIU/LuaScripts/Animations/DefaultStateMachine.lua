@@ -5,7 +5,7 @@ AnimFSM = {
     Update = function(self, dt)
         -- self.current = "Contents/Fbx/Capoeira.fbx"
 
-        self.current = "Contents/Human/NarutoRun"
+        self.current = "Contents/Walking/mixamo.com"
 
         return {
             anim = self.current,

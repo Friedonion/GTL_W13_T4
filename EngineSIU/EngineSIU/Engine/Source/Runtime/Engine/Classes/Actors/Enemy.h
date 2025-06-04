@@ -97,5 +97,51 @@ private:
     GameObject* GetRandomLegRagdollBodyPart();              // Leg 랜덤 선택 함수
 public:
     UPROPERTY(VisibleAnywhere, FRotator, Direction, )
+
+public:
+    virtual void RegisterLuaType(sol::state& Lua) override; // Lua에 클래스 등록해주는 함수.
+
+    virtual bool BindSelfLuaProperties() override; // LuaEnv에서 사용할 멤버 변수 등록 함수.
+
+    UPROPERTY(
+        EditAnywhere,
+        FVector,
+        PatrolA,
+        = FVector(200, 0, 0)
+    )
+
+    UPROPERTY(
+        EditAnywhere,
+        FVector,
+        PatrolB,
+        = FVector(-200, 0, 0)
+    )
+
+    UPROPERTY(
+        EditAnywhere,
+        FVector,
+        PatrolStartLocation,
+        = FVector(0, 0, 0)
+    )
+
+    UPROPERTY(
+        EditAnywhere,
+        FVector,
+        MoveDirection,
+        = FVector(1, 0, 0)
+    )
+
+    UPROPERTY(
+        EditAnywhere,
+        float,
+        MoveSpeed,
+        = 100.f;
+    )
+
+    enum
+    {
+        Patrol,
+        Attack
+    } State;
 };
 

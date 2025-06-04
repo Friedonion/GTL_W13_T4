@@ -24,6 +24,10 @@
 #include "Classes/Engine/FObjLoader.h"
 #include "Components/SocketComponent.h"
 
+#include "Lua/LuaScriptComponent.h"
+#include "Lua/LuaScriptManager.h"
+#include "Lua/LuaUtils/LuaTypeMacros.h"
+
 AEnemy::AEnemy()
     : SkeletalMeshComponent(nullptr)
     , SkeletalMesh(nullptr)
@@ -98,14 +102,61 @@ void AEnemy::Tick(float DeltaTime)
     if (bIsAlive)
     {
         FVector PlayerLocation = GEngine->ActiveWorld->GetMainPlayer()->GetActorLocation();
-        Direction = FRotator::MakeLookAtRotation(this->GetActorLocation(), PlayerLocation);
+        
+        FVector Disp = PlayerLocation - GetActorLocation();
 
-        SetActorRotation(FRotator(0, Direction.Yaw, 0));
+        float Distance = Disp.Length();
 
-        CalculateTimer(DeltaTime);
-        if (!bShouldFire) return;
+        if (Distance < 1000)
+        {
+            State = Attack;
+        }
+        else
+        {
+            State = Patrol;
+        }
 
-        Fire();
+        if (State == Patrol)
+        {
+            FVector CurrentLocation = GetActorLocation();
+            // 다음 위치 계산
+            FVector NextLocation = CurrentLocation + MoveDirection * DeltaTime * MoveSpeed;
+
+            // 두 순찰 지점(PatrolA, PatrolB)과의 거리
+            float ToA = FVector::Dist(NextLocation, PatrolA);
+            float ToB = FVector::Dist(NextLocation, PatrolB);
+
+            // PatrolA 또는 PatrolB에 도달하면 방향 반전
+            if (ToA < 1.0f) // 오차 허용치(1cm)
+            {
+                MoveDirection = (PatrolB - PatrolA).GetSafeNormal();
+            }
+            else if (ToB < 1.0f)
+            {
+                MoveDirection = (PatrolA - PatrolB).GetSafeNormal();
+            }
+
+            FRotator Rot = FRotator::MakeLookAtRotation(FVector::ZeroVector, MoveDirection);
+
+            // 위치 이동
+            SetActorLocation(NextLocation);
+            SetActorRotation(Rot);
+        }
+        else // Attack
+        {
+
+
+            Direction = FRotator::MakeLookAtRotation(this->GetActorLocation(), PlayerLocation);
+
+            SetActorRotation(FRotator(0, Direction.Yaw, 0));
+
+            CalculateTimer(DeltaTime);
+
+            if (!bShouldFire) return;
+
+            Fire();
+        }
+
     }
 
     if (bRagDollCreated)
@@ -124,7 +175,10 @@ void AEnemy::BeginPlay()
 {
     SkeletalMeshComponent = AddComponent<USkeletalMeshComponent>();
     SetRootComponent(SkeletalMeshComponent);
+    LuaScriptComponent->SetScriptName("LuaScripts/Actors/Enemy.lua");
     Super::BeginPlay();
+
+    RegisterLuaType(FLuaScriptManager::Get().GetLua());
 
     SetLuaToPlayAnim();
     //if (GetOwner())
@@ -134,7 +188,12 @@ void AEnemy::BeginPlay()
     //else
     //{
 
-    //}
+    if (SkeletalMeshComponent)
+    {
+        SkeletalMeshComponent->BindAnimScriptInstance(this);
+    }
+
+    SetActorLocation(GetOwner()->GetRootComponent()->GetRelativeLocation());
     GetActorRotation();
 
     bIsAlive = true;
@@ -161,6 +220,7 @@ void AEnemy::BeginPlay()
     StaticMeshComponent->SetRelativeRotation(FRotator(180.f, 0.f, 0.f));
 
     CreateCollisionShapes();
+
 }
 
 void AEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -216,7 +276,8 @@ void AEnemy::SetLuaToPlayAnim()
     if (ULuaScriptAnimInstance* AnimInstance = SkeletalMeshComponent->GetLuaScriptAnimInstance())
     {
         AnimInstance->GetStateMachine()->SetLuaScriptName(SkeletalMeshComponent->StateMachineFileName);
-        AnimInstance->GetStateMachine()->InitLuaStateMachine(this);
+        //AnimInstance->GetStateMachine()->InitLuaStateMachine(this);
+        AnimInstance->SetPlaying(true);
     }
 }
 
@@ -259,7 +320,7 @@ void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase
     BodyInstance->bStartAwake = true;                                    // 항상 깨어있는 상태로 시작
     BodyInstance->PositionSolverIterationCount = 8;                     // 위치 솔버 반복 횟수 증가
     BodyInstance->VelocitySolverIterationCount = 4;                     // 속도 솔버 반복 횟수 증가
-    
+
     FVector BoxWorldCenterLocation = GetActorLocation() + FVector(0, 0, InCenterZOffsetFromActorBase);
     PxVec3 PPos = PxVec3(BoxWorldCenterLocation.X, BoxWorldCenterLocation.Y, BoxWorldCenterLocation.Z);
 
@@ -291,6 +352,10 @@ void AEnemy::CreateCollisionBox_Body_Internal(float InCenterZOffsetFromActorBase
 
     BodyInstance->OwnerActor = this;
     GameObject* NewRigidBodyGameObject = GEngine->PhysicsManager->CreateGameObject(this, PPos, PQuat, BodyInstance, BodySetup, ERigidBodyType::DYNAMIC);
+
+    /*        KINEMATICS로 변경           */
+    // PxScene 외부에서 위치변경해야함
+    NewRigidBodyGameObject->SetRigidBodyType(ERigidBodyType::KINEMATIC);
 
     if (NewRigidBodyGameObject)
     {
@@ -466,6 +531,41 @@ GameObject* AEnemy::GetRandomLegRagdollBodyPart()
     return GetRagdollBodyPartByIndex(RandomLegIndex);
 }
 
+void AEnemy::RegisterLuaType(sol::state& Lua)
+{
+    DEFINE_LUA_TYPE_WITH_PARENT(AEnemy, (sol::bases<AActor>()),
+        "State", &AEnemy::State
+    )
+}
+
+bool AEnemy::BindSelfLuaProperties()
+{
+    if (!LuaScriptComponent)
+    {
+        return false;
+    }
+    // LuaScript Load 실패.
+    if (!LuaScriptComponent->LoadScript())
+    {
+        return false;
+    }
+
+    sol::table& LuaTable = LuaScriptComponent->GetLuaSelfTable();
+    if (!LuaTable.valid())
+    {
+        return false;
+    }
+
+    // 자기 자신 등록.
+    // self에 this를 하게 되면 내부에서 임의로 Table로 바꿔버리기 때문에 self:함수() 형태의 호출이 불가능.
+    // 자기 자신 객체를 따로 넘겨주어야만 AActor:GetName() 같은 함수를 실행시켜줄 수 있다.
+    LuaTable["this"] = this;
+    LuaTable["Name"] = *GetName(); // FString 해결되기 전까지 임시로 Table로 전달.
+    // 이 아래에서 또는 하위 클래스 함수에서 멤버 변수 등록.
+
+    return true;
+}
+
 
 void AEnemy::ApplyRagdollImpulse(ECollisionPart HitBodyPartType, const FVector& ImpulseDirection, float ImpulseMagnitude)
 {
@@ -532,7 +632,7 @@ void AEnemy::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActo
 
         ECollisionPart InitialHitPart = HitGameObject->PartIdentifier;
         FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
-        float ImpulseMagnitude = 20000.0f; // 기본 임펄스 크기
+        float ImpulseMagnitude = 200000.0f; // 기본 임펄스 크기
         ApplyRagdollImpulse(InitialHitPart, ImpulseDirection, ImpulseMagnitude);
 
         if (AUncannyGameMode* GameMode = Cast<AUncannyGameMode>(GetWorld()->GetGameMode()))

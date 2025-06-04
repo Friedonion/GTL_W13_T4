@@ -59,41 +59,41 @@ void ULuaScriptAnimInstance::NativeUpdateAnimation(float DeltaSeconds, FPoseCont
     if (!CurrAnim || !SkeletalMeshComp || !SkeletalMeshComp->GetSkeletalMeshAsset() || !bPlaying)
         return;
 
-    UAnimDataModel* DataModel = CurrAnim->GetDataModel();
-    if (!DataModel)
-        return;
+    //UAnimDataModel* DataModel = CurrAnim->GetDataModel();
+    //if (!DataModel)
+    //    return;
 
-    const int32 FrameRate = DataModel->GetFrameRate();
-    if (FrameRate <= 0)
-        return;
+    //const int32 FrameRate = DataModel->GetFrameRate();
+    //if (FrameRate <= 0)
+    //    return;
 
-    const float StartTime = static_cast<float>(LoopStartFrame) / FrameRate;
-    const float EndTime = static_cast<float>(LoopEndFrame) / FrameRate;
+    //const float StartTime = static_cast<float>(LoopStartFrame) / FrameRate;
+    //const float EndTime = static_cast<float>(LoopEndFrame) / FrameRate;
     const float Direction = bReverse ? -1.f : 1.f;
 
     PreviousTime = ElapsedTime;
     const float DeltaTime = DeltaSeconds * PlayRate * Direction;
     ElapsedTime += DeltaTime;
 
-    // 루프 / 비루프 처리
-    if (bLooping)
-    {
-        const float Duration = EndTime - StartTime;
-        float Adjusted = FMath::Fmod(ElapsedTime - StartTime, Duration);
-        if (Adjusted < 0.f)
-            Adjusted += Duration;
-        ElapsedTime = StartTime + Adjusted;
-    }
-    else
-    {
-        ElapsedTime = FMath::Clamp(ElapsedTime, StartTime, EndTime);
+    //// 루프 / 비루프 처리
+    //if (bLooping)
+    //{
+    //    const float Duration = EndTime - StartTime;
+    //    float Adjusted = FMath::Fmod(ElapsedTime - StartTime, Duration);
+    //    if (Adjusted < 0.f)
+    //        Adjusted += Duration;
+    //    ElapsedTime = StartTime + Adjusted;
+    //}
+    //else
+    //{
+    //    ElapsedTime = FMath::Clamp(ElapsedTime, StartTime, EndTime);
 
-        if ((!bReverse && ElapsedTime >= EndTime) || (bReverse && ElapsedTime <= StartTime))
-        {
-            bPlaying = false;
-            ElapsedTime = bReverse ? EndTime : StartTime;
-        }
-    }
+    //    if ((!bReverse && ElapsedTime >= EndTime) || (bReverse && ElapsedTime <= StartTime))
+    //    {
+    //        bPlaying = false;
+    //        ElapsedTime = bReverse ? EndTime : StartTime;
+    //    }
+    //}
 
 
 

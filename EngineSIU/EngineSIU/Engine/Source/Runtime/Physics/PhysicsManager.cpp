@@ -19,10 +19,15 @@ physx::PxFilterFlags DebugAllContactsFilterShader(
 }
 
 void GameObject::UpdateForPhysicsScene(PxScene* Scene) {
-    FVector Location = OwnerActor->GetActorLocation();
+
+    PxTransform SceneTransform = DynamicRigidBody->getGlobalPose();
+    PxVec3 Position = SceneTransform.p;
+    Position.x = OwnerActor->GetActorLocation().X;
+    Position.y = OwnerActor->GetActorLocation().Y;
+    
     FQuat Rotation = OwnerActor->GetActorRotation().Quaternion();
 
-    PxTransform Pose(PxVec3(Location.X, Location.Y, Location.Z), PxQuat(Rotation.X, Rotation.Y, Rotation.Z, Rotation.W));
+    PxTransform Pose(Position, PxQuat(Rotation.X, Rotation.Y, Rotation.Z, Rotation.W));
     PxSceneWriteLock scopedWriteLock(*Scene);
     if (DynamicRigidBody) {
         DynamicRigidBody->setGlobalPose(Pose);
