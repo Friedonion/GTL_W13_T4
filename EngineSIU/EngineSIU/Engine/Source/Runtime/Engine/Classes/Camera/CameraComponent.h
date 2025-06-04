@@ -16,7 +16,7 @@ public:
 
     float ViewFOV = 70.0f;
     float NearClip = 20.f;
-    float FarClip = 50000.0f;
+    float FarClip = 15000.0f;
 
     float DistanceBehind = 10.f;
     float CameraHeight = 15.f;

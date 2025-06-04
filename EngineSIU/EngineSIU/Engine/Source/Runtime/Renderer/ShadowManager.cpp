@@ -586,7 +586,7 @@ void FShadowManager::UpdateCascadeMatrices(const std::shared_ptr<FEditorViewport
         float p = (float)i / (float)NumCascades;
         float logSplit = NearClip * powf(EffectiveFarClip / NearClip, p);
         float uniSplit = NearClip + (EffectiveFarClip - NearClip) * p;
-        CascadeSplits[i] = 0.7f * logSplit + 0.3f * uniSplit; // 혼합 비율은 조정 가능
+        CascadeSplits[i] = DirectionalLight->Param1 * logSplit + (1-DirectionalLight->Param1) * uniSplit; // 혼합 비율은 조정 가능
     }
 
     const FMatrix InvCamView = FMatrix::Inverse(CamView);
@@ -668,8 +668,8 @@ void FShadowManager::UpdateCascadeMatrices(const std::shared_ptr<FEditorViewport
         if (DirectionalShadowCascadeDepthRHI && DirectionalShadowCascadeDepthRHI->ShadowMapResolution > 0)
         {
             float shadowMapRes = (float)DirectionalShadowCascadeDepthRHI->ShadowMapResolution;
-            float worldUnitsPerTexelX = (lsMax.X - lsMin.X) / shadowMapRes;
-            float worldUnitsPerTexelY = (lsMax.Y - lsMin.Y) / shadowMapRes;
+            float worldUnitsPerTexelX = (lsMax.X - lsMin.X) / shadowMapRes * DirectionalLight->Param2;
+            float worldUnitsPerTexelY = (lsMax.Y - lsMin.Y) / shadowMapRes * DirectionalLight->Param2;
 
             // Min/Max를 텍셀 경계에 맞춤
             lsMin.X = floorf(lsMin.X / worldUnitsPerTexelX) * worldUnitsPerTexelX;

@@ -1,5 +1,5 @@
 #define MAX_CASCADE_NUM 5 // TO DO : TO FIX!!!!
-#define NUM_CASCADES 3
+#define NUM_CASCADES 5
 
 struct VS_INPUT_StaticMesh
 {

@@ -16,7 +16,7 @@
 #include "GameFramework/Actor.h"
 #include "UObject/UObjectIterator.h"
 #include "TileLightCullingPass.h"
-
+#include "LightDefine.h"
 void FUpdateLightBufferPass::Initialize(FDXDBufferManager* InBufferManager, FGraphicsDevice* InGraphics, FDXDShaderManager* InShaderManager)
 {
     FRenderPassBase::Initialize(InBufferManager, InGraphics, InShaderManager);
@@ -338,7 +338,7 @@ void FUpdateLightBufferPass::UpdatePointLightBuffer()
             LightInfo.LightViewProjs[ProjectionIndex] = PointLights[LightIdx]->GetViewProjectionMatrix(ProjectionIndex);
         }
         LightInfo.ShadowMapArrayIndex = LightIdx;
-        LightInfo.ShadowBias = 0.005f;
+        LightInfo.ShadowBias = 0.5f;
         TempBuffer[LightIdx] = LightInfo;
     }
     // 이제 TempBuffer에 대해 업데이트
@@ -361,7 +361,7 @@ void FUpdateLightBufferPass::UpdateSpotLightBuffer()
         LightInfo.Direction = SpotLights[Idx]->GetDirection();
         LightInfo.LightViewProj = SpotLights[Idx]->GetViewMatrix() * SpotLights[Idx]->GetProjectionMatrix();
         LightInfo.ShadowMapArrayIndex = Idx;
-        LightInfo.ShadowBias = 0.005f;
+        LightInfo.ShadowBias = 0.5f;
         TempBuffer[Idx] = LightInfo;
     }
     // 이제 TempBuffer에 대해 업데이트

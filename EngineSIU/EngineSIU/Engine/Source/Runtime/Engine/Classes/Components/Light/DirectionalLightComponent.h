@@ -1,6 +1,7 @@
 #pragma once
 #include "LightComponent.h"
 #include "UObject/ObjectMacros.h"
+#include "LightDefine.h"
 
 class UDirectionalLightComponent : public ULightComponentBase
 {
@@ -35,8 +36,34 @@ public:
     float GetShadowFrustumWidth() const;
 
 private:
-    FDirectionalLightInfo DirectionalLightInfo;
+    UPROPERTY(EditAnywhere, FDirectionalLightInfo, DirectionalLightInfo, );
+
+public:
+    UPROPERTY(
+        EditAnywhere,
+        float,
+        ShadowNearPlane,
+        = 1.f
+    )
+
+    UPROPERTY(
+        EditAnywhere,
+        float,
+        ShadowFarPlane,
+        = 10000.0f
+    )
+
+    UPROPERTY(EditAnywhere, float, Param1, = 0.0f)
+    UPROPERTY(EditAnywhere, float, Param2, = 0.0f)
+    UPROPERTY(EditAnywhere, float, Param3, = 0.0f)
+    UPROPERTY(EditAnywhere, float, Param4, = 0.0f)
+    UPROPERTY(EditAnywhere, float, Param5, = 0.0f)
+    UPROPERTY(EditAnywhere, float, Param6, = 0.0f)
+    UPROPERTY(EditAnywhere, float, Param7, = 0.0f)
+    UPROPERTY(EditAnywhere, float, Param8, = 0.0f)
 
 
+    UPROPERTY_WITH_FLAGS(EditAnywhere, bool, bOverride, = false)
+    UPROPERTY(EditAnywhere, float, OverrideHeight, = 1000.0f)
 };
 

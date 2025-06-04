@@ -259,6 +259,9 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="LightGridGenerator.cpp" />
     <ClCompile Include="Engine\Source\Runtime\Core\TimerManager.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Actors\Fist.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\GameFramework\UncannyGameMode.cpp" />
+    <ClCompile Include="Engine\Source\Runtime\Engine\Classes\Components\USpawnerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Contents\AnimInstance\LuaScriptAnimInstance.h" />
@@ -619,6 +622,9 @@
     <ClInclude Include="LightGridGenerator.h" />
     <ClInclude Include="Engine\Source\Runtime\Core\TimerManager.h" />
     <ClInclude Include="Engine\Source\Runtime\Core\TimerData.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Actors\Fist.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\GameFramework\UncannyGameMode.h" />
+    <ClInclude Include="Engine\Source\Runtime\Engine\Classes\Components\USpawnerComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\ParticleSpriteVertexShader.hlsl" />
