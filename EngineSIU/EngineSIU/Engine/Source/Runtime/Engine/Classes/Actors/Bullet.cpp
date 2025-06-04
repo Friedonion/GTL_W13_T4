@@ -108,19 +108,21 @@ void ABullet::BeginPlay()
     FVector Velocity = GetActorForwardVector() * 1000.f;
 
     RigidBody->setLinearVelocity(PxVec3(Velocity.X, Velocity.Y, Velocity.Z));
-    // Begin Test
-    ParticleSystem = FObjectFactory::ConstructObject<UParticleSystem>(this);
-    ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_1103");
-    if (this == nullptr)
-        return;
-    ParticleSystemComponent = AddComponent<UParticleSystemComponent>(TEXT("ParticleSystemComp"));
-    ParticleSystemComponent->SetOwner(this);
-    ParticleSystemComponent->SetupAttachment(StaticMeshComponent);
-    ParticleSystemComponent->SetParticleSystem(ParticleSystem);
-    ParticleSystemComponent->InitializeSystem();
-    // End Test
-    StaticMeshComponent->BodyInstance->BIGameObject->OnHit.AddUObject(this, &ABullet::HandleCollision);
-
+    if (bVisible)
+    {
+        // Begin Test
+        ParticleSystem = FObjectFactory::ConstructObject<UParticleSystem>(this);
+        ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_1103");
+        if (this == nullptr)
+            return;
+        ParticleSystemComponent = AddComponent<UParticleSystemComponent>(TEXT("ParticleSystemComp"));
+        ParticleSystemComponent->SetOwner(this);
+        ParticleSystemComponent->SetupAttachment(StaticMeshComponent);
+        ParticleSystemComponent->SetParticleSystem(ParticleSystem);
+        ParticleSystemComponent->InitializeSystem();
+        // End Test
+        StaticMeshComponent->BodyInstance->BIGameObject->OnHit.AddUObject(this, &ABullet::HandleCollision);
+    }
 
 
     FVector CurrentLocation = GetActorLocation();
@@ -172,9 +174,12 @@ void ABullet::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AAct
 void ABullet::Tick(float DeltaTime)
 {
     AccumulatedTime += DeltaTime;
-    ParticleSystemComponent->TickComponent(DeltaTime);
-    FVector Loc = ParticleSystemComponent->GetComponentLocation(); // 변경값
-    UE_LOG(ELogLevel::Display, "%f, %f, %f", Loc.X, Loc.Y, Loc.Z);
+    if (bVisible)
+    {
+        ParticleSystemComponent->TickComponent(DeltaTime);
+        FVector Loc = ParticleSystemComponent->GetComponentLocation(); // 변경값
+        UE_LOG(ELogLevel::Display, "%f, %f, %f", Loc.X, Loc.Y, Loc.Z);
+    }
 
     FVector WorldLocation=StaticMeshComponent->GetComponentLocation();
     FSoundManager::GetInstance().PlaySoundAtLocation(*SoundName.ToString(), { WorldLocation.X , WorldLocation.Y , WorldLocation.Z });

@@ -44,5 +44,7 @@ public:
     FVector PatrolDirection;
 
     float CurrentSpawnTimer;
+
+    bool bFirstSpawn = true; // 최초 스폰 여부
 };
 

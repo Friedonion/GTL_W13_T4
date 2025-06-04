@@ -45,6 +45,12 @@ void AEnemySpawner::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
+    if (bFirstSpawn)
+    {
+        bFirstSpawn = false;
+        Spawn();
+    }
+
     CalculateTimer(DeltaTime);
     if (!bShouldSpawn) return;
 

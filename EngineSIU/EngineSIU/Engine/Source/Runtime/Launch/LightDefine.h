@@ -36,7 +36,7 @@ struct FDirectionalLightInfo
     FMatrix LightInvProj;  // Light 광원 입장에서의 InvProj
 
     uint32 ShadowMapArrayIndex = 0 ;//캐스캐이드전 임시 배열
-    uint32 CastShadows;
+    uint32 CastShadows = 1;
 
     UPROPERTY(EditAnywhere, float, ShadowBias, = 0.001f)
     //float ShadowBias;
