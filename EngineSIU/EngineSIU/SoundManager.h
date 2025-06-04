@@ -57,7 +57,7 @@ public:
         return true;
     }
 
-    void PlaySound(const std::string& name) {
+    FMOD::Channel* PlaySound(const std::string& name) {
         auto it = soundMap.find(name);
         if (it != soundMap.end()) {
             FMOD::Channel* newChannel = nullptr;
@@ -65,7 +65,13 @@ public:
             if (newChannel) {
                 activeChannels.push_back(newChannel);
             }
+            return newChannel;
         }
+    }
+
+    void UpdateVolume(FMOD::Channel* inChannel, float volume)
+    {
+        inChannel->setVolume(0.7);
     }
 
     void Update() {
