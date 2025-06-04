@@ -127,11 +127,11 @@ void AEnemy::Tick(float DeltaTime)
             float ToB = FVector::Dist(NextLocation, PatrolB);
 
             // PatrolA 또는 PatrolB에 도달하면 방향 반전
-            if (ToA < 1.0f) // 오차 허용치(1cm)
+            if (ToA < 100.f) // 오차 허용치(1cm)
             {
                 MoveDirection = (PatrolB - PatrolA).GetSafeNormal();
             }
-            else if (ToB < 1.0f)
+            else if (ToB < 100.f)
             {
                 MoveDirection = (PatrolA - PatrolB).GetSafeNormal();
             }
@@ -220,6 +220,9 @@ void AEnemy::BeginPlay()
     StaticMeshComponent->SetRelativeRotation(FRotator(180.f, 0.f, 0.f));
 
     CreateCollisionShapes();
+
+    MoveDirection = PatrolA - PatrolB;
+    MoveDirection.Normalize();
 
 }
 

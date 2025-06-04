@@ -30,6 +30,12 @@ private:
 public:
     UPROPERTY(VisibleAnywhere, AEnemy*, SpawnedEnemy,)
 
+    UPROPERTY(EditAnywhere, FVector, PatrolA,= FVector(1000, 0, 0))
+    UPROPERTY(EditAnywhere, FVector, PatrolB,= FVector(-1000, 0, 0))
+    UPROPERTY(EditAnywhere, float, InitSpeed, =200)
+    UPROPERTY(EditAnywhere, float, InitSpeedInterval, =200)
+
+
     float CurrentSpawnTimer;
 };
 
