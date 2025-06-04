@@ -27,12 +27,17 @@ ABullet::ABullet()
     , bVisible(true)
     , ParticleSystemComponent(nullptr)
     , ParticleSystem(nullptr)
+    , WhizzSoundChannel(nullptr)
 {
-
+    SoundName = "whizzby";
 }
 
 ABullet::~ABullet()
 {
+    if (WhizzSoundChannel) {
+        WhizzSoundChannel->stop();
+        WhizzSoundChannel = nullptr;
+    }
 }
 
 
@@ -49,6 +54,7 @@ UObject* ABullet::Duplicate(UObject* InOuter)
     NewActor->AccumulatedTime = AccumulatedTime;
     NewActor->ParticleSystemComponent = ParticleSystemComponent;
     NewActor->ParticleSystem = ParticleSystem;
+    NewActor->WhizzSoundChannel = WhizzSoundChannel;
 
     return NewActor;
 }
@@ -105,7 +111,6 @@ void ABullet::BeginPlay()
     // Begin Test
     ParticleSystem = FObjectFactory::ConstructObject<UParticleSystem>(this);
     ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_1103");
-    //ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_999.particlesystem");
     if (this == nullptr)
         return;
     ParticleSystemComponent = AddComponent<UParticleSystemComponent>(TEXT("ParticleSystemComp"));
@@ -115,15 +120,38 @@ void ABullet::BeginPlay()
     ParticleSystemComponent->InitializeSystem();
     // End Test
     StaticMeshComponent->BodyInstance->BIGameObject->OnHit.AddUObject(this, &ABullet::HandleCollision);
+
+
+
+    FVector CurrentLocation = GetActorLocation();
+
+    FMOD_VECTOR fmodPos = { CurrentLocation.X, CurrentLocation.Y, CurrentLocation.Z };
+    FMOD_VECTOR fmodVel = { Velocity.X, Velocity.Y, Velocity.Z };
+    \
+    WhizzSoundChannel = FSoundManager::GetInstance().PlaySoundAtLocation(*SoundName.ToString(), fmodPos, fmodVel, true /*startPaused = true*/);
+    if (WhizzSoundChannel) 
+    {
+        // 초기 3D 속성 설정 (PlaySoundAtLocation 내부에서 이미 수행했을 수 있음)
+        WhizzSoundChannel->set3DAttributes(&fmodPos, &fmodVel);
+        WhizzSoundChannel->setPaused(false); 
+    }
 }
 
 void ABullet::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+    if (WhizzSoundChannel) {
+        WhizzSoundChannel->stop();
+        WhizzSoundChannel = nullptr;
+    }
     Super::EndPlay(EndPlayReason);
 }
 
 bool ABullet::Destroy()
 {
+    if (WhizzSoundChannel) {
+        WhizzSoundChannel->stop();
+        WhizzSoundChannel = nullptr;
+    }
     GEngine->PhysicsManager->DestroyGameObject(StaticMeshComponent->BodyInstance->BIGameObject);
     return Super::Destroy();
 }
@@ -148,10 +176,30 @@ void ABullet::Tick(float DeltaTime)
     FVector Loc = ParticleSystemComponent->GetComponentLocation(); // 변경값
     UE_LOG(ELogLevel::Display, "%f, %f, %f", Loc.X, Loc.Y, Loc.Z);
 
+    FVector WorldLocation=StaticMeshComponent->GetComponentLocation();
+    FSoundManager::GetInstance().PlaySoundAtLocation(*SoundName.ToString(), { WorldLocation.X , WorldLocation.Y , WorldLocation.Z });
 
-    //FVector Loc = RootComponent->GetComponentLocation();// 고정값
-    //UE_LOG(ELogLevel::Display, "%f, %f, %f", Loc.X, Loc.Y, Loc.Z);
+    if (WhizzSoundChannel) {
+        bool isPlaying = false;
+        FMOD_RESULT result = WhizzSoundChannel->isPlaying(&isPlaying);
+        if (result == FMOD_OK && isPlaying) {
+            FVector CurrentLocation = GetActorLocation();
+            FVector PxVelocity = FVector::ZeroVector;
+            if (StaticMeshComponent && StaticMeshComponent->BodyInstance && StaticMeshComponent->BodyInstance->BIGameObject && StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody)
+            {
+                PxVec3 pxVel = StaticMeshComponent->BodyInstance->BIGameObject->DynamicRigidBody->getLinearVelocity();
+                PxVelocity = FVector(pxVel.x, pxVel.y, pxVel.z);
+            }
 
+            FMOD_VECTOR fmodPos = { CurrentLocation.X, CurrentLocation.Y, CurrentLocation.Z };
+            FMOD_VECTOR fmodVel = { PxVelocity.X, PxVelocity.Y, PxVelocity.Z }; 
+            WhizzSoundChannel->set3DAttributes(&fmodPos, &fmodVel);
+        }
+        else 
+        {
+            WhizzSoundChannel = nullptr;
+        }
+    }
     if (bDestroy)
     {
         Destroy();
