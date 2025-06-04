@@ -238,6 +238,8 @@ public:
 
     FString ToString() const;
     bool InitFromString(const FString& InSourceString);
+
+    float GetMax() const;
 };
 
 inline FVector::FVector(const FRotator& InRotator)

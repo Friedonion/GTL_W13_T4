@@ -63,6 +63,7 @@ public:
     void SetHeadRotation(const FRotator& Rotation) { Head->SetWorldRotation(Rotation); }
     FRotator GetHeadRotation() { return Head->GetComponentRotation(); }
 
+    void SetDead();
 private:
     bool bPunchingPending = false;
     bool bShootingPending = false;
@@ -81,6 +82,10 @@ private:
     bool bMoving = false;
 
     float FootStepTime = 0.f; // 발자국 소리 재생을 위한 시간
+
+    bool bDead = false;
+
+    bool bDestroyPending = false;
 
 private:
 

@@ -71,5 +71,6 @@ public:
     //* UPROPERTY(EPropertyFlags::EditAnywhere, ({ .Category = "NewCategory", .DisplayName = "MyValue" }), int, Value, = 10) // Metadata를 지정하면 Flag와 기본값은 필수
     UPROPERTY(EditAnywhere, FName, SoundName, = NAME_None)
     FMOD::Channel* WhizzSoundChannel;
+    bool bPlayed = false;
 };
 

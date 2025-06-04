@@ -52,7 +52,10 @@ private:
     
     LuaUIManager* UIManager = nullptr;
 
-	class ADirectionalLight* LightActor;
-	int LighteningCounter = 0;
-	float OriginalIntensity;
+    UPROPERTY(
+        class UDirectionalLightComponent*, Lightning, = nullptr)
+    int bLightningCount = 8;
+    bool bIsLightning = false;
+    FRotator LastRotator;
+    float LastIntensity;
 };

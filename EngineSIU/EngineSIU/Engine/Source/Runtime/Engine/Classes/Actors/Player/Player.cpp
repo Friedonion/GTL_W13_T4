@@ -158,6 +158,23 @@ void APlayerCharacter::Tick(float DeltaTime)
 {
     AActor::Tick(DeltaTime);
 
+    if (bDead)
+    {
+        if (bDestroyPending)
+        {
+            //GameObject* GameObject = CapsuleComponent->BodyInstance->BIGameObject;
+            //GEngine->PhysicsManager->DestroyGameObject(GameObject);
+            //CapsuleComponent->BodyInstance->BIGameObject = nullptr;
+            //bDestroyPending = false;
+        }
+        GEngineLoop.bSlowing = true;
+        FRotator Rotation = GetActorRotation();
+        Rotation.Pitch += DeltaTime * 30.f;
+        Rotation.Pitch = std::min(Rotation.Pitch, 90.f); // 죽었을 때 Pitch를 -90으로 고정
+        SetActorRotation(Rotation);
+        return;
+    }
+
     if (IsPunching() || IsShooting() || bMoving)
     {
         if (bMoving)
@@ -401,4 +418,14 @@ void APlayerCharacter::HandleCollision(GameObject* HitGameObject, AActor* SelfAc
             GameMode->OnPlayerHit();
         }
     }
+}
+
+void APlayerCharacter::SetDead()
+{
+    if (bDead)
+        return;
+
+    bDead = true;
+
+    bDestroyPending = true;
 }

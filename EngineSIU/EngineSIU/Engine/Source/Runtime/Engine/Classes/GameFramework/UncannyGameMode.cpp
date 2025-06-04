@@ -7,11 +7,23 @@
 #include "World/World.h"
 #include "Engine/Contents/Objects/DamageCameraShake.h"
 #include "Animation/AnimSoundNotify.h"
-#include "Actors/DirectionalLightActor.h"
+#include "Components/Light/DirectionalLightComponent.h"
+#include "Actors/Player/Player.h"
 
 void AUncannyGameMode::BeginPlay()
 {
     Super::BeginPlay();
+
+    for (UDirectionalLightComponent* LightComp : TObjectRange<UDirectionalLightComponent>())
+    {
+        if (LightComp->GetWorld()->WorldType != EWorldType::Editor)
+        {
+            Lightning = LightComp;
+            break;
+        }
+    }
+    LastRotator = Lightning->GetRelativeRotation();
+    LastIntensity = Lightning->GetIntensity();
 }
 
 void AUncannyGameMode::PostSpawnInitialize()
@@ -68,7 +80,7 @@ void AUncannyGameMode::PostSpawnInitialize()
             });
     }
     FMOD::Channel* channel = FSoundManager::GetInstance().PlaySound2D("BGM"); // 타이틀 BGM 재생
-    FSoundManager::GetInstance().UpdateVolume(channel, 0.6f); // 볼륨 조절
+    FSoundManager::GetInstance().UpdateVolume(channel, 0.3f); // 볼륨 조절
     // 초기 HP 설정
     SetMaxHP(100);
     SetCurrentHP(100);
@@ -138,31 +150,25 @@ void AUncannyGameMode::Tick(float DeltaTime)
         }
     }
 
-    //if (static_cast<int>(DeltaTime * 1024) % 4 == 1)
-    //{
+    if (bIsLightning)
+    {
+        bLightningCount--;
+    }
+    else if (rand() % 1024 == 0)
+    {
+        Lightning->SetRelativeRotation(FRotator(0, 65, -20));
+        Lightning->SetIntensity(10000);
+        bIsLightning = true;
+        bLightningCount = 8;
+    }
 
-    //    for (ADirectionalLight* Actor : TObjectRange<ADirectionalLight>())
-    //    {
-    //        if (Actor->GetWorld()->WorldType != EWorldType::Editor)
-    //        {
-    //            LightActor = Actor;
-    //            break;
-    //        }
-    //    }
-
-    //    OriginalIntensity = LightActor->GetIntensity();
-    //    LightActor->SetIntensity(100);
-    //    LighteningCounter = 5;
-    //}
-
-    //if (LighteningCounter > 0)
-    //{
-    //    LighteningCounter--;
-    //    if (LighteningCounter == 0)
-    //    {
-    //        LightActor->SetIntensity(OriginalIntensity);
-    //    }
-    //}
+    if (bIsLightning && bLightningCount <= 0)
+    {
+        Lightning->SetIntensity(LastIntensity);
+        Lightning->SetRelativeRotation(LastRotator);
+        bLightningCount == 0;
+        bIsLightning = false;
+    }
 }
 
 
@@ -274,6 +280,8 @@ void AUncannyGameMode::OnDeath()
 {
     APlayerController* Controller = GetWorld()->GetPlayerController();
     Controller->PlayerCameraManager->StartCameraFade(1.0f, 0.0f, 10.f, FLinearColor::Black, false);
+
+    GetWorld()->GetMainPlayer()->SetDead();
 
     Controller->UnPossess();
 }

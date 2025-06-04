@@ -194,7 +194,7 @@ public:
     }
     void UpdateVolume(FMOD::Channel* inChannel, float volume)
     {
-        inChannel->setVolume(0.7);
+        inChannel->setVolume(volume);
     }
 
     void Update() {

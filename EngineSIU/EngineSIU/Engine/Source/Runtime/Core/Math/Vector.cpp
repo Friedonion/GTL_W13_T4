@@ -1,4 +1,4 @@
-﻿#include "Vector.h"
+#include "Vector.h"
 
 #include "Vector4.h"
 #include "Misc/Parse.h"
@@ -60,4 +60,9 @@ bool FVector::InitFromString(const FString& InSourceString)
     const bool bSuccessful = FParse::Value(*InSourceString, TEXT("X=") , X) && FParse::Value(*InSourceString, TEXT("Y="), Y) && FParse::Value(*InSourceString, TEXT("Z="), Z);
 
     return bSuccessful;
+}
+
+float FVector::GetMax() const
+{
+    return FMath::Max3(X, Y, Z);
 }
