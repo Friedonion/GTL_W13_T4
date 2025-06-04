@@ -23,11 +23,6 @@ UObject* AEnemySpawner::Duplicate(UObject* InOuter)
     NewActor->Character = Character;
     NewActor->SpawnedEnemy = SpawnedEnemy;
 
-    NewActor->PatrolA = PatrolA;
-    NewActor->PatrolB = PatrolB;
-    NewActor->InitSpeed = InitSpeed;
-    NewActor->InitSpeedInterval = InitSpeedInterval;
-
     return NewActor;
 }
 
@@ -36,6 +31,14 @@ void AEnemySpawner::BeginPlay()
     Super::BeginPlay();
 
     CurrentSpawnTimer = 0.0f;
+
+    PatrolDistance = GetActorScale().X;
+    SpawnInterval = GetActorScale().Y;
+    InitSpeed = GetActorScale().Z;
+
+    PatrolDirection = GetActorForwardVector();
+
+    bShouldSpawn = true;
 }
 
 void AEnemySpawner::Tick(float DeltaTime)
@@ -79,6 +82,10 @@ bool AEnemySpawner::CanSpawn()
 {
     FVector PlayerLocation3D = GEngine->ActiveWorld->GetMainPlayer()->GetActorLocation();   
     FVector PlayerDirection3D = GEngine->ActiveWorld->GetMainPlayer()->GetActorForwardVector();
+    if (APlayerCharacter* Player = Cast<APlayerCharacter>(GEngine->ActiveWorld->GetMainPlayer()))
+    {
+        PlayerDirection3D = Player->GetHeadRotation().RotateVector(FVector(1, 0, 0));
+    }
 
     FVector2D PlayerToSpawner2D = FVector2D(this->GetActorLocation().X, this->GetActorLocation().Y) - FVector2D(PlayerLocation3D.X, PlayerLocation3D.Y);
     FVector2D PlayerDirection2D = FVector2D(PlayerDirection3D.X, PlayerDirection3D.Y);
@@ -104,12 +111,18 @@ void AEnemySpawner::Spawn()
     SpawnedEnemy = World->SpawnActor<AEnemy>();
     SpawnedEnemy->SetActorLabel(TEXT("OBJ_ENEMY"));
     SpawnedEnemy->SetOwner(this);
-    SpawnedEnemy->PatrolA = GetActorLocation() + PatrolA;
-    SpawnedEnemy->PatrolB = GetActorLocation() + PatrolB;
+    SpawnedEnemy->PatrolA = GetActorLocation() + PatrolDirection * PatrolDistance;
+    SpawnedEnemy->PatrolB = GetActorLocation() - PatrolDirection * PatrolDistance;
 
-    // 포인터 주소를 정수로 변환해서 1~5 범위로 매핑
     uintptr_t Address = reinterpret_cast<uintptr_t>(SpawnedEnemy);
-    SpawnedEnemy->MoveSpeed = (static_cast<int>(Address) % static_cast<int>(InitSpeedInterval)) + InitSpeed; // 1~5
+    SpawnedEnemy->MoveSpeed = InitSpeed; // 1~5
+
+    SpawnedEnemy->OnEnemyDestroy.BindLambda([this]()
+        {
+            SpawnedEnemy = nullptr;
+            bShouldSpawn = false;
+            CurrentSpawnTimer = 0.f; // 스폰 타이머 초기화
+        });
 
     bShouldSpawn = false;
 }

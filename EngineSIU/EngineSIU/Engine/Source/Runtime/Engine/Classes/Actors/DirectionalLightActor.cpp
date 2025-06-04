@@ -25,3 +25,12 @@ void ADirectionalLight::SetIntensity(float Intensity)
         DirectionalLightComponent->SetIntensity(Intensity);
     }
 }
+
+float ADirectionalLight::GetIntensity() const
+{
+    if (DirectionalLightComponent)
+    {
+        return DirectionalLightComponent->GetIntensity();
+    }
+    return 0.0f;
+}

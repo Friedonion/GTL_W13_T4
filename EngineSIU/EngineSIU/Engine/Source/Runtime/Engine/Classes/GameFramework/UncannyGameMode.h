@@ -12,6 +12,8 @@ public:
     AUncannyGameMode() = default;
     virtual ~AUncannyGameMode() override = default;
 
+	virtual void BeginPlay();
+
     virtual void PostSpawnInitialize() override;
     virtual void Tick(float DeltaTime) override;
 
@@ -50,4 +52,7 @@ private:
     
     LuaUIManager* UIManager = nullptr;
 
+	class ADirectionalLight* LightActor;
+	int LighteningCounter = 0;
+	float OriginalIntensity;
 };

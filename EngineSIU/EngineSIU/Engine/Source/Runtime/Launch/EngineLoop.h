@@ -51,8 +51,12 @@ public:
     FGPUTimingManager GPUTimingManager;
     FEngineProfiler EngineProfiler;
 
-    float DeltaTimeMultiplier = 1;
+    bool bSlowing = false;
+    float TargetMultiplier = 0.1f;
 private:
+    void CalculateDeltaTimeMultiplier();
+    float DeltaTimeMultiplier = 1;
+
     UImGuiManager* UIManager;
     //TODO: GWorld 제거, Editor들 EditorEngine으로 넣기
 

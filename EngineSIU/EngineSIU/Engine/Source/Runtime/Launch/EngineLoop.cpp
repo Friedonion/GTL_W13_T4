@@ -178,6 +178,8 @@ void FEngineLoop::Tick()
 
         float DeltaTime = static_cast<float>(ElapsedTime / 1000.f);
 
+        CalculateDeltaTimeMultiplier();
+
         DeltaTime *= DeltaTimeMultiplier;
 
         GEngine->Tick(DeltaTime);
@@ -316,4 +318,21 @@ void FEngineLoop::UpdateUI()
         GEngineLoop.GetUnrealEditor()->OnResize(AppWnd);
     }
     ViewportTypePanel::GetInstance().OnResize(AppWnd);
+}
+
+void FEngineLoop::CalculateDeltaTimeMultiplier()
+{
+    const float Step = 0.3f;
+    if (bSlowing)
+    {
+        DeltaTimeMultiplier -= Step;
+
+        DeltaTimeMultiplier = std::max(DeltaTimeMultiplier, TargetMultiplier);
+    }
+    else
+    {
+        DeltaTimeMultiplier += Step;
+        
+        DeltaTimeMultiplier = std::min(DeltaTimeMultiplier, 1.f);
+    }
 }

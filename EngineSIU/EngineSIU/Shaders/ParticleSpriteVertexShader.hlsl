@@ -15,7 +15,7 @@ struct FParticleSpriteVertex
 
 StructuredBuffer<FParticleSpriteVertex> InstanceBuffer : register(t1);
 
-struct VS_Input 
+struct VS_Input
 {
     uint VertexID : SV_VertexID;
     uint InstanceID : SV_InstanceID;
@@ -37,33 +37,36 @@ PS_Input main(VS_Input Input)
     // P1: Bottom-Right ( 0.5, -0.5) UV(1,1)
     // P2: Top-Left     (-0.5,  0.5) UV(0,0)
     // P3: Top-Right    ( 0.5,  0.5) UV(1,0)
-    float2 LocalOffsets[4] = {
+    float2 LocalOffsets[4] =
+    {
         float2(-0.5f, -0.5f), // P0
-        float2( 0.5f, -0.5f), // P1
-        float2(-0.5f,  0.5f), // P2
-        float2( 0.5f,  0.5f)  // P3
+        float2(0.5f, -0.5f), // P1
+        float2(-0.5f, 0.5f), // P2
+        float2(0.5f, 0.5f) // P3
     };
 
-    float2 TexCoords[4] = {
+    float2 TexCoords[4] =
+    {
         float2(0.0f, 1.0f), // P0 (텍스처의 좌하단)
         float2(1.0f, 1.0f), // P1 (텍스처의 우하단)
         float2(0.0f, 0.0f), // P2 (텍스처의 좌상단)
-        float2(1.0f, 0.0f)  // P3 (텍스처의 우상단)
+        float2(1.0f, 0.0f) // P3 (텍스처의 우상단)
     };
 
-    uint CornerIndices[6] = {
+    uint CornerIndices[6] =
+    {
         0, // VertexID 0 -> P0 (Bottom-Left)
         2, // VertexID 1 -> P2 (Top-Left)
         1, // VertexID 2 -> P1 (Bottom-Right)  // Triangle 1: P0-P2-P1 (CW)
 
         1, // VertexID 3 -> P1 (Bottom-Right)
         2, // VertexID 4 -> P2 (Top-Left)      // Triangle 2: P1-P2-P3 (CW)
-        3  // VertexID 5 -> P3 (Top-Right)
+        3 // VertexID 5 -> P3 (Top-Right)
     };
 
     FParticleSpriteVertex Particle = InstanceBuffer[Input.InstanceID];
     
-    PS_Input Output = (PS_Input)0;
+    PS_Input Output = (PS_Input) 0;
     
     uint CornerIdx = CornerIndices[Input.VertexID];
     float2 CornerOffset = LocalOffsets[CornerIdx];
@@ -92,34 +95,12 @@ PS_Input main(VS_Input Input)
 
     // 6. 뷰 공간 위치를 클립 공간으로 변환
     Output.Position = mul(VertexPosition_VS, ProjectionMatrix);
-    
+
     // 7. 나머지 파티클 데이터를 픽셀 셰이더로 전달
     Output.Color = Particle.Color;
     Output.RelativeTime = Particle.RelativeTime;
     Output.ParticleId = Particle.ParticleId;
     Output.SubImageIndex = Particle.SubImageIndex;
-    
-    // ───────────────────────────────────────────────────────
-    // 월드 공간 수직 낙하 로직 
-    // ───────────────────────────────────────────────────────
-    float3 Center_WS = mul(float4(Particle.Position, 1.0f), WorldMatrix).xyz;
-    
-    // 1. 월드 축 정의
-    float3 WorldRight = float3(1.0f, 0.0f, 0.0f);
-    float3 WorldDown = float3(0.0f, 0.0f, -1.0f);
-    
-    // 2. RotatedOffset (float2) 를 월드 오프셋(float3) 으로 변환
-    float3 WorldOffset = RotatedOffset.x * WorldRight
-                        + RotatedOffset.y * WorldDown;
-    
-    // 3. 최종 버텍스 월드 좌표 계산
-    float3 FinalPosWS = Center_WS + WorldOffset;
-    
-    // 4. 월드 좌표 -> 뷰 공간 변환
-    float4 FinalPosVS = mul(float4(FinalPosWS, 1.0f), ViewMatrix);
-    
-    // 5. 뷰 공간 -> 클립 공간 변환, 그리고 덮어쓰기
-    Output.Position = mul(FinalPosVS, ProjectionMatrix);
 
     return Output;
 }

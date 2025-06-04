@@ -523,6 +523,8 @@ FString AEnemy::GetCleanBoneName(const FString& InFullName)
 void AEnemy::DelayedDestroy()
 {
     Destroy();
+    OnEnemyDestroy.Execute();
+    OnEnemyDestroy.UnBind();
 }
 
 GameObject* AEnemy::GetRagdollBodyPartByIndex(int32 BodyIndex)

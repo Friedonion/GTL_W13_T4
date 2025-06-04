@@ -326,12 +326,6 @@ void ControlEditorPanel::CreateModifyButton(const ImVec2 ButtonSize, ImFont* Ico
         
         ImGui::Spacing();
 
-        ImGui::Text("Game Speed");
-        ImGui::SetNextItemWidth(120.0f);
-        if (ImGui::DragFloat("##GameSpeed", &GEngineLoop.DeltaTimeMultiplier, 0.1f, -10.f, 10.f, "%.1f"))
-        {
-        }
-
         ImGui::Text("F-Stop");
         float F_Stop = GEngineLoop.GetLevelEditor()->GetActiveViewportClient()->F_Stop;
         ImGui::SetNextItemWidth(120.0f);

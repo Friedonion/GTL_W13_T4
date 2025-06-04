@@ -11,6 +11,7 @@ public:
 public:
     void SetIntensity(float Intensity);
 
+    float GetIntensity() const;
 protected:
     UPROPERTY
     (UDirectionalLightComponent*, DirectionalLightComponent, = nullptr);

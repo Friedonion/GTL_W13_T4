@@ -7,6 +7,12 @@
 #include "World/World.h"
 #include "Engine/Contents/Objects/DamageCameraShake.h"
 #include "Animation/AnimSoundNotify.h"
+#include "Actors/DirectionalLightActor.h"
+
+void AUncannyGameMode::BeginPlay()
+{
+    Super::BeginPlay();
+}
 
 void AUncannyGameMode::PostSpawnInitialize()
 {
@@ -131,6 +137,32 @@ void AUncannyGameMode::Tick(float DeltaTime)
             bNoisePlaying = false;
         }
     }
+
+    //if (static_cast<int>(DeltaTime * 1024) % 4 == 1)
+    //{
+
+    //    for (ADirectionalLight* Actor : TObjectRange<ADirectionalLight>())
+    //    {
+    //        if (Actor->GetWorld()->WorldType != EWorldType::Editor)
+    //        {
+    //            LightActor = Actor;
+    //            break;
+    //        }
+    //    }
+
+    //    OriginalIntensity = LightActor->GetIntensity();
+    //    LightActor->SetIntensity(100);
+    //    LighteningCounter = 5;
+    //}
+
+    //if (LighteningCounter > 0)
+    //{
+    //    LighteningCounter--;
+    //    if (LighteningCounter == 0)
+    //    {
+    //        LightActor->SetIntensity(OriginalIntensity);
+    //    }
+    //}
 }
 
 

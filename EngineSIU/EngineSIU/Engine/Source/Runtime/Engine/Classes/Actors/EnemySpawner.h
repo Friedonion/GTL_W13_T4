@@ -24,17 +24,24 @@ private:
     void CalculateTimer(float DeltaTime);
 
 private:
-    UPROPERTY(EditAnywhere, float, SpawnInterval,)
     UPROPERTY(VisibleAnywhere, bool, bShouldSpawn,)
     UPROPERTY(VisibleAnywhere, ACharacter*, Character,)
 public:
     UPROPERTY(VisibleAnywhere, AEnemy*, SpawnedEnemy,)
 
-    UPROPERTY(EditAnywhere, FVector, PatrolA,= FVector(1000, 0, 0))
-    UPROPERTY(EditAnywhere, FVector, PatrolB,= FVector(-1000, 0, 0))
-    UPROPERTY(EditAnywhere, float, InitSpeed, =200)
-    UPROPERTY(EditAnywhere, float, InitSpeedInterval, =200)
+    //UPROPERTY(EditAnywhere, FVector, PatrolA,= FVector(1000, 0, 0))
+    //UPROPERTY(EditAnywhere, FVector, PatrolB,= FVector(-1000, 0, 0))
+    //UPROPERTY(EditAnywhere, float, InitSpeed, =300)
+    //UPROPERTY(EditAnywhere, float, InitSpeedInterval, =100)
+    // Scale.X = Patrol 거리
+    // Scale.Y = interval
+    // Scale.Z = InitSpeed
 
+    float PatrolDistance;
+    float SpawnInterval;
+    float InitSpeed;
+
+    FVector PatrolDirection;
 
     float CurrentSpawnTimer;
 };

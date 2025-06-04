@@ -23,6 +23,8 @@ struct FConstraintInstance;
 class UParticleSystem;
 class UParticleSystemComponent;
 
+DECLARE_DELEGATE(FOnEnemyDestroy)
+
 class AEnemy : public AActor
 {
     DECLARE_CLASS(AEnemy, AActor)
@@ -151,5 +153,7 @@ public:
         Patrol,
         Attack
     } State;
+
+    FOnEnemyDestroy OnEnemyDestroy;
 };
 

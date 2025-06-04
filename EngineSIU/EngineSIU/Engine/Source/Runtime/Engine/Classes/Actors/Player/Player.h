@@ -32,8 +32,6 @@ public:
 
     void SetPlayRate(float PlayRate);
 
-    void SetWorldTickRate(float TickRate);
-
     bool IsPunching();
     
     bool IsShooting();

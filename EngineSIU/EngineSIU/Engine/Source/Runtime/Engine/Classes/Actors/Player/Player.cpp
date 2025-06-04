@@ -169,11 +169,11 @@ void APlayerCharacter::Tick(float DeltaTime)
                 FSoundManager::GetInstance().PlaySound2D("footprint");
             }
         }
-        this->SetWorldTickRate(1);
+        GEngineLoop.bSlowing = false;
     }
     else
     {
-        this->SetWorldTickRate(DeltaTimeMultiplier);
+        GEngineLoop.bSlowing = true;
         FootStepTime = 0.f;
     }
 
@@ -210,7 +210,6 @@ void APlayerCharacter::RegisterLuaType(sol::state& Lua)
         "Punch", &APlayerCharacter::Punch,
         "Shoot", &APlayerCharacter::Shoot,
         "SetPlayRate", &APlayerCharacter::SetPlayRate,
-        "SetWorldTickRate", &APlayerCharacter::SetWorldTickRate,
         "HeadLocation", sol::property(&APlayerCharacter::GetHeadLocation, &APlayerCharacter::SetHeadLocation),
         "HeadRotation", sol::property(&APlayerCharacter::GetHeadRotation, &APlayerCharacter::SetHeadRotation)
     )
@@ -282,11 +281,6 @@ void APlayerCharacter::SetPlayRate(float PlayRate)
     {
         Instance->SetPlayRate(PlayRate);
     }
-}
-
-void APlayerCharacter::SetWorldTickRate(float TickRate)
-{
-    GEngineLoop.DeltaTimeMultiplier = TickRate;
 }
 
 bool APlayerCharacter::IsPunching()
