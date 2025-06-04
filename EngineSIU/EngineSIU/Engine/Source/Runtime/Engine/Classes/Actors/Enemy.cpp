@@ -28,6 +28,9 @@
 #include "Lua/LuaScriptManager.h"
 #include "Lua/LuaUtils/LuaTypeMacros.h"
 
+#include "Particles/ParticleSystem.h"
+#include "Particles/ParticleSystemComponent.h"
+
 AEnemy::AEnemy()
     : SkeletalMeshComponent(nullptr)
     , SkeletalMesh(nullptr)
@@ -44,6 +47,8 @@ AEnemy::AEnemy()
     , Weapon(nullptr)
     , StaticMeshComponent(nullptr)
     , SocketComponent()
+    , ParticleSystemComponent(nullptr)
+    , ParticleSystem(nullptr)
 {
 }
 
@@ -68,9 +73,9 @@ AEnemy::~AEnemy()
         {
             TM->ClearTimer(DestroyDelayTimerHandle);
         }
-        if (AttackCheckTimerHandle.IsValid())
+        if (DestroyParticleTimerHandle.IsValid())
         {
-            TM->ClearTimer(AttackCheckTimerHandle);
+            TM->ClearTimer(DestroyParticleTimerHandle);
         }
     }
 }
@@ -93,6 +98,8 @@ UObject* AEnemy::Duplicate(UObject* InOuter)
     NewActor->Weapon = Weapon;
     NewActor->SocketComponent = SocketComponent;
     NewActor->StaticMeshComponent = StaticMeshComponent;
+    NewActor->ParticleSystemComponent = ParticleSystemComponent;
+    NewActor->ParticleSystem = ParticleSystem;
 
     return NewActor;
 }
@@ -157,6 +164,13 @@ void AEnemy::Tick(float DeltaTime)
             Fire();
         }
 
+    }
+    else
+    {
+        if (ParticleSystemComponent)
+        {
+            ParticleSystemComponent->TickComponent(DeltaTime);
+        }
     }
 
     if (bRagDollCreated)
@@ -224,6 +238,13 @@ void AEnemy::BeginPlay()
     MoveDirection = PatrolA - PatrolB;
     MoveDirection.Normalize();
 
+    // Begin Test
+    ParticleSystem = FObjectFactory::ConstructObject<UParticleSystem>(this);
+    ParticleSystem = UAssetManager::Get().GetParticleSystem(L"Contents/ParticleSystem/UParticleSystem_940");
+    ParticleSystemComponent = AddComponent<UParticleSystemComponent>(TEXT("ParticleSystemComp"));
+    ParticleSystemComponent->SetOwner(this);
+    ParticleSystemComponent->SetupAttachment(StaticMeshComponent);
+    // End Test
 }
 
 void AEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -504,19 +525,6 @@ void AEnemy::DelayedDestroy()
     Destroy();
 }
 
-void AEnemy::PeriodicAttackCheck()
-{
-    if (!bIsAlive) // 죽었으면 더 이상 실행 안 함
-    {
-        FTimerManager* TM = GEngine->TimerManager;
-        if (TM && AttackCheckTimerHandle.IsValid())
-        {
-            TM->ClearTimer(AttackCheckTimerHandle);
-        }
-        return;
-    }
-}
-
 GameObject* AEnemy::GetRagdollBodyPartByIndex(int32 BodyIndex)
 {
     if (SkeletalMeshComponent &&
@@ -583,6 +591,12 @@ bool AEnemy::BindSelfLuaProperties()
 }
 
 
+void AEnemy::DestoryParticle()
+{
+    ParticleSystemComponent->DestroyComponent();
+    ParticleSystemComponent = nullptr;
+}
+
 void AEnemy::ApplyRagdollImpulse(ECollisionPart HitBodyPartType, const FVector& ImpulseDirection, float ImpulseMagnitude)
 {
     if (!SkeletalMeshComponent)
@@ -624,8 +638,12 @@ void AEnemy::ApplyRagdollImpulse(ECollisionPart HitBodyPartType, const FVector& 
 
         PxTransform RagdollPartGlobalPose = TargetRagdollBodyPart->DynamicRigidBody->getGlobalPose();
         PxVec3 PxImpulseLocation = RagdollPartGlobalPose.p;
-
         GEngine->PhysicsManager->AddImpulseAtLocation(TargetRagdollBodyPart, PxImpulse, PxImpulseLocation);
+
+        ParticleSystemComponent->SetParticleSystem(ParticleSystem);
+        PxVec3 PxLocation = TargetRagdollBodyPart->DynamicRigidBody->getGlobalPose().p;
+        ParticleSystemComponent->SetWorldLocation(FVector(PxLocation.x, PxLocation.y, PxLocation.z));
+        ParticleSystemComponent->InitializeSystem();
     }
 }
 
@@ -650,6 +668,18 @@ void AEnemy::HandleCollision(GameObject* HitGameObject, AActor* SelfActor, AActo
         FVector ImpulseDirection = HittingBullet->GetActorForwardVector();
         float ImpulseMagnitude = 200000.0f; // 기본 임펄스 크기
         ApplyRagdollImpulse(InitialHitPart, ImpulseDirection, ImpulseMagnitude);
+
+        // 여기서 임펄스 주고 킬하는 타이머도 추가?
+        // 이 타이머가 정확하게 어떻게 돌아가는 로직인지를 다시 한 번 생각해볼 필요가 있을듯.
+        FTimerManager* TM = GEngine->TimerManager;
+        if (TM)
+        {
+            if (DestroyParticleTimerHandle.IsValid())
+            {
+                TM->ClearTimer(DestroyParticleTimerHandle);
+            }
+            DestroyParticleTimerHandle = TM->SetTimer(this, &AEnemy::DestoryParticle, 1.0f, false);
+        }
 
         if (AUncannyGameMode* GameMode = Cast<AUncannyGameMode>(GetWorld()->GetGameMode()))
         {

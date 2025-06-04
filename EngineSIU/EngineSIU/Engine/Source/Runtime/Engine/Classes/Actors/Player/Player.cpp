@@ -16,6 +16,9 @@
 #include "Components/CapsuleComponent.h"
 #include "PhysicsManager.h"
 #include "GameFramework/UncannyGameMode.h"
+
+#include "SoundManager.h"
+
 APlayerCharacter::APlayerCharacter()
     : ACharacter()
 {
@@ -157,15 +160,47 @@ void APlayerCharacter::Tick(float DeltaTime)
 
     if (IsPunching() || IsShooting() || bMoving)
     {
+        if (bMoving)
+        {
+            FootStepTime += DeltaTime;
+            if(FootStepTime >= 0.4f)
+            {
+                FootStepTime = FootStepTime - 0.4f;
+                FSoundManager::GetInstance().PlaySound2D("footprint");
+            }
+        }
         this->SetWorldTickRate(1);
     }
     else
     {
         this->SetWorldTickRate(DeltaTimeMultiplier);
+        FootStepTime = 0.f;
     }
 
     bMoving = false;
     ProcessAttack(DeltaTime);
+
+    if (Head)
+    {
+        FVector Location = Head->GetComponentLocation();
+        FRotator Rotation = Head->GetComponentRotation();
+        FVector PxVelocity = FVector::ZeroVector;
+
+        PxVec3 pxVel = CapsuleComponent->BodyInstance->BIGameObject->DynamicRigidBody->getLinearVelocity();
+        PxVelocity = FVector(pxVel.x, pxVel.y, pxVel.z);
+        FVector Velocity = FVector(PxVelocity.X, PxVelocity.Y, PxVelocity.Z); 
+
+        FMOD_VECTOR listenerPos = { Location.X, Location.Y, Location.Z };
+        FMOD_VECTOR listenerVel = { Velocity.X, Velocity.Y, Velocity.Z };
+        
+        FVector ForwardVec = GetActorForwardVector();
+        FVector UpVec = GetActorUpVector();
+
+        FMOD_VECTOR listenerFwd = { ForwardVec.X, ForwardVec.Y, -ForwardVec.Z };
+        FMOD_VECTOR listenerUp = { UpVec.X, UpVec.Y, -UpVec.Z };
+
+        FSoundManager::GetInstance().UpdateListenerAttributes(0, listenerPos, listenerVel, listenerFwd, listenerUp);
+    }
 }
 
 void APlayerCharacter::RegisterLuaType(sol::state& Lua)

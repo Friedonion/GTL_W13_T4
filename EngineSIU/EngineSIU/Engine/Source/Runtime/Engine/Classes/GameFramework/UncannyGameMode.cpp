@@ -61,7 +61,8 @@ void AUncannyGameMode::PostSpawnInitialize()
             this->StartMatch();
             });
     }
-    FSoundManager::GetInstance().PlaySound("BGM"); // 타이틀 BGM 재생
+    FMOD::Channel* channel = FSoundManager::GetInstance().PlaySound2D("BGM"); // 타이틀 BGM 재생
+    FSoundManager::GetInstance().UpdateVolume(channel, 0.7f); // 볼륨 조절
     // 초기 HP 설정
     SetMaxHP(100);
     SetCurrentHP(100);
