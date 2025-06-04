@@ -16,6 +16,7 @@
 #include "Components/CapsuleComponent.h"
 #include "PhysicsManager.h"
 #include "GameFramework/UncannyGameMode.h"
+#include "SoundManager.h"
 APlayerCharacter::APlayerCharacter()
     : ACharacter()
 {
@@ -157,11 +158,21 @@ void APlayerCharacter::Tick(float DeltaTime)
 
     if (IsPunching() || IsShooting() || bMoving)
     {
+        if (bMoving)
+        {
+            FootStepTime += DeltaTime;
+            if(FootStepTime >= 0.4f)
+            {
+                FootStepTime = FootStepTime - 0.4f;
+                FSoundManager::GetInstance().PlaySound("footprint");
+            }
+        }
         this->SetWorldTickRate(1);
     }
     else
     {
         this->SetWorldTickRate(DeltaTimeMultiplier);
+        FootStepTime = 0.f;
     }
 
     bMoving = false;

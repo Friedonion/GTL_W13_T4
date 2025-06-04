@@ -43,7 +43,6 @@ protected:
     USkeletalMeshComponent* RightArm = nullptr;
     UAnimSequence* PunchAnim = nullptr;
     UAnimSequence* ShootAnim = nullptr;
-
     USceneComponent* Head = nullptr;
 
     UPROPERTY(
@@ -82,6 +81,8 @@ private:
     void ShootInternal();
     
     bool bMoving = false;
+
+    float FootStepTime = 0.f; // 발자국 소리 재생을 위한 시간
 
 private:
 
