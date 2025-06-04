@@ -166,7 +166,7 @@ void APlayerCharacter::Tick(float DeltaTime)
             if(FootStepTime >= 0.4f)
             {
                 FootStepTime = FootStepTime - 0.4f;
-                FSoundManager::GetInstance().PlaySound("footprint");
+                FSoundManager::GetInstance().PlaySound2D("footprint");
             }
         }
         this->SetWorldTickRate(1);
