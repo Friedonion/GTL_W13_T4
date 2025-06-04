@@ -92,12 +92,34 @@ PS_Input main(VS_Input Input)
 
     // 6. 뷰 공간 위치를 클립 공간으로 변환
     Output.Position = mul(VertexPosition_VS, ProjectionMatrix);
-
+    
     // 7. 나머지 파티클 데이터를 픽셀 셰이더로 전달
     Output.Color = Particle.Color;
     Output.RelativeTime = Particle.RelativeTime;
     Output.ParticleId = Particle.ParticleId;
     Output.SubImageIndex = Particle.SubImageIndex;
+    
+    // ───────────────────────────────────────────────────────
+    // 월드 공간 수직 낙하 로직 
+    // ───────────────────────────────────────────────────────
+    float3 Center_WS = mul(float4(Particle.Position, 1.0f), WorldMatrix).xyz;
+    
+    // 1. 월드 축 정의
+    float3 WorldRight = float3(1.0f, 0.0f, 0.0f);
+    float3 WorldDown = float3(0.0f, 0.0f, -1.0f);
+    
+    // 2. RotatedOffset (float2) 를 월드 오프셋(float3) 으로 변환
+    float3 WorldOffset = RotatedOffset.x * WorldRight
+                        + RotatedOffset.y * WorldDown;
+    
+    // 3. 최종 버텍스 월드 좌표 계산
+    float3 FinalPosWS = Center_WS + WorldOffset;
+    
+    // 4. 월드 좌표 -> 뷰 공간 변환
+    float4 FinalPosVS = mul(float4(FinalPosWS, 1.0f), ViewMatrix);
+    
+    // 5. 뷰 공간 -> 클립 공간 변환, 그리고 덮어쓰기
+    Output.Position = mul(FinalPosVS, ProjectionMatrix);
 
     return Output;
 }
