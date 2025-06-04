@@ -1,4 +1,3 @@
-
 newmtl Smoke
 map_Kd Smoke.png
 
@@ -14,3 +13,6 @@ map_Kd Flame.png
 
 newmtl Explosion_Alpha
 map_Kd T_Explosion_SubUV_Alpha.PNG
+
+newmtl Debris 
+map_Kd DebrisParticle.png

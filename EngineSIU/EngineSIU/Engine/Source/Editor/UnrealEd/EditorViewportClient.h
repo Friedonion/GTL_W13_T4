@@ -142,7 +142,7 @@ public:
     float ViewFOV = 90.0f;
     float AspectRatio;
     float NearClip = 20.f;
-    float FarClip = 50000.0f;
+    float FarClip = 15000.0f;
     
     float F_Stop = 2.8f;
     float SensorWidth = 24.576f; // mm

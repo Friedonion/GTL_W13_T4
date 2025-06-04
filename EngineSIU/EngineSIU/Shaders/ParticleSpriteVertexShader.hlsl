@@ -28,7 +28,7 @@ struct PS_Input
     float4 Color : COLOR0;
     float RelativeTime : TEXCOORD1;
     float ParticleId : TEXCOORD2;
-    float SubImageIndex : TEXCOORD3;
+    int SubImageIndex : TEXCOORD3;
 };
 
 PS_Input main(VS_Input Input)

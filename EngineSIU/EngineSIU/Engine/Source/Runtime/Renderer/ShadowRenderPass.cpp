@@ -262,32 +262,124 @@ void FShadowRenderPass::RenderAllMeshesForCSM(const std::shared_ptr<FEditorViewp
         RenderStaticMesh_Internal(RenderData, Comp->GetStaticMesh()->GetMaterials(), Comp->GetOverrideMaterials(), Comp->GetselectedSubMeshIndex());
     }
 
-    ID3D11InputLayout* TempIL = ShaderManager->GetInputLayoutByKey(L"SkeletalMeshVertexShader");
-    ID3D11VertexShader* TempVS = ShaderManager->GetVertexShaderByKey(L"CascadedShadowMapVS_SKM");
 
-    Graphics->DeviceContext->IASetInputLayout(TempIL);
-    Graphics->DeviceContext->VSSetShader(TempVS, nullptr, 0);
+	if (!GEngineLoop.Renderer.bSkeletalMeshInstanced)
+	{
+		ID3D11InputLayout* TempIL = ShaderManager->GetInputLayoutByKey(L"SkeletalMeshVertexShader");
+		ID3D11VertexShader* TempVS = ShaderManager->GetVertexShaderByKey(L"CascadedShadowMapVS_SKM");
+
+		Graphics->DeviceContext->IASetInputLayout(TempIL);
+		Graphics->DeviceContext->VSSetShader(TempVS, nullptr, 0);
     
-    for (const USkeletalMeshComponent* Comp : SkeletalMeshComponents)
-    {
-        if (!Comp || !Comp->GetSkeletalMeshAsset())
-        {
-            continue;
-        }
-        const FSkeletalMeshRenderData* RenderData = Comp->GetCPUSkinning() ? Comp->GetCPURenderData() : Comp->GetSkeletalMeshAsset()->GetRenderData();
-        if (RenderData == nullptr)
-        {
-            continue;
-        }
+		for (const USkeletalMeshComponent* Comp : SkeletalMeshComponents)
+		{
+			if (!Comp || !Comp->GetSkeletalMeshAsset())
+			{
+				continue;
+			}
+			const FSkeletalMeshRenderData* RenderData = Comp->GetCPUSkinning() ? Comp->GetCPURenderData() : Comp->GetSkeletalMeshAsset()->GetRenderData();
+			if (RenderData == nullptr)
+			{
+				continue;
+			}
 
-        FMatrix WorldMatrix = Comp->GetWorldMatrix();
-        FCasCadeData.World = WorldMatrix;
-        BufferManager->UpdateConstantBuffer(TEXT("FCascadeConstantBuffer"), FCasCadeData);
+			FMatrix WorldMatrix = Comp->GetWorldMatrix();
+			FCasCadeData.World = WorldMatrix;
+			BufferManager->UpdateConstantBuffer(TEXT("FCascadeConstantBuffer"), FCasCadeData);
 
-        UpdateBones(Comp);
+			UpdateBones(Comp);
 
-        RenderSkeletalMesh_Internal(RenderData);
-    }
+			RenderSkeletalMesh_Internal(RenderData);
+		}
+	}
+	else
+	{
+		ID3D11InputLayout* TempIL = ShaderManager->GetInputLayoutByKey(L"SkeletalMeshVertexShader");
+		ID3D11VertexShader* TempVS = ShaderManager->GetVertexShaderByKey(L"CascadedShadowMapVS_SKMI");
+
+		Graphics->DeviceContext->IASetInputLayout(TempIL);
+		Graphics->DeviceContext->VSSetShader(TempVS, nullptr, 0);
+
+		// 잠시 덮어씀
+		BufferManager->BindConstantBuffer(TEXT("FObjectConstantBufferInstanced"), 12, EShaderStage::Vertex);
+		BufferManager->BindStructuredBufferSRV(TEXT("BoneBufferInstanced"), 1, EShaderStage::Vertex);
+
+		// INSTANCING
+		// 같은 skeletal mesh끼리 묶음
+		// 이후 BoneMatrix를 StructuredBuffer로 SkelMeshComp 전부를 보냄
+		// 렌더링은 submesh 단위로 진행
+		TMap<USkeletalMesh*, TArray<USkeletalMeshComponent*>> SkeletalMeshMap;
+
+		for (USkeletalMeshComponent* Comp : SkeletalMeshComponents)
+		{
+			if (!Comp || !Comp->GetSkeletalMeshAsset())
+			{
+				continue;
+			}
+			USkeletalMesh* SkeletalMesh = Comp->GetSkeletalMeshAsset();
+			if (!SkeletalMeshMap.Contains(SkeletalMesh))
+			{
+				SkeletalMeshMap.Add(SkeletalMesh, TArray<USkeletalMeshComponent*>());
+			}
+			SkeletalMeshMap[SkeletalMesh].Add(Comp);
+		}
+
+		for (auto& Pair : SkeletalMeshMap)
+		{
+			USkeletalMesh* SkeletalMesh = Pair.Key;
+			TArray<USkeletalMeshComponent*>& SkeletalMeshComponents = Pair.Value;
+			if (SkeletalMesh->GetRenderData() == nullptr)
+			{
+				continue;
+			}
+			const FSkeletalMeshRenderData* RenderData = SkeletalMesh->GetRenderData();
+
+			const int32 TotalComponents = SkeletalMeshComponents.Num();
+			const int32 MaxInstances = FRenderer::MaxNumInstances;
+
+			for (int32 BatchStart = 0; BatchStart < TotalComponents; BatchStart += MaxInstances)
+			{
+				const int32 BatchCount = FMath::Min(MaxInstances, TotalComponents - BatchStart);
+
+				TArray<FMatrix> WorldMatrices;
+				WorldMatrices.Reserve(BatchCount);
+
+				// 해당 배치에 속한 컴포넌트만 처리
+				for (int32 i = 0; i < BatchCount; ++i)
+				{
+					USkeletalMeshComponent* Comp = SkeletalMeshComponents[BatchStart + i];
+					if (!Comp || !Comp->GetSkeletalMeshAsset())
+					{
+						continue;
+					}
+					FMatrix WorldMatrix = Comp->GetWorldMatrix();
+					WorldMatrices.Add(WorldMatrix);
+				}
+
+				int32 NumBones = SkeletalMesh->GetSkeleton()->GetReferenceSkeleton().GetRawBoneNum();
+				UpdateObjectConstantInstanced(NumBones, WorldMatrices, WorldMatrices.Num());
+
+				// 해당 배치의 SkeletalMeshComponents만 넘김
+				TArray<USkeletalMeshComponent*> BatchComponents;
+				BatchComponents.Reserve(BatchCount);
+				for (int32 i = 0; i < BatchCount; ++i)
+				{
+					USkeletalMeshComponent* Comp = SkeletalMeshComponents[BatchStart + i];
+					if (Comp && Comp->GetSkeletalMeshAsset())
+					{
+						BatchComponents.Add(Comp);
+					}
+				}
+				UpdateBonesInstanced(BatchComponents);
+
+				RenderSkeletalMeshInstanced_Internal(RenderData, BatchCount, 0);
+			}
+		}
+
+		BufferManager->BindConstantBuffer(TEXT("FObjectConstantBuffer"), 12, EShaderStage::Vertex);
+		BufferManager->BindStructuredBufferSRV(TEXT("BoneBuffer"), 1, EShaderStage::Vertex);
+	}
+
 }
 
 void FShadowRenderPass::BindResourcesForSampling()
@@ -416,6 +508,17 @@ void FShadowRenderPass::CreateResource()
     }
 
     hr = ShaderManager->AddVertexShader(L"CascadedShadowMapVS_SKM", L"Shaders/CascadedShadowMap.hlsl", "mainVS_SKM");
+    if (FAILED(hr))
+    {
+        UE_LOG(ELogLevel::Error, TEXT("Failed to create Cascaded ShadowMap Vertex shader!"));
+    }
+
+	D3D_SHADER_MACRO Defines[] = {
+		"Instancing", "1", // Instancing을 위한 매크로 정의
+		nullptr, nullptr // 끝을 나타내는 nullptr
+	};
+
+    hr = ShaderManager->AddVertexShader(L"CascadedShadowMapVS_SKMI", L"Shaders/CascadedShadowMap.hlsl", "mainVS_SKMI", Defines);
     if (FAILED(hr))
     {
         UE_LOG(ELogLevel::Error, TEXT("Failed to create Cascaded ShadowMap Vertex shader!"));

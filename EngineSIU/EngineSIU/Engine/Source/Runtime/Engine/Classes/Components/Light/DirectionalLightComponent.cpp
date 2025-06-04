@@ -22,6 +22,20 @@ UObject* UDirectionalLightComponent::Duplicate(UObject* InOuter)
         NewComponent->DirectionalLightInfo = DirectionalLightInfo;
     }
     
+	NewComponent->ShadowNearPlane = ShadowNearPlane;
+	NewComponent->ShadowFarPlane = ShadowFarPlane;
+	NewComponent->Param1 = Param1;
+	NewComponent->Param2 = Param2;
+	NewComponent->Param3 = Param3;
+	NewComponent->Param4 = Param4;
+	NewComponent->Param5 = Param5;
+	NewComponent->Param6 = Param6;
+	NewComponent->Param7 = Param7;
+	NewComponent->Param8 = Param8;
+	NewComponent->bOverride = bOverride;
+	NewComponent->OverrideHeight = OverrideHeight;
+
+
     return NewComponent;
 }
 
@@ -31,6 +45,13 @@ void UDirectionalLightComponent::GetProperties(TMap<FString, FString>& OutProper
     OutProperties.Add(TEXT("LightColor"), *DirectionalLightInfo.LightColor.ToString());
     OutProperties.Add(TEXT("Intensity"), FString::Printf(TEXT("%f"), DirectionalLightInfo.Intensity));
     OutProperties.Add(TEXT("Direction"), *DirectionalLightInfo.Direction.ToString());
+    OutProperties.Add(TEXT("Param1"), FString::Printf(TEXT("%f"), Param1));
+    OutProperties.Add(TEXT("Param2"), FString::Printf(TEXT("%f"), Param2));
+    OutProperties.Add(TEXT("Param3"), FString::Printf(TEXT("%f"), Param3));
+    OutProperties.Add(TEXT("Param4"), FString::Printf(TEXT("%f"), Param4));
+    OutProperties.Add(TEXT("Param5"), FString::Printf(TEXT("%f"), Param5));
+    OutProperties.Add(TEXT("Param6"), FString::Printf(TEXT("%f"), Param6));
+
 }
 
 void UDirectionalLightComponent::SetProperties(const TMap<FString, FString>& InProperties)
@@ -51,6 +72,36 @@ void UDirectionalLightComponent::SetProperties(const TMap<FString, FString>& InP
     if (TempStr)
     {
         DirectionalLightInfo.Direction.InitFromString(*TempStr);
+    }
+    TempStr = InProperties.Find(TEXT("Param1"));
+    if (TempStr)
+    {
+        Param1 = FString::ToFloat(*TempStr);
+    }
+    TempStr = InProperties.Find(TEXT("Param2"));
+    if (TempStr)
+    {
+        Param2 = FString::ToFloat(*TempStr);
+    }
+    TempStr = InProperties.Find(TEXT("Param3"));
+    if (TempStr)
+    {
+        Param3 = FString::ToFloat(*TempStr);
+    }
+    TempStr = InProperties.Find(TEXT("Param4"));
+    if (TempStr)
+    {
+        Param4 = FString::ToFloat(*TempStr);
+    }
+    TempStr = InProperties.Find(TEXT("Param5"));
+    if (TempStr)
+    {
+        Param5 = FString::ToFloat(*TempStr);
+    }
+    TempStr = InProperties.Find(TEXT("Param6"));
+    if (TempStr)
+    {
+        Param6 = FString::ToFloat(*TempStr);
     }
 }
 

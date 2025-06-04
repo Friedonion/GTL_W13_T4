@@ -133,7 +133,7 @@ public:
 
     bool Initialize(FGraphicsDevice* InGraphics, FDXDBufferManager* InBufferManager,
                     uint32_t InMaxSpotShadows = 128, uint32_t InSpotResolution = 1024,
-                    uint32_t InMaxPointShadows = 128,uint32_t InPointResolution = 512, uint32_t InNumCascades = 4, uint32_t InDirResolution = 4096); // NUM Cascades 바인딩 위치가 불명확합니다.
+                    uint32_t InMaxPointShadows = 128,uint32_t InPointResolution = 512, uint32_t InNumCascades = 5, uint32_t InDirResolution = 4096); // NUM Cascades 바인딩 위치가 불명확합니다.
 
 
     /** 생성된 모든 D3D 리소스를 해제합니다. */

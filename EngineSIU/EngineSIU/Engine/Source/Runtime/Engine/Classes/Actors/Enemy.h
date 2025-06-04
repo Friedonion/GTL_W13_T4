@@ -19,6 +19,10 @@ struct FBodyInstance;
 
 struct FConstraintSetup;
 struct FConstraintInstance;
+
+class UParticleSystem;
+class UParticleSystemComponent;
+
 class AEnemy : public AActor
 {
     DECLARE_CLASS(AEnemy, AActor)
@@ -87,10 +91,11 @@ private:
     TArray<GameObject*> CollisionRigidBodies;
 
     void DelayedDestroy();
-    void PeriodicAttackCheck();
 
     FTimerHandle DestroyDelayTimerHandle;
-    FTimerHandle AttackCheckTimerHandle;
+    FTimerHandle DestroyParticleTimerHandle;
+
+    void DestoryParticle();
 
     void ApplyRagdollImpulse(ECollisionPart HitPart, const FVector& ImpulseDirection, float ImpulseMagnitude);
     GameObject* GetRagdollBodyPartByIndex(int32 BodyIndex); // 헬퍼 함수 (선택 사항)
@@ -98,6 +103,9 @@ private:
 public:
     UPROPERTY(VisibleAnywhere, FRotator, Direction, )
 
+private:
+    UPROPERTY(EditAnywhere, UParticleSystem*, ParticleSystem, )
+    UPROPERTY(EditAnywhere, UParticleSystemComponent*, ParticleSystemComponent, )
 public:
     virtual void RegisterLuaType(sol::state& Lua) override; // Lua에 클래스 등록해주는 함수.
 
