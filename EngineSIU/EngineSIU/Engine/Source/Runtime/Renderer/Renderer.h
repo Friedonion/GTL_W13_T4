@@ -129,6 +129,11 @@ private:
     
     const int32 MaxBoneNum = 1024;
     const int32 MaxParticleInstanceNum = 1024;
+
+public:
+    static constexpr int32 MaxNumInstances = 128;
+
+    bool bSkeletalMeshInstanced = true;
 };
 
 template <typename RenderPassType> requires std::derived_from<RenderPassType, IRenderPass>

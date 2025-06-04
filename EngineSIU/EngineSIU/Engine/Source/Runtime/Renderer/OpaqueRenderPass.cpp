@@ -108,6 +108,7 @@ void FOpaqueRenderPass::ChangeViewMode(EViewModeIndex ViewMode)
     {
         VertexShader_StaticMesh = ShaderManager->GetVertexShaderByKey(L"StaticMeshVertexShader");
         VertexShader_SkeletalMesh = ShaderManager->GetVertexShaderByKey(L"SkeletalMeshVertexShader");
+        VertexShader_SkeletalMeshInstanced = ShaderManager->GetVertexShaderByKey(L"SkeletalMeshInstancedVertexShader");
     }
 
     // Pixel Shader
@@ -319,6 +320,95 @@ void FOpaqueRenderPass::RenderSkeletalMesh(const std::shared_ptr<FEditorViewport
     }
 }
 
+void FOpaqueRenderPass::PrepareSkeletalMeshInstanced()
+{
+    Graphics->DeviceContext->VSSetShader(VertexShader_SkeletalMeshInstanced, nullptr, 0);
+    Graphics->DeviceContext->IASetInputLayout(InputLayout_SkeletalMesh);
+}
+
+void FOpaqueRenderPass::RenderSkeletalMeshInstanced(const std::shared_ptr<FEditorViewportClient>& Viewport)
+{
+    // 잠시 덮어씀
+    BufferManager->BindConstantBuffer(TEXT("FObjectConstantBufferInstanced"), 12, EShaderStage::Vertex);
+    BufferManager->BindStructuredBufferSRV(TEXT("BoneBufferInstanced"), 1, EShaderStage::Vertex);
+
+
+    // INSTANCING
+    // 같은 skeletal mesh끼리 묶음
+    // 이후 BoneMatrix를 StructuredBuffer로 SkelMeshComp 전부를 보냄
+    // 렌더링은 submesh 단위로 진행
+    TMap<USkeletalMesh*, TArray<USkeletalMeshComponent*>> SkeletalMeshMap;
+
+    for (USkeletalMeshComponent* Comp : SkeletalMeshComponents)
+    {
+        if (!Comp || !Comp->GetSkeletalMeshAsset())
+        {
+            continue;
+        }
+        USkeletalMesh* SkeletalMesh = Comp->GetSkeletalMeshAsset();
+        if (!SkeletalMeshMap.Contains(SkeletalMesh))
+        {
+            SkeletalMeshMap.Add(SkeletalMesh, TArray<USkeletalMeshComponent*>());
+        }
+        SkeletalMeshMap[SkeletalMesh].Add(Comp);
+    }
+
+    for (auto& Pair : SkeletalMeshMap)
+    {
+        USkeletalMesh* SkeletalMesh = Pair.Key;
+        TArray<USkeletalMeshComponent*>& SkeletalMeshComponents = Pair.Value;
+        if (SkeletalMesh->GetRenderData() == nullptr)
+        {
+            continue;
+        }
+        const FSkeletalMeshRenderData* RenderData = SkeletalMesh->GetRenderData();
+
+        const int32 TotalComponents = SkeletalMeshComponents.Num();
+        const int32 MaxInstances = FRenderer::MaxNumInstances;
+
+        for (int32 BatchStart = 0; BatchStart < TotalComponents; BatchStart += MaxInstances)
+        {
+            const int32 BatchCount = FMath::Min(MaxInstances, TotalComponents - BatchStart);
+
+            TArray<FMatrix> WorldMatrices;
+            WorldMatrices.Reserve(BatchCount);
+
+            // 해당 배치에 속한 컴포넌트만 처리
+            for (int32 i = 0; i < BatchCount; ++i)
+            {
+                USkeletalMeshComponent* Comp = SkeletalMeshComponents[BatchStart + i];
+                if (!Comp || !Comp->GetSkeletalMeshAsset())
+                {
+                    continue;
+                }
+                FMatrix WorldMatrix = Comp->GetWorldMatrix();
+                WorldMatrices.Add(WorldMatrix);
+            }
+
+            int32 NumBones = SkeletalMesh->GetSkeleton()->GetReferenceSkeleton().GetRawBoneNum();
+            UpdateObjectConstantInstanced(NumBones, WorldMatrices, WorldMatrices.Num());
+
+            // 해당 배치의 SkeletalMeshComponents만 넘김
+            TArray<USkeletalMeshComponent*> BatchComponents;
+            BatchComponents.Reserve(BatchCount);
+            for (int32 i = 0; i < BatchCount; ++i)
+            {
+                USkeletalMeshComponent* Comp = SkeletalMeshComponents[BatchStart + i];
+                if (Comp && Comp->GetSkeletalMeshAsset())
+                {
+                    BatchComponents.Add(Comp);
+                }
+            }
+            UpdateBonesInstanced(BatchComponents);
+
+            RenderSkeletalMeshInstanced_Internal(RenderData, BatchCount, 0);
+        }
+    }
+
+    BufferManager->BindConstantBuffer(TEXT("FObjectConstantBuffer"), 12, EShaderStage::Vertex);
+    BufferManager->BindStructuredBufferSRV(TEXT("BoneBuffer"), 1, EShaderStage::Vertex);
+}
+
 void FOpaqueRenderPass::Initialize(FDXDBufferManager* InBufferManager, FGraphicsDevice* InGraphics, FDXDShaderManager* InShaderManager)
 {
     FRenderPassBase::Initialize(InBufferManager, InGraphics, InShaderManager);
@@ -367,9 +457,17 @@ void FOpaqueRenderPass::Render(const std::shared_ptr<FEditorViewportClient>& Vie
     PrepareStaticMesh();
     RenderStaticMesh(Viewport);
 
-    PrepareSkeletalMesh();
-    RenderSkeletalMesh(Viewport);
-    
+    if (!GEngineLoop.Renderer.bSkeletalMeshInstanced)
+    {
+        PrepareSkeletalMesh();
+        RenderSkeletalMesh(Viewport);
+    }
+    else
+    {
+        PrepareSkeletalMeshInstanced();
+        RenderSkeletalMeshInstanced(Viewport);
+    }
+
     CleanUpRender(Viewport);
 }
 

@@ -546,7 +546,7 @@ HRESULT FDXDShaderManager::AddVertexShader(const std::wstring& Key, const std::w
     ID3DBlob* ErrorBlob = nullptr;
 
     HRESULT Result = D3DCompileFromFile(
-        FileName.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, EntryPoint.c_str(), "vs_5_0", 0, 0,
+        FileName.c_str(), Defines, D3D_COMPILE_STANDARD_FILE_INCLUDE, EntryPoint.c_str(), "vs_5_0", 0, 0,
         &VertexShaderCSO, &ErrorBlob
     );
     if (FAILED(Result))

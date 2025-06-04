@@ -45,6 +45,10 @@ protected:
     void PrepareSkeletalMesh();
     void RenderSkeletalMesh(const std::shared_ptr<FEditorViewportClient>& Viewport);
     
+    void PrepareSkeletalMeshInstanced();
+    void RenderSkeletalMeshInstanced(const std::shared_ptr<FEditorViewportClient>& Viewport);
+
+    
     TArray<UStaticMeshComponent*> StaticMeshComponents;
     TArray<USkeletalMeshComponent*> SkeletalMeshComponents;
 
@@ -52,6 +56,7 @@ protected:
     ID3D11InputLayout* InputLayout_StaticMesh = nullptr;
 
     ID3D11VertexShader* VertexShader_SkeletalMesh = nullptr;
+    ID3D11VertexShader* VertexShader_SkeletalMeshInstanced = nullptr;
     ID3D11InputLayout* InputLayout_SkeletalMesh = nullptr;
 
     ID3D11PixelShader* PixelShader = nullptr;

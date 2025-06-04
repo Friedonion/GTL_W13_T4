@@ -62,6 +62,28 @@ void FRenderPassBase::UpdateObjectConstant(const FMatrix& WorldMatrix, const FVe
     BufferManager->UpdateConstantBuffer(TEXT("FObjectConstantBuffer"), ObjectData);
 }
 
+void FRenderPassBase::UpdateObjectConstantInstanced(int32 NumBones, const TArray<FMatrix>& WorldMatrix, int32 InstanceCount) const
+{
+    struct alignas(16) FObjectConstantBufferRaw
+    {
+        int32 NumBones;
+        int32 Pad0[3];
+        FObjectConstantBufferInstanced InstanceMatrices[FRenderer::MaxNumInstances];
+    } ConstantBuffer = {};
+
+    ConstantBuffer.NumBones = NumBones;
+
+    for (int32 i = 0; i < InstanceCount; ++i)
+    {
+        FObjectConstantBufferInstanced ObjectData = {};
+        ObjectData.WorldMatrix = WorldMatrix[i];
+        ObjectData.InverseTransposedWorld = FMatrix::Transpose(FMatrix::Inverse(WorldMatrix[i]));
+        ConstantBuffer.InstanceMatrices[i] = ObjectData;
+    }
+
+    BufferManager->UpdateConstantBuffer(TEXT("FObjectConstantBufferInstanced"), ConstantBuffer);
+}
+
 void FRenderPassBase::RenderStaticMesh_Internal(const FStaticMeshRenderData* RenderData, TArray<FStaticMaterial*> Materials, TArray<UMaterial*> OverrideMaterials, int32 SelectedSubMeshIndex)
 {
     UINT Stride = sizeof(FStaticMeshVertex);
@@ -209,6 +231,41 @@ void FRenderPassBase::RenderSkeletalMesh_Internal(const FSkeletalMeshRenderData*
     }
 }
 
+void FRenderPassBase::RenderSkeletalMeshInstanced_Internal(const FSkeletalMeshRenderData* RenderData, int32 InstanceCount, int32 InstanceStartLocation)
+{
+    constexpr UINT Stride = sizeof(FSkeletalMeshVertex);
+    constexpr UINT Offset = 0;
+
+    FVertexInfo VertexInfo;
+    BufferManager->CreateVertexBuffer(RenderData->ObjectName, RenderData->Vertices, VertexInfo);
+
+    Graphics->DeviceContext->IASetVertexBuffers(0, 1, &VertexInfo.VertexBuffer, &Stride, &Offset);
+
+    FIndexInfo IndexInfo;
+    BufferManager->CreateIndexBuffer(RenderData->ObjectName, RenderData->Indices, IndexInfo);
+    if (IndexInfo.IndexBuffer)
+    {
+        Graphics->DeviceContext->IASetIndexBuffer(IndexInfo.IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+    }
+    else
+    {
+        Graphics->DeviceContext->DrawInstanced(RenderData->Vertices.Num(), InstanceCount, 0, InstanceStartLocation);
+        return;
+    }
+
+    for (int SubMeshIndex = 0; SubMeshIndex < RenderData->MaterialSubsets.Num(); SubMeshIndex++)
+    {
+        FName MaterialName = RenderData->MaterialSubsets[SubMeshIndex].MaterialName;
+        UMaterial* Material = UAssetManager::Get().GetMaterial(MaterialName);
+        FMaterialInfo MaterialInfo = Material->GetMaterialInfo();
+        MaterialUtils::UpdateMaterial(BufferManager, Graphics, MaterialInfo);
+
+        const uint32 StartIndex = RenderData->MaterialSubsets[SubMeshIndex].IndexStart;
+        const uint32 IndexCount = RenderData->MaterialSubsets[SubMeshIndex].IndexCount;
+        Graphics->DeviceContext->DrawIndexedInstanced(IndexCount, InstanceCount, StartIndex, 0, InstanceStartLocation);
+    }
+}
+
 void FRenderPassBase::UpdateBones(const USkeletalMeshComponent* SkeletalMeshComponent)
 {
     if (!SkeletalMeshComponent ||
@@ -239,6 +296,37 @@ void FRenderPassBase::UpdateBones(const USkeletalMeshComponent* SkeletalMeshComp
     }
 
     BufferManager->UpdateStructuredBuffer(TEXT("BoneBuffer"), FinalBoneMatrices);
+}
+
+// 무조건 동일한 USKeletalMesh를 사용하는 컴포넌트가 와야합니다.
+void FRenderPassBase::UpdateBonesInstanced(const TArray<USkeletalMeshComponent*>& SkeletalMeshComponents)
+{
+    if (SkeletalMeshComponents.IsEmpty() || USkeletalMeshComponent::GetCPUSkinning())
+    {
+        return;
+    }
+    TArray<FMatrix> FinalBoneMatrices;
+    FinalBoneMatrices.Reserve(SkeletalMeshComponents.Num());
+    for (const USkeletalMeshComponent* SkeletalMeshComponent : SkeletalMeshComponents)
+    {
+        if (!SkeletalMeshComponent || !SkeletalMeshComponent->GetSkeletalMeshAsset() || !SkeletalMeshComponent->GetSkeletalMeshAsset()->GetSkeleton())
+        {
+            continue;
+        }
+        const FReferenceSkeleton& RefSkeleton = SkeletalMeshComponent->GetSkeletalMeshAsset()->GetSkeleton()->GetReferenceSkeleton();
+        const int32 BoneNum = RefSkeleton.RawRefBoneInfo.Num();
+
+        TArray<FMatrix> CurrentGlobalBoneMatrices;
+        SkeletalMeshComponent->GetCurrentGlobalBoneMatrices(CurrentGlobalBoneMatrices);
+
+        for (int32 BoneIndex = 0; BoneIndex < BoneNum; ++BoneIndex)
+        {
+            FMatrix FinalMatrix = RefSkeleton.InverseBindPoseMatrices[BoneIndex] * CurrentGlobalBoneMatrices[BoneIndex];
+            FinalMatrix = FMatrix::Transpose(FinalMatrix);
+            FinalBoneMatrices.Add(FinalMatrix);
+        }
+    }
+    BufferManager->UpdateStructuredBuffer(TEXT("BoneBufferInstanced"), FinalBoneMatrices);
 }
 
 void FRenderPassBase::Release()

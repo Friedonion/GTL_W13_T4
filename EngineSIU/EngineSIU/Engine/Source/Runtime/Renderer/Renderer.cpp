@@ -109,6 +109,9 @@ void FRenderer::CreateConstantBuffers()
     UINT ObjectBufferSize = sizeof(FObjectConstantBuffer);
     BufferManager->CreateBufferGeneric<FObjectConstantBuffer>("FObjectConstantBuffer", nullptr, ObjectBufferSize, D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
 
+    UINT ObjectBufferInstancedSize = sizeof(FObjectConstantBufferInstanced) * MaxNumInstances + sizeof(int32) * 4;
+    BufferManager->CreateBufferGeneric<FObjectConstantBufferInstanced>("FObjectConstantBufferInstanced", nullptr, ObjectBufferInstancedSize, D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
+
     UINT CameraConstantBufferSize = sizeof(FCameraConstantBuffer);
     BufferManager->CreateBufferGeneric<FCameraConstantBuffer>("FCameraConstantBuffer", nullptr, CameraConstantBufferSize, D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
 
@@ -140,6 +143,8 @@ void FRenderer::CreateConstantBuffers()
     BufferManager->CreateBufferGeneric<FCPUSkinningConstants>("FCPUSkinningConstants", nullptr, CPUSkinningBufferSize, D3D11_BIND_CONSTANT_BUFFER, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
 
     BufferManager->CreateStructuredBufferGeneric<FMatrix>("BoneBuffer", nullptr, MaxBoneNum, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
+    // TODO : 개수 적당히 조절 필요.
+    BufferManager->CreateStructuredBufferGeneric<FMatrix>("BoneBufferInstanced", nullptr, MaxBoneNum * MaxNumInstances / 16, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
 
     BufferManager->CreateStructuredBufferGeneric<FParticleSpriteVertex>("ParticleSpriteInstanceBuffer", nullptr, MaxParticleInstanceNum, D3D11_USAGE_DYNAMIC, D3D11_CPU_ACCESS_WRITE);
 
@@ -189,6 +194,11 @@ void FRenderer::CreateCommonShader() const
     };
 
     hr = ShaderManager->AddVertexShaderAndInputLayout(L"SkeletalMeshVertexShader", L"Shaders/SkeletalMeshVertexShader.hlsl", "mainVS", SkeletalMeshLayoutDesc, ARRAYSIZE(SkeletalMeshLayoutDesc));
+    if (FAILED(hr))
+    {
+        return;
+    }
+    hr = ShaderManager->AddVertexShaderAndInputLayout(L"SkeletalMeshInstancedVertexShader", L"Shaders/SkeletalMeshInstancedVertexShader.hlsl", "mainVS", SkeletalMeshLayoutDesc, ARRAYSIZE(SkeletalMeshLayoutDesc));
     if (FAILED(hr))
     {
         return;

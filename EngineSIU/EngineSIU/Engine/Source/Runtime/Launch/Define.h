@@ -434,6 +434,12 @@ struct FObjectConstantBuffer
     FVector pad;
 };
 
+struct FObjectConstantBufferInstanced
+{
+	FMatrix WorldMatrix;
+	FMatrix InverseTransposedWorld;
+};
+
 struct FCameraConstantBuffer
 {
     FMatrix ViewMatrix;
