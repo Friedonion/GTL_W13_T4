@@ -23,6 +23,11 @@ UObject* AEnemySpawner::Duplicate(UObject* InOuter)
     NewActor->Character = Character;
     NewActor->SpawnedEnemy = SpawnedEnemy;
 
+    NewActor->PatrolA = PatrolA;
+    NewActor->PatrolB = PatrolB;
+    NewActor->InitSpeed = InitSpeed;
+    NewActor->InitSpeedInterval = InitSpeedInterval;
+
     return NewActor;
 }
 
@@ -99,5 +104,12 @@ void AEnemySpawner::Spawn()
     SpawnedEnemy = World->SpawnActor<AEnemy>();
     SpawnedEnemy->SetActorLabel(TEXT("OBJ_ENEMY"));
     SpawnedEnemy->SetOwner(this);
+    SpawnedEnemy->PatrolA = GetActorLocation() + PatrolA;
+    SpawnedEnemy->PatrolB = GetActorLocation() + PatrolB;
+
+    // 포인터 주소를 정수로 변환해서 1~5 범위로 매핑
+    uintptr_t Address = reinterpret_cast<uintptr_t>(SpawnedEnemy);
+    SpawnedEnemy->MoveSpeed = (static_cast<int>(Address) % static_cast<int>(InitSpeedInterval)) + InitSpeed; // 1~5
+
     bShouldSpawn = false;
 }
