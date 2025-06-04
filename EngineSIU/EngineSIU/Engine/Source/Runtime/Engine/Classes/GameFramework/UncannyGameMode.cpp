@@ -153,6 +153,10 @@ void AUncannyGameMode::OnPlayerHit(float Damage)
     {
         OnDeath();
     }
+    else
+    {
+        PlayHitNoiseEffect();
+    }
 }
 
 void AUncannyGameMode::SetMaxHP(int32 NewMaxHP)
